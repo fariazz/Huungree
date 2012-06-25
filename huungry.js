@@ -45,7 +45,7 @@ huungry.start = function(){
         //console.log(initialY);
         
         bounds = new goog.math.Box(-(map.height-HEIGHT), 0, 0, -(map.width-WIDTH));
-        console.log(bounds);
+        //console.log(bounds);
         var drag = e.startDrag(false,bounds);
         
         
@@ -54,12 +54,34 @@ huungry.start = function(){
             //console.log(layer.getPosition().x);
             map.pixelOffsetX = -map.layer.getPosition().x;
             map.pixelOffsetY = -map.layer.getPosition().y;
-            console.log()
+            //console.log()
             //console.log('offsetx: '+map.pixelOffsetX);
             //console.log('offsety: '+map.pixelOffsetY);
         });
+        
+        //move player if selected
+        if(player.isSelected) {
+            console.log('move player');
+            player_xy = player.getPosition();
+            player_pos = map.getColRowFromXY(player_xy.x, player_xy.y);
+            var start = map.blockedMap.nodes[player_pos.row][player_pos.col];
+            //var start = [[player_pos.row],[player_pos.col]];
+            
+            target_pos = map.getColRowFromXY(e.position.x, e.position.y);
+            var end = map.blockedMap.nodes[target_pos.row][target_pos.col];
+            //var end = [[target_pos.row],[target_pos.col]];
+            
+            var result = astar.search(map.blockedMap.nodes, start, end, true);            
+        }
+        
     });
     
+    
+    goog.events.listen(player,['mousedown', 'touchstart'], function(e) {
+        e.event.stopPropagation();
+        player.isSelected = player.isSelected ? false : true;
+        console.log(player.isSelected);
+    });
     
     // set current scene active
     director.replaceScene(gameScene);
