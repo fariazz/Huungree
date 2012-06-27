@@ -30,13 +30,15 @@ huungry.Map.prototype.init = function() {
 console.log(this.tmx);
 
     //map of blocked tiles for collision detection
-    var blockedMap = [[]];
+    var blockedMap = [];
     var blocked_r = 0;
     var blocked_c = 0;
+
+    for(var r=0; r< this.tmx.width; r++) {
+        blockedMap.push([]);
+    }
     
-    
-    for(var i = 0; i < this.tmx.layers[0].tiles.length; i++)
-    {
+    for(var i = 0; i < this.tmx.layers[0].tiles.length; i++) {
         var tile = this.tmx.layers[0].tiles[i];
         var sprite = new lime.Sprite().setPosition(tile.px,tile.py).setAnchorPoint(0,0);
         sprite.setFill(tile.tile.frame);
@@ -45,14 +47,13 @@ console.log(this.tmx);
         if(blocked_c >= this.tmx.width) {
             blocked_c = 0;
             blocked_r++;
-            blockedMap.push([]);
         }
         
         if(tile.tile.properties[0] === undefined)
-            blockedMap[blocked_r].push(0);
+            blockedMap[blocked_c].push(0);
         
         else
-            blockedMap[blocked_r].push(1);
+            blockedMap[blocked_c].push(1);
         
         blocked_c++;
     }

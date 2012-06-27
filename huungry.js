@@ -64,14 +64,15 @@ huungry.start = function(){
             console.log('move player');
             player_xy = player.getPosition();
             player_pos = map.getColRowFromXY(player_xy.x, player_xy.y);
-            var start = map.blockedMap.nodes[player_pos.row][player_pos.col];
+            var start = map.blockedMap.nodes[player_pos.col][player_pos.row];
             //var start = [[player_pos.row],[player_pos.col]];
             
             target_pos = map.getColRowFromXY(e.position.x, e.position.y);
-            var end = map.blockedMap.nodes[target_pos.row][target_pos.col];
+            var end = map.blockedMap.nodes[target_pos.col][target_pos.row];
             //var end = [[target_pos.row],[target_pos.col]];
             
-            var result = astar.search(map.blockedMap.nodes, start, end, true);            
+            var result = astar.search(map.blockedMap.nodes, start, end, true);     
+            console.log(result);
         }
         
     });
