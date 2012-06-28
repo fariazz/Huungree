@@ -9,6 +9,8 @@ goog.require('lime.Layer');
 goog.require('lime.animation.MoveTo');
 goog.require('goog.math');
 goog.require('huungry.Map');
+goog.require('huungry.Character');
+goog.require('huungry.Player');
 
 WIDTH = 176;
 HEIGHT = 128;
@@ -31,57 +33,37 @@ huungry.start = function(){
     map.init();
  
     //player
-    var player = new lime.Sprite().setPosition(100,100).setFill('assets/player1.png');
+    var player = new huungry.Player().setPosition(100,100).setFill('assets/player1.png');
+    player.setMap(map);
+    player.setDefaultSpeed(50);
+        
     layer.appendChild(player);
     
     goog.events.listen(layer,['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         
-        var initialX = e.position.x;
-        var initialY = e.position.y;
-        
-        //console.log(JSON.stringify(map.getColRowFromXY(e.position.x,e.position.y)));
-        //console.log('initialx:'+initialX  );
-        //console.log(initialY);
-        
         bounds = new goog.math.Box(-(map.height-HEIGHT), 0, 0, -(map.width-WIDTH));
-        //console.log(bounds);
         var drag = e.startDrag(false,bounds);
-        
-        
-        e.swallow(['mouseup','touchend','touchcancel'],function(e){
-            
-            //console.log(layer.getPosition().x);
+                
+        e.swallow(['mouseup','touchend','touchcancel'],function(e){            
             map.pixelOffsetX = -map.layer.getPosition().x;
             map.pixelOffsetY = -map.layer.getPosition().y;
-            //console.log()
-            //console.log('offsetx: '+map.pixelOffsetX);
-            //console.log('offsety: '+map.pixelOffsetY);
+        
         });
         
         //move player if selected
         if(player.isSelected) {
-            console.log('move player');
-            player_xy = player.getPosition();
-            player_pos = map.getColRowFromXY(player_xy.x, player_xy.y);
-            var start = map.blockedMap.nodes[player_pos.col][player_pos.row];
-            //var start = [[player_pos.row],[player_pos.col]];
             
             target_pos = map.getColRowFromXY(e.position.x, e.position.y);
-            var end = map.blockedMap.nodes[target_pos.col][target_pos.row];
-            //var end = [[target_pos.row],[target_pos.col]];
-            
-            var result = astar.search(map.blockedMap.nodes, start, end, true);     
-            console.log(result);
-        }
-        
+            player.isSelected = false;
+            player.walkTo(target_pos.col, target_pos.row);            
+        }        
     });
     
     
     goog.events.listen(player,['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         player.isSelected = player.isSelected ? false : true;
-        console.log(player.isSelected);
     });
     
     // set current scene active

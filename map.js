@@ -26,6 +26,8 @@ huungry.Map.prototype.init = function() {
     
     //load tiled map
     this.tmx = new lime.parser.TMX(this.tmx_file);
+    
+    this.tileSize = this.tmx.tilewidth;
 
 console.log(this.tmx);
 
@@ -65,19 +67,31 @@ console.log(this.tmx);
     //console.log(this.blockedMap);
     
     //save map dimensions
-    this.width = this.tmx.width * this.tmx.tilewidth;
-    this.height = this.tmx.height * this.tmx.tileheight;
+    this.width = this.tmx.width * this.tileSize;
+    this.height = this.tmx.height * this.tileSize;
 }
 
 /*
  * get map cell row and col from map x and y
- * @param x map x coordinate
- * @param y map y coordinate
+ * @param float x map x coordinate
+ * @param float y map y coordinate
  */
 huungry.Map.prototype.getColRowFromXY = function(x,y) {
         
-	var col = parseInt((x - x%this.tmx.tilewidth)/this.tmx.tilewidth);
-	var row = parseInt((y - y%this.tmx.tileheight)/this.tmx.tileheight);
+	var col = parseInt((x - x%this.tileSize)/this.tileSize);
+	var row = parseInt((y - y%this.tileSize)/this.tileSize);
 	
 	return {'col': col, 'row': row};
+}
+
+/*
+ * get map coordinate x,y from column and row tile number
+ * @param int col tile column
+ * @param int row tile row
+ */
+huungry.Map.prototype.getXYFromColRow = function(col,row) {
+    var x = col*this.tileSize;
+    var y = row*this.tileSize;
+
+    return {'x':x, 'y':y};
 }
