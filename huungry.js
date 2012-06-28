@@ -33,10 +33,12 @@ huungry.start = function(){
     map.init();
  
     //player
-    var player = new huungry.Player().setPosition(100,100).setFill('assets/player1.png');
+    var player = new huungry.Player().setPosition(80,80).setFill('assets/player1.png');
     player.setMap(map);
     player.setDefaultSpeed(50);
         
+    map.player = player;
+    
     layer.appendChild(player);
     
     goog.events.listen(layer,['mousedown', 'touchstart'], function(e) {
@@ -53,10 +55,12 @@ huungry.start = function(){
         
         //move player if selected
         if(player.isSelected) {
-            
-            target_pos = map.getColRowFromXY(e.position.x, e.position.y);
+            console.log(map.player);
+            var target_pos = map.getColRowFromXY(e.position.x, e.position.y);
             player.isSelected = false;
-            player.walkTo(target_pos.col, target_pos.row);            
+            player.setPathTo(target_pos.col, target_pos.row);
+
+            map.highlightPath(player.path, player.getPosition());
         }        
     });
     

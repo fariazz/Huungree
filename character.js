@@ -82,7 +82,16 @@ huungry.Character.prototype.getCell = function() {
 * @param int row target tile row
 */
 huungry.Character.prototype.walkTo = function(col,row) {
-    
+    this.setPathTo(col, row);
+    this.walkPath();
+}
+
+/*
+ * set the path to a destination cell
+ * @param int col target tile column
+ * @param int row target tile row
+ */
+huungry.Character.prototype.setPathTo = function(col, row) {
     var character_pos = this.getCell();
     var start = this.map.blockedMap.nodes[character_pos.col][character_pos.row];
     var end = this.map.blockedMap.nodes[col][row];
@@ -90,5 +99,4 @@ huungry.Character.prototype.walkTo = function(col,row) {
     var path = astar.search(this.map.blockedMap.nodes, start, end, true);     
     
     this.setPath(path);
-    this.walkPath();
 }

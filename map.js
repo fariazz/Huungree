@@ -10,6 +10,8 @@ huungry.Map = function() {
     
     this.pixelOffsetX = 0;
     this.pixelOffsetY = 0;
+    
+    this.highlightedPath = [];
 }
 
 huungry.Map.prototype.setTMXFile = function(tmx_file) {
@@ -60,7 +62,7 @@ console.log(this.tmx);
         blocked_c++;
     }
     
-    console.log(blockedMap);
+    //console.log(blockedMap);
     
     this.blockedMap = new Graph(blockedMap);
     
@@ -94,4 +96,52 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
     var y = row*this.tileSize;
 
     return {'x':x, 'y':y};
+}
+
+/*
+ * Highlight a path of cells
+ * @param {} path
+ * @param {} origin
+ */
+huungry.Map.prototype.highlightPath = function(path, origin) {
+    
+    this.removeHighlightPath();
+    
+    if(origin !== undefined && path.length > 0) {
+        var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(origin.x, origin.y).setFill(0,0,0,.5).setSize(this.tileSize, this.tileSize);
+        this.layer.appendChild(highlightedCell);
+        this.highlightedPath.push(highlightedCell);
+    }
+    
+    for(i=0; i<path.length; i++) {
+        
+        if(i == path.length-1)
+        {
+            var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(path[i].x*this.tileSize, path[i].y*this.tileSize).setFill(120,200,0,0.9).setSize(this.tileSize, this.tileSize);
+            
+            var map = this;
+            goog.events.listen(highlightedCell,['mousedown', 'touchstart'], function(e) {
+                e.event.stopPropagation();
+                map.player.walkPath();
+            });            
+        }
+
+        else
+            var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(path[i].x*this.tileSize, path[i].y*this.tileSize).setFill(0,0,0,.5).setSize(this.tileSize, this.tileSize);
+        
+        this.layer.appendChild(highlightedCell);
+        this.highlightedPath.push(highlightedCell);
+     }
+}
+
+/*
+ * Remove highlight path
+ */
+huungry.Map.prototype.removeHighlightPath = function() {
+    for(i=0; i<this.highlightedPath.length; i++) {
+        this.highlightedPath[i].setHidden(true).removeDomElement();
+        delete this.highlightedPath[i];
+    }
+    
+    this.highlightedPath = [];
 }
