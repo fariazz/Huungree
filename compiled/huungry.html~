@@ -4,11 +4,9 @@
 <head>
 	<title>huungry</title>
 	<script type="text/javascript" src="../closure/closure/goog/base.js"></script>
-        <script type='text/javascript' src='graph.js'></script>
-        <script type='text/javascript' src='astar.js'></script>
 	<script type="text/javascript" src="huungry.js"></script>
 </head>
 
-<body onload="huungry.start()" style="background-color:black"></body>
+<body onload="huungry.start()"></body>
 
 </html>

@@ -9,7 +9,7 @@ huungry.Character = function() {
     goog.base(this);
     
     this.path = [];
-    
+    this.isMoving = false;
     this.setAnchorPoint(0, 0);
 }
 
@@ -52,6 +52,7 @@ huungry.Character.prototype.walkPath = function() {
     var next_cell = this.path.shift();
     
     if(next_cell !== undefined) {
+        this.isMoving =  true;
         //console.log('next_cell'+(next_cell.x));
         //console.log('path after shift'+this.path);
         var cellXY = this.map.getXYFromColRow(next_cell.x, next_cell.y);
@@ -66,7 +67,12 @@ huungry.Character.prototype.walkPath = function() {
             //console.log(this.path);
             character.walkPath();
         })
-    }    
+    }
+
+    else {
+        this.isMoving = false;
+        //console.log('character pos:'+JSON.stringify(this.getPosition()));
+    }
 }
 
 /*
