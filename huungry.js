@@ -12,6 +12,7 @@ goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
 goog.require('huungry.City');
+goog.require('huungry.Enemy');
 goog.require('huungry.DialogScene');
 goog.require('lime.GlossyButton');
 
@@ -31,12 +32,12 @@ huungry.start = function(){
     lime.scheduleManager.setDisplayRate(1000/30);
     
     //game scene
-    gameObj.gameScene = new lime.Scene;
-    gameObj.gameLayer = new lime.Layer().setRenderer(lime.Renderer.DOM).setAnchorPoint(0, 0);
+    gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    gameObj.gameLayer = new lime.Layer().setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0, 0);
     gameObj.gameScene.appendChild(gameObj.gameLayer);
     
     //dialog scene
-    gameObj.dialogScene = new huungry.DialogScene().setGameObj(gameObj);
+    gameObj.dialogScene = new huungry.DialogScene().setGameObj(gameObj).setRenderer(lime.Renderer.CANVAS);
     gameObj.dialogScene.init();
     
     //game map
@@ -51,12 +52,23 @@ huungry.start = function(){
         
     gameObj.map.player = gameObj.player;
     
+    //enemies
+    enemy_pos = gameObj.map.getXYFromColRow(2,6);
+    gameObj.enemies = [];
+    gameObj.enemies.push(new huungry.Enemy().setPosition(enemy_pos.x,enemy_pos.y).setFill('assets/enemy.png'));
+    gameObj.enemies[0].setMap(gameObj.map);
+    gameObj.enemies[0].setDefaultSpeed(50);
+    
     //cities
     city_pos = gameObj.map.getXYFromColRow(1,5);
     console.log(city_pos);
     var city = new huungry.City().setPosition(city_pos.x, city_pos.y).setFill('assets/city.png').setGameObj(gameObj);
     city.init();
     gameObj.gameLayer.appendChild(city);
+    
+    for(var i = 0; i < gameObj.enemies.length; i++) {
+        gameObj.gameLayer.appendChild(gameObj.enemies[i]);
+    }
     
     gameObj.gameLayer.appendChild(gameObj.player);
     

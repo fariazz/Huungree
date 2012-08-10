@@ -73,7 +73,7 @@ console.log(this.tmx);
     this.height = this.tmx.height * this.tileSize;
 }
 
-/*
+/**
  * get map cell row and col from map x and y
  * @param float x map x coordinate
  * @param float y map y coordinate
@@ -86,7 +86,7 @@ huungry.Map.prototype.getColRowFromXY = function(x,y) {
 	return {'col': col, 'row': row};
 }
 
-/*
+/**
  * get map coordinate x,y from column and row tile number
  * @param int col tile column
  * @param int row tile row
@@ -98,7 +98,7 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
     return {'x':x, 'y':y};
 }
 
-/*
+/**
  * Highlight a path of cells
  * @param {} path
  * @param {} origin

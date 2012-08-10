@@ -15,7 +15,7 @@ huungry.Character = function() {
 
 goog.inherits(huungry.Character,lime.Sprite);
 
-/*
+/**
  * Load a path as a set of objects that have x and y (row and col)
  * @param {} path
  * @return {huungry.Character}
@@ -25,7 +25,7 @@ huungry.Character.prototype.setPath = function(path) {
     return this;
 }
 
-/*
+/**
  * Set default speed
  * @param float speed
  * @return {huungry.Character}
@@ -35,7 +35,7 @@ huungry.Character.prototype.setDefaultSpeed = function(defaultSpeed) {
     return this;
 }
 
-/*
+/**
  * Load the map the character is in
  * @param huungry.Map map
  * @return {huungry.Character}
@@ -92,7 +92,7 @@ huungry.Character.prototype.walkTo = function(col,row) {
     this.walkPath();
 }
 
-/*
+/**
  * set the path to a destination cell
  * @param int col target tile column
  * @param int row target tile row
