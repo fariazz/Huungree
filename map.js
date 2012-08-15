@@ -1,10 +1,10 @@
 goog.provide('huungry.Map');
-goog.require('lime.parser.TMX');
 
 /*
  * Map class for tile-based games
  */
 huungry.Map = function() {
+        
     this.tileOffsetX = 0;
     this.tileOffsetY = 0;
     
@@ -14,63 +14,76 @@ huungry.Map = function() {
     this.highlightedPath = [];
 }
 
-huungry.Map.prototype.setTMXFile = function(tmx_file) {
-    this.tmx_file = tmx_file;
+huungry.Map.prototype.setGameObj = function(gameObj) {
+    this.gameObj = gameObj;
     return this;
 }
 
-huungry.Map.prototype.setLayer = function(layer) {
-    this.layer = layer;
+huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
+    //map properties
+    this.num_cols = jsonMap.layers[0].width;
+    this.num_rows = jsonMap.layers[0].height;
+    this.tileSize = jsonMap.tilewidth;
+    
+    //find collision layer
+    for(var i=0; i < jsonMap.layers.length; i++) {
+        if(jsonMap.layers[i].name == collision_layer_name) {
+            var collision_i = i;
+            break;
+        }            
+    }
+    
+    //load blocked cells
+    this.blockedCells = [[]];
+    var current_row = 0;
+    for(var i=0; i < jsonMap.layers[collision_i].data.length; i++) {
+        var col = i % this.num_cols;
+        var row = Math.floor(i/this.num_cols);
+        
+        if(row > current_row) {
+            current_row++;
+            this.blockedCells.push([]);
+        }
+        
+        if(jsonMap.layers[collision_i].data[i] > 0) {
+            this.blockedCells[row][col] = 1;
+        }
+        else {
+            this.blockedCells[row][col] = 0;
+        }
+    }
+    return this;
+}
+
+huungry.Map.prototype.setBackground = function(image_path) {
+    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path);
+    
+    this.moveLeftSprite = new lime.Sprite().setAnchorPoint(0, 0).setPosition(300,80).setFill('#8B5F65').setSize(20,100);
+    
+    
+    
     return this;
 }
 
 huungry.Map.prototype.init = function() {
+    this.gameObj.gameLayer.appendChild(this.backgroundSprite);
+    this.gameObj.gameLayer.appendChild(this.moveLeftSprite);
     
-    //load tiled map
-    this.tmx = new lime.parser.TMX(this.tmx_file);
-    
-    this.tileSize = this.tmx.tilewidth;
-
-console.log(this.tmx);
-
-    //map of blocked tiles for collision detection
-    var blockedMap = [];
-    var blocked_r = 0;
-    var blocked_c = 0;
-
-    for(var r=0; r< this.tmx.width; r++) {
-        blockedMap.push([]);
-    }
-    
-    for(var i = 0; i < this.tmx.layers[0].tiles.length; i++) {
-        var tile = this.tmx.layers[0].tiles[i];
-        var sprite = new lime.Sprite().setPosition(tile.px,tile.py).setAnchorPoint(0,0);
-        sprite.setFill(tile.tile.frame);
-        this.layer.appendChild(sprite);
-       
-        if(blocked_c >= this.tmx.width) {
-            blocked_c = 0;
-            blocked_r++;
-        }
+    var map = this;
+    goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
+        e.event.stopPropagation();
         
-        if(tile.tile.properties[0] === undefined)
-            blockedMap[blocked_c].push(0);
+        cell = map.getColRowFromXY(e.position.x, e.position.y);
+        console.log(map.blockedCells[cell.row][cell.col]);
+    });
+    
+    goog.events.listen(this.moveLeftSprite, ['mousedown', 'touchstart'], function(e) {
+        //e.event.stopPropagation();
         
-        else
-            blockedMap[blocked_c].push(1);
-        
-        blocked_c++;
-    }
+        var current_pos = map.backgroundSprite.getPosition();
+        map.backgroundSprite.setPosition(current_pos.x-map.tileSize, current_pos.y);
+    });
     
-    //console.log(blockedMap);
-    
-    this.blockedMap = new Graph(blockedMap);
-    
-    //console.log(this.blockedMap);
-    
-    //save map dimensions
-    this.width = this.tmx.width * this.tileSize;
-    this.height = this.tmx.height * this.tileSize;
 }
 
 /**
@@ -96,52 +109,4 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
     var y = row*this.tileSize;
 
     return {'x':x, 'y':y};
-}
-
-/**
- * Highlight a path of cells
- * @param {} path
- * @param {} origin
- */
-huungry.Map.prototype.highlightPath = function(path, origin) {
-    
-    this.removeHighlightPath();
-    
-    if(origin !== undefined && path.length > 0) {
-        var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(origin.x, origin.y).setFill(0,0,0,.5).setSize(this.tileSize, this.tileSize);
-        this.layer.appendChild(highlightedCell);
-        this.highlightedPath.push(highlightedCell);
-    }
-    
-    for(i=0; i<path.length; i++) {
-        
-        if(i == path.length-1)
-        {
-            var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(path[i].x*this.tileSize, path[i].y*this.tileSize).setFill(120,200,0,0.9).setSize(this.tileSize, this.tileSize);
-            
-            var map = this;
-            goog.events.listen(highlightedCell,['mousedown', 'touchstart'], function(e) {
-                e.event.stopPropagation();
-                map.player.walkPath();
-            });            
-        }
-
-        else
-            var highlightedCell = new lime.Sprite().setAnchorPoint(0,0).setPosition(path[i].x*this.tileSize, path[i].y*this.tileSize).setFill(0,0,0,.5).setSize(this.tileSize, this.tileSize);
-        
-        this.layer.appendChild(highlightedCell);
-        this.highlightedPath.push(highlightedCell);
-     }
-}
-
-/*
- * Remove highlight path
- */
-huungry.Map.prototype.removeHighlightPath = function() {
-    for(i=0; i<this.highlightedPath.length; i++) {
-        this.highlightedPath[i].setHidden(true).removeDomElement();
-        delete this.highlightedPath[i];
-    }
-    
-    this.highlightedPath = [];
 }
