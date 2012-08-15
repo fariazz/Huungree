@@ -6,45 +6,106 @@ goog.provide('huungry');
 goog.require('lime.Director');
 goog.require('lime.Scene');
 goog.require('lime.Layer');
-goog.require('lime.parser.TMX');
 goog.require('lime.animation.MoveTo');
 goog.require('goog.math');
+goog.require('huungry.Map');
+goog.require('huungry.Character');
+goog.require('huungry.Player');
+goog.require('huungry.City');
+goog.require('huungry.Enemy');
+goog.require('huungry.DialogScene');
+goog.require('lime.GlossyButton');
+
+WIDTH = 176;
+HEIGHT = 128;
 
 // entrypoint
 huungry.start = function(){
-
-    var director = new lime.Director(document.body,176,128);
-    director.makeMobileWebAppCapable();
+    
+    //main game object
+    var gameObj = {};
+    
+    gameObj.director = new lime.Director(document.body,WIDTH, HEIGHT);
+    gameObj.director.makeMobileWebAppCapable();
     //director.setDisplayFPS(false);
     
     lime.scheduleManager.setDisplayRate(1000/30);
     
-    var gameScene = new lime.Scene;
-    layer = new lime.Layer().setRenderer(lime.Renderer.CANVAS);
-    gameScene.appendChild(layer);
+    //game scene
+    gameObj.gameScene = new lime.Scene();
+    gameObj.gameLayer = new lime.Layer().setRenderer(lime.Renderer.DOM).setAnchorPoint(0, 0);
+    gameObj.gameScene.appendChild(gameObj.gameLayer);
     
-    var tmx = new lime.parser.TMX('assets/lesson11_map.tmx');
-
-    j = 0;
-
-	console.log(tmx);
-    for(var i = 0; i < tmx.layers[j].tiles.length; i++)
-    {
-            tile = tmx.layers[j].tiles[i];
-            sprite = new lime.Sprite().setPosition(tile.px,tile.py);
-            sprite.setFill(tile.tile.frame);
-            layer.appendChild(sprite);
-    }
- 
+    //dialog scene
+    gameObj.dialogScene = new huungry.DialogScene().setGameObj(gameObj).setRenderer(lime.Renderer.CANVAS);
+    gameObj.dialogScene.init();
+    
+    //game map
+    gameObj.map = new huungry.Map().setLayer(gameObj.gameLayer).setTMXFile('assets/lesson11_map.tmx');
+    gameObj.map.init();
+        
     //player
-    var player = new lime.Sprite().setPosition(100,100).setFill('assets/player.png');
-    layer.appendChild(player);
+    player_pos = gameObj.map.getXYFromColRow(2,2);
+    gameObj.player = new huungry.Player().setPosition(player_pos.x,player_pos.y).setFill('assets/player1.png');
+    gameObj.player.setMap(gameObj.map);
+    gameObj.player.setDefaultSpeed(50);
+        
+    gameObj.map.player = gameObj.player;
+    
+    //enemies
+    enemy_pos = gameObj.map.getXYFromColRow(2,6);
+    gameObj.enemies = [];
+    gameObj.enemies.push(new huungry.Enemy().setPosition(enemy_pos.x,enemy_pos.y).setFill('assets/enemy.png'));
+    gameObj.enemies[0].setMap(gameObj.map);
+    gameObj.enemies[0].setDefaultSpeed(50);
+    
+    //cities
+    city_pos = gameObj.map.getXYFromColRow(1,5);
+    console.log(city_pos);
+    var city = new huungry.City().setPosition(city_pos.x, city_pos.y).setFill('assets/city.png').setGameObj(gameObj);
+    city.init();
+    gameObj.gameLayer.appendChild(city);
+    
+    for(var i = 0; i < gameObj.enemies.length; i++) {
+        gameObj.gameLayer.appendChild(gameObj.enemies[i]);
+    }
+    
+    gameObj.gameLayer.appendChild(gameObj.player);
     
     
     
+    goog.events.listen(gameObj.gameLayer,['mousedown', 'touchstart'], function(e) {
+        e.event.stopPropagation();
+        
+        bounds = new goog.math.Box(-(gameObj.map.height-HEIGHT), 0, 0, -(gameObj.map.width-WIDTH));
+        var drag = e.startDrag(false,bounds);
+                
+        e.swallow(['mouseup','touchend','touchcancel'],function(e){            
+            gameObj.map.pixelOffsetX = -gameObj.map.layer.getPosition().x;
+            gameObj.map.pixelOffsetY = -gameObj.map.layer.getPosition().y;
+        
+        });
+        
+        //move player if selected
+        if(gameObj.player.isSelected) {
+            console.log(gameObj.map.player);
+            var target_pos = gameObj.map.getColRowFromXY(e.position.x, e.position.y);
+            gameObj.player.isSelected = false;
+            gameObj.player.setPathTo(target_pos.col, target_pos.row);
+
+            gameObj.map.highlightPath(gameObj.player.path, gameObj.player.getPosition());
+        }        
+    });
+    
+    
+    goog.events.listen(gameObj.player,['mousedown', 'touchstart'], function(e) {
+        e.event.stopPropagation();
+        gameObj.player.isSelected = gameObj.player.isSelected ? false : true;
+    });
     
     // set current scene active
-    director.replaceScene(gameScene);
+    gameObj.director.replaceScene(gameObj.gameScene);
+    gameObj.director.pushScene(gameObj.dialogScene);
 
 }
 
