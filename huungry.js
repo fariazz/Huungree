@@ -14,24 +14,29 @@ goog.require('huungry.Character');
 goog.require('huungry.Player');
 goog.require('huungry.City');
 goog.require('huungry.Enemy');
+goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
 goog.require('lime.GlossyButton');
 
-WIDTH = 176*2;
-HEIGHT = 128*2;
+WIDTH = 480;
+HEIGHT = 320;
+TILESIZE = 32;
 
 // entrypoint
 huungry.start = function(){
     
     //main game object
     var gameObj = {};
+    gameObj.screenWidth = WIDTH;
+    gameObj.screenHeight = HEIGHT;
+    gameObj.tileSize = TILESIZE;
+    gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
+    gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
     
-    gameObj.director = new lime.Director(document.body,WIDTH, HEIGHT);
+    gameObj.director = new lime.Director(document.body, gameObj.screenWidth, gameObj.screenHeight);
     gameObj.director.makeMobileWebAppCapable();
     //director.setDisplayFPS(false);
-    
-    //lime.scheduleManager.setDisplayRate(1000/30);
-    
+        
     //game scene
     gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     gameObj.gameLayer = new lime.Layer().setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0, 0);
@@ -40,9 +45,15 @@ huungry.start = function(){
     //game map
     gameObj.map = new huungry.Map().setGameObj(gameObj)
         .setJsonMap(BlockedCells.mainMap, 'blocked')
-        .setBackground('assets/biggermap.png');
+        .setBackground('assets/biggermap_res2.png');
     
     gameObj.map.init();
+    
+    //controls layer
+    gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
+    gameObj.controlsLayer.init();
+    gameObj.gameScene.appendChild(gameObj.controlsLayer);
+    
     
     // set current scene active
     gameObj.director.replaceScene(gameObj.gameScene);

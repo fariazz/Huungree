@@ -24,6 +24,8 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
     this.num_cols = jsonMap.layers[0].width;
     this.num_rows = jsonMap.layers[0].height;
     this.tileSize = jsonMap.tilewidth;
+    this.width = this.num_cols * this.tileSize;
+    this.height = this.num_rows * this.tileSize;
     
     //find collision layer
     for(var i=0; i < jsonMap.layers.length; i++) {
@@ -56,18 +58,12 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
 }
 
 huungry.Map.prototype.setBackground = function(image_path) {
-    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path);
-    
-    this.moveLeftSprite = new lime.Sprite().setAnchorPoint(0, 0).setPosition(300,80).setFill('#8B5F65').setSize(20,100);
-    
-    
-    
+    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path);   
     return this;
 }
 
 huungry.Map.prototype.init = function() {
     this.gameObj.gameLayer.appendChild(this.backgroundSprite);
-    this.gameObj.gameLayer.appendChild(this.moveLeftSprite);
     
     var map = this;
     goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
@@ -77,12 +73,7 @@ huungry.Map.prototype.init = function() {
         console.log(map.blockedCells[cell.row][cell.col]);
     });
     
-    goog.events.listen(this.moveLeftSprite, ['mousedown', 'touchstart'], function(e) {
-        //e.event.stopPropagation();
-        
-        var current_pos = map.backgroundSprite.getPosition();
-        map.backgroundSprite.setPosition(current_pos.x-map.tileSize, current_pos.y);
-    });
+    
     
 }
 
