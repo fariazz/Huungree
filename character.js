@@ -8,6 +8,8 @@ goog.require('lime.Sprite');
 huungry.Character = function() {
     goog.base(this);
     
+    this.setAnchorPoint(0, 0);
+        
     this.path = [];
     this.isMoving = false;
     this.setAnchorPoint(0, 0);
@@ -105,4 +107,9 @@ huungry.Character.prototype.setPathTo = function(col, row) {
     var path = astar.search(this.map.blockedMap.nodes, start, end, true);     
     
     this.setPath(path);
+}
+
+huungry.Character.prototype.setGameObj = function(gameObj) {
+    this.gameObj = gameObj;
+    return this;
 }

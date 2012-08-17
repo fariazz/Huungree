@@ -70,7 +70,7 @@ huungry.Map.prototype.init = function() {
         e.event.stopPropagation();
         
         cell = map.getColRowFromXY(e.position.x, e.position.y);
-        console.log(map.blockedCells[cell.row][cell.col]);
+        console.log('blocked cell:'+map.blockedCells[cell.row][cell.col]);
     });
     
     

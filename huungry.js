@@ -49,6 +49,16 @@ huungry.start = function(){
     
     gameObj.map.init();
     
+    //player
+    var pos = gameObj.map.getXYFromColRow(4,4);
+    gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
+        .setGameObj(gameObj);
+    
+    gameObj.player.init();
+    gameObj.gameLayer.appendChild(gameObj.player);
+    
+    gameObj.player.setCanMove(true);
+    
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
     gameObj.controlsLayer.init();

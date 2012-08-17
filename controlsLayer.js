@@ -43,40 +43,40 @@ huungry.ControlsLayer.prototype.init = function() {
     goog.events.listen(this.btnMapMoveLeft, ['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         
-        var current_pos = map.backgroundSprite.getPosition();
+        var current_pos = map.gameObj.gameLayer.getPosition();
         
         if(current_pos.x < 0) {
-            map.backgroundSprite.setPosition(current_pos.x+map.tileSize, current_pos.y);
+            map.gameObj.gameLayer.setPosition(current_pos.x+map.tileSize, current_pos.y);
         }
     });
     
     goog.events.listen(this.btnMapMoveRight, ['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         
-        var current_pos = map.backgroundSprite.getPosition();
+        var current_pos = map.gameObj.gameLayer.getPosition();
         
         if(current_pos.x > -map.width + map.gameObj.screenWidth) {
-            map.backgroundSprite.setPosition(current_pos.x-map.tileSize, current_pos.y);
+            map.gameObj.gameLayer.setPosition(current_pos.x-map.tileSize, current_pos.y);
         }
     });
     
     goog.events.listen(this.btnMapMoveUp, ['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         
-        var current_pos = map.backgroundSprite.getPosition();
+        var current_pos = map.gameObj.gameLayer.getPosition();
         
         if(current_pos.y < 0) {
-            map.backgroundSprite.setPosition(current_pos.x, current_pos.y+map.tileSize);
+            map.gameObj.gameLayer.setPosition(current_pos.x, current_pos.y+map.tileSize);
         }
     });
     
     goog.events.listen(this.btnMapMoveDown, ['mousedown', 'touchstart'], function(e) {
         e.event.stopPropagation();
         
-        var current_pos = map.backgroundSprite.getPosition();
+        var current_pos = map.gameObj.gameLayer.getPosition();
         
         if(current_pos.y > -map.height + map.gameObj.screenHeight) {
-            map.backgroundSprite.setPosition(current_pos.x, current_pos.y-map.tileSize);
+            map.gameObj.gameLayer.setPosition(current_pos.x, current_pos.y-map.tileSize);
         }
     });
     
