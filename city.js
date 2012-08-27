@@ -7,7 +7,7 @@ goog.require('goog.math');
  * City
  */
 huungry.City = function() {
-    goog.base(this);       
+    goog.base(this);
     this.setAnchorPoint(0, 0);
     this.dialogOpen = false;
 }
@@ -22,7 +22,7 @@ huungry.City.prototype.setGameObj = function(gameObj) {
 huungry.City.prototype.init = function() {
     lime.scheduleManager.schedule(function(dt) {
         if(this.gameObj.player.isMoving === false) {
-            if(!this.dialogOpen) {            
+            if(!this.dialogOpen) {
                 if(goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(),-1)) {
                     //console.log('city box:'+JSON.stringify(this.getBoundingBox()));
                     //console.log('player box:'+JSON.stringify(this.gameObj.player.getBoundingBox()));
@@ -32,7 +32,7 @@ huungry.City.prototype.init = function() {
                     //console.log(this.gameObj.player.getPosition());
                 }
             }
-        
+
             else {
                 if(!goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(),-1)) {
                     this.dialogOpen = false;

@@ -7,9 +7,9 @@ goog.require('lime.Sprite');
  */
 huungry.Character = function() {
     goog.base(this);
-    
+
     this.setAnchorPoint(0, 0);
-        
+    this.setSize(32,32);
     this.path = [];
     this.isMoving = false;
     this.setAnchorPoint(0, 0);
@@ -52,19 +52,19 @@ huungry.Character.prototype.setMap = function(map) {
  */
 huungry.Character.prototype.walkPath = function() {
     var next_cell = this.path.shift();
-    
+
     if(next_cell !== undefined) {
         this.isMoving =  true;
         //console.log('next_cell'+(next_cell.x));
         //console.log('path after shift'+this.path);
         var cellXY = this.map.getXYFromColRow(next_cell.x, next_cell.y);
         //console.log('cellXY '+JSON.stringify(cellXY));
-        
+
         var animation = new lime.animation.MoveTo(cellXY.x, cellXY.y).setDuration(this.map.tileSize/this.defaultSpeed);
         this.runAction(animation);
-        
+
         var character = this;
-        
+
         goog.events.listen(animation,lime.animation.Event.STOP,function(){
             //console.log(this.path);
             character.walkPath();
@@ -103,9 +103,9 @@ huungry.Character.prototype.setPathTo = function(col, row) {
     var character_pos = this.getCell();
     var start = this.map.blockedMap.nodes[character_pos.col][character_pos.row];
     var end = this.map.blockedMap.nodes[col][row];
-    
-    var path = astar.search(this.map.blockedMap.nodes, start, end, true);     
-    
+
+    var path = astar.search(this.map.blockedMap.nodes, start, end, true);
+
     this.setPath(path);
 }
 

@@ -24,7 +24,7 @@ TILESIZE = 32;
 
 // entrypoint
 huungry.start = function(){
-    
+
     //main game object
     var gameObj = {};
     gameObj.screenWidth = WIDTH;
@@ -32,39 +32,39 @@ huungry.start = function(){
     gameObj.tileSize = TILESIZE;
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
-    
+
     gameObj.director = new lime.Director(document.body, gameObj.screenWidth, gameObj.screenHeight);
     gameObj.director.makeMobileWebAppCapable();
     //director.setDisplayFPS(false);
-        
+
     //game scene
     gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
-    gameObj.gameLayer = new lime.Layer().setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0, 0);
+    gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     gameObj.gameScene.appendChild(gameObj.gameLayer);
-    
+
     //game map
     gameObj.map = new huungry.Map().setGameObj(gameObj)
         .setJsonMap(BlockedCells.mainMap, 'blocked')
-        .setBackground('assets/biggermap_res2.png');
-    
+        .setBackground('assets/medium_map.png');
+
     gameObj.map.init();
-    
+
     //player
     var pos = gameObj.map.getXYFromColRow(4,4);
     gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj);
-    
+
     gameObj.player.init();
     gameObj.gameLayer.appendChild(gameObj.player);
-    
+
     gameObj.player.setCanMove(true);
-    
+
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
     gameObj.controlsLayer.init();
     gameObj.gameScene.appendChild(gameObj.controlsLayer);
-    
-    
+
+
     // set current scene active
     gameObj.director.replaceScene(gameObj.gameScene);
 
