@@ -20,7 +20,7 @@ goog.require('lime.GlossyButton');
 
 WIDTH = 480;
 HEIGHT = 320;
-TILESIZE = 32;
+TILESIZE = 40;
 
 // entrypoint
 huungry.start = function(){

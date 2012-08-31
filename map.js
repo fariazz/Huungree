@@ -58,7 +58,7 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
 }
 
 huungry.Map.prototype.setBackground = function(image_path) {
-    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path).setSize(1600,1600);
+    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path).setSize(2000,2000);
     return this;
 }
 

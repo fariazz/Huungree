@@ -9,7 +9,7 @@ huungry.Character = function() {
     goog.base(this);
 
     this.setAnchorPoint(0, 0);
-    this.setSize(32,32);
+    this.setSize(40,40);
     this.path = [];
     this.isMoving = false;
     this.setAnchorPoint(0, 0);

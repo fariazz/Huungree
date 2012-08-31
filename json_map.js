@@ -31,7 +31,7 @@
     {
 
     },
- "tileheight":32,
+ "tileheight":40,
  "tilesets":[
         {
          "firstgid":1,
@@ -45,10 +45,10 @@
 
             },
          "spacing":0,
-         "tileheight":32,
-         "tilewidth":32
+         "tileheight":40,
+         "tilewidth":40
         }],
- "tilewidth":32,
+ "tilewidth":40,
  "version":1,
  "width":50
 }
