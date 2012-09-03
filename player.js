@@ -8,7 +8,9 @@ goog.require('huungry.Character');
  */
 huungry.Player = function() {
     goog.base(this);
-
+    
+    this.inFightScene = false;
+    
     this.canMove = false;
 }
 

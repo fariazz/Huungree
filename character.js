@@ -113,3 +113,12 @@ huungry.Character.prototype.setGameObj = function(gameObj) {
     this.gameObj = gameObj;
     return this;
 }
+
+/**
+ * set the characters attributes
+ * @param {} attributes
+ */
+huungry.Character.prototype.setAttributes = function(attributes) {
+    this.life = attributes.life;
+    return this;
+}
