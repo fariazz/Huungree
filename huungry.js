@@ -52,8 +52,8 @@ huungry.start = function(){
     //director.setDisplayFPS(false);
 
     //game scene
-    gameObj.gameScene = new lime.Scene();
-    gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0).setRenderer(lime.Renderer.CANVAS);
+    gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     gameObj.gameScene.appendChild(gameObj.gameLayer);
 
     //game map
@@ -128,8 +128,8 @@ huungry.start = function(){
     
     //fight scene
     gameObj.fight = function(enemy) {
-        var fightScene = new lime.Scene().setRenderer();    
-        var fightLayer = new lime.Layer().setPosition(0,0).setRenderer(lime.Renderer.CANVAS).setAnchorPoint(0,0);
+        var fightScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
+        var fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);
         var grass = new lime.Sprite().setSize(WIDTH,HEIGHT).setPosition(0,0).setAnchorPoint(0,0).setFill('rgb(0,125,0)');
         fightLayer.appendChild(grass);
         fightScene.appendChild(fightLayer);
@@ -200,7 +200,7 @@ huungry.start = function(){
             fightLayer.appendChild(unit);
         }
         
-        var runButton = new lime.GlossyButton().setSize(70,20).setPosition(120,300)
+        var runButton = new lime.GlossyButton().setSize(70,40).setPosition(120,300)
             .setText('Run').setColor('#00CD00'); 
             
         fightLayer.appendChild(runButton);
@@ -211,6 +211,7 @@ huungry.start = function(){
             gameObj.director.replaceScene(gameObj.gameScene);
             gameObj.gameLayer.setDirty(255);
             gameObj.controlsLayer.setDirty(255);
+            gameObj.gameScene.setDirty(255);
             
             //move the hero away from the monster, or the fight scene will be triggered again!
             //this is just a quick, non-elegant way of doing this
