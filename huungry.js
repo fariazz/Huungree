@@ -17,6 +17,7 @@ goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
 goog.require('huungry.FightEngine');
+goog.require('huungry.Unit');
 goog.require('lime.GlossyButton');
 
 WIDTH = 480;
@@ -69,54 +70,201 @@ huungry.start = function(){
     gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj);
     
-    gameObj.player.setAttributes({
-        life: 10
-    });
-    
     gameObj.player.init();
-    
-    gameObj.player.army = 8;
+       
+    gameObj.player.units = [
+        {
+            name: 'soldier',
+            image: 'player.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'soldier',
+            image: 'player.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'soldier',
+            image: 'player.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'soldier',
+            image: 'soldier.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+    ]
     
     
     gameObj.gameLayer.appendChild(gameObj.player);
 
     gameObj.player.showGamepad(true);
     
-    //enemies
-    gameObj.enemies = [];
+    //enemyArmies
+    gameObj.enemyArmies = [];
     
     var pos = gameObj.map.getXYFromColRow(7,7);
-    gameObj.enemies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setAttributes({
-            life: 12
-        });        
+    gameObj.enemyArmies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+        .setGameObj(gameObj);        
         
-    gameObj.enemies[0].init();
-    gameObj.enemies[0].army = 3
-    gameObj.gameLayer.appendChild(gameObj.enemies[0]);
+    gameObj.enemyArmies[0].init();
+    
+    gameObj.enemyArmies[0].units = [
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+    ];
+    
+    
+    gameObj.gameLayer.appendChild(gameObj.enemyArmies[0]);
     
     var pos = gameObj.map.getXYFromColRow(3,8);
-    gameObj.enemies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setAttributes({
-            life: 8
-        });        
+    gameObj.enemyArmies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+        .setGameObj(gameObj);        
         
-    gameObj.enemies[1].init();
-    gameObj.enemies[1].army = 5;
-    gameObj.gameLayer.appendChild(gameObj.enemies[1]);
+    gameObj.enemyArmies[1].init();
+    gameObj.enemyArmies[1].units = [
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+    ];
+    gameObj.gameLayer.appendChild(gameObj.enemyArmies[1]);
     
     var pos = gameObj.map.getXYFromColRow(6,2);
-    gameObj.enemies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setAttributes({
-            life: 10
-        });        
+    gameObj.enemyArmies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+        .setGameObj(gameObj);        
         
-    gameObj.enemies[2].init();
-    gameObj.enemies[2].army = 4;
-    gameObj.gameLayer.appendChild(gameObj.enemies[2]);
+    gameObj.enemyArmies[2].init();
+    gameObj.enemyArmies[2].units = [
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 5,
+            defense: 4,
+            canShoot: false,
+            life: 10
+        }
+        
+    ];
+    gameObj.gameLayer.appendChild(gameObj.enemyArmies[2]);
     
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);

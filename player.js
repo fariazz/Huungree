@@ -33,6 +33,7 @@ huungry.Player.prototype.init = function() {
                 e.event.stopPropagation();
                 var currentPos = player.getPosition();
                 var tileSize = player.gameObj.tileSize;
+                player.previousPosition = currentPos;
                 player.setPosition(currentPos.x + tileSize*player.movementTargets[i].dx, currentPos.y + tileSize*player.movementTargets[i].dy);
                 player.showGamepad(true);
             });

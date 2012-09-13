@@ -108,5 +108,11 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
  * @param int row tile column
  */
 huungry.Map.prototype.isCellBlocked = function(col, row) {
-    return this.blockedCells[row][col];
+    
+    if(this.blockedCells[row][col] === undefined) {
+        return 1;
+    }
+    else {
+        return this.blockedCells[row][col];
+    }
 }

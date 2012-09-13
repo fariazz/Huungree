@@ -48,10 +48,9 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.gameObj.controlsLayer.setDirty(255);
         currentObj.gameObj.gameScene.setDirty(255);
 
-        //move the hero away from the monster, or the fight scene will be triggered again!
-        //this is just a quick, non-elegant way of doing this
-        currentPos = currentObj.gameObj.player.getPosition();
-        currentObj.gameObj.player.setPosition(currentPos.x-currentObj.gameObj.tileSize, currentPos.y-currentObj.gameObj.tileSize);
+        //move player to previous position
+        previousPos = currentObj.gameObj.player.previousPosition;
+        currentObj.gameObj.player.setPosition(previousPos.x, previousPos.y);
         currentObj.gameObj.player.showGamepad(true);
         currentObj. gameObj.player.inFightScene = false;
     });
@@ -64,7 +63,7 @@ huungry.FightEngine.prototype.initArmies = function() {
     //init player army
     var playerUnitPositions = [];
 
-    while(playerUnitPositions.length < this.gameObj.player.army) {
+    while(playerUnitPositions.length < this.gameObj.player.units.length) {
         var position = {
             col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX),
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY)
@@ -84,9 +83,11 @@ huungry.FightEngine.prototype.initArmies = function() {
         }            
     }
 
-    for(i=0;i<this.gameObj.player.army;i++) {
+    for(i=0;i<this.gameObj.player.units.length;i++) {
         var pos = this.gameObj.map.getXYFromColRow(playerUnitPositions[i].col,playerUnitPositions[i].row);
-        var unit = new huungry.Character().setFill('assets/player.png').setPosition(pos.x, pos.y)
+        var unit = new huungry.Unit()
+            .setUnitData(this.gameObj.player.units[i])
+            .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
 
         this.fightLayer.appendChild(unit);
@@ -95,7 +96,7 @@ huungry.FightEngine.prototype.initArmies = function() {
     //init enemy army
     var enemyUnitPositions = [];
 
-    while(enemyUnitPositions.length < this.enemyArmy.army) {
+    while(enemyUnitPositions.length < this.enemyArmy.units.length) {
         var position = {
             col: this.gameObj.fightSceneEnemyStartX + goog.math.randomInt(this.gameObj.fightSceneEnemyEndX-this.gameObj.fightSceneEnemyStartX),
             row: this.gameObj.fightSceneEnemyStartY + goog.math.randomInt(this.gameObj.fightSceneEnemyEndY-this.gameObj.fightSceneEnemyStartY)
@@ -115,9 +116,11 @@ huungry.FightEngine.prototype.initArmies = function() {
         }            
     }
 
-    for(i=0;i<this.enemyArmy.army;i++) {
+    for(i=0;i<this.enemyArmy.units.length;i++) {
         var pos = this.gameObj.map.getXYFromColRow(enemyUnitPositions[i].col,enemyUnitPositions[i].row);
-        var unit = new huungry.Character().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+        var unit = new huungry.Unit()
+            .setUnitData(this.enemyArmy.units[i])
+            .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
 
         this.fightLayer.appendChild(unit);
