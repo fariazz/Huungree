@@ -101,3 +101,12 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
 
     return {'x':x, 'y':y};
 }
+
+/**
+ * return whether a cell is blocked or not
+ * @param int col tile column
+ * @param int row tile column
+ */
+huungry.Map.prototype.isCellBlocked = function(col, row) {
+    return this.blockedCells[row][col];
+}

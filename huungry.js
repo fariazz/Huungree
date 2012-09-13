@@ -13,7 +13,7 @@ goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
 goog.require('huungry.City');
-goog.require('huungry.Enemy');
+goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
 goog.require('huungry.FightEngine');
@@ -86,7 +86,7 @@ huungry.start = function(){
     gameObj.enemies = [];
     
     var pos = gameObj.map.getXYFromColRow(7,7);
-    gameObj.enemies[0] = new huungry.Enemy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+    gameObj.enemies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setAttributes({
             life: 12
@@ -97,7 +97,7 @@ huungry.start = function(){
     gameObj.gameLayer.appendChild(gameObj.enemies[0]);
     
     var pos = gameObj.map.getXYFromColRow(3,8);
-    gameObj.enemies[1] = new huungry.Enemy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+    gameObj.enemies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setAttributes({
             life: 8
@@ -108,7 +108,7 @@ huungry.start = function(){
     gameObj.gameLayer.appendChild(gameObj.enemies[1]);
     
     var pos = gameObj.map.getXYFromColRow(6,2);
-    gameObj.enemies[2] = new huungry.Enemy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
+    gameObj.enemies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setAttributes({
             life: 10

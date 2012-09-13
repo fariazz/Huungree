@@ -1,21 +1,21 @@
-goog.provide('huungry.Enemy');
+goog.provide('huungry.EnemyArmy');
 
 goog.require('lime.Sprite');
 goog.require('huungry.Character');
 
 /*
- * Enemy class for tile-based games
+ * Enemy armies
  */
-huungry.Enemy = function() {
+huungry.EnemyArmy = function() {
     goog.base(this);
 }
 
-goog.inherits(huungry.Enemy, huungry.Character);
+goog.inherits(huungry.EnemyArmy, huungry.Character);
 
 /*
  * Init
  */
-huungry.Enemy.prototype.init = function() {
+huungry.EnemyArmy.prototype.init = function() {
     
     lime.scheduleManager.schedule(function(dt) {
         if(!this.gameObj.player.inFightScene) {     
