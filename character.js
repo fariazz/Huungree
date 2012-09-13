@@ -59,88 +59,124 @@ huungry.Character.prototype.initGamepad = function() {
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': 1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 0
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 0
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#00EE76').setOpacity(0.5)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 1
     });
-
+    
+    var targetLayer = (this.customLayer === undefined) ? this.gameObj.gameLayer : this.customLayer;
+    
     for(var i=0; i<this.movementTargets.length; i++) {
-        this.gameObj.gameLayer.appendChild(this.movementTargets[i].sprite)
+        targetLayer.appendChild(this.movementTargets[i].sprite)
     }
+    
+    //register movement according to user input
+    var character = this;
+    
+    for(i=0; i<this.movementTargets.length; i++) {
+        (function (i) {
+            goog.events.listen(character.movementTargets[i].sprite,['mousedown', 'touchstart'], function(e) {
+
+                e.event.stopPropagation();
+                var currentPos = character.getPosition();
+                var tileSize = character.gameObj.tileSize;
+                character.previousPosition = currentPos;
+                character.setPosition(currentPos.x + tileSize*character.movementTargets[i].dx, currentPos.y + tileSize*character.movementTargets[i].dy);
+                
+                character.updateGamepad();
+            });
+        })(i);
+    }       
 }
 
 /**
  * set whether the player can move or is blocked, show/hide movement targets
+ * 
+ * @param boolean isVisible
  */
-huungry.Character.prototype.showGamepad = function() {
-    var pos = this.getPosition();
-    var currentCell = this.getCell();
+huungry.Character.prototype.toggleGamepad = function(isVisible) {
     
-    var tileSize = this.gameObj.tileSize;
+    if(isVisible) {
+        var pos = this.getPosition();
+        var currentCell = this.getCell();
 
-    for(var i=0; i<this.movementTargets.length; i++) {
-        
-        var targetCol = currentCell.col+this.movementTargets[i].dx;
-        var targetRow = currentCell.row+this.movementTargets[i].dy;
-        
-        //show if it can move
-        if(!this.gameObj.map.isCellBlocked(targetCol, targetRow)) {
-            this.movementTargets[i].sprite.setHidden(false);
-            this.movementTargets[i].sprite.setPosition(pos.x+tileSize*this.movementTargets[i].dx,pos.y+tileSize*this.movementTargets[i].dy);
-        }
-        else {
+        var tileSize = this.gameObj.tileSize;
+
+        for(var i=0; i<this.movementTargets.length; i++) {
+
+            var targetCol = currentCell.col+this.movementTargets[i].dx;
+            var targetRow = currentCell.row+this.movementTargets[i].dy;
+
+            //show if it can move
+            if(!this.gameObj.map.isCellBlocked(targetCol, targetRow)) {
+                this.movementTargets[i].sprite.setHidden(false);
+                this.movementTargets[i].sprite.setPosition(pos.x+tileSize*this.movementTargets[i].dx,pos.y+tileSize*this.movementTargets[i].dy);
+            }
+            else {
+                this.movementTargets[i].sprite.setHidden(true);
+            }
+        }    
+    }
+    else {
+        for(var i=0; i<this.movementTargets.length; i++) {
             this.movementTargets[i].sprite.setHidden(true);
         }
-        
-        
     }    
+    
+}
+
+/**
+ * by default hide gamepad
+ */
+huungry.Character.prototype.updateGamepad = function() {
+    this.toggleGamepad(false);
 }

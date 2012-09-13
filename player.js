@@ -23,20 +23,12 @@ huungry.Player.prototype.init = function() {
 
     this.initGamepad();
 
-    //register movement according to user input
-    player = this;
     
-    for(i=0; i<this.movementTargets.length; i++) {
-        (function (i) {
-            goog.events.listen(player.movementTargets[i].sprite,['mousedown', 'touchstart'], function(e) {
+}
 
-                e.event.stopPropagation();
-                var currentPos = player.getPosition();
-                var tileSize = player.gameObj.tileSize;
-                player.previousPosition = currentPos;
-                player.setPosition(currentPos.x + tileSize*player.movementTargets[i].dx, currentPos.y + tileSize*player.movementTargets[i].dy);
-                player.showGamepad(true);
-            });
-        })(i);
-    }       
+/**
+ * show gamepad after movement
+ */
+huungry.Player.prototype.updateGamepad = function() {
+    this.toggleGamepad(true);
 }

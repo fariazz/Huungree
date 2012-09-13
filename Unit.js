@@ -30,3 +30,11 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     
     return this;
 }
+
+/**
+ * by default hide gamepad
+ */
+huungry.Character.prototype.updateGamepad = function() {
+    this.toggleGamepad(false);
+    this.fightEngine.playTurn();
+}

@@ -5,6 +5,8 @@ goog.provide('huungry.FightEngine');
  */
 huungry.FightEngine = function() {
     this.floorColor = 'rgb(0,125,0)';
+    this.playerUnits = [];
+    this.enemyUnits = [];
 }
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
@@ -51,9 +53,15 @@ huungry.FightEngine.prototype.init = function() {
         //move player to previous position
         previousPos = currentObj.gameObj.player.previousPosition;
         currentObj.gameObj.player.setPosition(previousPos.x, previousPos.y);
-        currentObj.gameObj.player.showGamepad(true);
+        currentObj.gameObj.player.toggleGamepad(true);
         currentObj. gameObj.player.inFightScene = false;
     });
+    
+    this.playerMoves = true;
+    
+    this.prepareOrder();
+    
+    this.playTurn();
 }
 
 /**
@@ -89,7 +97,12 @@ huungry.FightEngine.prototype.initArmies = function() {
             .setUnitData(this.gameObj.player.units[i])
             .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
-
+        
+        unit.customLayer = this.fightLayer;
+        unit.initGamepad();
+        unit.fightEngine = this;
+        
+        this.playerUnits.push(unit);
         this.fightLayer.appendChild(unit);
     }
 
@@ -122,7 +135,70 @@ huungry.FightEngine.prototype.initArmies = function() {
             .setUnitData(this.enemyArmy.units[i])
             .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
-
+        
+        this.enemyUnits.push(unit);
         this.fightLayer.appendChild(unit);
     }
+}
+
+/**
+ * prepare the order in which the units will play
+ */
+huungry.FightEngine.prototype.prepareOrder = function() {
+    
+    //@TODO define who starts
+    this.playerMoves = true;
+    
+    //@TODO rearrange units by some criteria
+    this.playerUnitsOrder = [];
+    
+    for(i=0; i<this.playerUnits.length; i++) {
+        this.playerUnitsOrder.push(i);
+    }
+    
+    this.currentPlayerIndex = 0;
+    
+    //@TODO rearrange units by some criteria
+    this.enemyUnitsOrder = [];
+    
+    for(i=0; i<this.enemyUnits.length; i++) {
+        this.enemyUnitsOrder.push(i);
+    }    
+    
+    this.currentEnemyIndex = 0;    
+}
+
+/**
+ * play a turn
+ */
+huungry.FightEngine.prototype.playTurn = function() {
+    
+    if(this.playerMoves) {
+        //show gamepad for current unit
+        this.showCurrentGamepad();
+        
+        this.currentPlayerIndex++;
+        
+        if(this.currentPlayerIndex == this.playerUnits.length) {
+            this.currentPlayerIndex = 0;
+        }
+    }
+}
+
+
+/**
+ * show gamepad for current unit
+ */
+huungry.FightEngine.prototype.showCurrentGamepad = function() {
+    
+    var unit = this.playerUnits[this.currentPlayerIndex];
+    var pos = unit.getPosition();
+        
+    var tileSize = this.gameObj.tileSize;
+
+    for(var i=0; i<unit.movementTargets.length; i++) {
+       
+            unit.movementTargets[i].sprite.setHidden(false);
+            unit.movementTargets[i].sprite.setPosition(pos.x+tileSize*unit.movementTargets[i].dx,pos.y+tileSize*unit.movementTargets[i].dy);            
+    }    
 }

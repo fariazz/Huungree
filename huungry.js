@@ -66,7 +66,7 @@ huungry.start = function(){
     gameObj.map.init();
 
     //player
-    var pos = gameObj.map.getXYFromColRow(4,4);
+    var pos = gameObj.map.getXYFromColRow(0,2);
     gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj);
     
@@ -110,7 +110,7 @@ huungry.start = function(){
     
     gameObj.gameLayer.appendChild(gameObj.player);
 
-    gameObj.player.showGamepad(true);
+    gameObj.player.toggleGamepad(true);
     
     //enemyArmies
     gameObj.enemyArmies = [];
