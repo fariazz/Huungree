@@ -104,30 +104,8 @@ huungry.Player.prototype.init = function() {
                 var currentPos = player.getPosition();
                 var tileSize = player.gameObj.tileSize;
                 player.setPosition(currentPos.x + tileSize*player.movementTargets[i].dx, currentPos.y + tileSize*player.movementTargets[i].dy);
-                player.setCanMove(true);
+                player.showGamepad(true);
             });
         })(i);
     }       
 }
-
-/*
- * set whether the player can move or is blocked, show/hide movement targets
- */
-huungry.Player.prototype.setCanMove = function(canMove) {
-    this.canMove = canMove;
-
-    if(canMove) {
-        var pos = this.getPosition();
-        var tileSize = this.gameObj.tileSize;
-
-        for(var i=0; i<this.movementTargets.length; i++) {
-            this.movementTargets[i].sprite.setHidden(false);
-            this.movementTargets[i].sprite.setPosition(pos.x+tileSize*this.movementTargets[i].dx,pos.y+tileSize*this.movementTargets[i].dy);
-        }
-    }
-
-}
-
-/*
- *
- */

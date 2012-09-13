@@ -20,7 +20,6 @@ huungry.Enemy.prototype.init = function() {
     lime.scheduleManager.schedule(function(dt) {
         if(!this.gameObj.player.inFightScene) {     
             if(this.life >0 && goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(), -1)) {
-                this.gameObj.player.inFightScene = true;
                 this.gameObj.fight(this);
             }
         }

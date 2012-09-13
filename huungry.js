@@ -16,6 +16,7 @@ goog.require('huungry.City');
 goog.require('huungry.Enemy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
+goog.require('huungry.FightEngine');
 goog.require('lime.GlossyButton');
 
 WIDTH = 480;
@@ -79,7 +80,7 @@ huungry.start = function(){
     
     gameObj.gameLayer.appendChild(gameObj.player);
 
-    gameObj.player.setCanMove(true);
+    gameObj.player.showGamepad(true);
     
     //enemies
     gameObj.enemies = [];
@@ -128,100 +129,11 @@ huungry.start = function(){
     
     //fight scene
     gameObj.fight = function(enemy) {
-        var fightScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
-        var fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);
-        var grass = new lime.Sprite().setSize(WIDTH,HEIGHT).setPosition(0,0).setAnchorPoint(0,0).setFill('rgb(0,125,0)');
-        fightLayer.appendChild(grass);
-        fightScene.appendChild(fightLayer);
         
-        gameObj.player.inFightScene = true;
+        var FightEngine = new huungry.FightEngine().setGameObj(gameObj).setEnemyArmy(enemy);
+        FightEngine.init();
         
-        gameObj.director.replaceScene(fightScene);
         
-        //init player army
-        var playerUnitPositions = [];
-        
-        while(playerUnitPositions.length < gameObj.player.army) {
-            var position = {
-                col: gameObj.fightScenePlayerStartX + goog.math.randomInt(gameObj.fightScenePlayerEndX-gameObj.fightScenePlayerStartX),
-                row: gameObj.fightScenePlayerStartY + goog.math.randomInt(gameObj.fightScenePlayerEndY-gameObj.fightScenePlayerStartY)
-            };
-            
-            var repeated = false;
-            
-            for(j=0; j < playerUnitPositions.length; j++) {
-                if(playerUnitPositions[j].row == position.row && playerUnitPositions[j].col == position.col) {
-                    repeated = true;
-                    break;
-                }
-            }
-            
-            if(!repeated) {
-                playerUnitPositions.push(position);
-            }            
-        }
-        
-        for(i=0;i<gameObj.player.army;i++) {
-            var pos = gameObj.map.getXYFromColRow(playerUnitPositions[i].col,playerUnitPositions[i].row);
-            var unit = new huungry.Character().setFill('assets/player.png').setPosition(pos.x, pos.y)
-                .setGameObj(gameObj);
-                
-            fightLayer.appendChild(unit);
-        }
-        
-        //init enemy army
-        var enemyUnitPositions = [];
-        
-        while(enemyUnitPositions.length < enemy.army) {
-            var position = {
-                col: gameObj.fightSceneEnemyStartX + goog.math.randomInt(gameObj.fightSceneEnemyEndX-gameObj.fightSceneEnemyStartX),
-                row: gameObj.fightSceneEnemyStartY + goog.math.randomInt(gameObj.fightSceneEnemyEndY-gameObj.fightSceneEnemyStartY)
-            };
-            
-            var repeated = false;
-            
-            for(j=0; j < enemyUnitPositions.length; j++) {
-                if(enemyUnitPositions[j].row == position.row && enemyUnitPositions[j].col == position.col) {
-                    repeated = true;
-                    break;
-                }
-            }
-            
-            if(!repeated) {
-                enemyUnitPositions.push(position);
-            }            
-        }
-        
-        for(i=0;i<enemy.army;i++) {
-            var pos = gameObj.map.getXYFromColRow(enemyUnitPositions[i].col,enemyUnitPositions[i].row);
-            var unit = new huungry.Character().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-                .setGameObj(gameObj);
-                
-            fightLayer.appendChild(unit);
-        }
-        
-        var runButton = new lime.GlossyButton().setSize(70,40).setPosition(120,300)
-            .setText('Run').setColor('#00CD00'); 
-            
-        fightLayer.appendChild(runButton);
-        
-        //run away, coward
-        goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
-            //go back to the map
-            gameObj.director.replaceScene(gameObj.gameScene);
-            gameObj.gameLayer.setDirty(255);
-            gameObj.controlsLayer.setDirty(255);
-            gameObj.gameScene.setDirty(255);
-            
-            //move the hero away from the monster, or the fight scene will be triggered again!
-            //this is just a quick, non-elegant way of doing this
-            currentPos = gameObj.player.getPosition();
-            gameObj.player.setPosition(currentPos.x-gameObj.tileSize, currentPos.y-gameObj.tileSize);
-
-            gameObj.player.inFightScene = false;
-            
-
-        });
     }
 
 }
