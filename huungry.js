@@ -8,6 +8,7 @@ goog.require('lime.Scene');
 goog.require('lime.Layer');
 goog.require('lime.fill.Frame');
 goog.require('lime.animation.MoveTo');
+goog.require('lime.animation.FadeTo');
 goog.require('goog.math');
 goog.require('huungry.Map');
 goog.require('huungry.Character');
@@ -36,8 +37,8 @@ huungry.start = function(){
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
     
     //area in fight scene where units appear
-    gameObj.fightScenePlayerStartX = 0;
-    gameObj.fightScenePlayerEndX = 3;
+    gameObj.fightScenePlayerStartX = 6;
+    gameObj.fightScenePlayerEndX = 6;
     gameObj.fightScenePlayerStartY = 0;
     gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY - 1;
     
@@ -45,6 +46,8 @@ huungry.start = function(){
     gameObj.fightSceneEnemyEndX = gameObj.screenNumTilesX;
     gameObj.fightSceneEnemyStartY = 0;
     gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY - 1;
+    
+    gameObj.maxRandPercentage = 0.2;
     
     //animation
     gameObj.animationOn = true;
@@ -117,7 +120,7 @@ huungry.start = function(){
     //enemyArmies
     gameObj.enemyArmies = [];
     
-    var pos = gameObj.map.getXYFromColRow(7,7);
+    var pos = gameObj.map.getXYFromColRow(1,1);
     gameObj.enemyArmies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj);        
         

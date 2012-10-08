@@ -7,6 +7,10 @@ huungry.FightEngine = function() {
     this.floorColor = 'rgb(0,125,0)';
     this.playerUnits = [];
     this.enemyUnits = [];
+    this.FREE_TARGET = 1;
+    this.ENEMY_TARGET = 2;
+    this.UNIT_TARGET = 3;
+    this.BLOCKED_TARGET = 4;
 }
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
@@ -199,19 +203,40 @@ huungry.FightEngine.prototype.playTurn = function() {
             targetY = unitPos.y + this.gameObj.tileSize*dY;
         
         //check blocked
-        if(this.isCellBlocked(targetX, targetY)) {
+        var targetType = this.getTargetType(targetX, targetY);
+        if(targetType == this.ENEMY_TARGET || targetType == this.BLOCKED_TARGET ) {
             var targetX = unitPos.x,
             targetY = unitPos.y + this.gameObj.tileSize*dY;
+            var targetType = this.getTargetType(targetX, targetY);
             
-            if(this.isCellBlocked(targetX, targetY)) {
+            if(targetType == this.ENEMY_TARGET || targetType == this.BLOCKED_TARGET ) {
                 var targetX = unitPos.x + this.gameObj.tileSize*dX,
                 targetY = unitPos.y;
+                var targetType = this.getTargetType(targetX, targetY);
                 
-                if(this.isCellBlocked(targetX, targetY)) {
+                if(targetType == this.ENEMY_TARGET || targetType == this.BLOCKED_TARGET ) {
                     var targetX = unitPos.x,
                     targetY = unitPos.y;
-                }                
+                } 
+                else if(targetType == this.PLAYER_TARGET) {
+                    var attackedUnit = this.getUnitFromXY(targetX, targetY);
+                    enemy.attackUnit(attackedUnit);
+                    var targetX = unitPos.x,
+                        targetY = unitPos.y;
+                }
             }
+            else if(targetType == this.PLAYER_TARGET) {
+                var attackedUnit = this.getUnitFromXY(targetX, targetY);
+                enemy.attackUnit(attackedUnit);
+                var targetX = unitPos.x,
+                    targetY = unitPos.y;
+            }
+        }
+        else if(targetType == this.PLAYER_TARGET) {
+            var attackedUnit = this.getUnitFromXY(targetX, targetY);
+            enemy.attackUnit(attackedUnit);
+            var targetX = unitPos.x,
+                targetY = unitPos.y;
         }
         
         if(this.gameObj.animationOn) {
@@ -256,32 +281,59 @@ for(var i=0; i<unit.movementTargets.length; i++) {
             var posX=pos.x+tileSize*unit.movementTargets[i].dx,
                 posY=pos.y+tileSize*unit.movementTargets[i].dy;
             
-            if(!this.isCellBlocked(posX, posY)) {
+            var targetType = this.getTargetType(posX, posY);
+            
+            if(targetType == this.FREE_TARGET) {
                 unit.movementTargets[i].sprite.setHidden(false);
                 unit.movementTargets[i].sprite.setPosition(posX,posY);            
+            }
+            else if(targetType == this.ENEMY_TARGET) {
+                //show attack option
+                
             }
     }    
 }
 
 /**
- * check if a target destination is blocked
+ * get the target cell type
  * 
  * @param x in pixels
  * @param y in pixels
  */
-huungry.FightEngine.prototype.isCellBlocked = function(x,y) {
-    var isBlocked = false;
+huungry.FightEngine.prototype.getTargetType = function(x,y) {
+    var type = this.FREE_TARGET;
     for(var j=0; j<this.playerUnits.length; j++) {
         var unitPos = this.playerUnits[j].getPosition();
         if(x == unitPos.x && y == unitPos.y) {
-            isBlocked = true;
+            type = this.PLAYER_TARGET;
         }
     }
     for(var j=0; j<this.enemyUnits.length; j++) {
         var unitPos = this.enemyUnits[j].getPosition();
         if(x == unitPos.x && y == unitPos.y) {
-            isBlocked = true;
+            type = this.ENEMY_TARGET
         }
     }
-    return isBlocked;
+    return type;
+}
+
+/**
+ * get a unit from x y coordinates
+ * 
+ * @param x in pixels
+ * @param y in pixels
+ */
+huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
+    for(var j=0; j<this.playerUnits.length; j++) {
+        var unitPos = this.playerUnits[j].getPosition();
+        if(x == unitPos.x && y == unitPos.y) {
+            return this.playerUnits[j];
+        }
+    }
+    for(var j=0; j<this.enemyUnits.length; j++) {
+        var unitPos = this.enemyUnits[j].getPosition();
+        if(x == unitPos.x && y == unitPos.y) {
+            return this.enemyUnits[j];
+        }
+    }
 }

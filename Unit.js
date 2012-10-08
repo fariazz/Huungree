@@ -34,8 +34,31 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
 /**
  * by default hide gamepad
  */
-huungry.Character.prototype.updateGamepad = function() {
+huungry.Unit.prototype.updateGamepad = function() {
     this.toggleGamepad(false);
     this.fightEngine.playerMoves = false;
     this.fightEngine.playTurn();
+}
+
+/**
+ * attack a unit
+ * 
+ * @param huungry.Unit attackedUnit
+ */
+huungry.Unit.prototype.attackUnit = function(attackedUnit) {
+    attackedUnit.life -= Math.max(0, this.attack - attackedUnit.defense) + Math.random()*this.gameObj.maxRandPercentage*this.attack;
+    attackedUnit.showBeingAttacked();
+}
+
+/**
+ * show that it's being attacked
+ */
+huungry.Unit.prototype.showBeingAttacked = function() {
+    var effect = new lime.animation.FadeTo(0.5).setDuration(this.gameObj.movementDuration);                    
+    this.runAction(effect);     
+    var unit = this;
+    goog.events.listen(effect,lime.animation.Event.STOP,function(){
+        var effect = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
+        unit.runAction(effect);   
+    })
 }
