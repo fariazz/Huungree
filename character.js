@@ -12,7 +12,6 @@ huungry.Character = function() {
     this.setSize(40,40);
     this.path = [];
     this.isMoving = false;
-    this.setAnchorPoint(0, 0);
 }
 
 goog.inherits(huungry.Character,lime.Sprite);
@@ -127,12 +126,26 @@ huungry.Character.prototype.initGamepad = function() {
             goog.events.listen(character.movementTargets[i].sprite,['mousedown', 'touchstart'], function(e) {
 
                 e.event.stopPropagation();
+                character.toggleGamepad(false);
+                
                 var currentPos = character.getPosition();
                 var tileSize = character.gameObj.tileSize;
                 character.previousPosition = currentPos;
-                character.setPosition(currentPos.x + tileSize*character.movementTargets[i].dx, currentPos.y + tileSize*character.movementTargets[i].dy);
                 
-                character.updateGamepad();
+                var targetX = currentPos.x + tileSize*character.movementTargets[i].dx;
+                var targetY = currentPos.y + tileSize*character.movementTargets[i].dy;
+                
+                if(character.gameObj.animationOn) {
+                    var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(character.gameObj.movementDuration);                    
+                    character.runAction(movement);                    
+                    goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                        character.updateGamepad();
+                    })
+                }
+                else {
+                    character.setPosition(targetX, targetY);
+                    character.updateGamepad();
+                }                
             });
         })(i);
     }       

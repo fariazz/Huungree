@@ -36,5 +36,6 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
  */
 huungry.Character.prototype.updateGamepad = function() {
     this.toggleGamepad(false);
+    this.fightEngine.playerMoves = false;
     this.fightEngine.playTurn();
 }

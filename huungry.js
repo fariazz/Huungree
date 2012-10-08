@@ -46,7 +46,9 @@ huungry.start = function(){
     gameObj.fightSceneEnemyStartY = 0;
     gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY - 1;
     
-
+    //animation
+    gameObj.animationOn = true;
+    gameObj.movementDuration = 0.2;
     
 
     gameObj.director = new lime.Director(document.body, gameObj.screenWidth, gameObj.screenHeight);
@@ -104,8 +106,8 @@ huungry.start = function(){
             defense: 4,
             canShoot: false,
             life: 10
-        },
-    ]
+        }
+    ];
     
     
     gameObj.gameLayer.appendChild(gameObj.player);
@@ -169,7 +171,7 @@ huungry.start = function(){
             defense: 4,
             canShoot: false,
             life: 10
-        },
+        }
     ];
     
     
@@ -228,7 +230,7 @@ huungry.start = function(){
             defense: 4,
             canShoot: false,
             life: 10
-        },
+        }
     ];
     gameObj.gameLayer.appendChild(gameObj.enemyArmies[1]);
     

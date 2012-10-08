@@ -57,10 +57,8 @@ huungry.FightEngine.prototype.init = function() {
         currentObj. gameObj.player.inFightScene = false;
     });
     
-    this.playerMoves = true;
-    
-    this.prepareOrder();
-    
+    this.playerMoves = true;    
+    this.prepareOrder();    
     this.playTurn();
 }
 
@@ -69,9 +67,9 @@ huungry.FightEngine.prototype.init = function() {
  */
 huungry.FightEngine.prototype.initArmies = function() {
     //init player army
-    var playerUnitPositions = [];
+    this.playerUnitPositions = [];
 
-    while(playerUnitPositions.length < this.gameObj.player.units.length) {
+    while(this.playerUnitPositions.length < this.gameObj.player.units.length) {
         var position = {
             col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX),
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY)
@@ -79,20 +77,20 @@ huungry.FightEngine.prototype.initArmies = function() {
 
         var repeated = false;
 
-        for(j=0; j < playerUnitPositions.length; j++) {
-            if(playerUnitPositions[j].row == position.row && playerUnitPositions[j].col == position.col) {
+        for(j=0; j < this.playerUnitPositions.length; j++) {
+            if(this.playerUnitPositions[j].row == position.row && this.playerUnitPositions[j].col == position.col) {
                 repeated = true;
                 break;
             }
         }
 
         if(!repeated) {
-            playerUnitPositions.push(position);
+            this.playerUnitPositions.push(position);
         }            
     }
 
     for(i=0;i<this.gameObj.player.units.length;i++) {
-        var pos = this.gameObj.map.getXYFromColRow(playerUnitPositions[i].col,playerUnitPositions[i].row);
+        var pos = this.gameObj.map.getXYFromColRow(this.playerUnitPositions[i].col,this.playerUnitPositions[i].row);
         var unit = new huungry.Unit()
             .setUnitData(this.gameObj.player.units[i])
             .setPosition(pos.x, pos.y)
@@ -107,9 +105,9 @@ huungry.FightEngine.prototype.initArmies = function() {
     }
 
     //init enemy army
-    var enemyUnitPositions = [];
+    this.enemyUnitPositions = [];
 
-    while(enemyUnitPositions.length < this.enemyArmy.units.length) {
+    while(this.enemyUnitPositions.length < this.enemyArmy.units.length) {
         var position = {
             col: this.gameObj.fightSceneEnemyStartX + goog.math.randomInt(this.gameObj.fightSceneEnemyEndX-this.gameObj.fightSceneEnemyStartX),
             row: this.gameObj.fightSceneEnemyStartY + goog.math.randomInt(this.gameObj.fightSceneEnemyEndY-this.gameObj.fightSceneEnemyStartY)
@@ -117,20 +115,20 @@ huungry.FightEngine.prototype.initArmies = function() {
 
         var repeated = false;
 
-        for(j=0; j < enemyUnitPositions.length; j++) {
-            if(enemyUnitPositions[j].row == position.row && enemyUnitPositions[j].col == position.col) {
+        for(j=0; j < this.enemyUnitPositions.length; j++) {
+            if(this.enemyUnitPositions[j].row == position.row && this.enemyUnitPositions[j].col == position.col) {
                 repeated = true;
                 break;
             }
         }
 
         if(!repeated) {
-            enemyUnitPositions.push(position);
+            this.enemyUnitPositions.push(position);
         }            
     }
 
     for(i=0;i<this.enemyArmy.units.length;i++) {
-        var pos = this.gameObj.map.getXYFromColRow(enemyUnitPositions[i].col,enemyUnitPositions[i].row);
+        var pos = this.gameObj.map.getXYFromColRow(this.enemyUnitPositions[i].col, this.enemyUnitPositions[i].row);
         var unit = new huungry.Unit()
             .setUnitData(this.enemyArmy.units[i])
             .setPosition(pos.x, pos.y)
@@ -183,6 +181,65 @@ huungry.FightEngine.prototype.playTurn = function() {
             this.currentPlayerIndex = 0;
         }
     }
+    else {
+        //define target player unit
+        var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
+        
+        //get location difference
+        var enemy = this.enemyUnits[this.currentEnemyIndex]
+        var unitPos = enemy.getPosition();
+        var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
+        var diffX = targetUnitPos.x - unitPos.x,
+            diffY = targetUnitPos.y - unitPos.y;
+        
+        var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
+            dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
+        
+        var targetX = unitPos.x + this.gameObj.tileSize*dX,
+            targetY = unitPos.y + this.gameObj.tileSize*dY;
+        
+        //check blocked
+        if(this.isCellBlocked(targetX, targetY)) {
+            var targetX = unitPos.x,
+            targetY = unitPos.y + this.gameObj.tileSize*dY;
+            
+            if(this.isCellBlocked(targetX, targetY)) {
+                var targetX = unitPos.x + this.gameObj.tileSize*dX,
+                targetY = unitPos.y;
+                
+                if(this.isCellBlocked(targetX, targetY)) {
+                    var targetX = unitPos.x,
+                    targetY = unitPos.y;
+                }                
+            }
+        }
+        
+        if(this.gameObj.animationOn) {
+            var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
+            enemy.runAction(movement);     
+            
+            var engine = this;
+            goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                
+                engine.currentEnemyIndex++;        
+                if(engine.currentEnemyIndex == engine.enemyUnits.length) {
+                    engine.currentEnemyIndex = 0;
+                }
+                
+                engine.playerMoves = true;
+                engine.playTurn();
+            })
+        }
+        else {
+            enemy.setPosition(targetX, targetY);
+            this.currentEnemyIndex++;        
+            if(this.currentEnemyIndex == this.enemyUnits.length) {
+                this.currentEnemyIndex = 0;
+            }
+            this.playerMoves = true;
+            this.playTurn;
+        }          
+    }        
 }
 
 
@@ -192,13 +249,39 @@ huungry.FightEngine.prototype.playTurn = function() {
 huungry.FightEngine.prototype.showCurrentGamepad = function() {
     
     var unit = this.playerUnits[this.currentPlayerIndex];
-    var pos = unit.getPosition();
-        
+    var pos = unit.getPosition();        
     var tileSize = this.gameObj.tileSize;
 
-    for(var i=0; i<unit.movementTargets.length; i++) {
-       
-            unit.movementTargets[i].sprite.setHidden(false);
-            unit.movementTargets[i].sprite.setPosition(pos.x+tileSize*unit.movementTargets[i].dx,pos.y+tileSize*unit.movementTargets[i].dy);            
+for(var i=0; i<unit.movementTargets.length; i++) {
+            var posX=pos.x+tileSize*unit.movementTargets[i].dx,
+                posY=pos.y+tileSize*unit.movementTargets[i].dy;
+            
+            if(!this.isCellBlocked(posX, posY)) {
+                unit.movementTargets[i].sprite.setHidden(false);
+                unit.movementTargets[i].sprite.setPosition(posX,posY);            
+            }
     }    
+}
+
+/**
+ * check if a target destination is blocked
+ * 
+ * @param x in pixels
+ * @param y in pixels
+ */
+huungry.FightEngine.prototype.isCellBlocked = function(x,y) {
+    var isBlocked = false;
+    for(var j=0; j<this.playerUnits.length; j++) {
+        var unitPos = this.playerUnits[j].getPosition();
+        if(x == unitPos.x && y == unitPos.y) {
+            isBlocked = true;
+        }
+    }
+    for(var j=0; j<this.enemyUnits.length; j++) {
+        var unitPos = this.enemyUnits[j].getPosition();
+        if(x == unitPos.x && y == unitPos.y) {
+            isBlocked = true;
+        }
+    }
+    return isBlocked;
 }
