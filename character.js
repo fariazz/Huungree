@@ -12,6 +12,7 @@ huungry.Character = function() {
     this.setSize(40,40);
     this.path = [];
     this.isMoving = false;
+    this.currentTarget = [];
 }
 
 goog.inherits(huungry.Character,lime.Sprite);
@@ -112,10 +113,70 @@ huungry.Character.prototype.initGamepad = function() {
         'dy': 1
     });
     
+    //create attack targets where the user touches
+    this.attackTargets = [];
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': 0,
+        'dy': -1
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': 0,
+        'dy': 1
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': -1,
+        'dy': 0
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': 1,
+        'dy': 0
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': 1,
+        'dy': -1
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': -1,
+        'dy': 1
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': -1,
+        'dy': -1
+    });
+
+    this.attackTargets.push({
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
+        'dx': 1,
+        'dy': 1
+    });
+    
     var targetLayer = (this.customLayer === undefined) ? this.gameObj.gameLayer : this.customLayer;
     
     for(var i=0; i<this.movementTargets.length; i++) {
-        targetLayer.appendChild(this.movementTargets[i].sprite)
+        targetLayer.appendChild(this.movementTargets[i].sprite);
+        targetLayer.appendChild(this.attackTargets[i].sprite);
     }
     
     //register movement according to user input
@@ -147,6 +208,16 @@ huungry.Character.prototype.initGamepad = function() {
                     character.updateGamepad();
                 }                
             });
+            
+            //attack
+            goog.events.listen(character.attackTargets[i].sprite,['mousedown', 'touchstart'], function(e) {
+                e.event.stopPropagation();
+                if(character.currentTarget.length) {
+                    character.attackUnit(character.currentTarget[i]);
+                    character.updateGamepad();
+                }                
+            });
+
         })(i);
     }       
 }
@@ -176,12 +247,14 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
             }
             else {
                 this.movementTargets[i].sprite.setHidden(true);
+                this.attackTargets[i].sprite.setHidden(true);
             }
         }    
     }
     else {
         for(var i=0; i<this.movementTargets.length; i++) {
             this.movementTargets[i].sprite.setHidden(true);
+            this.attackTargets[i].sprite.setHidden(true);
         }
     }    
     

@@ -179,11 +179,8 @@ huungry.FightEngine.prototype.playTurn = function() {
         //show gamepad for current unit
         this.showCurrentGamepad();
         
-        this.currentPlayerIndex++;
-        
-        if(this.currentPlayerIndex == this.playerUnits.length) {
-            this.currentPlayerIndex = 0;
-        }
+        this.playerMoves = false;
+        this.updateNextMovingUnits();
     }
     else {
         //define target player unit
@@ -246,23 +243,19 @@ huungry.FightEngine.prototype.playTurn = function() {
             var engine = this;
             goog.events.listen(movement,lime.animation.Event.STOP,function(){
                 
-                engine.currentEnemyIndex++;        
-                if(engine.currentEnemyIndex == engine.enemyUnits.length) {
-                    engine.currentEnemyIndex = 0;
-                }
-                
                 engine.playerMoves = true;
+                engine.updateDead();
+                engine.updateNextMovingUnits();
                 engine.playTurn();
             })
         }
         else {
             enemy.setPosition(targetX, targetY);
-            this.currentEnemyIndex++;        
-            if(this.currentEnemyIndex == this.enemyUnits.length) {
-                this.currentEnemyIndex = 0;
-            }
+            
             this.playerMoves = true;
-            this.playTurn;
+            this.updateDead();
+            this.updateNextMovingUnit();
+            this.playTurn();
         }          
     }        
 }
@@ -276,6 +269,9 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     var unit = this.playerUnits[this.currentPlayerIndex];
     var pos = unit.getPosition();        
     var tileSize = this.gameObj.tileSize;
+    
+    //remove previous target
+    unit.currentTarget = [];
 
 for(var i=0; i<unit.movementTargets.length; i++) {
             var posX=pos.x+tileSize*unit.movementTargets[i].dx,
@@ -289,7 +285,9 @@ for(var i=0; i<unit.movementTargets.length; i++) {
             }
             else if(targetType == this.ENEMY_TARGET) {
                 //show attack option
-                
+                unit.attackTargets[i].sprite.setHidden(false);
+                unit.attackTargets[i].sprite.setPosition(posX,posY);
+                unit.currentTarget[i] = this.getUnitFromXY(posX, posY);
             }
     }    
 }
@@ -334,6 +332,64 @@ huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
         var unitPos = this.enemyUnits[j].getPosition();
         if(x == unitPos.x && y == unitPos.y) {
             return this.enemyUnits[j];
+        }
+    }
+}
+
+/**
+ * remove dead units
+ */
+huungry.FightEngine.prototype.updateDead = function() {
+    //remove dead units
+    var toRemovePlayer = [];
+    for(var j=0; j<this.playerUnits.length; j++) {
+        if(this.playerUnits[j].life <= 0) {
+            toRemovePlayer.push(j);
+        }
+    }
+    for(var i=0; i<toRemovePlayer.length; i++) {
+        this.playerUnits[i].setHidden(true);
+        this.playerUnits.splice(i,1);
+    }
+    
+    
+    var toRemoveEnemy = [];
+    for(var j=0; j<this.enemyUnits.length; j++) {
+        if(this.enemyUnits[j].life <= 0) {
+            toRemoveEnemy.push(j);
+        }
+    }
+    
+    for(var i=0; i<toRemoveEnemy.length; i++) {
+        this.enemyUnits[i].setHidden(true);
+        this.enemyUnits.splice(i,1);
+    }
+    
+    //check army defeated
+    if(this.playerUnits.length == 0) {
+        console.log('game over');
+    }
+    
+    if(this.enemyUnits.length == 0) {
+        console.log('enemy defeated');
+        this.gameObj.director.replaceScene(this.gameObj.gameScene);
+    }
+}
+
+/**
+ * define which units are staged to move on the next move
+ */
+huungry.FightEngine.prototype.updateNextMovingUnits = function() {
+    if(this.playerMoves) {
+        this.currentPlayerIndex++;
+        if(this.currentPlayerIndex >= this.playerUnits.length) {
+            this.currentPlayerIndex = 0;
+        }
+    }
+    else {
+        this.currentEnemyIndex++;        
+        if(this.currentEnemyIndex >= this.enemyUnits.length) {
+            this.currentEnemyIndex = 0;
         }
     }
 }
