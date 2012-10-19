@@ -9,7 +9,6 @@ huungry.Unit = function() {
     this.setAnchorPoint(0, 0);
     this.setSize(40,40);
     this.path = [];
-    this.setAnchorPoint(0, 0);
 }
 
 goog.inherits(huungry.Unit,huungry.Character);

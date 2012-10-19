@@ -10,8 +10,10 @@ huungry.Map = function() {
 
     this.pixelOffsetX = 0;
     this.pixelOffsetY = 0;
-
-    this.highlightedPath = [];
+    
+    //map elements such as units, items, etc
+    this.elements = [];
+    this.units = [];
 }
 
 huungry.Map.prototype.setGameObj = function(gameObj) {
@@ -34,31 +36,58 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
             break;
         }
     }
-
-    //load blocked cells
-    this.blockedCells = [[]];
+    
+    //init map elements
+    this.initEmptyElements(this.num_cols, this.num_rows);
+    //load blocked cells    
     var current_row = 0;
     for(var i=0; i < jsonMap.layers[collision_i].data.length; i++) {
         var col = i % this.num_cols;
         var row = Math.floor(i/this.num_cols);
 
-        if(row > current_row) {
-            current_row++;
-            this.blockedCells.push([]);
-        }
-
         if(jsonMap.layers[collision_i].data[i] > 0) {
-            this.blockedCells[row][col] = 1;
+            this.elements[row][col].blocked = 1;
         }
         else {
-            this.blockedCells[row][col] = 0;
+            this.elements[row][col].blocked = 0;
         }
     }
     return this;
 }
 
-huungry.Map.prototype.setBackground = function(image_path) {
-    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(image_path).setSize(2000,2000);
+/**
+ * initiate an empty array of map elements
+ * 
+ * @param int num_cols
+ * @param int num_rows
+ */
+ huungry.Map.prototype.initEmptyElements = function(num_cols, num_rows) {
+     for(var i=0; i < num_rows; i++) {
+        this.elements.push([]); 
+        for(var j=0; j < num_rows; j++) {
+            //this.elements[i].push({blocked: 0, units: []})
+            this.elements[i].push({blocked: 0})
+        } 
+     }
+ }
+
+
+/**
+ * set dimensions in pixels
+ * @param {int,int} dimensions
+*/
+huungry.Map.prototype.setSize = function(dimensions) {
+    this.width = dimensions.width;
+    this.height = dimensions.height;
+    return this;
+}
+
+/**
+ * set background
+ * @param string background
+ */
+huungry.Map.prototype.setBackground = function(background) {
+    this.backgroundSprite = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0).setFill(background).setSize(this.width,this.height);
     return this;
 }
 
@@ -66,12 +95,12 @@ huungry.Map.prototype.init = function() {
     this.gameObj.gameLayer.appendChild(this.backgroundSprite);
 
     var map = this;
-    goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
-        e.event.stopPropagation();
-
-        cell = map.getColRowFromXY(e.position.x, e.position.y);
-        console.log('blocked cell:'+map.blockedCells[cell.row][cell.col]);
-    });
+//    goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
+//        e.event.stopPropagation();
+//
+//        cell = map.getColRowFromXY(e.position.x, e.position.y);
+//        console.log('blocked cell:'+map.blockedCells[cell.row][cell.col]);
+//    });
 
 
 
@@ -109,10 +138,38 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
  */
 huungry.Map.prototype.isCellBlocked = function(col, row) {
     
-    if(this.blockedCells[row][col] === undefined) {
+    if(col >= this.num_cols || row >= this.num_rows || col < 0 || row < 0) {
         return 1;
     }
     else {
-        return this.blockedCells[row][col];
+        return this.elements[row][col].blocked;
     }
 }
+
+/**
+ * add a unit to the map
+ * @param {} unit
+ */
+huungry.Map.prototype.addUnit = function(unit) {
+    this.units.push(unit);
+}
+
+///**
+// * add an element to the map
+// * @param int col
+// * @param int row
+// * @param {} element
+// */
+//huungry.Map.prototype.addElement = function(col, row, unit) {
+//    this.elements[row][col].units.push(unit);
+//}
+
+///**
+// * get the unit type of a cell
+// * @param int col
+// * @param int row
+// * @return int
+// */
+//huungry.Map.prototype.getUnitType = function(col, row) {
+//    return this.unitCells[row][col];
+//}

@@ -20,10 +20,7 @@ goog.inherits(huungry.Player, huungry.Character);
  * Init
  */
 huungry.Player.prototype.init = function() {
-
-    this.initGamepad();
-
-    
+    this.initGamepad();    
 }
 
 /**
@@ -31,4 +28,14 @@ huungry.Player.prototype.init = function() {
  */
 huungry.Player.prototype.updateGamepad = function() {
     this.toggleGamepad(true);
+    
+    this.refreshMapPos();
+    
+    //check for enemy collision
+    for(var i=0; i < this.map.units.length; i++) {      
+        if(this.cell.col == this.map.units[i].cell.col && this.cell.row == this.map.units[i].cell.row 
+            && this.id != this.map.units[i].id && this.map.units[i].unitType == this.gameObj.ENEMY_ARMY) {
+            this.gameObj.fight(this.map.units[i]);
+        }
+    }
 }

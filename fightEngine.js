@@ -29,9 +29,12 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
 huungry.FightEngine.prototype.init = function() {
     this.fightScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
-    this.floor = new lime.Sprite().setSize(WIDTH,HEIGHT).setPosition(0,0).setAnchorPoint(0,0).setFill(this.floorColor);
     
-    this.fightLayer.appendChild(this.floor);
+    this.map = new huungry.Map().setGameObj(this.gameObj)
+        .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight})
+        .setBackground(this.floorColor);
+    
+    this.fightLayer.appendChild(this.map.backgroundSprite);
     this.fightScene.appendChild(this.fightLayer);
 
     this.gameObj.player.inFightScene = true;
@@ -48,22 +51,29 @@ huungry.FightEngine.prototype.init = function() {
     //run away
     currentObj = this;
     goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
-        //go back to the map
-        currentObj.gameObj.director.replaceScene(currentObj.gameObj.gameScene);
-        currentObj.gameObj.gameLayer.setDirty(255);
-        currentObj.gameObj.controlsLayer.setDirty(255);
-        currentObj.gameObj.gameScene.setDirty(255);
-
-        //move player to previous position
-        previousPos = currentObj.gameObj.player.previousPosition;
-        currentObj.gameObj.player.setPosition(previousPos.x, previousPos.y);
-        currentObj.gameObj.player.toggleGamepad(true);
-        currentObj. gameObj.player.inFightScene = false;
+        currentObj.exitFight();
     });
     
     this.playerMoves = true;    
     this.prepareOrder();    
     this.playTurn();
+}
+
+/**
+ * exit fight scene
+ */
+huungry.FightEngine.prototype.exitFight = function() {
+    //go back to the map
+    this.gameObj.director.replaceScene(this.gameObj.gameScene);
+    this.gameObj.gameLayer.setDirty(255);
+    this.gameObj.controlsLayer.setDirty(255);
+    this.gameObj.gameScene.setDirty(255);
+
+    //move player to previous position
+    previousPos = this.gameObj.player.previousPosition;
+    this.gameObj.player.setPosition(previousPos.x, previousPos.y);
+    this.gameObj.player.toggleGamepad(true);
+    this. gameObj.player.inFightScene = false;
 }
 
 /**
@@ -99,6 +109,10 @@ huungry.FightEngine.prototype.initArmies = function() {
             .setUnitData(this.gameObj.player.units[i])
             .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
+        
+        goog.events.listen(unit, ['mousedown','touchstart'], function(e) {
+            console.log('life:'+this.life);
+        });
         
         unit.customLayer = this.fightLayer;
         unit.initGamepad();
@@ -137,7 +151,9 @@ huungry.FightEngine.prototype.initArmies = function() {
             .setUnitData(this.enemyArmy.units[i])
             .setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj);
-        
+        goog.events.listen(unit, ['mousedown','touchstart'], function(e) {
+            console.log('life:'+this.life);
+        });
         this.enemyUnits.push(unit);
         this.fightLayer.appendChild(unit);
     }
@@ -151,7 +167,7 @@ huungry.FightEngine.prototype.prepareOrder = function() {
     //@TODO define who starts
     this.playerMoves = true;
     
-    //@TODO rearrange units by some criteria
+    //@TODO rearrange units by some criteria like agility, etc
     this.playerUnitsOrder = [];
     
     for(i=0; i<this.playerUnits.length; i++) {
@@ -183,11 +199,21 @@ huungry.FightEngine.prototype.playTurn = function() {
         this.updateNextMovingUnits();
     }
     else {
-        //define target player unit
+        //enemy moves
+        var enemy = this.enemyUnits[this.currentEnemyIndex]
+        
+        //attach adjacent enemy if any
+        console.log(this.map);
+        var adjacentEnemy = this.map.getAdjacent(enemy, this.UNIT_TARGET);
+
+
+//define target player unit
         var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
         
-        //get location difference
-        var enemy = this.enemyUnits[this.currentEnemyIndex]
+        
+        
+        
+        
         var unitPos = enemy.getPosition();
         var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
         var diffX = targetUnitPos.x - unitPos.x,

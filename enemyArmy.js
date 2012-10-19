@@ -16,12 +16,12 @@ goog.inherits(huungry.EnemyArmy, huungry.Character);
  * Init
  */
 huungry.EnemyArmy.prototype.init = function() {
-    
-    lime.scheduleManager.schedule(function(dt) {
-        if(!this.gameObj.player.inFightScene) {     
-            if(goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(), -1)) {
-                this.gameObj.fight(this);
-            }
-        }
-    }, this);
+    this.unitType = this.gameObj.ENEMY_ARMY;
+//    lime.scheduleManager.schedule(function(dt) {
+//        if(!this.gameObj.player.inFightScene) {     
+//            if(goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(), -1)) {
+//                this.gameObj.fight(this);
+//            }
+//        }
+//    }, this);
 }

@@ -29,10 +29,14 @@ TILESIZE = 40;
 huungry.start = function(){
 
     //main game object
-    var gameObj = {};
-    gameObj.screenWidth = WIDTH;
-    gameObj.screenHeight = HEIGHT;
-    gameObj.tileSize = TILESIZE;
+    var gameObj = {
+        screenWidth: 480,
+        screenHeight: 320,
+        tileSize: 40,
+        width: 2000,
+        height: 2000,
+        ENEMY_ARMY: 1
+    };    
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
     
@@ -73,7 +77,9 @@ huungry.start = function(){
     //player
     var pos = gameObj.map.getXYFromColRow(0,2);
     gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj);
+        .setGameObj(gameObj)
+        .setMap(gameObj.map)
+        .refreshMapPos();
     
     gameObj.player.init();
        
@@ -122,7 +128,9 @@ huungry.start = function(){
     
     var pos = gameObj.map.getXYFromColRow(1,1);
     gameObj.enemyArmies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj);        
+        .setGameObj(gameObj)
+        .setMap(gameObj.map)
+        .refreshMapPos();        
         
     gameObj.enemyArmies[0].init();
     
@@ -182,7 +190,9 @@ huungry.start = function(){
     
     var pos = gameObj.map.getXYFromColRow(3,8);
     gameObj.enemyArmies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj);        
+        .setGameObj(gameObj)
+        .setMap(gameObj.map)
+        .refreshMapPos();        
         
     gameObj.enemyArmies[1].init();
     gameObj.enemyArmies[1].units = [
@@ -239,7 +249,9 @@ huungry.start = function(){
     
     var pos = gameObj.map.getXYFromColRow(6,2);
     gameObj.enemyArmies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj);        
+        .setGameObj(gameObj)
+        .setMap(gameObj.map)
+        .refreshMapPos();        
         
     gameObj.enemyArmies[2].init();
     gameObj.enemyArmies[2].units = [

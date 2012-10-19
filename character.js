@@ -13,6 +13,9 @@ huungry.Character = function() {
     this.path = [];
     this.isMoving = false;
     this.currentTarget = [];
+    
+    //unique id
+    this.id = Math.floor(Math.random() * 10000000000);
 }
 
 goog.inherits(huungry.Character,lime.Sprite);
@@ -34,10 +37,36 @@ huungry.Character.prototype.walkTo = function(col,row) {
     this.walkPath();
 }
 
+/*
+ * set game object
+ * @param {} gameObj
+ * @return {}
+ */
 huungry.Character.prototype.setGameObj = function(gameObj) {
     this.gameObj = gameObj;
     return this;
 }
+
+/*
+ * set map
+ * @param {} map
+ * @return {}
+ */
+huungry.Character.prototype.setMap = function(map) {
+    this.map = map;
+    this.map.addUnit(this);
+    return this;
+}
+
+/**
+ * keep updated map column and row position record
+*/
+huungry.Character.prototype.refreshMapPos = function() {
+    var pos = this.getPosition();
+    this.cell = this.map.getColRowFromXY(pos.x, pos.y);
+    return this;
+}
+
 
 /**
  * set the characters attributes
