@@ -35,7 +35,6 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
  */
 huungry.Unit.prototype.playerMoved = function() {
     this.toggleGamepad(false);
-    this.fightEngine.playerMoves = false;
     this.fightEngine.playTurn();
 }
 
@@ -45,20 +44,37 @@ huungry.Unit.prototype.playerMoved = function() {
  * @param huungry.Unit attackedUnit
  */
 huungry.Unit.prototype.attackUnit = function(attackedUnit) {
-    attackedUnit.life -= Math.max(0, this.attack - attackedUnit.defense) + Math.random()*this.gameObj.maxRandPercentage*this.attack;
-    attackedUnit.showBeingAttacked();
+    var damage = Math.max(0, this.attack - attackedUnit.defense) + Math.random()*this.gameObj.maxRandPercentage*this.attack;
+    attackedUnit.life -= damage;
+    console.log(attackedUnit.name+' received a damage of '+damage);
+    attackedUnit.showBeingAttacked(this);
 }
 
 /**
  * show that it's being attacked
+ * 
+ * @param {} attacker
  */
-huungry.Unit.prototype.showBeingAttacked = function() {
+huungry.Unit.prototype.showBeingAttacked = function(attacker) {
     var effect = new lime.animation.FadeTo(0.2).setDuration(this.gameObj.movementDuration);                    
     this.runAction(effect);     
     var unit = this;
-    console.log(unit);
+    console.log(unit.name);
     goog.events.listen(effect,lime.animation.Event.STOP,function(){
-        var effect = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
-        unit.runAction(effect);   
+        console.log(unit.name+' was attacked');
+        var effect2 = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
+        unit.runAction(effect2);   
+        goog.events.listen(effect2,lime.animation.Event.STOP,function(){
+            console.log(unit);
+            console.log(unit.fightEngine);
+            if(unit.fightEngine.playerMoves) {
+                console.log(1);
+                attacker.playerMoved();
+            }    
+            else {
+                console.log(0);
+                unit.fightEngine.playTurn();
+            }            
+        });
     })
 }

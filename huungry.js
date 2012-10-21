@@ -146,12 +146,12 @@ huungry.start = function(){
             attack: 8885,
             defense: 4,
             canShoot: false,
-            life: 10
+            life: 2
         },
         {
             name: 'monster',
             image: 'enemy.png',
-            attack: 5888,
+            attack: 1,
             defense: 4,
             canShoot: false,
             life: 10
@@ -159,7 +159,15 @@ huungry.start = function(){
         {
             name: 'monster',
             image: 'enemy2.png',
-            attack: 58888,
+            attack: 1,
+            defense: 4,
+            canShoot: false,
+            life: 2
+        },
+        {
+            name: 'monster',
+            image: 'enemy2.png',
+            attack: 1,
             defense: 4,
             canShoot: false,
             life: 10
@@ -167,7 +175,7 @@ huungry.start = function(){
         {
             name: 'monster',
             image: 'enemy2.png',
-            attack: 58888,
+            attack: 1,
             defense: 4,
             canShoot: false,
             life: 10
@@ -175,15 +183,7 @@ huungry.start = function(){
         {
             name: 'monster',
             image: 'enemy2.png',
-            attack: 5888,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5888,
+            attack: 1,
             defense: 4,
             canShoot: false,
             life: 10

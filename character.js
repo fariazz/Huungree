@@ -243,7 +243,6 @@ huungry.Character.prototype.initGamepad = function() {
                 e.event.stopPropagation();
                 if(character.currentTarget.length) {
                     character.attackUnit(character.currentTarget[i]);
-                    character.playerMoved();
                 }                
             });
 

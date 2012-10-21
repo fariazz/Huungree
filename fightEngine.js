@@ -146,6 +146,7 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .setUnitType(this.gameObj.ENEMY_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();   
+            unit.fightEngine = this;
             this.enemyUnits.push(unit);
             this.fightLayer.appendChild(unit);
             i++;
@@ -161,7 +162,7 @@ huungry.FightEngine.prototype.prepareOrder = function() {
     //@TODO define who starts
     //@TODO sort units by some criteria like agility, or randomly
     //this.playerMoves = Math.random() > 0.5;
-    this.playerMoves = 1;
+    this.playerMoves = false;
     this.currentPlayerIndex = 0;
     this.currentEnemyIndex = 0;    
 }
@@ -174,10 +175,11 @@ huungry.FightEngine.prototype.playTurn = function() {
     this.updateDead();
     this.updateNextMovingUnits();
     
+    this.playerMoves = !this.playerMoves;
+    
     if(this.playerMoves) {
         //show gamepad for current unit
         this.showCurrentGamepad();        
-        this.playerMoves = false;
     }
     else {
         //enemy moves
@@ -186,9 +188,8 @@ huungry.FightEngine.prototype.playTurn = function() {
         //attach adjacent enemy if any
         var adjacentEnemy = this.map.getAdjacentUnit(enemy, this.gameObj.PLAYER_UNIT);        
         if(adjacentEnemy) {
-            this.playerMoves = true;
+            console.log('attack player:'+adjacentEnemy.name);
             enemy.attackUnit(adjacentEnemy);
-            this.playTurn();
         }
         
         else {
@@ -217,15 +218,12 @@ huungry.FightEngine.prototype.playTurn = function() {
 
                     var engine = this;
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
-
-                        engine.playerMoves = true;
                         engine.playTurn();
                     })
                 }
             }
             //otherwise pass
             else {
-                this.playerMoves = true;
                 this.playTurn();
             }
         }   
@@ -323,7 +321,7 @@ huungry.FightEngine.prototype.updateDead = function() {
  * define which units are staged to move on the next move
  */
 huungry.FightEngine.prototype.updateNextMovingUnits = function() {
-    if(this.playerMoves) {
+    if(!this.playerMoves) {
         this.currentPlayerIndex++;
         if(this.currentPlayerIndex >= this.playerUnits.length) {
             this.currentPlayerIndex = 0;
