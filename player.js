@@ -9,9 +9,9 @@ goog.require('huungry.Character');
 huungry.Player = function() {
     goog.base(this);
     
-    this.inFightScene = false;
-    
+    this.inFightScene = false;    
     this.canMove = false;
+    this.gold = 100;
 }
 
 goog.inherits(huungry.Player, huungry.Character);

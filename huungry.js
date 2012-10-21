@@ -143,7 +143,7 @@ huungry.start = function(){
         {
             name: 'monster',
             image: 'enemy.png',
-            attack: 8885,
+            attack: 12,
             defense: 4,
             canShoot: false,
             life: 1
@@ -268,7 +268,8 @@ huungry.start = function(){
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
     gameObj.controlsLayer.init();
     gameObj.gameScene.appendChild(gameObj.controlsLayer);
-
+    
+    gameObj.controlsLayer.refreshInfo();
 
     // set current scene active
     gameObj.director.replaceScene(gameObj.gameScene);

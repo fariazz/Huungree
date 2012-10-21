@@ -23,7 +23,7 @@ huungry.ControlsLayer.prototype.setGameObj = function(gameObj) {
 
 huungry.ControlsLayer.prototype.init = function() {
     this.btnMapMoveRight = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/btnMapMoveRight.png')
-        .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide,this.gameObj.screenHeight/2-this.gameObj.tileSize*this.tileFactorLSide/2);
+        .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide-this.gameObj.tileSize,this.gameObj.screenHeight/2-this.gameObj.tileSize*this.tileFactorLSide/2);
 
     this.btnMapMoveLeft = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/btnMapMoveLeft.png')
         .setPosition(0 ,this.gameObj.screenHeight/2-this.gameObj.tileSize*this.tileFactorLSide/2);
@@ -33,11 +33,17 @@ huungry.ControlsLayer.prototype.init = function() {
 
     this.btnMapMoveDown = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/btnMapMoveDown.png')
         .setPosition(this.gameObj.screenWidth/2-this.gameObj.tileSize*this.tileFactorLSide/2 ,this.gameObj.screenHeight - this.gameObj.tileSize*this.tileFactorSSide);
-
+    
+    this.sideBar = new lime.Sprite().setAnchorPoint(0,0).setFill('#D6B896')
+        .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide,0)
+        .setSize(this.gameObj.tileSize, this.gameObj.screenHeight);
+    
+    
     this.appendChild(this.btnMapMoveLeft);
     this.appendChild(this.btnMapMoveRight);
     this.appendChild(this.btnMapMoveUp);
     this.appendChild(this.btnMapMoveDown);
+    this.appendChild(this.sideBar);
 
     //listeners for map navigation
     map = this.gameObj.map;
@@ -81,5 +87,20 @@ huungry.ControlsLayer.prototype.init = function() {
             map.gameObj.gameLayer.setPosition(current_pos.x, current_pos.y-map.tileSize);
         }
     });
+    
+    //side bar
+    this.goldLabel = new lime.Label().setPosition(2,5).setText('Gold:')
+        .setAnchorPoint(0,0).setFontColor('#000000');
+    this.goldValue = new lime.Label().setPosition(2,25).setText()
+        .setAnchorPoint(0,0).setFontColor('#000000');
+        
+    this.sideBar.appendChild(this.goldLabel);    
+    this.sideBar.appendChild(this.goldValue);    
+}
 
+/**
+ * refresh player info
+ */
+huungry.ControlsLayer.prototype.refreshInfo = function() {
+    this.goldValue.setText(this.gameObj.player.gold);
 }
