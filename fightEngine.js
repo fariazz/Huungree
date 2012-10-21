@@ -89,7 +89,8 @@ huungry.FightEngine.prototype.exitFight = function() {
     var previousPos = this.gameObj.player.previousPosition;
     this.gameObj.player.setPosition(previousPos.x, previousPos.y);
     this.gameObj.player.toggleGamepad(true);
-    this. gameObj.player.inFightScene = false;
+    this.gameObj.player.inFightScene = false;
+    this.gameObj.controlsLayer.refreshInfo();
 }
 
 /**
@@ -334,6 +335,7 @@ huungry.FightEngine.prototype.updateDead = function() {
     
     if(this.enemyUnits.length == 0) {
         console.log('enemy defeated');
+        this.gameObj.player.gold += this.enemyArmy.gold;
         this.enemyArmy.die();
         this.exitFight();        
     }

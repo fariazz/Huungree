@@ -28,7 +28,7 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
-    this.lifeBar = new lime.Label().setPosition(27,0).setText(this.life).setSize(20,20)
+    this.lifeBar = new lime.Label().setPosition(27,0).setText(Math.max(Math.ceil(this.life),0)).setSize(20,20)
         .setAnchorPoint(0,0).setFontColor('#FFFFFF');
     this.appendChild(this.lifeBar);
     
@@ -88,5 +88,5 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
  * udpate life bar
  */
 huungry.Unit.prototype.refreshLifeBar = function() {
-    this.lifeBar.setText(Math.max(Math.ceil(this.life)));
+    this.lifeBar.setText(Math.max(Math.ceil(this.life),0));
 }

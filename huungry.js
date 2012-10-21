@@ -138,6 +138,7 @@ huungry.start = function(){
         .refreshMapPos();        
         
     gameObj.enemyArmies[0].init();
+    gameObj.enemyArmies[0].gold = 124;
     
     gameObj.enemyArmies[0].units = [
         {
@@ -176,6 +177,7 @@ huungry.start = function(){
         .refreshMapPos();        
         
     gameObj.enemyArmies[1].init();
+    gameObj.enemyArmies[1].gold = 100;
     gameObj.enemyArmies[1].units = [
         {
             name: 'monster',
@@ -235,6 +237,7 @@ huungry.start = function(){
         .refreshMapPos();        
         
     gameObj.enemyArmies[2].init();
+    gameObj.enemyArmies[2].gold = 140;
     gameObj.enemyArmies[2].units = [
         {
             name: 'monster',
