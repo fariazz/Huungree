@@ -40,7 +40,7 @@ huungry.start = function(){
         ENEMY_ARMY: 3,
         PLAYER_UNIT: 4,
         ENEMY_UNIT: 5,
-        BLOCKED_TARGET: 6,
+        BLOCKED_TARGET: 6
     };    
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
@@ -163,7 +163,7 @@ huungry.start = function(){
             defense: 4,
             canShoot: false,
             life: 1
-        },
+        }
     ];
     
     

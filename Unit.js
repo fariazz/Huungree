@@ -28,6 +28,10 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
+    this.lifeBar = new lime.Label().setPosition(27,0).setText(this.life).setSize(20,20)
+        .setAnchorPoint(0,0).setFontColor('#FFFFFF');
+    this.appendChild(this.lifeBar);
+    
     return this;
 }
 
@@ -69,13 +73,20 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
             console.log(unit);
             console.log(unit.fightEngine);
             if(unit.fightEngine.playerMoves) {
-                console.log(1);
-                attacker.playerMoved();
+                unit.refreshLifeBar();    
+                attacker.playerMoved();                            
             }    
             else {
-                console.log(0);
+                unit.refreshLifeBar();
                 unit.fightEngine.playTurn();
             }            
         });
     })
+}
+
+/**
+ * udpate life bar
+ */
+huungry.Unit.prototype.refreshLifeBar = function() {
+    this.lifeBar.setText(Math.max(Math.ceil(this.life)));
 }
