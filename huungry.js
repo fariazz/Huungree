@@ -51,8 +51,8 @@ huungry.start = function(){
     gameObj.fightScenePlayerStartY = 0;
     gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY - 1;
     
-    gameObj.fightSceneEnemyStartX = gameObj.screenNumTilesX-3;
-    gameObj.fightSceneEnemyEndX = gameObj.screenNumTilesX;
+    gameObj.fightSceneEnemyStartX = gameObj.screenNumTilesX-4;
+    gameObj.fightSceneEnemyEndX = gameObj.screenNumTilesX-2;
     gameObj.fightSceneEnemyStartY = 0;
     gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY - 1;
     
@@ -146,7 +146,7 @@ huungry.start = function(){
             attack: 8885,
             defense: 4,
             canShoot: false,
-            life: 2
+            life: 1
         },
         {
             name: 'monster',
@@ -154,7 +154,7 @@ huungry.start = function(){
             attack: 1,
             defense: 4,
             canShoot: false,
-            life: 10
+            life: 1
         },
         {
             name: 'monster',
@@ -162,32 +162,8 @@ huungry.start = function(){
             attack: 1,
             defense: 4,
             canShoot: false,
-            life: 2
+            life: 1
         },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 1,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 1,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 1,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        }
     ];
     
     

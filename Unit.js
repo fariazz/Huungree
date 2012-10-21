@@ -26,6 +26,7 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.life = unitData.life;
     this.name = unitData.name;
     this.canShoot = unitData.canShoot;
+    this.image = unitData.image;
     
     return this;
 }

@@ -64,6 +64,21 @@ huungry.FightEngine.prototype.init = function() {
  * exit fight scene
  */
 huungry.FightEngine.prototype.exitFight = function() {
+    
+    //update player army
+    this.gameObj.player.units = [];
+    
+    for(var i=0; i< this.playerUnits.length; i++) {
+        this.gameObj.player.units.push({
+            name: this.playerUnits[i].name,
+            image: this.playerUnits[i].image,
+            attack: this.playerUnits[i].attack,
+            defense: this.playerUnits[i].defense,
+            canShoot: this.playerUnits[i].canShoot,
+            life: this.playerUnits[i].life
+        });
+    }
+    
     //go back to the map
     this.gameObj.director.replaceScene(this.gameObj.gameScene);
     this.gameObj.gameLayer.setDirty(255);
@@ -173,6 +188,11 @@ huungry.FightEngine.prototype.prepareOrder = function() {
 huungry.FightEngine.prototype.playTurn = function() {
     
     this.updateDead();
+    
+    if(!this. gameObj.player.inFightScene) {
+        return false;
+    }
+    
     this.updateNextMovingUnits();
     
     this.playerMoves = !this.playerMoves;
@@ -309,11 +329,13 @@ huungry.FightEngine.prototype.updateDead = function() {
     //check army defeated
     if(this.playerUnits.length == 0) {
         console.log('game over');
+        this.exitFight();  
     }
     
     if(this.enemyUnits.length == 0) {
         console.log('enemy defeated');
-        this.gameObj.director.replaceScene(this.gameObj.gameScene);
+        this.enemyArmy.die();
+        this.exitFight();        
     }
 }
 
