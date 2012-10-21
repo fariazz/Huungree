@@ -35,7 +35,12 @@ huungry.start = function(){
         tileSize: 40,
         width: 2000,
         height: 2000,
-        ENEMY_ARMY: 1
+        FREE_TARGET: 1,
+        PLAYER_ARMY: 2,
+        ENEMY_ARMY: 3,
+        PLAYER_UNIT: 4,
+        ENEMY_UNIT: 5,
+        BLOCKED_TARGET: 6,
     };    
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;

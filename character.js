@@ -229,12 +229,12 @@ huungry.Character.prototype.initGamepad = function() {
                     var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(character.gameObj.movementDuration);                    
                     character.runAction(movement);                    
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                        character.updateGamepad();
+                        character.playerMoved();
                     })
                 }
                 else {
                     character.setPosition(targetX, targetY);
-                    character.updateGamepad();
+                    character.playerMoved();
                 }                
             });
             
@@ -243,7 +243,7 @@ huungry.Character.prototype.initGamepad = function() {
                 e.event.stopPropagation();
                 if(character.currentTarget.length) {
                     character.attackUnit(character.currentTarget[i]);
-                    character.updateGamepad();
+                    character.playerMoved();
                 }                
             });
 
@@ -292,6 +292,25 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
 /**
  * by default hide gamepad
  */
-huungry.Character.prototype.updateGamepad = function() {
+huungry.Character.prototype.playerMoved = function() {
     this.toggleGamepad(false);
+}
+
+/**
+ * kill unit
+ */
+huungry.Character.prototype.die = function() {
+    this.setHidden(true);
+    this.map.removeUnit(this);
+}
+
+/**
+ * set unit type
+ * 
+ * @param int unitType
+ * @return huungry.Character
+ */
+huungry.Character.prototype.setUnitType = function(unitType) {
+    this.unitType = unitType;
+    return this;
 }

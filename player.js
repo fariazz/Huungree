@@ -26,7 +26,7 @@ huungry.Player.prototype.init = function() {
 /**
  * show gamepad after movement
  */
-huungry.Player.prototype.updateGamepad = function() {
+huungry.Player.prototype.playerMoved = function() {
     this.toggleGamepad(true);
     
     this.refreshMapPos();

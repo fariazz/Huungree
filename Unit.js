@@ -31,9 +31,9 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
 }
 
 /**
- * by default hide gamepad
+ * the player unit finished moving (hide gamepage, etc)
  */
-huungry.Unit.prototype.updateGamepad = function() {
+huungry.Unit.prototype.playerMoved = function() {
     this.toggleGamepad(false);
     this.fightEngine.playerMoves = false;
     this.fightEngine.playTurn();
@@ -53,9 +53,10 @@ huungry.Unit.prototype.attackUnit = function(attackedUnit) {
  * show that it's being attacked
  */
 huungry.Unit.prototype.showBeingAttacked = function() {
-    var effect = new lime.animation.FadeTo(0.5).setDuration(this.gameObj.movementDuration);                    
+    var effect = new lime.animation.FadeTo(0.2).setDuration(this.gameObj.movementDuration);                    
     this.runAction(effect);     
     var unit = this;
+    console.log(unit);
     goog.events.listen(effect,lime.animation.Event.STOP,function(){
         var effect = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
         unit.runAction(effect);   
