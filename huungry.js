@@ -274,18 +274,55 @@ huungry.start = function(){
     
     gameObj.controlsLayer.refreshInfo();
 
+    
+    //fight scene
+    gameObj.fight = function(enemy) {        
+        var FightEngine = new huungry.FightEngine().setGameObj(gameObj).setEnemyArmy(enemy);
+        FightEngine.init();
+    }
+    
+    //player details screen
+    gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
+    
+    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
+            .setSize(gameObj.width, gameObj.height-500).setFill('#0D0D0D');
+    
+    //close button
+    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
+        .setPosition(400, 280)
+        .setSize(80, 40);
+    gameObj.playerInfoScene.appendChild(winBackground);
+    gameObj.playerInfoScene.appendChild(closeButton);
+    gameObj.playerInfoLayer = new lime.Layer().setAnchorPoint(0, 0);            
+    gameObj.playerInfoScene.appendChild(gameObj.playerInfoLayer);
+    
+    //close event
+    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
+        gameObj.director.replaceScene(gameObj.gameScene);
+    });
+
+    //launch event
+    goog.events.listen(gameObj.player,['mousedown', 'touchstart'], function(e) {
+        console.log(gameObj.playerInfoScene);
+        gameObj.playerInfoLayer.removeAllChildren();
+        
+        //player units
+        for(var i=0; i<gameObj.player.units.length; i++) {          
+            var label = new lime.Label().setText(gameObj.player.units[i].name+' - '+Math.ceil(gameObj.player.units[i].life)).setFontColor('#E8FC08')
+            .setPosition(10, 50+30*i).setAnchorPoint(0,0);
+            gameObj.playerInfoLayer.appendChild(label);
+        }
+        gameObj.director.replaceScene(gameObj.playerInfoScene);
+    });
+    
+    //open when clicking on the player
+    //goog.events.listen()
+    //
+    //
+    //
     // set current scene active
     gameObj.director.replaceScene(gameObj.gameScene);
     
-    //fight scene
-    gameObj.fight = function(enemy) {
-        
-        var FightEngine = new huungry.FightEngine().setGameObj(gameObj).setEnemyArmy(enemy);
-        FightEngine.init();
-        
-        
-    }
-
 }
 
 
