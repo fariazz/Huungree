@@ -122,7 +122,7 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .setUnitData(this.gameObj.player.units[i])
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
-                .setUnitType(this.gameObj.PLAYER_UNIT)
+                .setElementType(this.gameObj.PLAYER_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();     
             unit.customLayer = this.fightLayer;
@@ -159,7 +159,7 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .setUnitData(this.enemyArmy.units[i])
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
-                .setUnitType(this.gameObj.ENEMY_UNIT)
+                .setElementType(this.gameObj.ENEMY_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();   
             unit.fightEngine = this;
@@ -207,7 +207,7 @@ huungry.FightEngine.prototype.playTurn = function() {
         var enemy = this.enemyUnits[this.currentEnemyIndex]
         
         //attach adjacent enemy if any
-        var adjacentEnemy = this.map.getAdjacentUnit(enemy, this.gameObj.PLAYER_UNIT);        
+        var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
         if(adjacentEnemy) {
             console.log('attack player:'+adjacentEnemy.name);
             enemy.attackUnit(adjacentEnemy);

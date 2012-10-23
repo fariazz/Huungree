@@ -54,7 +54,7 @@ huungry.Character.prototype.setGameObj = function(gameObj) {
  */
 huungry.Character.prototype.setMap = function(map) {
     this.map = map;
-    this.map.addUnit(this);
+    this.map.addElement(this);
     return this;
 }
 
@@ -300,16 +300,16 @@ huungry.Character.prototype.playerMoved = function() {
  */
 huungry.Character.prototype.die = function() {
     this.setHidden(true);
-    this.map.removeUnit(this);
+    this.map.removeElement(this);
 }
 
 /**
- * set unit type
+ * set element type
  * 
- * @param int unitType
+ * @param int elementType
  * @return huungry.Character
  */
-huungry.Character.prototype.setUnitType = function(unitType) {
-    this.unitType = unitType;
+huungry.Character.prototype.setElementType = function(elementType) {
+    this.elementType = elementType;
     return this;
 }

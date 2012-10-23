@@ -11,9 +11,8 @@ huungry.Map = function() {
     this.pixelOffsetX = 0;
     this.pixelOffsetY = 0;
     
-    //map elements such as units, items, etc
     this.elements = [];
-    this.units = [];
+    this.blocked = [];
 }
 
 huungry.Map.prototype.setGameObj = function(gameObj) {
@@ -46,10 +45,10 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
         var row = Math.floor(i/this.num_cols);
 
         if(jsonMap.layers[collision_i].data[i] > 0) {
-            this.elements[row][col].blocked = 1;
+            this.blocked[row][col] = 1;
         }
         else {
-            this.elements[row][col].blocked = 0;
+            this.blocked[row][col] = 0;
         }
     }
     return this;
@@ -63,10 +62,9 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
  */
  huungry.Map.prototype.initEmptyElements = function(num_cols, num_rows) {
      for(var i=0; i < num_rows; i++) {
-        this.elements.push([]); 
+        this.blocked.push([]); 
         for(var j=0; j < num_cols; j++) {
-            //this.elements[i].push({blocked: 0, units: []})
-            this.elements[i].push({blocked: 0})
+            this.blocked[i][j] =  0;
         } 
      }
  }
@@ -145,32 +143,32 @@ huungry.Map.prototype.isCellBlocked = function(col, row) {
         return 1;
     }
     else {
-        return this.elements[row][col].blocked;
+        return this.blocked[row][col];
     }
 }
 
 /**
- * add a unit to the map
- * @param {} unit
+ * add a element to the map
+ * @param {} element
  */
-huungry.Map.prototype.addUnit = function(unit) {
-    this.units.push(unit);
+huungry.Map.prototype.addElement = function(element) {
+    this.elements.push(element);
 }
 
 /**
- * remove a unit
- * @param {} unit
+ * remove a element
+ * @param {} element
  */
-huungry.Map.prototype.removeUnit = function(unit) {
+huungry.Map.prototype.removeElement = function(element) {
     var index = -1;
-    for(var i=0; i<this.units.length; i++) {
-        if(unit.id == this.units[i].id) {
+    for(var i=0; i<this.elements.length; i++) {
+        if(element.id == this.elements[i].id) {
             index = i;
             break;
         }
     }
     if(index >= 0) {
-        this.units.splice(i,1)
+        this.elements.splice(i,1)
     }
 }
 
@@ -180,22 +178,22 @@ huungry.Map.prototype.removeUnit = function(unit) {
 // * @param int row
 // * @param {} element
 // */
-//huungry.Map.prototype.addElement = function(col, row, unit) {
-//    this.elements[row][col].units.push(unit);
+//huungry.Map.prototype.addElement = function(col, row, element) {
+//    this.elements[row][col].elements.push(element);
 //}
 
 ///**
-// * get the unit type of a cell
+// * get the element type of a cell
 // * @param int col
 // * @param int row
 // * @return int
 // */
-//huungry.Map.prototype.getUnitType = function(col, row) {
-//    return this.unitCells[row][col];
+//huungry.Map.prototype.getElementType = function(col, row) {
+//    return this.elementCells[row][col];
 //}
 
 /**
- * get the target unit type
+ * get the target element type
  * 
  * @param int col
  * @param int row
@@ -203,10 +201,10 @@ huungry.Map.prototype.removeUnit = function(unit) {
 huungry.Map.prototype.getTargetType = function(col,row) {
     
     var cellCoord = this.getXYFromColRow(col, row);    
-    for(var i=0; i<this.units.length; i++) {
-        var unitPos = this.units[i].getPosition();
-        if(cellCoord.x == unitPos.x && cellCoord.y == unitPos.y) {
-            return this.units[i].unitType;
+    for(var i=0; i<this.elements.length; i++) {
+        var elementPos = this.elements[i].getPosition();
+        if(cellCoord.x == elementPos.x && cellCoord.y == elementPos.y) {
+            return this.elements[i].elementType;
         }
     }
     
@@ -215,90 +213,90 @@ huungry.Map.prototype.getTargetType = function(col,row) {
 }
 
 /**
- * get the target unit
+ * get the target element
  * 
  * @param int col
  * @param int row
  */
-huungry.Map.prototype.getTargetUnit = function(col,row) {
+huungry.Map.prototype.getTargetElement = function(col,row) {
     
     var cellCoord = this.getXYFromColRow(col, row);    
-    for(var i=0; i<this.units.length; i++) {
-        var unitPos = this.units[i].getPosition();
-        if(cellCoord.x == unitPos.x && cellCoord.y == unitPos.y) {
-            return this.units[i];
+    for(var i=0; i<this.elements.length; i++) {
+        var elementPos = this.elements[i].getPosition();
+        if(cellCoord.x == elementPos.x && cellCoord.y == elementPos.y) {
+            return this.elements[i];
         }
     }
     return false;
 }
 
 /**
- * get an adyacent unit if any
+ * get an adyacent element if any
  * 
- * @param {} unit
- * @param int unitType
+ * @param {} element
+ * @param int elementType
  * @return {}
  */
-huungry.Map.prototype.getAdjacentUnit = function(unit, unitType) {
-    var unitPos = unit.getPosition();
-    var cellPos = this.getColRowFromXY(unitPos.x, unitPos.y);
+huungry.Map.prototype.getAdjacentElement = function(element, elementType) {
+    var elementPos = element.getPosition();
+    var cellPos = this.getColRowFromXY(elementPos.x, elementPos.y);
     
-    var adjacentUnits = [];
-    var foundUnit;
+    var adjacentElements = [];
+    var foundElement;
     if(cellPos.col-1 >= 0) {        
-        foundUnit = this.getTargetUnit(cellPos.col-1,cellPos.row);
-//        console.log(foundUnit);
-//        console.log('type:'+foundUnit.unitType);
-//        console.log('type2:'+unitType);
-//        console.log(foundUnit && foundUnit.unitType == unitType);
+        foundElement = this.getTargetElement(cellPos.col-1,cellPos.row);
+//        console.log(foundElement);
+//        console.log('type:'+foundElement.elementType);
+//        console.log('type2:'+elementType);
+//        console.log(foundElement && foundElement.elementType == elementType);
         
-        if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+        if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         
         if(cellPos.row-1 >= 0) {
-            foundUnit = this.getTargetUnit(cellPos.col-1,cellPos.row-1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row-1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
             
-            foundUnit = this.getTargetUnit(cellPos.col,cellPos.row-1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+            foundElement = this.getTargetElement(cellPos.col,cellPos.row-1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
         
         if(cellPos.row+1 < this.num_rows) {
-            foundUnit = this.getTargetUnit(cellPos.col-1,cellPos.row+1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row+1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
             
-            foundUnit = this.getTargetUnit(cellPos.col,cellPos.row+1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+            foundElement = this.getTargetElement(cellPos.col,cellPos.row+1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
         
     }
-    //console.log(adjacentUnits);
+    //console.log(adjacentElements);
     if(cellPos.col+1 < this.num_cols) {        
-        foundUnit = this.getTargetUnit(cellPos.col+1,cellPos.row);
-        if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+        foundElement = this.getTargetElement(cellPos.col+1,cellPos.row);
+        if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         
         if(cellPos.row-1 >= 0) {
-            foundUnit = this.getTargetUnit(cellPos.col+1,cellPos.row-1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}          
+            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row-1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}          
         }
         
         if(cellPos.row+1 < this.num_rows) {
-            foundUnit = this.getTargetUnit(cellPos.col+1,cellPos.row+1);    
-            if(foundUnit && foundUnit.unitType == unitType) {adjacentUnits.push(foundUnit);}
+            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row+1);    
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
         
     }
-    //console.log(adjacentUnits.length);
-    //console.log(adjacentUnits.length > 0);
-    if(adjacentUnits.length > 0) {
+    //console.log(adjacentElements.length);
+    //console.log(adjacentElements.length > 0);
+    if(adjacentElements.length > 0) {
         //console.log('in');
-        var index = goog.math.randomInt(adjacentUnits.length);
-        //console.log('adjacent units:'+JSON.stringify(adjacentUnits));
+        var index = goog.math.randomInt(adjacentElements.length);
+        //console.log('adjacent elements:'+JSON.stringify(adjacentElements));
         //console.log('chosen index:'+index);
-        //console.log('chosen unit:'+adjacentUnits[index]);
-        return adjacentUnits[index];
+        //console.log('chosen element:'+adjacentElements[index]);
+        return adjacentElements[index];
     }
     else {
-        //console.log('no adjacent units');
+        //console.log('no adjacent elements');
         return false;
     }
 }

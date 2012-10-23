@@ -13,7 +13,7 @@ goog.require('goog.math');
 goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
-goog.require('huungry.City');
+goog.require('huungry.Place');
 goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
@@ -40,7 +40,11 @@ huungry.start = function(){
         ENEMY_ARMY: 3,
         PLAYER_UNIT: 4,
         ENEMY_UNIT: 5,
-        BLOCKED_TARGET: 6
+        BLOCKED_TARGET: 6,
+        ITEM_TARGET: 7,
+        SHOP_TARGET: 8,
+        CITY_TARGET: 9,
+        QUEST_TARGET: 10,
     };    
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
@@ -78,6 +82,12 @@ huungry.start = function(){
         .setBackground('assets/medium_map.png');
 
     gameObj.map.init();
+
+    //places
+    var pos = gameObj.map.getXYFromColRow(3,2);
+    var place = new huungry.Place().setFill('assets/city.png')
+        .setPosition(pos.x, pos.y);
+    gameObj.gameLayer.appendChild(place);
 
     //player
     var pos = gameObj.map.getXYFromColRow(0,2);

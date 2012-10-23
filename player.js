@@ -32,10 +32,16 @@ huungry.Player.prototype.playerMoved = function() {
     this.refreshMapPos();
     
     //check for enemy collision
-    for(var i=0; i < this.map.units.length; i++) {      
-        if(this.cell.col == this.map.units[i].cell.col && this.cell.row == this.map.units[i].cell.row 
-            && this.id != this.map.units[i].id && this.map.units[i].unitType == this.gameObj.ENEMY_ARMY) {
-            this.gameObj.fight(this.map.units[i]);
+    for(var i=0; i < this.map.elements.length; i++) {    
+        if(this.cell.col == this.map.elements[i].cell.col && this.cell.row == this.map.elements[i].cell.row 
+            && this.id != this.map.elements[i].id) {
+            if(this.map.elements[i].elementType == this.gameObj.ENEMY_ARMY) {
+                this.gameObj.fight(this.map.elements[i]);
+            }
+            else {
+                console.log('in an element');
+            }
+            
         }
     }
 }

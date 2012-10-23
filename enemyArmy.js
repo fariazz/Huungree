@@ -16,7 +16,7 @@ goog.inherits(huungry.EnemyArmy, huungry.Character);
  * Init
  */
 huungry.EnemyArmy.prototype.init = function() {
-    this.unitType = this.gameObj.ENEMY_ARMY;
+    this.elementType = this.gameObj.ENEMY_ARMY;
 //    lime.scheduleManager.schedule(function(dt) {
 //        if(!this.gameObj.player.inFightScene) {     
 //            if(goog.math.Box.intersectsWithPadding(this.getBoundingBox(),this.gameObj.player.getBoundingBox(), -1)) {
