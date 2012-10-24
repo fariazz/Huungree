@@ -12,7 +12,7 @@ huungry.EnemyArmy = function() {
 
 goog.inherits(huungry.EnemyArmy, huungry.Character);
 
-/*
+/**
  * Init
  */
 huungry.EnemyArmy.prototype.init = function() {

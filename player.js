@@ -38,10 +38,24 @@ huungry.Player.prototype.playerMoved = function() {
             if(this.map.elements[i].elementType == this.gameObj.ENEMY_ARMY) {
                 this.gameObj.fight(this.map.elements[i]);
             }
+            else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
+                var item = this.map.elements[i];
+                this.collect(item);
+            }
             else {
-                console.log('in an element');
+                console.log(this.map.elements[i]);
             }
             
         }
     }
+}
+
+/**
+ * collect item
+ * @param {} item
+ */
+huungry.Player.prototype.collect = function(item) {
+    this.gold += item.gold;
+    item.die();
+    this.gameObj.controlsLayer.refreshInfo();
 }

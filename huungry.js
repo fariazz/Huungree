@@ -13,7 +13,7 @@ goog.require('goog.math');
 goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
-goog.require('huungry.Place');
+goog.require('huungry.Item');
 goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
@@ -85,8 +85,43 @@ huungry.start = function(){
 
     //places
     var pos = gameObj.map.getXYFromColRow(3,2);
-    var place = new huungry.Place().setFill('assets/city.png')
-        .setPosition(pos.x, pos.y);
+    var place = new huungry.Item()
+        .setGameObj(gameObj)
+        .setPosition(pos.x, pos.y)
+        .setMap(gameObj.map)
+        .refreshMapPos()
+        .setData({
+            name: 'Gold',
+            gold: 100,
+            image: 'gold.png'
+        })
+        .init();  
+    gameObj.gameLayer.appendChild(place);
+    var pos = gameObj.map.getXYFromColRow(3,4);
+    var place = new huungry.Item()
+        .setGameObj(gameObj)
+        .setPosition(pos.x, pos.y)
+        .setMap(gameObj.map)
+        .refreshMapPos()
+        .setData({
+            name: 'Gold',
+            gold: 140,
+            image: 'gold.png'
+        })
+        .init();  
+    gameObj.gameLayer.appendChild(place);
+    var pos = gameObj.map.getXYFromColRow(6,6);
+    var place = new huungry.Item()
+        .setGameObj(gameObj)
+        .setPosition(pos.x, pos.y)
+        .setMap(gameObj.map)
+        .refreshMapPos()
+        .setData({
+            name: 'Gold',
+            gold: 100,
+            image: 'gold.png'
+        })
+        .init();  
     gameObj.gameLayer.appendChild(place);
 
     //player
