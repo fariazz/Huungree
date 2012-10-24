@@ -14,6 +14,7 @@ goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
 goog.require('huungry.Item');
+goog.require('huungry.Shop');
 goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.DialogScene');
@@ -83,9 +84,9 @@ huungry.start = function(){
 
     gameObj.map.init();
 
-    //places
+    //items
     var pos = gameObj.map.getXYFromColRow(3,2);
-    var place = new huungry.Item()
+    var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
         .setMap(gameObj.map)
@@ -96,9 +97,9 @@ huungry.start = function(){
             image: 'gold.png'
         })
         .init();  
-    gameObj.gameLayer.appendChild(place);
+    gameObj.gameLayer.appendChild(item);
     var pos = gameObj.map.getXYFromColRow(3,4);
-    var place = new huungry.Item()
+    var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
         .setMap(gameObj.map)
@@ -109,9 +110,9 @@ huungry.start = function(){
             image: 'gold.png'
         })
         .init();  
-    gameObj.gameLayer.appendChild(place);
+    gameObj.gameLayer.appendChild(item);
     var pos = gameObj.map.getXYFromColRow(6,6);
-    var place = new huungry.Item()
+    var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
         .setMap(gameObj.map)
@@ -122,7 +123,47 @@ huungry.start = function(){
             image: 'gold.png'
         })
         .init();  
-    gameObj.gameLayer.appendChild(place);
+    gameObj.gameLayer.appendChild(item);
+    
+    //shops
+    var pos = gameObj.map.getXYFromColRow(1,4);
+    var shop = new huungry.Shop()
+        .setGameObj(gameObj)
+        .setPosition(pos.x, pos.y)
+        .setMap(gameObj.map)
+        .refreshMapPos()
+        .setData(
+            {
+                name: 'le grand shop',
+                image: 'city.png',
+                units: [
+                    {                    
+                        qty: 10,
+                        price: 25,
+                        unitData: {                    
+                            name: 'super soldier',
+                            image: 'player2.png',
+                            attack: 15,
+                            defense: 4,
+                            canShoot: false                    
+                        }
+                    },
+                    {                    
+                        qty: 3,
+                        price: 45,
+                        unitData: {                    
+                            name: 'x-soldier',
+                            image: 'player3.png',
+                            attack: 25,
+                            defense: 4,
+                            canShoot: false                    
+                        }
+                    }
+                ]                
+            }
+        )
+        .init();  
+    gameObj.gameLayer.appendChild(shop);
 
     //player
     var pos = gameObj.map.getXYFromColRow(0,2);
@@ -159,7 +200,7 @@ huungry.start = function(){
             life: 10
         },
         {
-            name: 'soldier',
+            name: 'tough soldier',
             image: 'soldier.png',
             attack: 5,
             defense: 4,

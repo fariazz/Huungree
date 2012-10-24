@@ -42,6 +42,10 @@ huungry.Player.prototype.playerMoved = function() {
                 var item = this.map.elements[i];
                 this.collect(item);
             }
+            else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
+                this.map.elements[i].showDialog();
+                console.log('in shop');
+            }
             else {
                 console.log(this.map.elements[i]);
             }
