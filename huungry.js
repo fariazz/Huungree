@@ -45,7 +45,7 @@ huungry.start = function(){
         ITEM_TARGET: 7,
         SHOP_TARGET: 8,
         CITY_TARGET: 9,
-        QUEST_TARGET: 10,
+        QUEST_TARGET: 10
     };    
     gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
