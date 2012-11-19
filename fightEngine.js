@@ -115,21 +115,15 @@ huungry.FightEngine.prototype.initArmies = function() {
     this.playerUnitPositions = [];
     
     var i = 0;
+    var takenCells = {};    
     while(this.playerUnitPositions.length < this.gameObj.player.units.length) {
         var position = {
             col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX+1),
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+1)
         };
-        var spaceTaken = false;
 
-        for(j=0; j < this.playerUnitPositions.length; j++) {
-            if(this.playerUnitPositions[j].row == position.row && this.playerUnitPositions[j].col == position.col) {
-                spaceTaken = true;
-                break;
-            }
-        }
-
-        if(!spaceTaken) {
+        if(!takenCells[position.col+','+position.row]) {
+            takenCells[position.col+','+position.row] = true;
             this.playerUnitPositions.push(position);
             var pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
             var unit = new huungry.Unit()
@@ -145,28 +139,22 @@ huungry.FightEngine.prototype.initArmies = function() {
             this.playerUnits.push(unit);
             this.fightLayer.appendChild(unit);
             i++;
-        }            
+        }
     }
 
     //init enemy army
     this.enemyUnitPositions = [];
     
     var i=0;
+    var takenCells = {};
     while(this.enemyUnitPositions.length < this.enemyArmy.units.length) {
         var position = {
             col: this.gameObj.fightSceneEnemyStartX + goog.math.randomInt(this.gameObj.fightSceneEnemyEndX-this.gameObj.fightSceneEnemyStartX+0.99),
             row: this.gameObj.fightSceneEnemyStartY + goog.math.randomInt(this.gameObj.fightSceneEnemyEndY-this.gameObj.fightSceneEnemyStartY+0.99)
         };
-        var spaceTaken = false;
 
-        for(j=0; j < this.enemyUnitPositions.length; j++) {
-            if(this.enemyUnitPositions[j].row == position.row && this.enemyUnitPositions[j].col == position.col) {
-                spaceTaken = true;
-                break;
-            }
-        }
-
-        if(!spaceTaken) {
+        if(!takenCells[position.col+','+position.row]) {
+            takenCells[position.col+','+position.row] = true;
             this.enemyUnitPositions.push(position);
             var pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
             var unit = new huungry.Unit()
