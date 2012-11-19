@@ -63,3 +63,14 @@ huungry.Player.prototype.collect = function(item) {
     item.die();
     this.gameObj.controlsLayer.refreshInfo();
 }
+
+/**
+ * buy a unit
+ * @param {} unitData
+ * @param int price
+ */
+huungry.Player.prototype.buy = function(unitData, price, qty) {
+    this.gold -= price;
+    unitData.life = qty;
+    this.units.push(unitData);
+}

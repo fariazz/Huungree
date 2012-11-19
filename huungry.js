@@ -51,7 +51,7 @@ huungry.start = function(){
     gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
     
     //area in fight scene where units appear
-    gameObj.fightScenePlayerStartX = 6;
+    gameObj.fightScenePlayerStartX = 5;
     gameObj.fightScenePlayerEndX = 6;
     gameObj.fightScenePlayerStartY = 0;
     gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY - 1;
@@ -173,7 +173,7 @@ huungry.start = function(){
         .refreshMapPos();
     
     gameObj.player.init();
-       
+    gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
         {
             name: 'soldier',
