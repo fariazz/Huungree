@@ -2,7 +2,7 @@ goog.provide('huungry.Character');
 
 goog.require('lime.Sprite');
 
-/*
+/**
  * Game character class for tile-based games
  */
 huungry.Character = function() {
@@ -20,7 +20,7 @@ huungry.Character = function() {
 
 goog.inherits(huungry.Character,lime.Sprite);
 
-/*
+/**
  *Get the character tile column and row
  */
 huungry.Character.prototype.getCell = function() {

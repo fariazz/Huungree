@@ -39,10 +39,7 @@ huungry.FightEngine.prototype.init = function() {
     });
     
     this.fightScene.appendChild(this.fightLayer);
-
-    this.gameObj.player.inFightScene = true;    
-    this.initArmies();
-        
+    
     var runButton = new lime.GlossyButton().setSize(70,40).setPosition(120,300)
         .setAnchorPoint(0,0)
         .setText('Run').setColor('#00CD00'); 
@@ -69,7 +66,8 @@ huungry.FightEngine.prototype.init = function() {
         
 
     
-    
+    this.gameObj.player.inFightScene = true;    
+    this.initArmies();
     this.prepareOrder();    
     this.playTurn();
 }
