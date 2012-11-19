@@ -42,19 +42,33 @@ huungry.FightEngine.prototype.init = function() {
 
     this.gameObj.player.inFightScene = true;    
     this.initArmies();
-    
-    this.gameObj.director.replaceScene(this.fightScene);
         
     var runButton = new lime.GlossyButton().setSize(70,40).setPosition(120,300)
+        .setAnchorPoint(0,0)
         .setText('Run').setColor('#00CD00'); 
-
     this.fightLayer.appendChild(runButton);
-
     //run away
     var currentObj = this;
     goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
         currentObj.exitFight();
     });
+    
+    var passButton = new lime.GlossyButton().setSize(70,40).setPosition(200,300)
+        .setAnchorPoint(0,0)
+        .setText('Pass').setColor('#00CD00'); 
+    this.fightLayer.appendChild(passButton);
+    
+    //pass
+    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {
+        currentObj.pass();
+    });
+    
+    
+    
+    this.gameObj.director.replaceScene(this.fightScene);
+        
+
+    
     
     this.prepareOrder();    
     this.playTurn();
@@ -103,8 +117,8 @@ huungry.FightEngine.prototype.initArmies = function() {
     var i = 0;
     while(this.playerUnitPositions.length < this.gameObj.player.units.length) {
         var position = {
-            col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX+0.99),
-            row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+0.99)
+            col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX+1),
+            row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+1)
         };
         var spaceTaken = false;
 
@@ -357,4 +371,12 @@ huungry.FightEngine.prototype.updateNextMovingUnits = function() {
             this.currentEnemyIndex = 0;
         }
     }
+}
+
+/**
+ * pass a turn
+ */
+huungry.FightEngine.prototype.pass = function() {
+    this.playerUnits[this.currentPlayerIndex].toggleGamepad(false);
+    this.playTurn();
 }

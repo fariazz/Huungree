@@ -54,12 +54,12 @@ huungry.start = function(){
     gameObj.fightScenePlayerStartX = 5;
     gameObj.fightScenePlayerEndX = 6;
     gameObj.fightScenePlayerStartY = 0;
-    gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY - 1;
+    gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY-1;
     
     gameObj.fightSceneEnemyStartX = gameObj.screenNumTilesX-4;
     gameObj.fightSceneEnemyEndX = gameObj.screenNumTilesX-2;
     gameObj.fightSceneEnemyStartY = 0;
-    gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY - 1;
+    gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY-1;
     
     gameObj.maxRandPercentage = 0.2;
     
