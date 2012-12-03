@@ -80,12 +80,12 @@ huungry.start = function(){
     //game map
     gameObj.map = new huungry.Map().setGameObj(gameObj)
         .setJsonMap(BlockedCells.mainMap, 'blocked')
-        .setBackground('assets/medium_map.png');
+        .setBackground('assets/world_map.png');
 
     gameObj.map.init();
 
     //items
-    var pos = gameObj.map.getXYFromColRow(3,2);
+    var pos = gameObj.map.getXYFromColRow(17,2);
     var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
@@ -98,7 +98,7 @@ huungry.start = function(){
         })
         .init();  
     gameObj.gameLayer.appendChild(item);
-    var pos = gameObj.map.getXYFromColRow(3,4);
+    var pos = gameObj.map.getXYFromColRow(17,4);
     var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
@@ -111,7 +111,7 @@ huungry.start = function(){
         })
         .init();  
     gameObj.gameLayer.appendChild(item);
-    var pos = gameObj.map.getXYFromColRow(6,6);
+    var pos = gameObj.map.getXYFromColRow(20,6);
     var item = new huungry.Item()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
@@ -126,7 +126,7 @@ huungry.start = function(){
     gameObj.gameLayer.appendChild(item);
     
     //shops
-    var pos = gameObj.map.getXYFromColRow(1,4);
+    var pos = gameObj.map.getXYFromColRow(11,4);
     var shop = new huungry.Shop()
         .setGameObj(gameObj)
         .setPosition(pos.x, pos.y)
@@ -166,7 +166,7 @@ huungry.start = function(){
     gameObj.gameLayer.appendChild(shop);
 
     //player
-    var pos = gameObj.map.getXYFromColRow(0,2);
+    var pos = gameObj.map.getXYFromColRow(10,2);
     gameObj.player = new huungry.Player().setFill('assets/player.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setMap(gameObj.map)
@@ -217,7 +217,7 @@ huungry.start = function(){
     //enemyArmies
     gameObj.enemyArmies = [];
     
-    var pos = gameObj.map.getXYFromColRow(1,1);
+    var pos = gameObj.map.getXYFromColRow(11,1);
     gameObj.enemyArmies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setMap(gameObj.map)
@@ -256,7 +256,7 @@ huungry.start = function(){
     
     gameObj.gameLayer.appendChild(gameObj.enemyArmies[0]);
     
-    var pos = gameObj.map.getXYFromColRow(3,8);
+    var pos = gameObj.map.getXYFromColRow(13,8);
     gameObj.enemyArmies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setMap(gameObj.map)
@@ -316,7 +316,7 @@ huungry.start = function(){
     ];
     gameObj.gameLayer.appendChild(gameObj.enemyArmies[1]);
     
-    var pos = gameObj.map.getXYFromColRow(6,2);
+    var pos = gameObj.map.getXYFromColRow(16,2);
     gameObj.enemyArmies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
         .setGameObj(gameObj)
         .setMap(gameObj.map)
