@@ -46,8 +46,8 @@ var UnitTypes = [
         id: 'bluemonster',
         name: 'blue monster',
         image: 'bluemonster.png',
-        attack: 12,
-        defense: 4,
+        attack: 10,
+        defense: 8,
         canShoot: false,
         life: 10,
         gold: 10
@@ -56,8 +56,8 @@ var UnitTypes = [
         id: 'pinkmonster',
         name: 'pink monster',
         image: 'pinkmonster.png',
-        attack: 15,
-        defense: 4,
+        attack: 13,
+        defense: 10,
         canShoot: false,
         life: 14,
         gold: 15
@@ -67,7 +67,7 @@ var UnitTypes = [
         name: 'lion',
         image: 'lion.png',
         attack: 8,
-        defense: 3,
+        defense: 6,
         canShoot: false,
         life: 6,
         gold: 5
@@ -76,8 +76,8 @@ var UnitTypes = [
         id: 'zombie',
         name: 'zombie',
         image: 'zombie.png',
-        attack: 18,
-        defense: 3,
+        attack: 16,
+        defense: 5,
         canShoot: false,
         life: 12,
         gold: 13
@@ -86,8 +86,8 @@ var UnitTypes = [
         id: 'peasant',
         name: 'peasant',
         image: 'peasant.png',
-        attack: 5,
-        defense: 2,
+        attack: 10,
+        defense: 7,
         canShoot: false,
         life: 20,
         gold: 17
@@ -97,7 +97,7 @@ var UnitTypes = [
         name: 'dwarf',
         image: 'dwarf.png',
         attack: 20,
-        defense: 10,
+        defense: 13,
         canShoot: false,
         life: 25,
         gold: 40
@@ -106,8 +106,8 @@ var UnitTypes = [
         id: 'axeman',
         name: 'axe warrior',
         image: 'axeman.png',
-        attack: 22,
-        defense: 10,
+        attack: 16,
+        defense: 13,
         canShoot: false,
         life: 22,
         gold: 32

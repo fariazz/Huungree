@@ -45,7 +45,7 @@ huungry.Unit.prototype.playerMoved = function() {
  * @param huungry.Unit attackedUnit
  */
 huungry.Unit.prototype.attackUnit = function(attackedUnit) {
-    var damage = Math.max(0, this.attack - attackedUnit.defense) + Math.random()*this.gameObj.maxRandPercentage*this.attack;
+    var damage = this.attack*0.05 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
     attackedUnit.life -= damage;
     console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);

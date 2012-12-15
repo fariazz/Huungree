@@ -70,7 +70,6 @@ huungry.FightEngine.prototype.init = function() {
     
     this.gameObj.player.inFightScene = true;    
     this.initArmies();
-    this.prepareOrder();    
     this.playTurn();
 }
 
@@ -136,6 +135,7 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.customLayer = this.fightLayer;
             unit.initGamepad();
             unit.fightEngine = this;
+            unit.readiness = Math.random();
             this.playerUnits.push(unit);
             this.fightLayer.appendChild(unit);
             i++;
@@ -165,24 +165,12 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .setMap(this.map)
                 .refreshMapPos();   
             unit.fightEngine = this;
+            unit.readiness = Math.random();
             this.enemyUnits.push(unit);
             this.fightLayer.appendChild(unit);
             i++;
         }            
     }
-}
-
-/**
- * prepare the order in which the units will play
- */
-huungry.FightEngine.prototype.prepareOrder = function() {
-    
-    //@TODO define who starts
-    //@TODO sort units by some criteria like agility, or randomly
-    //this.playerMoves = Math.random() > 0.5;
-    this.playerMoves = false;
-    this.currentPlayerIndex = 0;
-    this.currentEnemyIndex = 0;    
 }
 
 /**
@@ -197,9 +185,7 @@ huungry.FightEngine.prototype.playTurn = function() {
     }
     
     this.updateNextMovingUnits();
-    
-    this.playerMoves = !this.playerMoves;
-    
+
     if(this.playerMoves) {
         //show gamepad for current unit
         this.showCurrentGamepad();        
@@ -347,18 +333,34 @@ huungry.FightEngine.prototype.updateDead = function() {
  * define which units are staged to move on the next move
  */
 huungry.FightEngine.prototype.updateNextMovingUnits = function() {
-    if(!this.playerMoves) {
-        this.currentPlayerIndex++;
-        if(this.currentPlayerIndex >= this.playerUnits.length) {
-            this.currentPlayerIndex = 0;
-        }
+    
+    //reset previous unit if any
+    if(this.playerMoves === true) {
+        this.playerUnits[this.currentPlayerIndex].readiness = 0;
     }
-    else {
-        this.currentEnemyIndex++;        
-        if(this.currentEnemyIndex >= this.enemyUnits.length) {
-            this.currentEnemyIndex = 0;
-        }
+    else if(this.playerMoves === false) {
+        this.enemyUnits[this.currentEnemyIndex].readiness = 0;
     }
+    
+    //get the unit with the highest "readiness"    
+    var maxReady = -99;
+    for(var i=0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
+        this.playerUnits[i].readiness+= Math.random();
+        if(this.playerUnits[i].readiness > maxReady) {
+            this.currentPlayerIndex = i;
+            maxReady = this.playerUnits[i].readiness;
+            this.playerMoves = true;
+        }        
+    }
+    
+    for(i=0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
+        this.enemyUnits[i].readiness+= Math.random();
+        if(this.enemyUnits[i].readiness > maxReady) {
+            this.currentEnemyIndex = i;            
+            maxReady = this.enemyUnits[i].readiness;
+            this.playerMoves = false;
+        }        
+    }   
 }
 
 /**

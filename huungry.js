@@ -160,46 +160,6 @@ huungry.start = function(){
         }
     };
     gameObj.loadShops();
-    
-    
-    var pos = gameObj.map.getXYFromColRow(11,4);
-    var shop = new huungry.Shop()
-        .setGameObj(gameObj)
-        .setPosition(pos.x, pos.y)
-        .setMap(gameObj.map)
-        .refreshMapPos()
-        .setData(
-            {
-                name: 'le grand shop',
-                image: 'city.png',
-                units: [
-                    {                    
-                        qty: 10,
-                        price: 25,
-                        unitData: {                    
-                            name: 'super soldier',
-                            image: 'player2.png',
-                            attack: 15,
-                            defense: 4,
-                            canShoot: false                    
-                        }
-                    },
-                    {                    
-                        qty: 3,
-                        price: 45,
-                        unitData: {                    
-                            name: 'x-soldier',
-                            image: 'player3.png',
-                            attack: 25,
-                            defense: 4,
-                            canShoot: false                    
-                        }
-                    }
-                ]                
-            }
-        )
-        .init();  
-    gameObj.gameLayer.appendChild(shop);
 
     //player
     var pos = gameObj.map.getXYFromColRow(10,2);
@@ -211,38 +171,10 @@ huungry.start = function(){
     gameObj.player.init();
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
-        {
-            name: 'soldier',
-            image: 'player.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'soldier',
-            image: 'player.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'soldier',
-            image: 'player.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'tough soldier',
-            image: 'soldier.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        }
+        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
     ];
     
     
