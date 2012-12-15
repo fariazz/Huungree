@@ -15,7 +15,7 @@ huungry.DialogScene = function() {
     this.dialogBackground = new lime.Sprite().setAnchorPoint(0, 0)
         .setPosition(WIDTH/8, HEIGHT/8).setSize(WIDTH*3/4, HEIGHT*3/4).setFill('#9BCD9B');
 
-    this.dialogClose = new lime.GlossyButton().setSize(50,20).setPosition(WIDTH/2,HEIGHT*3/4)
+    this.dialogClose = new lime.GlossyButton().setSize(25,10).setPosition(WIDTH/2,HEIGHT*3/4)
         .setText('Ok').setColor('#EECFA1');
 
     this.appendChild(this.dialogBackground);

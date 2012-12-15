@@ -31,11 +31,11 @@ huungry.start = function(){
 
     //main game object
     var gameObj = {
-        screenWidth: 480,
-        screenHeight: 320,
-        tileSize: 40,
-        width: 2000,
-        height: 2000,
+        screenWidth: 240,
+        screenHeight: 160,
+        tileSize: 20,
+        width: 1000,
+        height: 1000,
         FREE_TARGET: 1,
         PLAYER_ARMY: 2,
         ENEMY_ARMY: 3,
@@ -254,15 +254,15 @@ huungry.start = function(){
     }
     
     //player details screen
-    gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
+    gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     
     var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
             .setSize(gameObj.width, gameObj.height-500).setFill('#0D0D0D');
     
     //close button
     var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(400, 280)
-        .setSize(80, 40);
+        .setPosition(gameObj.tileSize*10, gameObj.tileSize*7)
+        .setSize(gameObj.tileSize*2, gameObj.tileSize);
     gameObj.playerInfoScene.appendChild(winBackground);
     gameObj.playerInfoScene.appendChild(closeButton);
     gameObj.playerInfoLayer = new lime.Layer().setAnchorPoint(0, 0);            
@@ -281,7 +281,7 @@ huungry.start = function(){
         //player units
         for(var i=0; i<gameObj.player.units.length; i++) {          
             var label = new lime.Label().setText(gameObj.player.units[i].name+' - '+Math.ceil(gameObj.player.units[i].life)).setFontColor('#E8FC08')
-            .setPosition(10, 50+30*i).setAnchorPoint(0,0);
+            .setPosition(gameObj.tileSize/4, gameObj.tileSize+gameObj.tileSize*2/3*i).setAnchorPoint(0,0);
             gameObj.playerInfoLayer.appendChild(label);
         }
         gameObj.director.replaceScene(gameObj.playerInfoScene);

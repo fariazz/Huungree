@@ -8,8 +8,7 @@ goog.require('lime.Sprite');
 huungry.Character = function() {
     goog.base(this);
 
-    this.setAnchorPoint(0, 0);
-    this.setSize(40,40);
+    this.setAnchorPoint(0, 0);    
     this.path = [];
     this.isMoving = false;
     this.currentTarget = [];
@@ -44,6 +43,7 @@ huungry.Character.prototype.walkTo = function(col,row) {
  */
 huungry.Character.prototype.setGameObj = function(gameObj) {
     this.gameObj = gameObj;
+    this.setSize(this.gameObj.tileSize,this.gameObj.tileSize);
     return this;
 }
 

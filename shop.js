@@ -34,13 +34,13 @@ huungry.Shop.prototype.setData = function(data) {
  */
 huungry.Shop.prototype.showDialog = function() {
     console.log('show dialog');
-    this.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    this.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
     var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
             .setSize(this.gameObj.screenWidth, this.gameObj.screenHeight).setFill('#0D0D0D');
     //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(400, 280)
-        .setSize(80, 40);
+    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')        
+        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
+        .setSize(this.gameObj.tileSize*3, this.gameObj.tileSize);
     this.scene.appendChild(winBackground);
     this.scene.appendChild(closeButton);
     
@@ -52,13 +52,13 @@ huungry.Shop.prototype.showDialog = function() {
     
     //show units
     for(var i=0; i < this.data.units.length; i++) {
-        var productLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(20,50+i*42);
+        var productLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize+i*this.gameObj.tileSize);
         var productImg = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setFill('assets/'+this.data.units[i].unitData.image).setSize(32,32);
+            .setFill('assets/'+this.data.units[i].unitData.image).setSize(this.gameObj.tileSize,this.gameObj.tileSize);
         productLayer.appendChild(productImg);
         
         var productLabel = new lime.Label().setText(this.data.units[i].qty+'x'+this.data.units[i].unitData.name+' ('+this.data.units[i].price+' gold)')
-            .setFontColor('#E8FC08').setAnchorPoint(0,0).setPosition(45,16);
+            .setFontColor('#E8FC08').setAnchorPoint(0,0).setPosition(this.gameObj.tileSize,this.gameObj.tileSize/2);
         productLayer.appendChild(productLabel);
         
         this.scene.appendChild(productLayer);        

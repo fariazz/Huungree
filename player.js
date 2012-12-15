@@ -67,7 +67,8 @@ huungry.Player.prototype.collect = function(item) {
 /**
  * buy a unit
  * @param {} unitData
- * @param int price
+ * @param price
+ * @param qty
  */
 huungry.Player.prototype.buy = function(unitData, price, qty) {
     this.gold -= price;

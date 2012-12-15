@@ -40,7 +40,8 @@ huungry.FightEngine.prototype.init = function() {
     
     this.fightScene.appendChild(this.fightLayer);
     
-    var runButton = new lime.GlossyButton().setSize(70,40).setPosition(120,300)
+    var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize)
+        .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
         .setText('Run').setColor('#00CD00'); 
     this.fightLayer.appendChild(runButton);
@@ -50,7 +51,8 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.exitFight();
     });
     
-    var passButton = new lime.GlossyButton().setSize(70,40).setPosition(200,300)
+    var passButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize)
+        .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
         .setText('Pass').setColor('#00CD00'); 
     this.fightLayer.appendChild(passButton);

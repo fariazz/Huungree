@@ -5,10 +5,6 @@ goog.provide('huungry.Unit');
  */
 huungry.Unit = function() {
     goog.base(this);
-
-    this.setAnchorPoint(0, 0);
-    this.setSize(40,40);
-    this.path = [];
 }
 
 goog.inherits(huungry.Unit,huungry.Character);
@@ -28,7 +24,7 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
-    this.lifeBar = new lime.Label().setPosition(27,0).setText(Math.max(Math.ceil(this.life),0)).setSize(20,20)
+    this.lifeBar = new lime.Label().setPosition(12,13).setText(Math.max(Math.ceil(this.life),0)).setFontSize(10)
         .setAnchorPoint(0,0).setFontColor('#FFFFFF');
     this.appendChild(this.lifeBar);
     

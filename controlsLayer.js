@@ -89,12 +89,9 @@ huungry.ControlsLayer.prototype.init = function() {
     });
     
     //side bar
-    this.goldLabel = new lime.Label().setPosition(2,5).setText('Gold:')
-        .setAnchorPoint(0,0).setFontColor('#000000');
-    this.goldValue = new lime.Label().setPosition(2,25).setText()
-        .setAnchorPoint(0,0).setFontColor('#000000');
+    this.goldValue = new lime.Label().setPosition(2,5).setText()
+        .setAnchorPoint(0,0).setFontColor('#000000').setFontSize(8);
         
-    this.sideBar.appendChild(this.goldLabel);    
     this.sideBar.appendChild(this.goldValue);    
 }
 
