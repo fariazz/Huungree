@@ -125,7 +125,43 @@ huungry.start = function(){
         .init();  
     gameObj.gameLayer.appendChild(item);
     
+    //init unit types
+    gameObj.cloneUnit = function(unit) {
+        var cloned= {
+                id: unit.id,
+                name: unit.name,
+                image: unit.image,
+                attack: unit.attack,
+                defense: unit.defense,
+                canShoot: unit.canShoot,
+                life: unit.life,
+                gold: unit.gold
+        }
+        return cloned;
+    }
+    
+    gameObj.unitTypes = new Array();
+    for(var i=0, arrayLen = UnitTypes.length; i<arrayLen; i++) {
+        gameObj.unitTypes[UnitTypes[i].id] = UnitTypes[i];
+    }
+    
     //shops
+    gameObj.loadShops = function() {        
+        for(var i=0, arrayLen = MapShops.length; i<arrayLen; i++) {
+            var pos = gameObj.map.getXYFromColRow(MapShops[i].x,MapShops[i].y);
+            var shop = new huungry.Shop()
+                .setGameObj(gameObj)
+                .setPosition(pos.x, pos.y)
+                .setMap(gameObj.map)
+                .refreshMapPos()
+                .setData(MapShops[i])
+                .init();
+            gameObj.gameLayer.appendChild(shop);
+        }
+    };
+    gameObj.loadShops();
+    
+    
     var pos = gameObj.map.getXYFromColRow(11,4);
     var shop = new huungry.Shop()
         .setGameObj(gameObj)
@@ -215,13 +251,8 @@ huungry.start = function(){
     gameObj.player.toggleGamepad(true);
     
     //enemyArmies
-    gameObj.loadEnemies = function() {
-        gameObj.enemyTypes = new Array();
+    gameObj.loadEnemies = function() {        
         gameObj.enemyArmies = new Array();
-        for(var i=0, arrayLen = EnemyTypes.length; i<arrayLen; i++) {
-            gameObj.enemyTypes[EnemyTypes[i].id] = EnemyTypes[i];
-        }
-        
         for(var i=0, arrayLen = MapEnemyArmies.length; i<arrayLen; i++) {
             var pos = gameObj.map.getXYFromColRow(MapEnemyArmies[i].x,MapEnemyArmies[i].y);
             gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/'+MapEnemyArmies[i].image).setPosition(pos.x, pos.y)

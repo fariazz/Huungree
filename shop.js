@@ -52,27 +52,29 @@ huungry.Shop.prototype.showDialog = function() {
     
     //show units
     for(var i=0; i < this.data.units.length; i++) {
-        var productLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize+i*this.gameObj.tileSize);
+        var unit = this.gameObj.unitTypes[this.data.units[i].id];
+        var productLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize+i*this.gameObj.tileSize*1.1);
         var productImg = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setFill('assets/'+this.data.units[i].unitData.image).setSize(this.gameObj.tileSize,this.gameObj.tileSize);
+            .setAnchorPoint(0, 0)
+            .setFill('assets/'+unit.image).setSize(this.gameObj.tileSize,this.gameObj.tileSize);
         productLayer.appendChild(productImg);
         
-        var productLabel = new lime.Label().setText(this.data.units[i].qty+'x'+this.data.units[i].unitData.name+' ('+this.data.units[i].price+' gold)')
-            .setFontColor('#E8FC08').setAnchorPoint(0,0).setPosition(this.gameObj.tileSize,this.gameObj.tileSize/2);
+        var productLabel = new lime.Label().setText(unit.name+' ('+this.data.units[i].price+' gold)')
+            .setFontColor('#E8FC08').setAnchorPoint(0,0).setPosition(this.gameObj.tileSize*1.1,0);
         productLayer.appendChild(productLabel);
         
         this.scene.appendChild(productLayer);        
         
-        (function(productLayer, i) {
+        (function(productLayer, i, unit) {
             goog.events.listen(productLayer,['mousedown', 'touchstart'], function(e) {
                 if(currentObj.gameObj.player.gold >= currentObj.data.units[i].price) {
                     if(currentObj.gameObj.player.units.length < currentObj.gameObj.player.maxNumUnits ) {
-                        currentObj.gameObj.player.buy(currentObj.data.units[i].unitData, currentObj.data.units[i].price, currentObj.data.units[i].qty);
+                        currentObj.gameObj.player.buy(unit, currentObj.data.units[i].price);
                         currentObj.refreshPlayerInfo();
                     }
                 }
             })
-        })(productLayer, i);
+        })(productLayer, i, unit);
         
     }
     

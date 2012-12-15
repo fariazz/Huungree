@@ -41,7 +41,7 @@ var BlockedCells = {};
  "width":50
 }
 
-var EnemyTypes = [
+var UnitTypes = [
     {
         id: 'bluemonster',
         name: 'blue monster',
@@ -81,6 +81,46 @@ var EnemyTypes = [
         canShoot: false,
         life: 12,
         gold: 13
+    },
+    {
+        id: 'peasant',
+        name: 'peasant',
+        image: 'peasant.png',
+        attack: 5,
+        defense: 2,
+        canShoot: false,
+        life: 20,
+        gold: 17
+    },
+    {
+        id: 'dwarf',
+        name: 'dwarf',
+        image: 'dwarf.png',
+        attack: 20,
+        defense: 10,
+        canShoot: false,
+        life: 25,
+        gold: 40
+    },
+    {
+        id: 'axeman',
+        name: 'axe warrior',
+        image: 'axeman.png',
+        attack: 22,
+        defense: 10,
+        canShoot: false,
+        life: 22,
+        gold: 32
+    },
+    {
+        id: 'soldier',
+        name: 'soldier',
+        image: 'soldier.png',
+        attack: 18,
+        defense: 10,
+        canShoot: false,
+        life: 18,
+        gold: 24
     },
 ]
 
@@ -301,3 +341,23 @@ var MapEnemyArmies = [
     },
 ]
 
+MapShops = [
+    {
+        x: 8,
+        y: 4,
+        name: 'Le Mirage',
+        image: 'city.png',
+        units: [
+            {
+                id: 'peasant',
+                price: 30,
+                qty: 5
+            },
+            {                
+                id: 'axeman',
+                price: 40,
+                qty: 5
+            }
+        ]
+    },
+];

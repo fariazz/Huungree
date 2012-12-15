@@ -66,12 +66,12 @@ huungry.Player.prototype.collect = function(item) {
 
 /**
  * buy a unit
- * @param {} unitData
+ * @param unit
  * @param price
  * @param qty
  */
-huungry.Player.prototype.buy = function(unitData, price, qty) {
+huungry.Player.prototype.buy = function(unit, price) {
     this.gold -= price;
-    unitData.life = qty;
-    this.units.push(unitData);
+    this.units.push(unit);
+    console.log(this.units);
 }

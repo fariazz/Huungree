@@ -21,21 +21,12 @@ huungry.EnemyArmy.prototype.init = function() {
     this.units = new Array();
     
     for(var i = 0, arrayLen = this.unitsSummary.length; i < arrayLen; i++) {
-        var unit = this.gameObj.enemyTypes[this.unitsSummary[i].id];
+        var unit = this.gameObj.unitTypes[this.unitsSummary[i].id];
         
         this.gold += unit.gold * this.unitsSummary[i].number;
         
         for(var j = 0; j< this.unitsSummary[i].number; j++) {
-            this.units.push({
-                id: unit.id,
-                name: unit.name,
-                image: unit.image,
-                attack: unit.attack,
-                defense: unit.defense,
-                canShoot: unit.canShoot,
-                life: unit.life,
-                gold: unit.gold
-            });
+            this.units.push(this.gameObj.cloneUnit(unit));
         }
     }
     
