@@ -215,143 +215,29 @@ huungry.start = function(){
     gameObj.player.toggleGamepad(true);
     
     //enemyArmies
-    gameObj.enemyArmies = [];
-    
-    var pos = gameObj.map.getXYFromColRow(11,1);
-    gameObj.enemyArmies[0] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setMap(gameObj.map)
-        .refreshMapPos();        
-        
-    gameObj.enemyArmies[0].init();
-    gameObj.enemyArmies[0].gold = 124;
-    
-    gameObj.enemyArmies[0].units = [
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 12,
-            defense: 4,
-            canShoot: false,
-            life: 1
-        },
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 1,
-            defense: 4,
-            canShoot: false,
-            life: 1
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 1,
-            defense: 4,
-            canShoot: false,
-            life: 1
-        }
-    ];
-    
-    
-    gameObj.gameLayer.appendChild(gameObj.enemyArmies[0]);
-    
-    var pos = gameObj.map.getXYFromColRow(13,8);
-    gameObj.enemyArmies[1] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setMap(gameObj.map)
-        .refreshMapPos();        
-        
-    gameObj.enemyArmies[1].init();
-    gameObj.enemyArmies[1].gold = 100;
-    gameObj.enemyArmies[1].units = [
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        }
-    ];
-    gameObj.gameLayer.appendChild(gameObj.enemyArmies[1]);
-    
-    var pos = gameObj.map.getXYFromColRow(16,2);
-    gameObj.enemyArmies[2] = new huungry.EnemyArmy().setFill('assets/enemy.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setMap(gameObj.map)
-        .refreshMapPos();        
-        
-    gameObj.enemyArmies[2].init();
-    gameObj.enemyArmies[2].gold = 140;
-    gameObj.enemyArmies[2].units = [
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
-        },
-        {
-            name: 'monster',
-            image: 'enemy2.png',
-            attack: 5,
-            defense: 4,
-            canShoot: false,
-            life: 10
+    gameObj.loadEnemies = function() {
+        gameObj.enemyTypes = new Array();
+        gameObj.enemyArmies = new Array();
+        for(var i=0, arrayLen = EnemyTypes.length; i<arrayLen; i++) {
+            gameObj.enemyTypes[EnemyTypes[i].id] = EnemyTypes[i];
         }
         
-    ];
-    gameObj.gameLayer.appendChild(gameObj.enemyArmies[2]);
+        for(var i=0, arrayLen = MapEnemyArmies.length; i<arrayLen; i++) {
+            var pos = gameObj.map.getXYFromColRow(MapEnemyArmies[i].x,MapEnemyArmies[i].y);
+            gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/'+MapEnemyArmies[i].image).setPosition(pos.x, pos.y)
+                .setGameObj(gameObj)
+                .setMap(gameObj.map)
+                .refreshMapPos()); 
+            gameObj.enemyArmies[i].unitsSummary = MapEnemyArmies[i].unitsSummary;
+            gameObj.enemyArmies[i].init();
+            gameObj.gameLayer.appendChild(gameObj.enemyArmies[i]);
+        }
+    };
+    gameObj.loadEnemies();
+    
+     
+        
+    
     
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
