@@ -47,7 +47,7 @@ huungry.Character.prototype.setGameObj = function(gameObj) {
     return this;
 }
 
-/*
+/**
  * set map
  * @param {} map
  * @return {}
@@ -230,7 +230,7 @@ huungry.Character.prototype.initGamepad = function() {
                     character.runAction(movement);                    
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
                         character.playerMoved();
-                    })
+                    });
                 }
                 else {
                     character.setPosition(targetX, targetY);
@@ -242,6 +242,7 @@ huungry.Character.prototype.initGamepad = function() {
             goog.events.listen(character.attackTargets[i].sprite,['mousedown', 'touchstart'], function(e) {
                 e.event.stopPropagation();
                 if(character.currentTarget.length) {
+                    character.toggleGamepad(false);
                     character.attackUnit(character.currentTarget[i]);
                 }                
             });
@@ -280,9 +281,15 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
         }    
     }
     else {
+        console.log('creature');
+        console.log(this);
         for(var i=0; i<this.movementTargets.length; i++) {
             this.movementTargets[i].sprite.setHidden(true);
             this.attackTargets[i].sprite.setHidden(true);
+        }
+        
+        if(this.fightEngine) {
+            this.fightEngine.clearRangeTargets();
         }
     }    
     

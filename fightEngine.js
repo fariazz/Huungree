@@ -7,8 +7,9 @@ goog.require('lime.Circle');
  */
 huungry.FightEngine = function() {
     this.floorColor = 'rgb(0,125,0)';
-    this.playerUnits = [];
-    this.enemyUnits = [];
+    this.playerUnits = new Array();
+    this.enemyUnits = new Array();
+    this.rangeTargets = new Array();
 }
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
@@ -25,7 +26,7 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
  * initiate fighting
  */
 huungry.FightEngine.prototype.init = function() {
-    this.fightScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);    
+    this.fightScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
     
     this.map = new huungry.Map().setGameObj(this.gameObj)
@@ -61,6 +62,7 @@ huungry.FightEngine.prototype.init = function() {
     
     //pass
     goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {
+        currentObj.clearRangeTargets();
         currentObj.pass();
     });
     
@@ -200,7 +202,6 @@ huungry.FightEngine.prototype.playTurn = function() {
         //attach adjacent enemy if any
         var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
         if(adjacentEnemy) {
-            console.log('attack player:'+adjacentEnemy.name);
             enemy.attackUnit(adjacentEnemy);
         }
         
@@ -224,11 +225,11 @@ huungry.FightEngine.prototype.playTurn = function() {
                 bullet.runAction(movement); 
                 
                 var layer = this.fightLayer;
+                var currentObj = this;
                 goog.events.listen(movement,lime.animation.Event.STOP,function(){
                     layer.removeChild(bullet);
+                    enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
                 })
-                
-                enemy.attackUnit(this.playerUnits[targetUnitIndex]);
             }
             
             else {
@@ -278,6 +279,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     var unit = this.playerUnits[this.currentPlayerIndex];
     var pos = unit.getPosition();        
     var tileSize = this.gameObj.tileSize;
+    var currentObj = this;
     
     //remove previous target
     unit.currentTarget = [];
@@ -298,9 +300,61 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
             unit.attackTargets[i].sprite.setPosition(posX,posY);
             unit.currentTarget[i] = this.getUnitFromXY(posX, posY);
         }
-    }    
+    }
+
+    //show range attack targets if allowed
+    if(unit.canShoot) {
+        
+        this.rangeTargets = new Array();
+        var enemyPos;
+        var emnemyunitPos;
+        console.log('can shoot');
+        for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
+            enemyPos = this.enemyUnits[i].getPosition();
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303')
+                .setOpacity(0.5).setSize(tileSize,tileSize)
+                .setPosition(enemyPos.x, enemyPos.y));
+            
+            (function(i, currentObj) {
+                goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
+                    e.preventDefault();
+                    unit.toggleGamepad(false);
+                    emnemyunitPos = currentObj.enemyUnits[i].getPosition();
+                    
+                    //create bullet
+                    var bullet = new lime.Circle().setPosition(pos.x+currentObj.gameObj.tileSize/2, pos.y+currentObj.gameObj.tileSize/2)
+                        .setSize(currentObj.gameObj.tileSize/5,currentObj.gameObj.tileSize/5).setFill('#B0171F');
+                    currentObj.fightLayer.appendChild(bullet);
+
+                    var movement = new lime.animation
+                        .MoveTo(emnemyunitPos.x+currentObj.gameObj.tileSize/2,emnemyunitPos.y+currentObj.gameObj.tileSize/2)
+                        .setDuration(currentObj.gameObj.movementDuration);                    
+                    bullet.runAction(movement); 
+
+                    goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                        currentObj.fightLayer.removeChild(bullet);                        
+                        unit.attackUnit(currentObj.enemyUnits[i]);  
+                        
+                    })
+                });
+            })(i, currentObj);
+                
+            this.fightLayer.appendChild(this.rangeTargets[i]);
+        }
+    }
 }
 
+/**
+ * remove range targets from layer
+ */
+ huungry.FightEngine.prototype.clearRangeTargets = function() {
+     if(this.rangeTargets.length) {
+        for(var i=0, arrayLen = this.enemyUnits.length; i < arrayLen; i++) {    
+            this.rangeTargets[i].setHidden(true);
+            this.fightLayer.removeChild(this.rangeTargets[i]);
+        }
+     }
+ } 
 
 
 /**

@@ -170,10 +170,11 @@ huungry.start = function(){
     gameObj.player.init();
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+//        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+//        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+//        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
-        gameObj.cloneUnit(gameObj.unitTypes['soldier'])
+        gameObj.cloneUnit(gameObj.unitTypes['archer']),
     ];
     
     

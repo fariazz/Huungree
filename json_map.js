@@ -122,6 +122,16 @@ var UnitTypes = [
         life: 18,
         gold: 24
     },
+    {
+        id: 'archer',
+        name: 'archer',
+        image: 'archer.png',
+        attack: 10,
+        defense: 5,
+        canShoot: true,
+        life: 1300,
+        gold: 23
+    },
 ]
 
 var MapEnemyArmies = [
