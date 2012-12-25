@@ -1,5 +1,7 @@
 goog.provide('huungry.FightEngine');
 
+goog.require('lime.Circle');
+
 /*
  * Takes care of the fighting
  */
@@ -193,6 +195,7 @@ huungry.FightEngine.prototype.playTurn = function() {
     else {
         //enemy moves
         var enemy = this.enemyUnits[this.currentEnemyIndex]
+        var unitPos = enemy.getPosition();
         
         //attach adjacent enemy if any
         var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
@@ -202,39 +205,66 @@ huungry.FightEngine.prototype.playTurn = function() {
         }
         
         else {
-            //define target player unit
-            var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
-            var unitPos = enemy.getPosition();
-            var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
-            var diffX = targetUnitPos.x - unitPos.x,
-                diffY = targetUnitPos.y - unitPos.y;
-
-            var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
-                dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
-
-            var targetX = unitPos.x + this.gameObj.tileSize*dX,
-                targetY = unitPos.y + this.gameObj.tileSize*dY;
+            //if range decide between shooting and moving
+            var willShoot = Math.random();
             
-            //check blocked
-            var targetCell = this.map.getColRowFromXY(targetX,targetY);
-            var targetType = this.map.getTargetType(targetCell.col, targetCell.row);
-            
-            //if not blocked move
-            if(targetType == this.gameObj.FREE_TARGET) {
-                if(this.gameObj.animationOn) {
-                    var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
-                    enemy.runAction(movement);     
-
-                    var engine = this;
-                    goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                        engine.playTurn();
-                    })
-                }
+            if(enemy.canShoot && willShoot <= this.gameObj.shootProbability) {
+                //define target
+                var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
+                var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
+                
+                //create bullet
+                var bullet = new lime.Circle().setPosition(unitPos.x+this.gameObj.tileSize/2, unitPos.y+this.gameObj.tileSize/2)
+                    .setSize(this.gameObj.tileSize/5,this.gameObj.tileSize/5).setFill('#B0171F');
+                this.fightLayer.appendChild(bullet);
+                
+                var movement = new lime.animation
+                    .MoveTo(targetUnitPos.x+this.gameObj.tileSize/2,targetUnitPos.y+this.gameObj.tileSize/2)
+                    .setDuration(this.gameObj.movementDuration);                    
+                bullet.runAction(movement); 
+                
+                var layer = this.fightLayer;
+                goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                    layer.removeChild(bullet);
+                })
+                
+                enemy.attackUnit(this.playerUnits[targetUnitIndex]);
             }
-            //otherwise pass
+            
             else {
-                this.playTurn();
-            }
+                //define target player unit
+                var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);                
+                var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
+                var diffX = targetUnitPos.x - unitPos.x,
+                    diffY = targetUnitPos.y - unitPos.y;
+
+                var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
+                    dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
+
+                var targetX = unitPos.x + this.gameObj.tileSize*dX,
+                    targetY = unitPos.y + this.gameObj.tileSize*dY;
+
+                //check blocked
+                var targetCell = this.map.getColRowFromXY(targetX,targetY);
+                var targetType = this.map.getTargetType(targetCell.col, targetCell.row);
+
+                //if not blocked move
+                if(targetType == this.gameObj.FREE_TARGET) {
+                    if(this.gameObj.animationOn) {
+                        var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
+                        enemy.runAction(movement);     
+
+                        var engine = this;
+                        goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                            engine.playTurn();
+                        })
+                    }
+                }
+                //otherwise pass
+                else {
+                    this.playTurn();
+                }
+            }                        
         }   
     }
 }

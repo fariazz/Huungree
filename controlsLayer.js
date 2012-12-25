@@ -11,7 +11,7 @@ huungry.ControlsLayer = function() {
     this.tileFactorLSide = 3;
     this.tileFactorSSide = 1;
     this.setAnchorPoint(0, 0);
-//    this.setRenderer(lime.Renderer.CANVAS);
+    this.setRenderer(lime.Renderer.DOM);
 }
 
 goog.inherits(huungry.ControlsLayer,lime.Layer);

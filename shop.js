@@ -34,7 +34,7 @@ huungry.Shop.prototype.setData = function(data) {
  */
 huungry.Shop.prototype.showDialog = function() {
     console.log('show dialog');
-    this.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    this.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
             .setSize(this.gameObj.screenWidth, this.gameObj.screenHeight).setFill('#0D0D0D');
     //close button

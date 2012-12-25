@@ -48,7 +48,7 @@ var UnitTypes = [
         image: 'bluemonster.png',
         attack: 10,
         defense: 8,
-        canShoot: false,
+        canShoot: true,
         life: 10,
         gold: 10
     },
@@ -361,3 +361,12 @@ MapShops = [
         ]
     },
 ];
+
+MapItems = [
+    {
+        x: 12,
+        y: 3,
+        gold: 20,
+        image: 'gold.png'
+    },
+]

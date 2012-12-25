@@ -22,10 +22,6 @@ goog.require('huungry.FightEngine');
 goog.require('huungry.Unit');
 goog.require('lime.GlossyButton');
 
-WIDTH = 480;
-HEIGHT = 320;
-TILESIZE = 40;
-
 // entrypoint
 huungry.start = function(){
 
@@ -63,6 +59,9 @@ huungry.start = function(){
     
     gameObj.maxRandPercentage = 0.2;
     
+    //probability that a range attack unit shoots
+    gameObj.shootProbability = 0.85;
+    
     //animation
     gameObj.animationOn = true;
     gameObj.movementDuration = 0.2;
@@ -73,7 +72,7 @@ huungry.start = function(){
     //director.setDisplayFPS(false);
 
     //game scene
-    gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
     gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     gameObj.gameScene.appendChild(gameObj.gameLayer);
 
@@ -174,7 +173,7 @@ huungry.start = function(){
         gameObj.cloneUnit(gameObj.unitTypes['axeman']),
         gameObj.cloneUnit(gameObj.unitTypes['axeman']),
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
-        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier'])
     ];
     
     
