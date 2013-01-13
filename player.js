@@ -31,7 +31,7 @@ huungry.Player.prototype.playerMoved = function() {
     
     this.refreshMapPos();
     
-    this.gameObj.clearDarkness(this.cell.col,this.cell.row);
+    this.gameObj.updateVisiblity(this.cell.col,this.cell.row);
     
     //check for enemy collision
     for(var i=0; i < this.map.elements.length; i++) {    

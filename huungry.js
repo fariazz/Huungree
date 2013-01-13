@@ -74,7 +74,9 @@ huungry.start = function(){
     //game scene
     gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
     gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
+    gameObj.darknessLayer = new lime.Layer().setAnchorPoint(0, 0);
     gameObj.gameScene.appendChild(gameObj.gameLayer);
+    gameObj.gameScene.appendChild(gameObj.darknessLayer);
 
     //game map
     gameObj.map = new huungry.Map().setGameObj(gameObj)
@@ -174,51 +176,75 @@ huungry.start = function(){
     gameObj.loadEnemies();
     
      
-    //map darknessw
-    var darkness = new Array();
+    //init map visibility
+    gameObj.darkness = new Array();
     for(i = 0, arrayLen = gameObj.map.num_cols; i<arrayLen; i++) {        
-        darkness.push(new Array());
+        gameObj.darkness.push(new Array());
         for(var j = 0, arrayLen2 = gameObj.map.num_rows; j<arrayLen2; j++) {
-            darkness[i][j] = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
-                setPosition(i*gameObj.map.tileSize,j*gameObj.map.tileSize).
-                setSize(gameObj.map.tileSize,gameObj.map.tileSize);
-            gameObj.gameLayer.appendChild(darkness[i][j]);
+            gameObj.darkness[i][j] = 1;            
         }        
     }
         
-    gameObj.clearDarkness = function(col,row) {
-
-        darkness[col][row].setHidden(true);
+    gameObj.updateVisiblity = function(col,row) {
+        
+        gameObj.darkness[col][row]= 0;;
         
         if(col-1 >= 0 && row-1 >= 0) {
-            darkness[col-1][row-1].setHidden(true);
+            gameObj.darkness[col-1][row-1]= 0;;
         }
         if(col-1 >= 0) {
-            darkness[col-1][row].setHidden(true);
+            gameObj.darkness[col-1][row]= 0;;
         }
         if(col-1 >= 0 && row+1 < gameObj.map.num_rows) {
-            darkness[col-1][row+1].setHidden(true);
+            gameObj.darkness[col-1][row+1]= 0;;
         }
         if(row-1 >= 0) {
-            darkness[col][row-1].setHidden(true);
+            gameObj.darkness[col][row-1]= 0;;
         }
         if(row+1 < gameObj.map.num_rows) {
-            darkness[col][row+1].setHidden(true);
+            gameObj.darkness[col][row+1]= 0;;
         }
         if(col+1 < gameObj.map.num_cols && row-1 >= 0) {
-            darkness[col+1][row-1].setHidden(true);
+            gameObj.darkness[col+1][row-1]= 0;;
         }
         if(col+1 < gameObj.map.num_cols) {
-            darkness[col+1][row].setHidden(true);
+            gameObj.darkness[col+1][row]= 0;;
         }
         if(col+1 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
-            darkness[col+1][row+1].setHidden(true);
+            gameObj.darkness[col+1][row+1]= 0;;
         }
+        
+        var layerPos = gameObj.gameLayer.getPosition();
+        var offsetX = -layerPos.x/gameObj.tileSize; 
+        var offsetY = -layerPos.y/gameObj.tileSize; 
+        
+        console.log('offsetX:'+offsetX);
+        console.log('offsetY:'+offsetY);
+        
+        gameObj.darknessLayer.removeAllChildren(); 
+        var darknessCell;
+        //console.log(gameObj.darkness);
+        
+        for(i=0; i < gameObj.screenNumTilesX; i++) {
+            for(j=0; j < gameObj.screenNumTilesY; j++) {                
+                if(gameObj.darkness[offsetX+i][offsetY+j]) {
+                    
+//                    console.log('dark cell');
+//                    console.log('x '+(offsetX+i));
+//                    console.log('y '+(offsetY+j));
+//                    
+                     darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
+                        setPosition(i*gameObj.map.tileSize,j*gameObj.map.tileSize).
+                        setSize(gameObj.map.tileSize,gameObj.map.tileSize);
+                    gameObj.darknessLayer.appendChild(darknessCell);
+                }
+            }
+        }        
     };
     
     var playerPos = gameObj.player.getPosition();
     var playerPosCR = gameObj.map.getColRowFromXY(playerPos.x,playerPos.y);
-    gameObj.clearDarkness(playerPosCR.col, playerPosCR.row);
+    gameObj.updateVisiblity(playerPosCR.col, playerPosCR.row);
     
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);

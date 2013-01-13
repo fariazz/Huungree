@@ -55,6 +55,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
         if(current_pos.x < 0) {
             map.gameObj.gameLayer.setPosition(current_pos.x+map.tileSize, current_pos.y);
+            map.gameObj.updateVisiblity(map.gameObj.player.cell.col,map.gameObj.player.cell.row);
         }
     });
 
@@ -65,6 +66,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
         if(current_pos.x > -map.width + map.gameObj.screenWidth) {
             map.gameObj.gameLayer.setPosition(current_pos.x-map.tileSize, current_pos.y);
+            map.gameObj.updateVisiblity(map.gameObj.player.cell.col,map.gameObj.player.cell.row);
         }
     });
 
@@ -75,6 +77,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
         if(current_pos.y < 0) {
             map.gameObj.gameLayer.setPosition(current_pos.x, current_pos.y+map.tileSize);
+            map.gameObj.updateVisiblity(map.gameObj.player.cell.col,map.gameObj.player.cell.row);
         }
     });
 
@@ -85,6 +88,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
         if(current_pos.y > -map.height + map.gameObj.screenHeight) {
             map.gameObj.gameLayer.setPosition(current_pos.x, current_pos.y-map.tileSize);
+            map.gameObj.updateVisiblity(map.gameObj.player.cell.col,map.gameObj.player.cell.row);
         }
     });
     
