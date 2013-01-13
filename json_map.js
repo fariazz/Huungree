@@ -374,9 +374,17 @@ MapShops = [
 
 MapItems = [
     {
-        x: 12,
-        y: 3,
+        x: 8,
+        y: 2,
+        name: 'Gold',
         gold: 20,
+        image: 'gold.png'
+    },
+    {
+        x: 7,
+        y: 3,
+        name: 'Ancient chest',
+        gold: 210,
         image: 'gold.png'
     },
 ]

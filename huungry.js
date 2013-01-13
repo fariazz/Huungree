@@ -82,47 +82,22 @@ huungry.start = function(){
         .setBackground('assets/world_map.png');
 
     gameObj.map.init();
-
+    
     //items
-    var pos = gameObj.map.getXYFromColRow(17,2);
-    var item = new huungry.Item()
-        .setGameObj(gameObj)
-        .setPosition(pos.x, pos.y)
-        .setMap(gameObj.map)
-        .refreshMapPos()
-        .setData({
-            name: 'Gold',
-            gold: 100,
-            image: 'gold.png'
-        })
-        .init();  
-    gameObj.gameLayer.appendChild(item);
-    var pos = gameObj.map.getXYFromColRow(17,4);
-    var item = new huungry.Item()
-        .setGameObj(gameObj)
-        .setPosition(pos.x, pos.y)
-        .setMap(gameObj.map)
-        .refreshMapPos()
-        .setData({
-            name: 'Gold',
-            gold: 140,
-            image: 'gold.png'
-        })
-        .init();  
-    gameObj.gameLayer.appendChild(item);
-    var pos = gameObj.map.getXYFromColRow(20,6);
-    var item = new huungry.Item()
-        .setGameObj(gameObj)
-        .setPosition(pos.x, pos.y)
-        .setMap(gameObj.map)
-        .refreshMapPos()
-        .setData({
-            name: 'Gold',
-            gold: 100,
-            image: 'gold.png'
-        })
-        .init();  
-    gameObj.gameLayer.appendChild(item);
+    gameObj.loadItems = function() {        
+        for(var i=0, arrayLen = MapItems.length; i<arrayLen; i++) {
+            var pos = gameObj.map.getXYFromColRow(MapItems[i].x,MapItems[i].y);
+            var item = new huungry.Item()
+                .setGameObj(gameObj)
+                .setPosition(pos.x, pos.y)
+                .setMap(gameObj.map)
+                .refreshMapPos()
+                .setData(MapItems[i])
+                .init();
+            gameObj.gameLayer.appendChild(item);
+        }
+    };
+    gameObj.loadItems();
     
     //init unit types
     gameObj.cloneUnit = function(unit) {
@@ -170,11 +145,11 @@ huungry.start = function(){
     gameObj.player.init();
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
-//        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
-//        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
-//        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
-        gameObj.cloneUnit(gameObj.unitTypes['archer']),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'])
     ];
     
     
@@ -199,8 +174,51 @@ huungry.start = function(){
     gameObj.loadEnemies();
     
      
+    //map darknessw
+    var darkness = new Array();
+    for(i = 0, arrayLen = gameObj.map.num_cols; i<arrayLen; i++) {        
+        darkness.push(new Array());
+        for(var j = 0, arrayLen2 = gameObj.map.num_rows; j<arrayLen2; j++) {
+            darkness[i][j] = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
+                setPosition(i*gameObj.map.tileSize,j*gameObj.map.tileSize).
+                setSize(gameObj.map.tileSize,gameObj.map.tileSize);
+            gameObj.gameLayer.appendChild(darkness[i][j]);
+        }        
+    }
         
+    gameObj.clearDarkness = function(col,row) {
+
+        darkness[col][row].setHidden(true);
+        
+        if(col-1 >= 0 && row-1 >= 0) {
+            darkness[col-1][row-1].setHidden(true);
+        }
+        if(col-1 >= 0) {
+            darkness[col-1][row].setHidden(true);
+        }
+        if(col-1 >= 0 && row+1 < gameObj.map.num_rows) {
+            darkness[col-1][row+1].setHidden(true);
+        }
+        if(row-1 >= 0) {
+            darkness[col][row-1].setHidden(true);
+        }
+        if(row+1 < gameObj.map.num_rows) {
+            darkness[col][row+1].setHidden(true);
+        }
+        if(col+1 < gameObj.map.num_cols && row-1 >= 0) {
+            darkness[col+1][row-1].setHidden(true);
+        }
+        if(col+1 < gameObj.map.num_cols) {
+            darkness[col+1][row].setHidden(true);
+        }
+        if(col+1 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
+            darkness[col+1][row+1].setHidden(true);
+        }
+    };
     
+    var playerPos = gameObj.player.getPosition();
+    var playerPosCR = gameObj.map.getColRowFromXY(playerPos.x,playerPos.y);
+    gameObj.clearDarkness(playerPosCR.col, playerPosCR.row);
     
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
