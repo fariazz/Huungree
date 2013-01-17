@@ -31,6 +31,8 @@ huungry.Player.prototype.playerMoved = function() {
     
     this.refreshMapPos();
     
+    var pos = this.getPosition();
+    this.gameObj.centerCameraTo(pos.x,pos.y);
     this.gameObj.updateVisiblity(this.cell.col,this.cell.row);
     
     //check for enemy collision

@@ -184,9 +184,12 @@ huungry.start = function(){
             gameObj.darkness[i][j] = 1;            
         }        
     }
-        
+    
+    /**
+     * set visiblity of map cells that are on the screen. Create darkness
+     * black polygons to cover unvisible areas
+     */
     gameObj.updateVisiblity = function(col,row) {
-        
         gameObj.darkness[col][row]= 0;;
         
         if(col-1 >= 0 && row-1 >= 0) {
@@ -268,29 +271,32 @@ huungry.start = function(){
         console.log('offsetY:'+offsetY);
         
         gameObj.darknessLayer.removeAllChildren(); 
+        gameObj.darknessLayer.setPosition(0,0); 
         var darknessCell;
         //console.log(gameObj.darkness);
         var currStart;
         var creatingBlock = false;
-        for(i=0; i < gameObj.screenNumTilesY; i++) {
-            for(j=0; j < gameObj.screenNumTilesX; j++) {    
+        for(i=-1; i < gameObj.screenNumTilesY+1; i++) {
+            for(j=-1; j < gameObj.screenNumTilesX+1; j++) {    
                 
-                //if it's dark, then start or continue darkness
-                if(gameObj.darkness[offsetX+j][offsetY+i]) {
-                    if(!creatingBlock) {
-                        creatingBlock = true;
-                        currStart = {col: j, row: i};
+                //if it's dark, then start or continue darkness      
+                if(offsetY+i != -1 && offsetX+j != -1) {
+                    if(gameObj.darkness[offsetX+j][offsetY+i]) {
+                        if(!creatingBlock) {
+                            creatingBlock = true;
+                            currStart = {col: j, row: i};
+                        }
                     }
-                }
-                else {
-                    if(creatingBlock) {
-                        creatingBlock = false;
-                        darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
-                            setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
-                            setSize(gameObj.map.tileSize*(j - currStart.col),gameObj.map.tileSize);
-                        gameObj.darknessLayer.appendChild(darknessCell);
-                    }
-                }             
+                    else {
+                        if(creatingBlock) {
+                            creatingBlock = false;
+                            darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
+                                setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
+                                setSize(gameObj.map.tileSize*(j - currStart.col),gameObj.map.tileSize);
+                            gameObj.darknessLayer.appendChild(darknessCell);
+                        }
+                    }            
+                } 
             }
             if(creatingBlock) {
                 creatingBlock = false;
@@ -305,6 +311,23 @@ huungry.start = function(){
             }
         }
                
+    };
+    
+    /**
+     * center map layer to a coordinate
+     * @param x
+     * @param y
+     */
+    gameObj.centerCameraTo = function(x,y) {
+//        console.log('x:'+x);
+//        console.log('y:'+y);
+//        
+//        console.log('x+gameObj.screenWidth/2:'+Math.round((-x+gameObj.screenWidth/2)));
+//        console.log('y+gameObj.screenHeight/2:'+Math.round((-y+gameObj.screenHeight/2)));
+//               
+
+        
+        gameObj.gameLayer.setPosition(Math.min(0,Math.round(-x+gameObj.screenWidth/2)),Math.min(0,Math.round(-y+gameObj.screenHeight/2)));
     };
     
     var playerPos = gameObj.player.getPosition();
