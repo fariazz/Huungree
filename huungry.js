@@ -327,7 +327,7 @@ huungry.start = function(){
 //               
 
         
-        gameObj.gameLayer.setPosition(Math.min(0,Math.round(-x+gameObj.screenWidth/2)),Math.min(0,Math.round(-y+gameObj.screenHeight/2)));
+        gameObj.gameLayer.setPosition(Math.min(0,Math.round(-x+gameObj.screenWidth/2-gameObj.tileSize)),Math.min(0,Math.round(-y+gameObj.screenHeight/2)));
     };
     
     var playerPos = gameObj.player.getPosition();
