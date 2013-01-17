@@ -190,28 +190,74 @@ huungry.start = function(){
         gameObj.darkness[col][row]= 0;;
         
         if(col-1 >= 0 && row-1 >= 0) {
-            gameObj.darkness[col-1][row-1]= 0;;
+            gameObj.darkness[col-1][row-1]= 0;  
+            
+            if(col-2 >= 0 && row-1 >= 0) {
+                gameObj.darkness[col-2][row-1]= 0;
+            }
+            
+            if(col-1 >= 0 && row-2 >= 0) {
+                gameObj.darkness[col-1][row-2]= 0;
+            }
         }
         if(col-1 >= 0) {
-            gameObj.darkness[col-1][row]= 0;;
+            gameObj.darkness[col-1][row]= 0;
+            
+            if(col-2 >= 0) {
+                gameObj.darkness[col-2][row]= 0;
+            }
         }
         if(col-1 >= 0 && row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col-1][row+1]= 0;;
+            gameObj.darkness[col-1][row+1]= 0;
+            
+            if(col-2 >= 0 && row+1 < gameObj.map.num_rows) {
+                gameObj.darkness[col-2][row+1]= 0;
+            }
+            if(col-1 >= 0 && row+2 < gameObj.map.num_rows) {
+                gameObj.darkness[col-1][row+2]= 0;
+            }
         }
         if(row-1 >= 0) {
-            gameObj.darkness[col][row-1]= 0;;
+            gameObj.darkness[col][row-1]= 0;
+            
+            if(row-2 >= 0) {
+                gameObj.darkness[col][row-2]= 0;
+            }
         }
         if(row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col][row+1]= 0;;
+            gameObj.darkness[col][row+1]= 0;
+            
+            if(row+2 < gameObj.map.num_rows) {
+                gameObj.darkness[col][row+2]= 0;
+            }
+            
         }
         if(col+1 < gameObj.map.num_cols && row-1 >= 0) {
-            gameObj.darkness[col+1][row-1]= 0;;
+            gameObj.darkness[col+1][row-1]= 0;
+            
+            if(col+2 < gameObj.map.num_cols && row-1 >= 0) {
+                gameObj.darkness[col+2][row-1]= 0;
+            }
+            if(col+1 < gameObj.map.num_cols && row-2 >= 0) {
+                gameObj.darkness[col+1][row-2]= 0;
+            }
         }
         if(col+1 < gameObj.map.num_cols) {
-            gameObj.darkness[col+1][row]= 0;;
+            gameObj.darkness[col+1][row]= 0;
+            
+            if(col+2 < gameObj.map.num_cols) {
+                gameObj.darkness[col+2][row]= 0;
+            }
         }
         if(col+1 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col+1][row+1]= 0;;
+            gameObj.darkness[col+1][row+1]= 0;
+            
+            if(col+2 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
+                gameObj.darkness[col+2][row+1]= 0;
+            }            
+            if(col+1 < gameObj.map.num_cols && row+2 < gameObj.map.num_rows) {
+                gameObj.darkness[col+1][row+2]= 0;
+            }            
         }
         
         var layerPos = gameObj.gameLayer.getPosition();
@@ -224,22 +270,41 @@ huungry.start = function(){
         gameObj.darknessLayer.removeAllChildren(); 
         var darknessCell;
         //console.log(gameObj.darkness);
-        
-        for(i=0; i < gameObj.screenNumTilesX; i++) {
-            for(j=0; j < gameObj.screenNumTilesY; j++) {                
-                if(gameObj.darkness[offsetX+i][offsetY+j]) {
-                    
-//                    console.log('dark cell');
-//                    console.log('x '+(offsetX+i));
-//                    console.log('y '+(offsetY+j));
-//                    
-                     darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
-                        setPosition(i*gameObj.map.tileSize,j*gameObj.map.tileSize).
-                        setSize(gameObj.map.tileSize,gameObj.map.tileSize);
-                    gameObj.darknessLayer.appendChild(darknessCell);
+        var currStart;
+        var creatingBlock = false;
+        for(i=0; i < gameObj.screenNumTilesY; i++) {
+            for(j=0; j < gameObj.screenNumTilesX; j++) {    
+                
+                //if it's dark, then start or continue darkness
+                if(gameObj.darkness[offsetX+j][offsetY+i]) {
+                    if(!creatingBlock) {
+                        creatingBlock = true;
+                        currStart = {col: j, row: i};
+                    }
                 }
+                else {
+                    if(creatingBlock) {
+                        creatingBlock = false;
+                        darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
+                            setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
+                            setSize(gameObj.map.tileSize*(j - currStart.col),gameObj.map.tileSize);
+                        gameObj.darknessLayer.appendChild(darknessCell);
+                    }
+                }             
             }
-        }        
+            if(creatingBlock) {
+                creatingBlock = false;
+//                console.log('i:'+i);
+//                console.log('start position x:'+currStart.col*gameObj.map.tileSize);
+//                console.log('start position y:'+currStart.row*gameObj.map.tileSize);
+//                console.log('size x:'+gameObj.map.tileSize*(j-1 - currStart.col));
+                darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
+                    setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
+                    setSize(gameObj.map.tileSize*(j-1 - currStart.col),gameObj.map.tileSize);
+                gameObj.darknessLayer.appendChild(darknessCell);
+            }
+        }
+               
     };
     
     var playerPos = gameObj.player.getPosition();
