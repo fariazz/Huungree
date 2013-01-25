@@ -87,10 +87,10 @@ huungry.start = function(){
             gold: 40
         },
         {
-            id: 'axeman',
-            name: 'axe warrior',
-            image: 'axeman.png',
-            attack: 16,
+            id: 'priest',
+            name: 'priest',
+            image: 'priest.png',
+            attack: 26,
             defense: 13,
             canShoot: false,
             life: 22,
@@ -110,8 +110,8 @@ huungry.start = function(){
             id: 'archer',
             name: 'archer',
             image: 'archer.png',
-            attack: 10,
-            defense: 5,
+            attack: 15,
+            defense: 3,
             canShoot: true,
             life: 13,
             gold: 23
@@ -145,7 +145,7 @@ huungry.start = function(){
             canShoot: true,
             life: 19,
             gold: 40
-        },
+        }
     ];
     
     //main game object
@@ -235,8 +235,8 @@ huungry.start = function(){
     gameObj.player.init();
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman']),
+        gameObj.cloneUnit(gameObj.unitTypes['priest']),
+        gameObj.cloneUnit(gameObj.unitTypes['knight']),
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
         gameObj.cloneUnit(gameObj.unitTypes['archer'])
@@ -353,11 +353,13 @@ huungry.start = function(){
         //console.log(gameObj.darkness);
         var currStart;
         var creatingBlock = false;
-        for(i=-1; i < gameObj.screenNumTilesY+1; i++) {
-            for(j=-1; j < gameObj.screenNumTilesX+1; j++) {    
+        for(i=0; i < gameObj.screenNumTilesY; i++) {
+            for(j=0; j < gameObj.screenNumTilesX; j++) {    
                 
-                //if it's dark, then start or continue darkness      
-                if(offsetY+i != -1 && offsetX+j != -1) {
+                //if it's dark, then start or continue darkness  
+                //console.log('offsetY+i:'+(offsetY+i));
+                //console.log('offsetX+j:'+(offsetX+j));
+                if(offsetY+i != -1 && offsetX+j != -1 && gameObj.darkness[offsetX+j] !== undefined) {
                     if(gameObj.darkness[offsetX+j][offsetY+i]) {
                         if(!creatingBlock) {
                             creatingBlock = true;

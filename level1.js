@@ -275,12 +275,12 @@ huungryGameMaps.level1.shops = [
         image: 'city.png',
         units: [
             {
-                id: 'peasant',
+                id: 'knight',
                 price: 30,
                 qty: 5
             },
             {                
-                id: 'axeman',
+                id: 'lion',
                 price: 40,
                 qty: 5
             }
@@ -298,7 +298,7 @@ huungryGameMaps.level1.shops = [
                 qty: 5
             },
             {                
-                id: 'axeman',
+                id: 'priest',
                 price: 40,
                 qty: 5
             }

@@ -39,10 +39,10 @@ huungry.ControlsLayer.prototype.init = function() {
         .setSize(this.gameObj.tileSize, this.gameObj.screenHeight);
     
     
-    this.appendChild(this.btnMapMoveLeft);
-    this.appendChild(this.btnMapMoveRight);
-    this.appendChild(this.btnMapMoveUp);
-    this.appendChild(this.btnMapMoveDown);
+//    this.appendChild(this.btnMapMoveLeft);
+//    this.appendChild(this.btnMapMoveRight);
+//    this.appendChild(this.btnMapMoveUp);
+//    this.appendChild(this.btnMapMoveDown);
     this.appendChild(this.sideBar);
 
     //listeners for map navigation
