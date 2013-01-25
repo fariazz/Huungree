@@ -27,9 +27,9 @@ huungry.Player.prototype.init = function() {
  * show gamepad after movement
  */
 huungry.Player.prototype.playerMoved = function() {
-    this.toggleGamepad(true);
-    
+        
     this.refreshMapPos();
+    this.toggleGamepad(true);
     
     var pos = this.getPosition();
     this.gameObj.centerCameraTo(pos.x,pos.y);

@@ -105,9 +105,9 @@ huungry.FightEngine.prototype.exitFight = function() {
     //move player to previous position
     var previousPos = this.gameObj.player.previousPosition;
     this.gameObj.player.setPosition(previousPos.x, previousPos.y);
-    this.gameObj.player.toggleGamepad(true);
     this.gameObj.player.inFightScene = false;
     this.gameObj.controlsLayer.refreshInfo();
+    this.gameObj.player.playerMoved();
 }
 
 /**
@@ -370,8 +370,8 @@ huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
             return this.playerUnits[j];
         }
     }
-    for(var j=0; j<this.enemyUnits.length; j++) {
-        var unitPos = this.enemyUnits[j].getPosition();
+    for(j=0; j<this.enemyUnits.length; j++) {
+        unitPos = this.enemyUnits[j].getPosition();
         if(x == unitPos.x && y == unitPos.y) {
             return this.enemyUnits[j];
         }
@@ -392,7 +392,7 @@ huungry.FightEngine.prototype.updateDead = function() {
     }
     
     var num_enemies = this.enemyUnits.length;
-    for(var i=num_enemies-1; i>= 0; i--) {
+    for(i=num_enemies-1; i>= 0; i--) {
         if(this.enemyUnits[i].life <= 0) {
             this.enemyUnits[i].die();
             this.enemyUnits.splice(i,1);

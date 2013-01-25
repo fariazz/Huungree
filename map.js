@@ -16,7 +16,7 @@ huungry.Map = function() {
 }
 
 huungry.Map.prototype.setGameObj = function(gameObj) {
-    this.gameObj = gameObj;
+    this.gameObj = gameObj;    
     return this;
 }
 
@@ -95,17 +95,62 @@ huungry.Map.prototype.setBackground = function(background) {
 huungry.Map.prototype.init = function() {
     this.gameObj.gameLayer.appendChild(this.backgroundSprite);
 
-    var map = this;
+//    var map = this;
 //    goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
 //        e.event.stopPropagation();
 //
 //        cell = map.getColRowFromXY(e.position.x, e.position.y);
 //        console.log('blocked cell:'+map.blockedCells[cell.row][cell.col]);
 //    });
-
-
-
 }
+
+/**
+ *Initiate level data, only for maps that are levels
+ */
+huungry.Map.prototype.initLevel = function() {
+    this.gameObj.map = this;
+    
+    //load items
+    var item, pos;
+    for(var i=0, arrayLen = this.level.items.length; i<arrayLen; i++) {
+        pos = this.gameObj.map.getXYFromColRow(this.level.items[i].x,this.level.items[i].y);
+        item = new huungry.Item()
+            .setGameObj(this.gameObj)
+            .setPosition(pos.x, pos.y)
+            .setMap(this)
+            .refreshMapPos()
+            .setData(this.level.items[i])
+            .init();
+        this.gameObj.gameLayer.appendChild(item);
+    }
+    
+    //shops
+    var shop;
+    for(i=0, arrayLen = this.level.shops.length; i<arrayLen; i++) {
+        pos = this.gameObj.map.getXYFromColRow(this.level.shops[i].x,this.level.shops[i].y);
+        shop = new huungry.Shop()
+            .setGameObj(this.gameObj)
+            .setPosition(pos.x, pos.y)
+            .setMap(this)
+            .refreshMapPos()
+            .setData(this.level.shops[i])
+            .init();
+        this.gameObj.gameLayer.appendChild(shop);
+    }
+    
+    //enemyArmies
+    this.gameObj.enemyArmies = new Array();
+    for(var i=0, arrayLen = this.level.enemyArmies.length; i<arrayLen; i++) {
+        var pos = this.gameObj.map.getXYFromColRow(this.level.enemyArmies[i].x,this.level.enemyArmies[i].y);
+        this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
+            .setGameObj(this.gameObj)
+            .setMap(this.gameObj.map)
+            .refreshMapPos()); 
+        this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
+        this.gameObj.enemyArmies[i].init();
+        this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
+    }
+};
 
 /**
  * get map cell row and col from map x and y
@@ -143,6 +188,8 @@ huungry.Map.prototype.isCellBlocked = function(col, row) {
         return 1;
     }
     else {
+        console.log('col:'+col+' row:'+row+' blocked:'+this.blocked[row][col]);
+        console.log(this);
         return this.blocked[row][col];
     }
 }
@@ -299,4 +346,20 @@ huungry.Map.prototype.getAdjacentElement = function(element, elementType) {
         //console.log('no adjacent elements');
         return false;
     }
-}
+};
+
+/**
+ * set level of the map, if any
+ * @param level name of the level file
+ */
+huungry.Map.prototype.setLevel = function(level) {
+    this.level = huungryGameMaps[level];
+    this.gameObj.width = this.level.width;
+    this.gameObj.height = this.level.height;
+    this.setJsonMap(this.level.tiledData,'blocked');
+    this.setBackground(this.level.image); 
+    this.playerInitialX = this.level.playerInitialX;
+    this.playerInitialY = this.level.playerInitialY;
+    
+    return this;
+};

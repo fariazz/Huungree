@@ -261,14 +261,14 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
     if(isVisible) {
         var pos = this.getPosition();
         var currentCell = this.getCell();
-
+        
         var tileSize = this.gameObj.tileSize;
 
         for(var i=0; i<this.movementTargets.length; i++) {
 
             var targetCol = currentCell.col+this.movementTargets[i].dx;
             var targetRow = currentCell.row+this.movementTargets[i].dy;
-
+            
             //show if it can move
             if(!this.gameObj.map.isCellBlocked(targetCol, targetRow)) {
                 this.movementTargets[i].sprite.setHidden(false);
