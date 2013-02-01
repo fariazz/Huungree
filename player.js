@@ -44,8 +44,8 @@ huungry.Player.prototype.playerMoved = function() {
             }
             else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
                 this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
-                .setTitleText('Treasure found!')
-                .setMainText(this.map.elements[i].gold+' '+this.map.elements[i].name)
+                .setTitleText(this.map.elements[i].name)
+                .setMainText("You've found "+this.map.elements[i].gold+'\npieces of gold.')
                 .setSceneAfter(this.gameObj.gameScene)
                 .setCallback(function(params) {
                     console.log(params);
