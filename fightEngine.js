@@ -68,6 +68,21 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.pass();
     });
     
+    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize)
+        .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.5)
+        .setAnchorPoint(0,0)
+        .setText('Kill all').setColor('#00CD00'); 
+    this.fightLayer.appendChild(killButton);
+    
+    //pass
+    goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
+        for(var j=0; j<currentObj.enemyUnits.length; j++) {
+            currentObj.enemyUnits[j].life = -1;           
+        }
+        
+        currentObj.pass();
+    });
+    
     this.gameObj.player.inFightScene = true;    
     this.initArmies();
     this.playTurn();    
@@ -402,10 +417,14 @@ huungry.FightEngine.prototype.updateDead = function() {
     }
     
     if(this.enemyUnits.length == 0) {
-        console.log('enemy defeated');
-        this.gameObj.player.gold += this.enemyArmy.gold;
-        this.enemyArmy.die();
-        this.exitFight();        
+        var dialog = new huungry.DialogScene().setGameObj(this.gameObj)
+            .setTitleText("You've won!")
+            .setMainText("You've found "+this.enemyArmy.gold+" pieces of\ngold in their corpses.")
+            .setCallback(function(fightScene) {
+                fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
+                fightScene.enemyArmy.die();
+                fightScene.exitFight();
+            }, this).init();            
     }
 }
 
