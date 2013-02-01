@@ -103,6 +103,14 @@ huungry.GameObj.prototype.runLevel = function(levelName) {
     this.gameLayer.appendChild(this.player);
     this.player.toggleGamepad(true);
     this.updateVisiblity(this.map.playerInitialX, this.map.playerInitialY);
+    
+    //controls layer
+    this.controlsLayer = new huungry.ControlsLayer().setGameObj(this);
+    this.controlsLayer.init();
+    this.gameScene.appendChild(this.controlsLayer);    
+    this.controlsLayer.refreshInfo();
+    
+    this.director.replaceScene(this.gameScene);
 };
 
 /**

@@ -164,14 +164,24 @@ huungry.start = function(){
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
         gameObj.cloneUnit(gameObj.unitTypes['archer'])
     ];
-        
-    gameObj.runLevel('level1');
     
-    //controls layer
-    gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
-    gameObj.controlsLayer.init();
-    gameObj.gameScene.appendChild(gameObj.controlsLayer);    
-    gameObj.controlsLayer.refreshInfo();
+    //splash screen
+    gameObj.splashScreen = new Object();
+    gameObj.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    gameObj.splashScreen.background = new lime.Sprite().setAnchorPoint(0,0).
+        setFill('assets/splashscreen.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
+    gameObj.splashScreen.startBtn = new lime.GlossyButton().setColor('#133242').setText('Start')
+        .setPosition(gameObj.tileSize*3, gameObj.tileSize*7)
+        .setSize(gameObj.tileSize*2, gameObj.tileSize);
+    
+    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.background);
+    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.startBtn);
+    
+    goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {
+        gameObj.runLevel('level1');
+    });
+    
+    gameObj.director.replaceScene(gameObj.splashScreen.scene);
     
     //player details screen
     gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
@@ -213,7 +223,7 @@ huungry.start = function(){
     //
     //
     // set current scene active
-    gameObj.director.replaceScene(gameObj.gameScene);
+    
     
 }
 
