@@ -417,7 +417,7 @@ huungry.FightEngine.prototype.updateDead = function() {
     }
     
     if(this.enemyUnits.length == 0) {
-        var dialog = new huungry.DialogScene().setGameObj(this.gameObj)
+        this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
             .setTitleText("You've won!")
             .setMainText("You've found "+this.enemyArmy.gold+" pieces of\ngold in their corpses.")
             .setCallback(function(fightScene) {

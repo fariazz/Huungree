@@ -43,8 +43,15 @@ huungry.Player.prototype.playerMoved = function() {
                 this.gameObj.fight(this.map.elements[i]);
             }
             else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
-                var item = this.map.elements[i];
-                this.collect(item);
+                this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
+                .setTitleText('Treasure found!')
+                .setMainText(this.map.elements[i].gold+' '+this.map.elements[i].name)
+                .setSceneAfter(this.gameObj.gameScene)
+                .setCallback(function(params) {
+                    console.log(params);
+                    var item = params.player.map.elements[params.i];
+                    params.player.collect(item);
+                }, {player: this, i: i}).init();                    
             }
             else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
                 this.map.elements[i].showDialog();

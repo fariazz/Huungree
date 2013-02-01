@@ -58,9 +58,17 @@ huungry.DialogScene.prototype.init = function() {
     
     var currentObj = this;
     goog.events.listen(this.dialogClose,['mousedown', 'touchstart'], function(e) {
-        e.event.stopPropagation();
-        this.parent_.gameObj.director.popScene();
+        e.event.stopPropagation();        
         currentObj.callback(currentObj.callbackParameters);
+        
+        if(currentObj.sceneAfter) {            
+            this.parent_.gameObj.director.replaceScene(currentObj.sceneAfter);
+        }
     });
     this.gameObj.director.replaceScene(this);
+}
+
+huungry.DialogScene.prototype.setSceneAfter = function(sceneAfter) {
+    this.sceneAfter = sceneAfter;
+    return this;
 }
