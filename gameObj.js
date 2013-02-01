@@ -263,7 +263,7 @@ huungry.GameObj.prototype.centerCameraTo = function(x,y) {
 };
 
 //fight scene
-huungry.GameObj.prototype.fight = function(enemy) {        
+huungry.GameObj.prototype.fight = function(enemy) {
     var FightEngine = new huungry.FightEngine().setGameObj(this).setEnemyArmy(enemy);
     FightEngine.init();
 }

@@ -28,21 +28,23 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
 huungry.FightEngine.prototype.init = function() {
     this.fightScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
+        
+    this.fightScene.appendChild(this.fightLayer);
+    this.gameObj.director.replaceScene(this.fightScene);
     
     this.map = new huungry.Map().setGameObj(this.gameObj)
         .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight})
         .setBackground(this.floorColor);
     
     this.fightLayer.appendChild(this.map.backgroundSprite);
-    
+        
     currentObj = this;
     goog.events.listen(this.map.backgroundSprite, ['mousedown', 'touchstart'], function(e){
         var target = currentObj.map.getColRowFromXY(e.position.x, e.position.y);
         //console.log(currentObj.map.getTargetType(target.col, target.row));
     });
     
-    this.fightScene.appendChild(this.fightLayer);
-    
+        
     var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize)
         .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
@@ -66,15 +68,9 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.pass();
     });
     
-    
-    
-    this.gameObj.director.replaceScene(this.fightScene);
-        
-
-    
     this.gameObj.player.inFightScene = true;    
     this.initArmies();
-    this.playTurn();
+    this.playTurn();    
 }
 
 /**
