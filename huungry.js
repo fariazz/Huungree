@@ -10,6 +10,7 @@ goog.require('lime.fill.Frame');
 goog.require('lime.animation.MoveTo');
 goog.require('lime.animation.FadeTo');
 goog.require('goog.math');
+goog.require('huungry.GameObj');
 goog.require('huungry.Map');
 goog.require('huungry.Character');
 goog.require('huungry.Player');
@@ -148,91 +149,13 @@ huungry.start = function(){
         }
     ];
     
-    //main game object
-    var gameObj = {
-        screenWidth: 240,
-        screenHeight: 160,
-        tileSize: 20,
-        FREE_TARGET: 1,
-        PLAYER_ARMY: 2,
-        ENEMY_ARMY: 3,
-        PLAYER_UNIT: 4,
-        ENEMY_UNIT: 5,
-        BLOCKED_TARGET: 6,
-        ITEM_TARGET: 7,
-        SHOP_TARGET: 8,
-        CITY_TARGET: 9,
-        QUEST_TARGET: 10
-    };    
-    gameObj.screenNumTilesX = gameObj.screenWidth/gameObj.tileSize;
-    gameObj.screenNumTilesY = gameObj.screenHeight/gameObj.tileSize;
+    var gameObj = new huungry.GameObj(document);
+    gameObj.setUnitTypes(UnitTypes);       
     
-    //area in fight scene where units appear
-    gameObj.fightScenePlayerStartX = 5;
-    gameObj.fightScenePlayerEndX = 6;
-    gameObj.fightScenePlayerStartY = 0;
-    gameObj.fightScenePlayerEndY = gameObj.screenNumTilesY-2;
-    
-    gameObj.fightSceneEnemyStartX = gameObj.screenNumTilesX-4;
-    gameObj.fightSceneEnemyEndX = gameObj.screenNumTilesX-2;
-    gameObj.fightSceneEnemyStartY = 0;
-    gameObj.fightSceneEnemyEndY = gameObj.screenNumTilesY-2;
-    
-    gameObj.maxRandPercentage = 0.2;
-    
-    //probability that a range attack unit shoots
-    gameObj.shootProbability = 0.85;
-    
-    //animation
-    gameObj.animationOn = true;
-    gameObj.movementDuration = 0.2;
-    
-
-    gameObj.director = new lime.Director(document.body, gameObj.screenWidth, gameObj.screenHeight);
-    gameObj.director.makeMobileWebAppCapable();
-    //director.setDisplayFPS(false);
-
-    //game scene
-    gameObj.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
-    gameObj.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
-    gameObj.darknessLayer = new lime.Layer().setAnchorPoint(0, 0);
-    gameObj.gameScene.appendChild(gameObj.gameLayer);
-    gameObj.gameScene.appendChild(gameObj.darknessLayer);
-    
-    //init unit types
-    gameObj.cloneUnit = function(unit) {
-        var cloned= {
-                id: unit.id,
-                name: unit.name,
-                image: unit.image,
-                attack: unit.attack,
-                defense: unit.defense,
-                canShoot: unit.canShoot,
-                life: unit.life,
-                gold: unit.gold
-        }
-        return cloned;
-    }
-    
-    gameObj.unitTypes = new Array();
-    for(var i=0, arrayLen = UnitTypes.length; i<arrayLen; i++) {
-        gameObj.unitTypes[UnitTypes[i].id] = UnitTypes[i];
-    }
-    
-    //game map
-    gameObj.map = new huungry.Map().setGameObj(gameObj)
-        .setLevel('level1');
-    gameObj.map.init();
-    gameObj.map.initLevel();
-    
-    //player
-    var pos = gameObj.map.getXYFromColRow(gameObj.map.playerInitialX,gameObj.map.playerInitialY);
-    gameObj.player = new huungry.Player().setFill('assets/knight1.png').setPosition(pos.x, pos.y)
-        .setGameObj(gameObj)
-        .setMap(gameObj.map)
-        .refreshMapPos();
-    
-    gameObj.player.init();
+    //player    
+    gameObj.player = new huungry.Player().setFill('assets/knight1.png')
+        .setGameObj(gameObj);
+        
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
         gameObj.cloneUnit(gameObj.unitTypes['priest']),
@@ -241,191 +164,14 @@ huungry.start = function(){
         gameObj.cloneUnit(gameObj.unitTypes['soldier']),
         gameObj.cloneUnit(gameObj.unitTypes['archer'])
     ];
-    
-    
-    gameObj.gameLayer.appendChild(gameObj.player);
-
-    gameObj.player.toggleGamepad(true);
-    
-    
-    
-     
-    //init map visibility
-    gameObj.darkness = new Array();
-    for(i = 0, arrayLen = gameObj.map.num_cols; i<arrayLen; i++) {        
-        gameObj.darkness.push(new Array());
-        for(var j = 0, arrayLen2 = gameObj.map.num_rows; j<arrayLen2; j++) {
-            gameObj.darkness[i][j] = 1;            
-        }        
-    }
-    
-    /**
-     * set visiblity of map cells that are on the screen. Create darkness
-     * black polygons to cover unvisible areas
-     * 
-     * @param col location of the player
-     * @param row location of the player
-     */
-    gameObj.updateVisiblity = function(col,row) {
-        gameObj.darkness[col][row]= 0;;
         
-        if(col-1 >= 0 && row-1 >= 0) {
-            gameObj.darkness[col-1][row-1]= 0;  
-            
-            if(col-2 >= 0 && row-1 >= 0) {
-                gameObj.darkness[col-2][row-1]= 0;
-            }
-            
-            if(col-1 >= 0 && row-2 >= 0) {
-                gameObj.darkness[col-1][row-2]= 0;
-            }
-        }
-        if(col-1 >= 0) {
-            gameObj.darkness[col-1][row]= 0;
-            
-            if(col-2 >= 0) {
-                gameObj.darkness[col-2][row]= 0;
-            }
-        }
-        if(col-1 >= 0 && row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col-1][row+1]= 0;
-            
-            if(col-2 >= 0 && row+1 < gameObj.map.num_rows) {
-                gameObj.darkness[col-2][row+1]= 0;
-            }
-            if(col-1 >= 0 && row+2 < gameObj.map.num_rows) {
-                gameObj.darkness[col-1][row+2]= 0;
-            }
-        }
-        if(row-1 >= 0) {
-            gameObj.darkness[col][row-1]= 0;
-            
-            if(row-2 >= 0) {
-                gameObj.darkness[col][row-2]= 0;
-            }
-        }
-        if(row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col][row+1]= 0;
-            
-            if(row+2 < gameObj.map.num_rows) {
-                gameObj.darkness[col][row+2]= 0;
-            }
-            
-        }
-        if(col+1 < gameObj.map.num_cols && row-1 >= 0) {
-            gameObj.darkness[col+1][row-1]= 0;
-            
-            if(col+2 < gameObj.map.num_cols && row-1 >= 0) {
-                gameObj.darkness[col+2][row-1]= 0;
-            }
-            if(col+1 < gameObj.map.num_cols && row-2 >= 0) {
-                gameObj.darkness[col+1][row-2]= 0;
-            }
-        }
-        if(col+1 < gameObj.map.num_cols) {
-            gameObj.darkness[col+1][row]= 0;
-            
-            if(col+2 < gameObj.map.num_cols) {
-                gameObj.darkness[col+2][row]= 0;
-            }
-        }
-        if(col+1 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
-            gameObj.darkness[col+1][row+1]= 0;
-            
-            if(col+2 < gameObj.map.num_cols && row+1 < gameObj.map.num_rows) {
-                gameObj.darkness[col+2][row+1]= 0;
-            }            
-            if(col+1 < gameObj.map.num_cols && row+2 < gameObj.map.num_rows) {
-                gameObj.darkness[col+1][row+2]= 0;
-            }            
-        }
-        
-        var layerPos = gameObj.gameLayer.getPosition();
-        var offsetX = -layerPos.x/gameObj.tileSize; 
-        var offsetY = -layerPos.y/gameObj.tileSize; 
-        
-        console.log('offsetX:'+offsetX);
-        console.log('offsetY:'+offsetY);
-        
-        gameObj.darknessLayer.removeAllChildren(); 
-        gameObj.darknessLayer.setPosition(0,0); 
-        var darknessCell;
-        //console.log(gameObj.darkness);
-        var currStart;
-        var creatingBlock = false;
-        for(i=0; i < gameObj.screenNumTilesY; i++) {
-            for(j=0; j < gameObj.screenNumTilesX; j++) {    
-                
-                //if it's dark, then start or continue darkness  
-                //console.log('offsetY+i:'+(offsetY+i));
-                //console.log('offsetX+j:'+(offsetX+j));
-                if(offsetY+i != -1 && offsetX+j != -1 && gameObj.darkness[offsetX+j] !== undefined) {
-                    if(gameObj.darkness[offsetX+j][offsetY+i]) {
-                        if(!creatingBlock) {
-                            creatingBlock = true;
-                            currStart = {col: j, row: i};
-                        }
-                    }
-                    else {
-                        if(creatingBlock) {
-                            creatingBlock = false;
-                            darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
-                                setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
-                                setSize(gameObj.map.tileSize*(j - currStart.col),gameObj.map.tileSize);
-                            gameObj.darknessLayer.appendChild(darknessCell);
-                        }
-                    }            
-                } 
-            }
-            if(creatingBlock) {
-                creatingBlock = false;
-//                console.log('i:'+i);
-//                console.log('start position x:'+currStart.col*gameObj.map.tileSize);
-//                console.log('start position y:'+currStart.row*gameObj.map.tileSize);
-//                console.log('size x:'+gameObj.map.tileSize*(j-1 - currStart.col));
-                darknessCell = new lime.Sprite().setAnchorPoint(0,0).setFill('#000000').
-                    setPosition(currStart.col*gameObj.map.tileSize,currStart.row*gameObj.map.tileSize).
-                    setSize(gameObj.map.tileSize*(j-1 - currStart.col),gameObj.map.tileSize);
-                gameObj.darknessLayer.appendChild(darknessCell);
-            }
-        }
-               
-    };
-    
-    /**
-     * center map layer to a coordinate
-     * @param x
-     * @param y
-     */
-    gameObj.centerCameraTo = function(x,y) {
-//        console.log('x:'+x);
-//        console.log('y:'+y);
-//        
-//        console.log('x+gameObj.screenWidth/2:'+Math.round((-x+gameObj.screenWidth/2)));
-//        console.log('y+gameObj.screenHeight/2:'+Math.round((-y+gameObj.screenHeight/2)));
-//               
-
-        
-        gameObj.gameLayer.setPosition(Math.min(0,Math.round(-x+gameObj.screenWidth/2-gameObj.tileSize)),Math.min(0,Math.round(-y+gameObj.screenHeight/2)));
-    };
-    
-    var playerPos = gameObj.player.getPosition();
-    var playerPosCR = gameObj.map.getColRowFromXY(playerPos.x,playerPos.y);
-    gameObj.updateVisiblity(playerPosCR.col, playerPosCR.row);
+    gameObj.runLevel('level1');
     
     //controls layer
     gameObj.controlsLayer = new huungry.ControlsLayer().setGameObj(gameObj);
     gameObj.controlsLayer.init();
-    gameObj.gameScene.appendChild(gameObj.controlsLayer);
-    
+    gameObj.gameScene.appendChild(gameObj.controlsLayer);    
     gameObj.controlsLayer.refreshInfo();
-
-    
-    //fight scene
-    gameObj.fight = function(enemy) {        
-        var FightEngine = new huungry.FightEngine().setGameObj(gameObj).setEnemyArmy(enemy);
-        FightEngine.init();
-    }
     
     //player details screen
     gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
