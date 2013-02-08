@@ -28,8 +28,10 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
 huungry.FightEngine.prototype.init = function() {
     this.fightScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
+    this.fightUILayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
         
     this.fightScene.appendChild(this.fightLayer);
+    this.fightScene.appendChild(this.fightUILayer);
     this.gameObj.director.replaceScene(this.fightScene);
     
     this.map = new huungry.Map().setGameObj(this.gameObj)
@@ -49,7 +51,7 @@ huungry.FightEngine.prototype.init = function() {
         .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
         .setText('Run').setColor('#00CD00'); 
-    this.fightLayer.appendChild(runButton);
+    this.fightUILayer.appendChild(runButton);
     //run away
     var currentObj = this;
     goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
@@ -60,7 +62,7 @@ huungry.FightEngine.prototype.init = function() {
         .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
         .setText('Pass').setColor('#00CD00'); 
-    this.fightLayer.appendChild(passButton);
+    this.fightUILayer.appendChild(passButton);
     
     //pass
     goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {
@@ -72,7 +74,7 @@ huungry.FightEngine.prototype.init = function() {
         .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.5)
         .setAnchorPoint(0,0)
         .setText('Kill all').setColor('#00CD00'); 
-    this.fightLayer.appendChild(killButton);
+    this.fightUILayer.appendChild(killButton);
     
     //pass
     goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
@@ -296,8 +298,8 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     unit.currentTarget = [];
 
     for(var i=0; i<unit.movementTargets.length; i++) {
-        var posX=pos.x+tileSize*unit.movementTargets[i].dx,
-            posY=pos.y+tileSize*unit.movementTargets[i].dy;
+        var posX=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
+            posY=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
         var posCell = this.map.getColRowFromXY(posX, posY);
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
