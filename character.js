@@ -88,56 +88,56 @@ huungry.Character.prototype.initGamepad = function() {
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_up.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_down.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': 1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_left.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 0
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_right.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 0
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_up_right.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_down_left.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_up_left.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': -1
     });
 
     this.movementTargets.push({
         'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/arrow_down_right.png').setOpacity(0.8)
-            .setSize(this.gameObj.tileSize/2,this.gameObj.tileSize/2).setHidden(true),
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 1
     });
@@ -243,7 +243,7 @@ huungry.Character.prototype.initGamepad = function() {
                 e.event.stopPropagation();
                 if(character.currentTarget.length) {
                     character.toggleGamepad(false);
-                    console.log(character);
+                    //console.log(character);
                     character.attackUnit(character.currentTarget[i]);
                 }                
             });
@@ -272,8 +272,8 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
             
             //show if it can move
             if(!this.gameObj.map.isCellBlocked(targetCol, targetRow)) {
-                var posX=pos.x+tileSize*this.movementTargets[i].dx+(this.movementTargets[i].dx < 0 ? tileSize/2 : this.movementTargets[i].dx == 0 ? tileSize/4 : 0),
-                    posY=pos.y+tileSize/2*this.movementTargets[i].dy+(this.movementTargets[i].dy > 0 ? tileSize/2 : this.movementTargets[i].dy == 0 ? tileSize/4 : 0);
+                var posX=pos.x+tileSize*this.movementTargets[i].dx;//+(this.movementTargets[i].dx < 0 ? tileSize/2 : this.movementTargets[i].dx == 0 ? tileSize/4 : 0),
+                    posY=pos.y+tileSize*this.movementTargets[i].dy;//+(this.movementTargets[i].dy > 0 ? tileSize/2 : this.movementTargets[i].dy == 0 ? tileSize/4 : 0);
                 this.movementTargets[i].sprite.setHidden(false);
                 this.movementTargets[i].sprite.setPosition(posX,posY);
             }

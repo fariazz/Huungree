@@ -35,7 +35,7 @@ huungry.FightEngine.prototype.init = function() {
     this.gameObj.director.replaceScene(this.fightScene);
     
     this.map = new huungry.Map().setGameObj(this.gameObj)
-        .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight})
+        .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight-this.gameObj.tileSize})
         .setBackground(this.floorColor);
     
     this.fightLayer.appendChild(this.map.backgroundSprite);
@@ -45,10 +45,9 @@ huungry.FightEngine.prototype.init = function() {
         var target = currentObj.map.getColRowFromXY(e.position.x, e.position.y);
         //console.log(currentObj.map.getTargetType(target.col, target.row));
     });
-    
-        
-    var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize)
-        .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.5)
+            
+    var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
+        .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.7)
         .setAnchorPoint(0,0)
         .setText('Run').setColor('#00CD00'); 
     this.fightUILayer.appendChild(runButton);
@@ -58,8 +57,8 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.exitFight();
     });
     
-    var passButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize)
-        .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.5)
+    var passButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
+        .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.7)
         .setAnchorPoint(0,0)
         .setText('Pass').setColor('#00CD00'); 
     this.fightUILayer.appendChild(passButton);
@@ -70,8 +69,8 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.pass();
     });
     
-    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize)
-        .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.5)
+    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize*0.8)
+        .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.7)
         .setAnchorPoint(0,0)
         .setText('Kill all').setColor('#00CD00'); 
     this.fightUILayer.appendChild(killButton);
@@ -128,21 +127,23 @@ huungry.FightEngine.prototype.exitFight = function() {
  */
 huungry.FightEngine.prototype.initArmies = function() {
     //init player army
-    this.playerUnitPositions = [];
+    this.playerUnitPositions = new Array();
     
-    var i = 0;
-    var takenCells = {};    
+    var i = 0, pos, unit;
+    var takenCells = new Array();    
+    var position, cellIndex;
     while(this.playerUnitPositions.length < this.gameObj.player.units.length) {
-        var position = {
+        position = {
             col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX+1),
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+1)
         };
-
-        if(!takenCells[position.col+','+position.row]) {
-            takenCells[position.col+','+position.row] = true;
+        cellIndex = position.col + position.row*1000;
+        
+        if(takenCells.indexOf(cellIndex) == -1) {
+            takenCells.push(cellIndex);
             this.playerUnitPositions.push(position);
-            var pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
-            var unit = new huungry.Unit()
+            pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
+            unit = new huungry.Unit()
                 .setUnitData(this.gameObj.player.units[i])
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
@@ -160,21 +161,23 @@ huungry.FightEngine.prototype.initArmies = function() {
     }
 
     //init enemy army
-    this.enemyUnitPositions = [];
+    this.enemyUnitPositions = new Array();    
     
-    var i=0;
-    var takenCells = {};
+    i=0;
+    takenCells = new Array();    
     while(this.enemyUnitPositions.length < this.enemyArmy.units.length) {
-        var position = {
+        position = {
             col: this.gameObj.fightSceneEnemyStartX + goog.math.randomInt(this.gameObj.fightSceneEnemyEndX-this.gameObj.fightSceneEnemyStartX+0.99),
             row: this.gameObj.fightSceneEnemyStartY + goog.math.randomInt(this.gameObj.fightSceneEnemyEndY-this.gameObj.fightSceneEnemyStartY+0.99)
         };
 
-        if(!takenCells[position.col+','+position.row]) {
-            takenCells[position.col+','+position.row] = true;
+        cellIndex = position.col + position.row*1000;
+        
+        if(takenCells.indexOf(cellIndex) == -1) {
+            takenCells.push(cellIndex);
             this.enemyUnitPositions.push(position);
-            var pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
-            var unit = new huungry.Unit()
+            pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
+            unit = new huungry.Unit()
                 .setUnitData(this.enemyArmy.units[i])
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
@@ -301,14 +304,14 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         var posX=pos.x+tileSize*unit.movementTargets[i].dx,
             posY=pos.y+tileSize*unit.movementTargets[i].dy;
         
-        var posXM=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
-            posYM=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
+        //var posXM=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
+        //    posYM=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
         var posCell = this.map.getColRowFromXY(posX, posY);
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
         if(targetType == this.gameObj.FREE_TARGET) {
             unit.movementTargets[i].sprite.setHidden(false);
-            unit.movementTargets[i].sprite.setPosition(posXM,posYM);            
+            unit.movementTargets[i].sprite.setPosition(posX,posY);            
         }
         else if(targetType == this.gameObj.ENEMY_UNIT) {
             //show attack option            
