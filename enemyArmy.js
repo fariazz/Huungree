@@ -26,7 +26,7 @@ huungry.EnemyArmy.prototype.init = function() {
         this.gold += unit.gold * this.unitsSummary[i].number;
         
         for(var j = 0; j< this.unitsSummary[i].number; j++) {
-            this.units.push(this.gameObj.cloneUnit(unit));
+            this.units.push(this.gameObj.cloneUnit(unit,this.unitsSummary[i].number ));
         }
     }
     

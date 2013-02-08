@@ -34,7 +34,6 @@ huungry.start = function(){
             attack: 10,
             defense: 8,
             canShoot: true,
-            life: 10,
             gold: 10
         },
         {
@@ -44,7 +43,6 @@ huungry.start = function(){
             attack: 13,
             defense: 10,
             canShoot: false,
-            life: 14,
             gold: 15
         },
         {
@@ -54,7 +52,6 @@ huungry.start = function(){
             attack: 8,
             defense: 6,
             canShoot: false,
-            life: 6,
             gold: 5
         },
         {
@@ -64,7 +61,6 @@ huungry.start = function(){
             attack: 16,
             defense: 5,
             canShoot: false,
-            life: 12,
             gold: 13
         },
         {
@@ -74,7 +70,6 @@ huungry.start = function(){
             attack: 10,
             defense: 7,
             canShoot: false,
-            life: 20,
             gold: 17
         },
         {
@@ -84,7 +79,6 @@ huungry.start = function(){
             attack: 20,
             defense: 13,
             canShoot: false,
-            life: 25,
             gold: 40
         },
         {
@@ -94,7 +88,6 @@ huungry.start = function(){
             attack: 26,
             defense: 13,
             canShoot: false,
-            life: 22,
             gold: 32
         },
         {
@@ -104,7 +97,6 @@ huungry.start = function(){
             attack: 18,
             defense: 10,
             canShoot: false,
-            life: 18,
             gold: 24
         },
         {
@@ -114,7 +106,6 @@ huungry.start = function(){
             attack: 15,
             defense: 3,
             canShoot: true,
-            life: 13,
             gold: 23
         },
         {
@@ -124,7 +115,6 @@ huungry.start = function(){
             attack: 18,
             defense: 7,
             canShoot: false,
-            life: 18,
             gold: 40
         },
         {
@@ -134,7 +124,6 @@ huungry.start = function(){
             attack: 10,
             defense: 3,
             canShoot: true,
-            life: 19,
             gold: 40
         },
         {
@@ -144,7 +133,6 @@ huungry.start = function(){
             attack: 10,
             defense: 3,
             canShoot: true,
-            life: 19,
             gold: 40
         }
     ];
@@ -158,11 +146,11 @@ huungry.start = function(){
         
     gameObj.player.maxNumUnits = 14;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['priest']),
-        gameObj.cloneUnit(gameObj.unitTypes['knight']),
-        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
-        gameObj.cloneUnit(gameObj.unitTypes['soldier']),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'])
+        gameObj.cloneUnit(gameObj.unitTypes['priest'], 5),
+        gameObj.cloneUnit(gameObj.unitTypes['knight'], 5),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier'], 6),
+        gameObj.cloneUnit(gameObj.unitTypes['soldier'], 7),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 8)
     ];
     
     //splash screen
@@ -216,14 +204,6 @@ huungry.start = function(){
         }
         gameObj.director.replaceScene(gameObj.playerInfoScene);
     });
-    
-    //open when clicking on the player
-    //goog.events.listen()
-    //
-    //
-    //
-    // set current scene active
-    
     
 }
 

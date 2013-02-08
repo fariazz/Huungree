@@ -50,8 +50,9 @@ huungry.GameObj = function(document) {
 /**
  * create a deep copy of a unit
  * @param {huungry.Unit} unit
+ * @param number
  */
-huungry.GameObj.prototype.cloneUnit = function(unit) {
+huungry.GameObj.prototype.cloneUnit = function(unit, number) {
     var cloned= {
             id: unit.id,
             name: unit.name,
@@ -59,7 +60,7 @@ huungry.GameObj.prototype.cloneUnit = function(unit) {
             attack: unit.attack,
             defense: unit.defense,
             canShoot: unit.canShoot,
-            life: unit.life,
+            life: number,
             gold: unit.gold
     }
     return cloned;
