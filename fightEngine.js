@@ -149,7 +149,7 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .setElementType(this.gameObj.PLAYER_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();     
-            unit.customLayer = this.fightLayer;
+            unit.customLayer = this.fightUILayer;
             unit.initGamepad();
             unit.fightEngine = this;
             unit.readiness = Math.random();
@@ -298,17 +298,20 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     unit.currentTarget = [];
 
     for(var i=0; i<unit.movementTargets.length; i++) {
-        var posX=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
-            posY=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
+        var posX=pos.x+tileSize*unit.movementTargets[i].dx,
+            posY=pos.y+tileSize*unit.movementTargets[i].dy;
+        
+        var posXM=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
+            posYM=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
         var posCell = this.map.getColRowFromXY(posX, posY);
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
         if(targetType == this.gameObj.FREE_TARGET) {
             unit.movementTargets[i].sprite.setHidden(false);
-            unit.movementTargets[i].sprite.setPosition(posX,posY);            
+            unit.movementTargets[i].sprite.setPosition(posXM,posYM);            
         }
         else if(targetType == this.gameObj.ENEMY_UNIT) {
-            //show attack option
+            //show attack option            
             unit.attackTargets[i].sprite.setHidden(false);
             unit.attackTargets[i].sprite.setPosition(posX,posY);
             unit.currentTarget[i] = this.getUnitFromXY(posX, posY);
@@ -324,8 +327,8 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         console.log('can shoot');
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
-            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303')
-                .setOpacity(0.5).setSize(tileSize,tileSize)
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/rangeattack-icon.png')
+                .setSize(tileSize,tileSize)
                 .setPosition(enemyPos.x, enemyPos.y));
             
             (function(i, currentObj) {

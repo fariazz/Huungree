@@ -24,7 +24,7 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
-    this.lifeBar = new lime.Label().setPosition(12,13).setText(Math.max(Math.ceil(this.life),0)).setFontSize(10)
+    this.lifeBar = new lime.Label().setPosition(12,13).setText(Math.max(Math.ceil(this.life),0)).setFontSize(8)
         .setAnchorPoint(0,0).setFontColor('#FFFFFF');
     this.appendChild(this.lifeBar);
     

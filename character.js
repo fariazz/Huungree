@@ -146,56 +146,56 @@ huungry.Character.prototype.initGamepad = function() {
     this.attackTargets = [];
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': 1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 0
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 0
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#FF0303').setOpacity(0.5)
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 1
@@ -243,6 +243,7 @@ huungry.Character.prototype.initGamepad = function() {
                 e.event.stopPropagation();
                 if(character.currentTarget.length) {
                     character.toggleGamepad(false);
+                    console.log(character);
                     character.attackUnit(character.currentTarget[i]);
                 }                
             });
