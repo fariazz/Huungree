@@ -97,6 +97,10 @@ huungry.ControlsLayer.prototype.init = function() {
         .setAnchorPoint(0,0).setFontColor('#000000').setFontSize(8);
         
     this.sideBar.appendChild(this.goldValue);    
+    
+    //player details window
+    this.initPlayerInfoWindow();
+    
 }
 
 /**
@@ -104,4 +108,65 @@ huungry.ControlsLayer.prototype.init = function() {
  */
 huungry.ControlsLayer.prototype.refreshInfo = function() {
     this.goldValue.setText(this.gameObj.player.gold);
+}
+
+/**
+ * init player info window
+ */
+huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
+    //icon to launch
+    var infoWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
+        .setFill('assets/knight1.png')
+        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize);
+    this.sideBar.appendChild(infoWindowBtn);
+    
+    //player details screen
+    this.gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
+    
+    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
+            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
+    
+    //close button
+    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
+        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
+        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);
+    this.gameObj.playerInfoScene.appendChild(winBackground);
+    this.gameObj.playerInfoScene.appendChild(closeButton);
+    this.gameObj.playerInfoLayer = new lime.Layer().setAnchorPoint(0, 0);            
+    this.gameObj.playerInfoScene.appendChild(this.gameObj.playerInfoLayer);
+    
+    //close event
+    var gameObj = this.gameObj;
+    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
+        gameObj.director.replaceScene(gameObj.gameScene);
+    });
+
+    //launch event
+    goog.events.listen(infoWindowBtn,['mousedown', 'touchstart'], function(e) {
+        gameObj.playerInfoLayer.removeAllChildren();
+        
+        //title
+        var y_title = gameObj.tileSize/2;
+        var h_row = gameObj.tileSize/2+2;
+        var title = new lime.Label().setText('Units').setFontColor('#E8FC08')
+            .setPosition(gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
+            .setFontSize(11);
+            gameObj.playerInfoLayer.appendChild(title);
+        
+        //player units
+        for(var i=0; i<gameObj.player.units.length; i++) {          
+            var thumbnail = new lime.Sprite().setAnchorPoint(0,0)
+                .setSize(gameObj.tileSize/2*0.8,gameObj.tileSize/2*0.8)
+                .setFill('assets/'+gameObj.player.units[i].image)
+                .setPosition(gameObj.tileSize/3, y_title+gameObj.tileSize+h_row*i);
+            gameObj.playerInfoLayer.appendChild(thumbnail);
+            
+            var label = new lime.Label().setText(Math.ceil(gameObj.player.units[i].life)+' x '+gameObj.player.units[i].name+' (attack:'+gameObj.player.units[i].attack+' defense:'+gameObj.player.units[i].defense+')')
+            .setFontColor('#E8FC08').setFontSize(9)
+            .setPosition(gameObj.tileSize, y_title+gameObj.tileSize+h_row*i).setAnchorPoint(0,0);
+            gameObj.playerInfoLayer.appendChild(label);
+        }
+        gameObj.director.replaceScene(gameObj.playerInfoScene);
+    });
 }

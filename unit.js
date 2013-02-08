@@ -66,8 +66,8 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
         var effect2 = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
         unit.runAction(effect2);   
         goog.events.listen(effect2,lime.animation.Event.STOP,function(){
-            console.log(unit);
-            console.log(unit.fightEngine);
+            //console.log(unit);
+            //console.log(unit.fightEngine);
             if(unit.fightEngine.playerMoves) {
                 unit.refreshLifeBar();    
                 attacker.playerMoved();                            

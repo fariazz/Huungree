@@ -171,39 +171,7 @@ huungry.start = function(){
     
     gameObj.director.replaceScene(gameObj.splashScreen.scene);
     
-    //player details screen
-    gameObj.playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     
-    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setSize(gameObj.width, gameObj.height-500).setFill('#0D0D0D');
-    
-    //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(gameObj.tileSize*10, gameObj.tileSize*7)
-        .setSize(gameObj.tileSize*2, gameObj.tileSize);
-    gameObj.playerInfoScene.appendChild(winBackground);
-    gameObj.playerInfoScene.appendChild(closeButton);
-    gameObj.playerInfoLayer = new lime.Layer().setAnchorPoint(0, 0);            
-    gameObj.playerInfoScene.appendChild(gameObj.playerInfoLayer);
-    
-    //close event
-    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
-        gameObj.director.replaceScene(gameObj.gameScene);
-    });
-
-    //launch event
-    goog.events.listen(gameObj.player,['mousedown', 'touchstart'], function(e) {
-        console.log(gameObj.playerInfoScene);
-        gameObj.playerInfoLayer.removeAllChildren();
-        
-        //player units
-        for(var i=0; i<gameObj.player.units.length; i++) {          
-            var label = new lime.Label().setText(gameObj.player.units[i].name+' - '+Math.ceil(gameObj.player.units[i].life)).setFontColor('#E8FC08')
-            .setPosition(gameObj.tileSize/4, gameObj.tileSize+gameObj.tileSize*2/3*i).setAnchorPoint(0,0);
-            gameObj.playerInfoLayer.appendChild(label);
-        }
-        gameObj.director.replaceScene(gameObj.playerInfoScene);
-    });
     
 }
 

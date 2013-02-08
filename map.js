@@ -188,8 +188,8 @@ huungry.Map.prototype.isCellBlocked = function(col, row) {
         return 1;
     }
     else {
-        console.log('col:'+col+' row:'+row+' blocked:'+this.blocked[row][col]);
-        console.log(this);
+        //console.log('col:'+col+' row:'+row+' blocked:'+this.blocked[row][col]);
+        //console.log(this);
         return this.blocked[row][col];
     }
 }
