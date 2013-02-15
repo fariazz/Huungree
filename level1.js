@@ -269,8 +269,8 @@ huungryGameMaps.level1.enemyArmies = [
 
 huungryGameMaps.level1.shops = [
     {
-        x: 5,
-        y: 13,
+        x: 1,
+        y: 1,
         name: 'Le Mirage',
         image: 'city.png',
         units: [
@@ -282,6 +282,11 @@ huungryGameMaps.level1.shops = [
             {                
                 id: 'lion',
                 price: 40,
+                qty: 5
+            },
+            {
+                id: 'peasant',
+                price: 30,
                 qty: 5
             }
         ]

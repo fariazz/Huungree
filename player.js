@@ -11,7 +11,7 @@ huungry.Player = function() {
     
     this.inFightScene = false;    
     this.canMove = false;
-    this.gold = 100;
+    this.gold = 1000;
 }
 
 goog.inherits(huungry.Player, huungry.Character);
@@ -81,8 +81,9 @@ huungry.Player.prototype.collect = function(item) {
  * @param price
  * @param qty
  */
-huungry.Player.prototype.buy = function(unit, price) {
+huungry.Player.prototype.buy = function(unit, price, qty) {
     this.gold -= price;
+    unit.life = qty;
     this.units.push(unit);
     console.log(this.units);
 }

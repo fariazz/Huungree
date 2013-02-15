@@ -110,7 +110,7 @@ huungry.start = function(){
         },
         {
             id: 'knight',
-            name: 'knight',
+            name: 'knight of the order',
             image: 'knight2.png',
             attack: 18,
             defense: 7,
@@ -144,7 +144,7 @@ huungry.start = function(){
     gameObj.player = new huungry.Player().setFill('assets/knight1.png')
         .setGameObj(gameObj);
         
-    gameObj.player.maxNumUnits = 14;   
+    gameObj.player.maxNumUnits = 10;   
     gameObj.player.units = [
         gameObj.cloneUnit(gameObj.unitTypes['priest'], 5),
         gameObj.cloneUnit(gameObj.unitTypes['knight'], 5),
