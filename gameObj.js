@@ -22,13 +22,13 @@ huungry.GameObj = function(document) {
     this.screenNumTilesY = this.screenHeight/this.tileSize;
     
     //area in fight scene where units appear
-    this.fightScenePlayerStartX = 0;
-    this.fightScenePlayerEndX = 2;
+    this.fightScenePlayerStartX = 1;
+    this.fightScenePlayerEndX = 3;
     this.fightScenePlayerStartY = 0;
     this.fightScenePlayerEndY = this.screenNumTilesY-2;
     
-    this.fightSceneEnemyStartX = this.screenNumTilesX-3;
-    this.fightSceneEnemyEndX = this.screenNumTilesX-1;
+    this.fightSceneEnemyStartX = this.screenNumTilesX-4;
+    this.fightSceneEnemyEndX = this.screenNumTilesX-2;
     this.fightSceneEnemyStartY = 0;
     this.fightSceneEnemyEndY = this.screenNumTilesY-2;
     
@@ -39,12 +39,10 @@ huungry.GameObj = function(document) {
     
     //animation
     this.animationOn = true;
-    this.movementDuration = 0.2;
-    
+    this.movementDuration = 0.2;    
 
     this.director = new lime.Director(document.body, this.screenWidth, this.screenHeight);
-    this.director.makeMobileWebAppCapable();
-    
+    this.director.makeMobileWebAppCapable();    
 };
 
 /**

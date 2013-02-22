@@ -77,6 +77,7 @@ huungry.Shop.prototype.showDialog = function() {
                     if(currentObj.gameObj.player.units.length < currentObj.gameObj.player.maxNumUnits ) {
                         currentObj.gameObj.player.buy(unit, currentObj.data.units[i].price, 1);
                         currentObj.refreshPlayerInfo();
+                        currentObj.refreshPlayerUnits();
                         currentObj.data.units[i].qty--;
                         availableLabel.setText(currentObj.data.units[i].qty+' available');
                     }
@@ -86,15 +87,16 @@ huungry.Shop.prototype.showDialog = function() {
     }
     
     //show player units
-    var playerUnitsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/units_grid.png')
-        .setPosition(5,110).setSize(106,43);
-    this.scene.appendChild(playerUnitsRect);
-    
-    
-    this.playerResources = new lime.Label().setText(this.data.name+' - $'+this.gameObj.player.gold)
-            .setFontColor('#E8FC08').setAnchorPoint(0,0).setPosition(10,5);
+    var gridX = 5, gridY= 110;
+    this.playerUnitsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
+        
+    this.playerResources = new lime.Label().setFontColor('#E8FC08')
+        .setAnchorPoint(0,0).setPosition(10,5);                    
+    this.scene.appendChild(this.playerUnitsLayer);
     this.scene.appendChild(this.playerResources);
-    
+        
+    this.refreshPlayerInfo();
+    this.refreshPlayerUnits();        
     this.gameObj.director.replaceScene(this.scene);
 }
 
@@ -102,5 +104,32 @@ huungry.Shop.prototype.showDialog = function() {
  * refresh player's info
  */
 huungry.Shop.prototype.refreshPlayerInfo = function() {
-    this.playerResources.setText('You have: '+this.gameObj.player.gold+' gold');
+    this.playerResources.setText(this.data.name+' - $'+this.gameObj.player.gold);
+}
+
+/**
+ * refresh player's units
+ */
+huungry.Shop.prototype.refreshPlayerUnits = function() {
+    this.playerUnitsLayer.removeAllChildren();
+    var gridX = 0, gridY = 0;
+    var playerUnitsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/units_grid.png')
+        .setPosition(gridX,gridY).setSize(106,43);
+    this.playerUnitsLayer.appendChild(playerUnitsRect);    
+    
+    var thumbnail, thumbX, thumbY = gridY+1;
+    for(i=0; i < this.gameObj.player.units.length; i++) {  
+        
+        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
+        
+        if(i == 5) {
+            thumbY += this.gameObj.tileSize+1;
+        }
+        
+        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
+            .setFill('assets/'+this.gameObj.player.units[i].image)
+            .setPosition(thumbX, thumbY);
+        this.playerUnitsLayer.appendChild(thumbnail);        
+    }
 }

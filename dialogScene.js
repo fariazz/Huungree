@@ -8,7 +8,7 @@ goog.require('lime.Sprite');
  */
 huungry.DialogScene = function() {
     goog.base(this);
-    
+    this.setRenderer(lime.Renderer.DOM);
     this.callback = function() {};    
 }
 
@@ -21,7 +21,9 @@ huungry.DialogScene.prototype.setGameObj = function(gameObj) {
 
 huungry.DialogScene.prototype.setTitleText = function(title) {
     this.titleText = new lime.Label().setText(title)
-        .setPosition(this.gameObj.screenWidth/2, this.gameObj.screenHeight*3/10);
+        .setFontSize(16)
+        .setSize(200,20)
+        .setPosition(this.gameObj.screenWidth/2, this.gameObj.screenHeight*2/10);
         return this;
 }
 
@@ -39,12 +41,9 @@ huungry.DialogScene.prototype.setCallback = function(callback, callbackParameter
 }
 
 huungry.DialogScene.prototype.init = function() {
-    this.dialogLayer = new lime.Layer().setRenderer(lime.Renderer.DOM).setAnchorPoint(0, 0);
-    this.appendChild(this.dialogLayer);
-
     this.dialogBackground = new lime.Sprite().setAnchorPoint(0, 0)
-        .setPosition(this.gameObj.screenWidth/8, this.gameObj.screenHeight/8)
-        .setSize(this.gameObj.screenWidth*3/4, this.gameObj.screenHeight*3/4)
+        .setPosition(0,0)
+        .setSize(this.gameObj.screenWidth, this.gameObj.screenHeight)
         .setFill('assets/dialogBackground.png');
 
     this.dialogClose = new lime.GlossyButton().setSize(this.gameObj.tileSize*3,this.gameObj.tileSize)
