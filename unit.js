@@ -17,6 +17,7 @@ goog.inherits(huungry.Unit,huungry.Character);
 huungry.Unit.prototype.setUnitData = function(unitData) {
     this.setFill('assets/'+unitData.image);
     
+    this.id = unitData.id;
     this.attack = unitData.attack;
     this.defense = unitData.defense;
     this.life = unitData.life;

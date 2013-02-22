@@ -83,7 +83,5 @@ huungry.Player.prototype.collect = function(item) {
  */
 huungry.Player.prototype.buy = function(unit, price, qty) {
     this.gold -= price;
-    unit.life = qty;
-    this.units.push(unit);
-    console.log(this.units);
+    this.units.push(this.gameObj.cloneUnit(unit, qty));
 }

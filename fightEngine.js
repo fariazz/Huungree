@@ -99,6 +99,7 @@ huungry.FightEngine.prototype.exitFight = function() {
     
     for(var i=0; i< this.playerUnits.length; i++) {
         this.gameObj.player.units.push({
+            id: this.playerUnits[i].id,
             name: this.playerUnits[i].name,
             image: this.playerUnits[i].image,
             attack: this.playerUnits[i].attack,

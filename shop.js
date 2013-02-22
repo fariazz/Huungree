@@ -87,7 +87,7 @@ huungry.Shop.prototype.showDialog = function() {
     }
     
     //show player units
-    var gridX = 5, gridY= 110;
+    var gridX = 5, gridY= 105;
     this.playerUnitsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
         
     this.playerResources = new lime.Label().setFontColor('#E8FC08')
@@ -97,6 +97,12 @@ huungry.Shop.prototype.showDialog = function() {
         
     this.refreshPlayerInfo();
     this.refreshPlayerUnits();        
+    
+    var helpMerge = new lime.Label().setText('To merge units, touch source then target.')
+        .setPosition(gridX, gridY + 45).setFontColor('#E8FC08').setFontSize(8)
+        .setAnchorPoint(0,0);
+    this.scene.appendChild(helpMerge);
+    
     this.gameObj.director.replaceScene(this.scene);
 }
 
@@ -117,7 +123,8 @@ huungry.Shop.prototype.refreshPlayerUnits = function() {
         .setPosition(gridX,gridY).setSize(106,43);
     this.playerUnitsLayer.appendChild(playerUnitsRect);    
     
-    var thumbnail, thumbX, thumbY = gridY+1;
+    this.thumbnailLayers = new Array();
+    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
     for(i=0; i < this.gameObj.player.units.length; i++) {  
         
         thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
@@ -126,10 +133,61 @@ huungry.Shop.prototype.refreshPlayerUnits = function() {
             thumbY += this.gameObj.tileSize+1;
         }
         
+        this.thumbnailLayers.push(
+            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
+        
         thumbnail = new lime.Sprite().setAnchorPoint(0,0)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
             .setFill('assets/'+this.gameObj.player.units[i].image)
-            .setPosition(thumbX, thumbY);
-        this.playerUnitsLayer.appendChild(thumbnail);        
+            .setPosition(0,0);        
+        
+        lifeBar = new lime.Label().setPosition(11,10)
+            .setText(this.gameObj.player.units[i].life).setFontSize(9)
+            .setAnchorPoint(0,0).setFontColor('#E8FC08');
+        
+        this.thumbnailLayers[i].unit = this.gameObj.player.units[i];
+        this.thumbnailLayers[i].index = i;
+        this.thumbnailLayers[i].appendChild(thumbnail);       
+        this.thumbnailLayers[i].appendChild(lifeBar);       
+        this.playerUnitsLayer.appendChild(this.thumbnailLayers[i]);  
+        
+        (function(thumbnailLayers, i, gameObj, currentObj) {
+            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
+                e.stopPropagation();
+                
+                if(thumbnailLayers[i].highlightCell) {
+                    thumbnailLayers[i].removeChild(thumbnailLayers[i].highlightCell);
+                    thumbnailLayers[i].highlightCell = undefined;
+                }
+                else {
+                    //check if a unit is selected, if not, select current
+                    var prevSelected;
+                    for(var j=0, arrLen2 = thumbnailLayers.length; j < arrLen2; j++) {
+                        if(i != j && thumbnailLayers[j].highlightCell) {
+                            prevSelected = thumbnailLayers[j]
+                        }
+                    }
+                    
+                    if(!prevSelected) {                    
+                        thumbnailLayers[i].highlightCell = new lime.Sprite().setAnchorPoint(0,0)
+                            .setPosition(0,0).setSize(gameObj.tileSize, gameObj.tileSize)
+                            .setFill(232,252,8,0.5);
+                        thumbnailLayers[i].appendChild(thumbnailLayers[i].highlightCell);
+                    }
+                    
+                    else {
+                        //if it's the same unit, merge
+                        if(prevSelected.unit.id == thumbnailLayers[i].unit.id) {
+                            gameObj.player.units[i].life += prevSelected.unit.life;
+                            gameObj.player.units.splice(prevSelected.index,1);
+                            thumbnailLayers[prevSelected.index].removeChild(thumbnailLayers[prevSelected.index].highlightCell);
+                            currentObj.refreshPlayerUnits();
+                        }
+                    }
+                }
+                
+            });
+        })(this.thumbnailLayers, i, this.gameObj, this);
+        
     }
 }
