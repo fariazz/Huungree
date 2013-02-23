@@ -272,7 +272,7 @@ huungryGameMaps.level1.shops = [
         x: 1,
         y: 1,
         name: 'Le Mirage',
-        image: 'city.png',
+        image: 'house-1.png',
         units: [
             {
                 id: 'knight',
@@ -294,8 +294,8 @@ huungryGameMaps.level1.shops = [
     {
         x: 12,
         y: 12,
-        name: 'Le Mirage',
-        image: 'city.png',
+        name: 'Red Eyes Shop',
+        image: 'house-2.png',
         units: [
             {
                 id: 'peasant',

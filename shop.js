@@ -61,6 +61,8 @@ huungry.Shop.prototype.showDialog = function() {
         var productLabel = new lime.Label().setText(unit.name+' - $'+this.data.units[i].price)
             .setFontColor('#E8FC08').setAnchorPoint(0,0)
             .setPosition(this.gameObj.tileSize*1.1,2)
+            .setSize(200,10)    
+            .setAlign('left')            
             .setFontSize(7);
         productLayer.appendChild(productLabel);
         
@@ -142,7 +144,7 @@ huungry.Shop.prototype.refreshPlayerUnits = function() {
             .setPosition(0,0);        
         
         lifeBar = new lime.Label().setPosition(11,10)
-            .setText(this.gameObj.player.units[i].life).setFontSize(9)
+            .setText(Math.ceil(this.gameObj.player.units[i].life)).setFontSize(9)
             .setAnchorPoint(0,0).setFontColor('#E8FC08');
         
         this.thumbnailLayers[i].unit = this.gameObj.player.units[i];

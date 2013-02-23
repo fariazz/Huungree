@@ -210,12 +210,16 @@ huungry.Map.prototype.removeElement = function(element) {
     var index = -1;
     for(var i=0; i<this.elements.length; i++) {
         if(element.id == this.elements[i].id) {
+            console.log(this.elements);
+            console.log('removed:'+i);
             index = i;
             break;
         }
     }
     if(index >= 0) {
-        this.elements.splice(i,1)
+        this.elements.splice(index,1);
+        console.log('after splice');
+        console.log(this.elements);
     }
 }
 
@@ -246,7 +250,7 @@ huungry.Map.prototype.removeElement = function(element) {
  * @param int row
  */
 huungry.Map.prototype.getTargetType = function(col,row) {
-    
+    console.log(this.elements);
     var cellCoord = this.getXYFromColRow(col, row);    
     for(var i=0; i<this.elements.length; i++) {
         var elementPos = this.elements[i].getPosition();

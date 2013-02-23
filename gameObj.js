@@ -22,8 +22,8 @@ huungry.GameObj = function(document) {
     this.screenNumTilesY = this.screenHeight/this.tileSize;
     
     //area in fight scene where units appear
-    this.fightScenePlayerStartX = 1;
-    this.fightScenePlayerEndX = 3;
+    this.fightScenePlayerStartX = 3;
+    this.fightScenePlayerEndX = 5;
     this.fightScenePlayerStartY = 0;
     this.fightScenePlayerEndY = this.screenNumTilesY-2;
     

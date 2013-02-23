@@ -99,7 +99,7 @@ huungry.FightEngine.prototype.exitFight = function() {
     
     for(var i=0; i< this.playerUnits.length; i++) {
         this.gameObj.player.units.push({
-            id: this.playerUnits[i].id,
+            id: this.playerUnits[i].typeid,
             name: this.playerUnits[i].name,
             image: this.playerUnits[i].image,
             attack: this.playerUnits[i].attack,
@@ -301,7 +301,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     //remove previous target
     unit.currentTarget = [];
 
-    for(var i=0; i<unit.movementTargets.length; i++) {
+    for(var i=0, arrLen = unit.movementTargets.length; i<arrLen; i++) {
         var posX=pos.x+tileSize*unit.movementTargets[i].dx,
             posY=pos.y+tileSize*unit.movementTargets[i].dy;
         
@@ -315,6 +315,8 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
             unit.movementTargets[i].sprite.setPosition(posX,posY);            
         }
         else if(targetType == this.gameObj.ENEMY_UNIT) {
+            console.log('showing sword');
+            console.log(posCell);
             //show attack option            
             unit.attackTargets[i].sprite.setHidden(false);
             unit.attackTargets[i].sprite.setPosition(posX,posY);
