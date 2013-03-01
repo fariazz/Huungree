@@ -12,6 +12,7 @@ huungry.Player = function() {
     this.inFightScene = false;    
     this.canMove = false;
     this.gold = 1000;
+    this.items = new Array();
 }
 
 goog.inherits(huungry.Player, huungry.Character);
@@ -43,19 +44,29 @@ huungry.Player.prototype.playerMoved = function() {
                 this.gameObj.fight(this.map.elements[i]);
             }
             else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
+                
+                //item dialog content
+                var item = this.map.elements[i];
+                var message;
+                switch(item.type) {
+                    case 'ITEM.GOLD':
+                        message = "You've found "+this.map.elements[i].gold+'\npieces of gold.';
+                        break;
+                    case 'ITEM.ATTACK-SPELL':
+                        message = "Use this spell on your enemies during battle.";
+                        break;        
+                }
+                                
                 this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
                 .setTitleText(this.map.elements[i].name)
-                .setMainText("You've found "+this.map.elements[i].gold+'\npieces of gold.')
+                .setMainText(message)
                 .setSceneAfter(this.gameObj.gameScene)
-                .setCallback(function(params) {
-                    console.log(params);
-                    var item = params.player.map.elements[params.i];
+                .setCallback(function(params) {                    
                     params.player.collect(item);
-                }, {player: this, i: i}).init();                    
+                }, {player: this, item: item}).init();                    
             }
             else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
                 this.map.elements[i].showDialog();
-                console.log('in shop');
             }
             else {
                 console.log(this.map.elements[i]);
@@ -70,8 +81,17 @@ huungry.Player.prototype.playerMoved = function() {
  * @param {} item
  */
 huungry.Player.prototype.collect = function(item) {
-    this.gold += item.gold;
+    switch(item.type) {
+        case 'ITEM.GOLD':
+            this.gold += item.gold;            
+            break;
+        default:
+            this.items.push(item.clone());
+            break;        
+    }
     item.die();
+    console.log(this.items);
+    
     this.gameObj.controlsLayer.refreshInfo();
 }
 

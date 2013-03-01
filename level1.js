@@ -317,21 +317,31 @@ huungryGameMaps.level1.items = [
         y: 3,
         name: 'Gold',
         gold: 20,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
+    },
+    {
+        x: 5,
+        y: 2,
+        name: 'Fire Scroll',
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
     },
     {
         x: 6,
         y: 5,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 1,
         y: 7,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 1,
@@ -345,55 +355,63 @@ huungryGameMaps.level1.items = [
         y: 13,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 8,
         y: 13,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 11,
         y: 9,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 13,
         y: 10,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 13,
         y: 6,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 9,
         y: 4,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 11,
         y: 1,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
     {
         x: 12,
         y: 1,
         name: 'Ancient chest',
         gold: 210,
-        image: 'gold.png'
+        image: 'gold.png',
+        type: 'ITEM.GOLD'
     },
 ]

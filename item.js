@@ -25,14 +25,21 @@ huungry.Item.prototype.init = function() {
 huungry.Item.prototype.setData = function(data) {
     this.setFill('assets/'+data.image);
     this.name = data.name;
+    this.type = data.type;        
     this.gold = data.gold;
     
     return this;
 }
 
 /**
- * show details dialog
+ * create a deep copy of a item
  */
-huungry.Item.prototype.showDialog = function() {
-    
-}
+huungry.Item.prototype.clone = function() {
+    var cloned= {
+            id: this.id,
+            name: this.name,
+            image: this.image,
+            type: this.type            
+    }
+    return cloned;
+};

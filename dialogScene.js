@@ -22,7 +22,7 @@ huungry.DialogScene.prototype.setGameObj = function(gameObj) {
 huungry.DialogScene.prototype.setTitleText = function(title) {
     this.titleText = new lime.Label().setText(title)
         .setFontSize(16)
-        .setSize(200,20)
+        .setSize(this.gameObj.screenWidth*0.8,this.gameObj.tileSize)
         .setPosition(this.gameObj.screenWidth/2, this.gameObj.screenHeight*2/10);
         return this;
 }
@@ -30,6 +30,7 @@ huungry.DialogScene.prototype.setTitleText = function(title) {
 huungry.DialogScene.prototype.setMainText = function(title) {
     this.mainText = new lime.Label().setText(title)
         .setMultiline(true)
+        .setSize(this.gameObj.screenWidth*0.8,this.gameObj.tileSize)
         .setPosition(this.gameObj.screenWidth/2, this.gameObj.screenHeight*1/2);
         return this;
 }
@@ -47,7 +48,7 @@ huungry.DialogScene.prototype.init = function() {
         .setFill('assets/dialogBackground.png');
 
     this.dialogClose = new lime.GlossyButton().setSize(this.gameObj.tileSize*3,this.gameObj.tileSize)
-        .setPosition(this.gameObj.screenWidth/2,this.gameObj.screenHeight*3/4)
+        .setPosition(this.gameObj.screenWidth/2,this.gameObj.screenHeight*4/5)
         .setText('Ok').setColor('#EECFA1');
 
     this.appendChild(this.dialogBackground);
