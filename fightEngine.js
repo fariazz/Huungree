@@ -64,15 +64,14 @@ huungry.FightEngine.prototype.init = function() {
     this.fightUILayer.appendChild(passButton);
     
     //pass
-    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {
-        currentObj.clearRangeTargets();
+    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {        
         currentObj.pass();
     });
     
-    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize*0.8)
+    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
         .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.7)
         .setAnchorPoint(0,0)
-        .setText('Kill all').setColor('#00CD00'); 
+        .setText('Kill').setColor('#00CD00'); 
     this.fightUILayer.appendChild(killButton);
     
     //pass
@@ -83,6 +82,32 @@ huungry.FightEngine.prototype.init = function() {
         
         currentObj.pass();
     });
+    
+    //battle items
+    this.initItemsWindow();
+    this.itemsButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize*0.8)
+        .setPosition(this.gameObj.tileSize*8.5,this.gameObj.tileSize*7.7)
+        .setAnchorPoint(0,0)
+        .setText('Items').setColor('#00CD00'); 
+    this.fightUILayer.appendChild(this.itemsButton);
+    
+    var currObj = this;
+    goog.events.listen(this.itemsButton, ['mousedown','touchstart'], function(e) {        
+        //can only use items when player is moving
+        if(currObj.playerMoves) {
+            
+            if(currObj.selectedItem === undefined) {
+                console.log('show items window');
+                //show player items
+                currObj.refreshItems();        
+                currObj.gameObj.director.pushScene(currObj.itemsScene);
+            }
+            else {
+                currObj.hideItemTargets();                
+            }            
+            
+        }
+    });    
     
     this.gameObj.player.inFightScene = true;    
     this.initArmies();
@@ -477,6 +502,164 @@ huungry.FightEngine.prototype.updateNextMovingUnits = function() {
  * pass a turn
  */
 huungry.FightEngine.prototype.pass = function() {
-    this.playerUnits[this.currentPlayerIndex].toggleGamepad(false);
+    this.hideTargets();
     this.playTurn();
 }
+
+/**
+ * hide unit targets
+ */
+huungry.FightEngine.prototype.hideTargets = function() {
+    this.playerUnits[this.currentPlayerIndex].toggleGamepad(false);
+    this.clearRangeTargets();
+}
+
+/**
+ * init items window
+ */
+huungry.FightEngine.prototype.initItemsWindow = function() {
+    
+    //player details screen
+    this.itemsScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
+    
+    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
+            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
+    this.itemsScene.appendChild(winBackground);
+    
+    //close button
+    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
+        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
+        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);    
+    this.itemsScene.appendChild(closeButton);
+    
+    //use button
+    this.useButton = new lime.GlossyButton().setColor('#133242').setText('Use')
+        .setPosition(this.gameObj.tileSize*2, this.gameObj.tileSize*7)
+        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize)
+        .setHidden(true);
+    this.itemsScene.appendChild(this.useButton);    
+    
+    //title
+    var y_title = this.gameObj.tileSize/2;
+    var title = new lime.Label().setText('Items').setFontColor('#E8FC08')
+        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
+        .setFontSize(11);
+    this.itemsScene.appendChild(title);
+    
+    //close event
+    var currObj = this;
+    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
+        currObj.gameObj.director.popScene();
+    });
+    
+    goog.events.listen(this.useButton,['mousedown', 'touchstart'], function(e) {
+        currObj.showItemTargets();
+        currObj.gameObj.director.popScene();
+    });
+    
+    var gridX = 5, gridY= 40;
+    this.playerItemsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
+    this.itemsScene.appendChild(this.playerItemsLayer);     
+};
+
+
+
+/**
+ * refresh player's units
+ */
+huungry.FightEngine.prototype.refreshItems = function() {
+    this.playerItemsLayer.removeAllChildren();
+    var gridX = 0, gridY = 0;
+    var playerItemsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/items_grid.png')
+        .setPosition(gridX,gridY);
+    this.playerItemsLayer.appendChild(playerItemsRect);    
+    
+    this.itemHelp = new lime.Label().setText('')
+        .setPosition(gridX, gridY + 70).setFontColor('#E8FC08').setFontSize(8)
+        .setAnchorPoint(0,0);
+    this.playerItemsLayer.appendChild(this.itemHelp);
+    
+    var thumbnailLayers = new Array();
+    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
+    for(i=0; i < this.gameObj.player.items.length; i++) {  
+        
+        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
+        
+        if(i == 5) {
+            thumbY += this.gameObj.tileSize+1;
+        }
+        
+        thumbnailLayers.push(
+            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
+        
+        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
+            .setFill('assets/'+this.gameObj.player.items[i].image)
+            .setPosition(0,0);        
+        
+        thumbnailLayers[i].item = this.gameObj.player.items[i];
+        thumbnailLayers[i].index = i;
+        thumbnailLayers[i].appendChild(thumbnail);       
+        this.playerItemsLayer.appendChild(thumbnailLayers[i]);  
+        
+        (function(thumbnailLayers, i, gameObj, currentObj) {
+            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
+                e.stopPropagation();
+                currentObj.selectedItem = i;     
+                currentObj.itemHelp.setText(gameObj.player.items[i].name);
+                currentObj.useButton.setHidden(false);
+            });
+        })(thumbnailLayers, i, this.gameObj, this);
+        
+    }
+};
+
+/**
+ * show item targets
+ */
+huungry.FightEngine.prototype.showItemTargets = function() {
+    this.itemsButton.setText('Cancel');
+    this.useButton.setHidden(true);
+    this.hideTargets();
+        
+    var unit = this.playerUnits[this.currentPlayerIndex];
+    var pos = unit.getPosition();        
+    var tileSize = this.gameObj.tileSize;
+    var currentObj = this;
+    
+    var item = this.gameObj.player.items[this.selectedItem];
+
+    //show range attack targets if attack spell
+    if(item.type == 'ITEM.ATTACK-SPELL') {
+       
+        this.rangeTargets = new Array();
+        var enemyPos;
+        console.log('attack spell');
+        for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
+            enemyPos = this.enemyUnits[i].getPosition();
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/'+item.image)
+                .setOpacity(0.5)
+                .setSize(tileSize,tileSize)
+                .setPosition(enemyPos.x, enemyPos.y));
+            
+            (function(i, currentObj) {
+                goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
+                    e.preventDefault();                         
+                    item.attackUnit(currentObj.enemyUnits[i]);  
+                });
+            })(i, currentObj);
+                
+            this.fightLayer.appendChild(this.rangeTargets[i]);
+        }
+    }
+};
+
+/**
+ * hide item target
+ */
+huungry.FightEngine.prototype.hideItemTargets = function() {
+    this.selectedItem = undefined;
+    this.itemsButton.setText('Items');
+    this.clearRangeTargets();
+    this.showCurrentGamepad();
+};

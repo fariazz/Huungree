@@ -321,11 +321,12 @@ huungryGameMaps.level1.items = [
         type: 'ITEM.GOLD'
     },
     {
-        x: 5,
+        x: 3,
         y: 2,
         name: 'Fire Scroll',
         image: 'scroll-fire.png',
-        type: 'ITEM.ATTACK-SPELL'
+        type: 'ITEM.ATTACK-SPELL',
+        attack: 10
     },
     {
         x: 6,

@@ -101,6 +101,7 @@ huungry.ControlsLayer.prototype.init = function() {
     //player details window
     this.initPlayerInfoWindow();
     this.initArrangeArmiesWindow();
+    this.initItemsWindow();
     
 }
 
@@ -229,7 +230,7 @@ huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
         
         gameObj.director.replaceScene(arrangeArmiesScene);
     });        
-}
+};
 
 /**
  * refresh player's units
@@ -308,4 +309,99 @@ huungry.ControlsLayer.prototype.refreshPlayerUnits = function() {
         })(this.thumbnailLayers, i, this.gameObj, this);
         
     }
-}
+};
+
+/**
+ * init items window
+ */
+huungry.ControlsLayer.prototype.initItemsWindow = function() {
+    //icon to launch
+    var itemsBtn = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
+        .setFill('assets/scroll-fire.png')
+        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize*3.6);
+    this.sideBar.appendChild(itemsBtn);
+    
+    //player details screen
+    itemsScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
+    
+    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
+            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
+    
+    //close button
+    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
+        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
+        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);
+    itemsScene.appendChild(winBackground);
+    itemsScene.appendChild(closeButton);
+    
+    //title
+    var y_title = this.gameObj.tileSize/2;
+    var title = new lime.Label().setText('Items').setFontColor('#E8FC08')
+        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
+        .setFontSize(11);
+    itemsScene.appendChild(title);
+    
+    //close event
+    var gameObj = this.gameObj;
+    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
+        gameObj.director.replaceScene(gameObj.gameScene);
+    });
+    
+    var gridX = 5, gridY= 40;
+    this.playerItemsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
+    itemsScene.appendChild(this.playerItemsLayer);
+    
+    //launch event
+    var currObj = this, helpMerge;
+    goog.events.listen(itemsBtn,['mousedown', 'touchstart'], function(e) {
+        
+        //show player items
+        currObj.refreshItems();        
+        gameObj.director.replaceScene(itemsScene);
+    });        
+};
+
+/**
+ * refresh player's units
+ */
+huungry.ControlsLayer.prototype.refreshItems = function() {
+    this.playerItemsLayer.removeAllChildren();
+    var gridX = 0, gridY = 0;
+    var playerItemsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/items_grid.png')
+        .setPosition(gridX,gridY);
+    this.playerItemsLayer.appendChild(playerItemsRect);    
+    
+    var thumbnailLayers = new Array();
+    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
+    for(i=0; i < this.gameObj.player.items.length; i++) {  
+        
+        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
+        
+        if(i == 5) {
+            thumbY += this.gameObj.tileSize+1;
+        }
+        
+        thumbnailLayers.push(
+            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
+        
+        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
+            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
+            .setFill('assets/'+this.gameObj.player.items[i].image)
+            .setPosition(0,0);        
+        
+        thumbnailLayers[i].item = this.gameObj.player.items[i];
+        thumbnailLayers[i].index = i;
+        thumbnailLayers[i].appendChild(thumbnail);       
+        this.playerItemsLayer.appendChild(thumbnailLayers[i]);  
+        
+        (function(thumbnailLayers, i, gameObj, currentObj) {
+            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
+                e.stopPropagation();
+                                
+                
+            });
+        })(thumbnailLayers, i, this.gameObj, this);
+        
+    }
+};

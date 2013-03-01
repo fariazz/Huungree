@@ -70,8 +70,13 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
             //console.log(unit);
             //console.log(unit.fightEngine);
             if(unit.fightEngine.playerMoves) {
-                unit.refreshLifeBar();    
-                attacker.playerMoved();                            
+                unit.refreshLifeBar();   
+                if(!attacker.isItem) {
+                    attacker.playerMoved(); 
+                }
+                else {
+                    unit.fightEngine.hideItemTargets();
+                }
             }    
             else {
                 unit.refreshLifeBar();
