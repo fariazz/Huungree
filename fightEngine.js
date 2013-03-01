@@ -661,5 +661,7 @@ huungry.FightEngine.prototype.hideItemTargets = function() {
     this.selectedItem = undefined;
     this.itemsButton.setText('Items');
     this.clearRangeTargets();
+    this.updateDead();
     this.showCurrentGamepad();
+    
 };

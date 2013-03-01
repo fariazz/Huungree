@@ -166,7 +166,7 @@ huungry.start = function(){
     gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.startBtn);
     
     goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {
-        gameObj.runLevel('level1');
+        gameObj.runLevel('level1_new');
     });
     
     gameObj.director.replaceScene(gameObj.splashScreen.scene);
