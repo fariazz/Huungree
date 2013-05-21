@@ -26,6 +26,57 @@ goog.require('lime.GlossyButton');
 // entrypoint
 huungry.start = function(){
     
+    this.levels = [
+        {
+            codeName: 'level1_new',
+            displayName: 'Level 1',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 1',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+        {
+            codeName: 'level2',
+            displayName: 'Level 2',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 2',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+        {
+            codeName: 'level3',
+            displayName: 'Level 3',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 3',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+        {
+            codeName: 'level4',
+            displayName: 'Level 4',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 4',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+        {
+            codeName: 'level5',
+            displayName: 'Level 5',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 5',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+        {
+            codeName: 'level6',
+            displayName: 'Level 6',
+            image: 'scroll-fire.png',
+            introText: 'This is an introduction to level 6',
+            introImg: 'scroll-fire.png',
+            questText: 'Your goal in this level is to blablabablab'
+        },
+    ];
+    
     var UnitTypes = [
         {
             id: 'bluemonster',
@@ -165,8 +216,20 @@ huungry.start = function(){
     gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.background);
     gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.startBtn);
     
-    goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {
-        gameObj.runLevel('level1_new');
+    //level selection screen
+    gameObj.levelSelectionScreen = new Object();
+    gameObj.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    gameObj.levelSelectionScreen.background = new lime.Sprite().setAnchorPoint(0,0).
+        setFill('assets/splashscreen.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
+    
+//    var i; var levelBtn;
+//    for(i in this.levels) {
+//        levelBtn = new lime.Sprite().setAnchorPoint
+//    }
+//    
+    var currentObj = this;
+    goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
+        HuungryUI.showLevelselDialog(currentObj.levels, gameObj);
     });
     
     gameObj.director.replaceScene(gameObj.splashScreen.scene);

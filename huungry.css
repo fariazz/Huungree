@@ -1,0 +1,19 @@
+.lime-scene {display:block !important;}     
+
+.zva_dialog {
+    background-color: yellow;
+    width:100%;
+    height:100%;
+    display: none;
+    padding: 5%;
+}
+
+.zva_dialog_levelsel_listcont ul li {
+    margin: 2%;
+}
+
+.zva_dialog_leveldesc_img {
+    width: 80%;
+    height: 20%;
+    margin: auto;
+}

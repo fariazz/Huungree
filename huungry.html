@@ -4,15 +4,25 @@
 <head>
     <meta charset="utf-8"/>
     <title>huungry</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="ui.js"></script>
     <script type="text/javascript" src="../closure/closure/goog/base.js"></script>
     <script type='text/javascript' src='level1_new.js'></script>
-    <script type="text/javascript" src="huungry.js"></script>
-
-    <style>
-        .lime-scene {display:block !important;}            
-    </style>
+    <script type="text/javascript" src="huungry.js"></script>    
+    <link rel="stylesheet" type="text/css" href="reset.css" />   
+    <link rel="stylesheet" type="text/css" href="huungry.css" />   
 </head>
 
-<body onload="huungry.start()" style="background-color:black"></body>
+<body onload="huungry.start()" style="background-color:black">
+    <div class="zva_dialog zva_dialog_levelsel">
+        <h2>Campaigns</h2>
+        <div class="zva_dialog_levelsel_listcont"></div>
+    </div>
+    <div class="zva_dialog zva_dialog_leveldesc">
+        <div class="zva_dialog_leveldesc_img" ></div>            
+        <div class="zva_dialog_leveldesc_txt" ></div>            
+        <button class="zva_dialog_btn">Ok</button>
+    </div>
+</body>
 
 </html>
