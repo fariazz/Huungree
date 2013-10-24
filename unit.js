@@ -15,7 +15,7 @@ goog.inherits(huungry.Unit,huungry.Character);
  * @param json unitData
  */
 huungry.Unit.prototype.setUnitData = function(unitData) {
-    this.setFill('assets/'+unitData.image);
+    this.setFill('assets/images/units/'+unitData.image);
     
     this.typeid = unitData.id;
     this.attack = unitData.attack;
@@ -46,7 +46,7 @@ huungry.Unit.prototype.playerMoved = function() {
  * @param huungry.Unit attackedUnit
  */
 huungry.Unit.prototype.attackUnit = function(attackedUnit) {
-    var damage = this.attack*0.05 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
+    var damage = this.attack*0.06 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
     attackedUnit.life -= damage;
     console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);

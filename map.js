@@ -142,7 +142,7 @@ huungry.Map.prototype.initLevel = function() {
     this.gameObj.enemyArmies = new Array();
     for(var i=0, arrayLen = this.level.enemyArmies.length; i<arrayLen; i++) {
         var pos = this.gameObj.map.getXYFromColRow(this.level.enemyArmies[i].x,this.level.enemyArmies[i].y);
-        this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
+        this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
             .setGameObj(this.gameObj)
             .setMap(this.gameObj.map)
             .refreshMapPos()); 

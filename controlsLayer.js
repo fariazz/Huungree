@@ -119,7 +119,7 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
     //icon to launch
     var infoWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
-        .setFill('assets/knight1.png')
+        .setFill('assets/images/units/knight.png')
         .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize);
     this.sideBar.appendChild(infoWindowBtn);
     
@@ -182,7 +182,7 @@ huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
     //icon to launch
     var arrangeArmiesBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
-        .setFill('assets/knight1.png')
+        .setFill('assets/images/units/knight.png')
         .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize*2.2);
     this.sideBar.appendChild(arrangeArmiesBtn);
     

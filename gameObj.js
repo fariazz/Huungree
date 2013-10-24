@@ -32,7 +32,7 @@ huungry.GameObj = function(document) {
     this.fightSceneEnemyStartY = 0;
     this.fightSceneEnemyEndY = this.screenNumTilesY-2;
     
-    this.maxRandPercentage = 0.2;
+    this.maxRandPercentage = 0.15;
     
     //probability that a range attack unit shoots
     this.shootProbability = 0.85;

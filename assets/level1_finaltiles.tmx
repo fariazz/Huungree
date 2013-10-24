@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="35" height="30" tilewidth="20" tileheight="20">
+ <tileset firstgid="1" name="huungree_tileset" tilewidth="20" tileheight="20" spacing="1" margin="1">
+  <image source="huungree_tileset.png" width="432" height="541"/>
+ </tileset>
+ <layer name="map" width="35" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzFlsFu2zAQRBkXcSLEPkZS1UPPaoO6/gA7h/z/P7VEOfDLaFdRgQI9DExRFPdxuEvzWEo5/iddTLXvxz/UR/P9TPrFcmqqfYdAA7THWInPxxZP8rFRH1nYd2jxqK7pG0SGqXFO+D5a+2mDL+Souk94nsHSBTo0nr3N4b7IG/oTsYxQBw4xzE3PTc4zlWVO+rrEQU6ynMASrdl51vzhHBPGy6/Z2O4DX5R7xyCOGMZEGte3sa9g0feK+9U4qgbzRft4XPHG192VW972Ta8JS/19aiKHs7g3EcMZfqvvU/mTN4Nx9MZNlsffemjfPbRnsSi3yTJiri/GNIODLB1YxOMePpVb3jP/hxLXu3Im2o9onq0sY9sz5T3rsH7/Bu3RHsqSZSrvzzX5wrwgT1Tvyu/e3onF658sd/h+wJxDudWQ2h1iZCz0ZY3FvfG5+rJcI73xcb52948cGYvad/Dl3Np1/s+YczSeyBdfA/NiK0sdtwNHtlbmAM+YNY4XKGPhPkUxdxbjjL2iJ56/ZPiIReef+7dLVN/x3DmjnbG8JIp8IQt98DPFz5eMgzxvgeTR2h6RQyzXQDrnmDMZS1Q/WU2Lg7Wvs7Hqu4k8zN0tLLwHZSzkVC7oLqfYazzRHrGGWPsz1joHLHxP79VW7EtjuQR75jz8v5YPzhH5ojFzeX83yHwRj3vkd4e+LM9prVc1GbF4TtETj+9t36/oP0M856aIxXOG99q/YbmW5dk8leXdY2fPWU1rj5hrV8S+2HOUz1H9V+kep2fd6bJzl16KOYu9VeKgF4+Y3+9SvEe5svVuVTSn6xcAfXfs
+  </data>
+ </layer>
+ <layer name="mapover" width="35" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20JT6AAAAAAPgYQaAAB
+  </data>
+ </layer>
+ <layer name="blocked" width="35" height="30" visible="0" opacity="0.75">
+  <data encoding="base64" compression="zlib">
+   eJzNlEcOwzAMBPX/X/lnuQbElqHtgwkEcCSWYdN1zrk+9HtTmj93r5gI9/R3je+Uq8vf6TpxTLTO6X7ekZ5t/CWdFpvUluaedFvv3opzjs9P3RO+Vhc6n2reG8tmz9tuJJZN31SsqZ9sXD/cLLQ6p7eknW3eonlOekeEsGz39Imvqed4lWzrQnvs4tLdU7GS0N4Ru/YGud6pbxpz+nVzoVicHhGaf2LZ5rupedpzwkjmdPpvNSfsk7/5aBwtJ3WeOJovxeVitnwS35O3Kfm6O6vO1vGkmjtbsuONqfW69fuEMzJfim/6cv9dfok12dDvZP8fL+WSdAlLmmfCpuI727Zrqdd3Yzrm9k4kIfl95fcDEI1zvQ==
+  </data>
+ </layer>
+ <layer name="enemies" width="35" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlUsKgDAMRHt/8P+5iYgL8WpuLEhokWLMjJC3KckmQzNJQnAcfVq0ABJqtIAf0aEFKHBc7xv/DyJmnKUqkx9NVTiRODulXtm1hTzA6GVrJnD9Hlw/x33vlfpk1RRCxgyoyX6LU/3eErnlYx2NiBH3j3Wnyr9hJOUZJIhZt+AEn6kRjw==
+  </data>
+ </layer>
+ <layer name="items" width="35" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBieIHqgHUABCBxoB1AJZBMpF0prhwwQwOZ/fGEylEAwhfpxhQM9wyeIjnYNZ0CvsjaXBmZG0sBMUsFwKROGKogZaAeQCYjND7TIN8ggh8bmj4KhAfCVY+F0c8UoIASIrW8i6GwfsSCKyuYhgxAqmgXr16D7H73dORLqfwDcZAty
+  </data>
+ </layer>
+ <objectgroup name="enemiesObj" width="35" height="30">
+  <object x="372" y="148"/>
+ </objectgroup>
+</map>

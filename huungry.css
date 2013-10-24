@@ -1,11 +1,12 @@
 .lime-scene {display:block !important;}     
 
 .zva_dialog {
-    background-color: yellow;
+    background-color: black;
     width:100%;
     height:100%;
     display: none;
     padding: 5%;
+    color: white;
 }
 
 .zva_dialog_levelsel_listcont ul li {
@@ -15,5 +16,11 @@
 .zva_dialog_leveldesc_img {
     width: 80%;
     height: 20%;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+}
+
+.zva_dialog_leveldesc_txt {
+    margin-bottom: 5%;
 }

@@ -115,7 +115,7 @@ huungryGameMaps.level1_new.enemyArmies = [
                 number: 2
             },
             {
-                id: 'bluemonster',
+                id: 'lion',
                 number: 2
             },
         ]
@@ -123,14 +123,18 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 2,
         y: 8,
-        image: 'knight2.png',
+        image: 'peasant.png',
         unitsSummary: [
             {
-                id: 'knight',
+                id: 'peasant',
                 number: 3
             },
             {
-                id: 'cross_soldier',
+                id: 'peasant',
+                number: 3
+            },
+            {
+                id: 'wolf',
                 number: 3
             },
         ]
@@ -138,18 +142,18 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 4,
         y: 9,
-        image: 'bluemonster.png',
+        image: 'archer.png',
         unitsSummary: [
             {
                 id: 'lion',
                 number: 2
             },
             {
-                id: 'bluemonster',
+                id: 'archer',
                 number: 3
             },
             {
-                id: 'pinkmonster',
+                id: 'archer',
                 number: 1
             },
         ]
@@ -157,10 +161,18 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 6,
         y: 7,
-        image: 'solder1.png',
+        image: 'insectman.png',
         unitsSummary: [
             {
-                id: 'cross_soldier',
+                id: 'insectman',
+                number: 3
+            },
+            {
+                id: 'insectman',
+                number: 3
+            },
+            {
+                id: 'insectman',
                 number: 3
             },
         ]
@@ -168,14 +180,14 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 6,
         y: 11,
-        image: 'pinkmonster.png',
+        image: 'snake.png',
         unitsSummary: [            
             {
-                id: 'bluemonster',
+                id: 'snake',
                 number: 2
             },
             {
-                id: 'pinkmonster',
+                id: 'snake',
                 number: 3
             },
         ]
@@ -183,14 +195,14 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 2,
         y: 13,
-        image: 'pinkmonster.png',
+        image: 'snake.png',
         unitsSummary: [            
             {
-                id: 'bluemonster',
+                id: 'snake',
                 number: 1
             },
             {
-                id: 'pinkmonster',
+                id: 'snake',
                 number: 5
             },
         ]
@@ -198,73 +210,25 @@ huungryGameMaps.level1_new.enemyArmies = [
     {
         x: 8,
         y: 9,
-        image: 'zombie.png',
+        image: 'halfling.png',
         unitsSummary: [
             {
-                id: 'lion',
+                id: 'halfling',
                 number: 2
             },
             {
-                id: 'zombie',
+                id: 'halfling',
                 number: 3
             },
             {
-                id: 'pinkmonster',
+                id: 'lion',
                 number: 1
             },
         ]
     },
-    {
-        x: 10,
-        y: 11,
-        image: 'bluemonster.png',
-        unitsSummary: [
-            {
-                id: 'zombie',
-                number: 2
-            },
-            {
-                id: 'bluemonster',
-                number: 3
-            },
-            {
-                id: 'pinkmonster',
-                number: 3
-            },
-        ]
-    },
-    {
-        x: 10,
-        y: 6,
-        image: 'zombie.png',
-        unitsSummary: [
-            {
-                id: 'lion',
-                number: 2
-            },
-            {
-                id: 'bluemonster',
-                number: 3
-            },
-            {
-                id: 'zombie',
-                number: 5
-            },
-        ]
-    },
-    {
-        x: 13,
-        y: 3,
-        image: 'ninja.png',
-        unitsSummary: [
-            {
-                id: 'ninja',
-                number: 5
-            }
-        ]
-    },
     
-]
+    
+];
 
 huungryGameMaps.level1_new.shops = [
     {
