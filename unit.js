@@ -14,7 +14,7 @@ goog.inherits(huungry.Unit,huungry.Character);
  * 
  * @param json unitData
  */
-huungry.Unit.prototype.setUnitData = function(unitData) {
+huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
     this.setFill('assets/images/units/'+unitData.image);
     
     this.typeid = unitData.id;
@@ -25,8 +25,10 @@ huungry.Unit.prototype.setUnitData = function(unitData) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
-    this.lifeBar = new lime.Label().setPosition(12,13).setText(Math.max(Math.ceil(this.life),0)).setFontSize(8)
-        .setAnchorPoint(0,0).setFontColor('#FFFFFF');
+    var color = isPlayer ? '#FFFFFF' : '#FFCCCC';
+    
+    this.lifeBar = new lime.Label().setPosition(15,12).setText(Math.max(Math.ceil(this.life),0)).setFontSize(8)
+        .setAnchorPoint(0,0).setFontColor(color);
     this.appendChild(this.lifeBar);
     
     return this;
@@ -48,7 +50,7 @@ huungry.Unit.prototype.playerMoved = function() {
 huungry.Unit.prototype.attackUnit = function(attackedUnit) {
     var damage = this.attack*0.06 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
     attackedUnit.life -= damage;
-    console.log(attackedUnit.name+' received a damage of '+damage);
+    //console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);
 }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8"  />
+    <meta name="format-detection" content="telephone=no"  />
+    <meta name="viewport" initial-scale=1, width=device-width"  />
+
+    <script type="text/javascript">
+        function onDeviceReady() {
+//            intel.xdk.device.hideSplashScreen();
+            navigator.splashscreen.hide() ;         // same as intel.xdk.device.hideSplashScreen() ;
+
+    };
+    document.addEventListener("intel.xdk.device.ready",onDeviceReady,false);
+    </script>
+
+  <body>
+    <h1>
+        test header
+    </h1>
+    <div>
+        test body  
+    </div>
+
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    
+  </body>
+</html>

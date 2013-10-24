@@ -24,7 +24,7 @@ huungry.Item.prototype.init = function() {
  * @param {} data
  */
 huungry.Item.prototype.setData = function(data) {
-    this.setFill('assets/'+data.image);
+    this.setFill('assets/images/items/'+data.image);
     this.image = data.image;
     this.name = data.name;
     this.type = data.type;        
@@ -57,8 +57,8 @@ huungry.Item.prototype.clone = function() {
 huungry.Item.prototype.attackUnit = function(attackedUnit) {
     var damage = this.attack*0.05 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
     attackedUnit.life -= damage;
-    console.log(attackedUnit.name+' received a damage of '+damage);
+    //console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);
     this.gameObj.player.items.splice(attackedUnit.fightEngine.selectedItem,1);
-    console.log(this.gameObj.player.items);
+    //console.log(this.gameObj.player.items);
 };

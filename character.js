@@ -273,7 +273,7 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
             //show if it can move
             if(!this.gameObj.map.isCellBlocked(targetCol, targetRow)) {
                 var posX=pos.x+tileSize*this.movementTargets[i].dx;//+(this.movementTargets[i].dx < 0 ? tileSize/2 : this.movementTargets[i].dx == 0 ? tileSize/4 : 0),
-                    posY=pos.y+tileSize*this.movementTargets[i].dy;//+(this.movementTargets[i].dy > 0 ? tileSize/2 : this.movementTargets[i].dy == 0 ? tileSize/4 : 0);
+                var posY=pos.y+tileSize*this.movementTargets[i].dy;//+(this.movementTargets[i].dy > 0 ? tileSize/2 : this.movementTargets[i].dy == 0 ? tileSize/4 : 0);
                 this.movementTargets[i].sprite.setHidden(false);
                 this.movementTargets[i].sprite.setPosition(posX,posY);
             }
@@ -284,8 +284,6 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
         }    
     }
     else {
-        console.log('creature');
-        console.log(this);
         for(var i=0; i<this.movementTargets.length; i++) {
             this.movementTargets[i].sprite.setHidden(true);
             this.attackTargets[i].sprite.setHidden(true);

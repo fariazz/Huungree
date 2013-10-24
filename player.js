@@ -56,7 +56,9 @@ huungry.Player.prototype.playerMoved = function() {
                         message = "Use this spell on your enemies during battle.";
                         break;        
                 }
-                                
+                
+                this.gameObj.numItems--;
+                
                 this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
                 .setTitleText(this.map.elements[i].name)
                 .setMainText(message)
@@ -69,7 +71,7 @@ huungry.Player.prototype.playerMoved = function() {
                 this.map.elements[i].showDialog();
             }
             else {
-                console.log(this.map.elements[i]);
+                //console.log(this.map.elements[i]);
             }
             
         }
@@ -90,9 +92,13 @@ huungry.Player.prototype.collect = function(item) {
             break;        
     }
     item.die();
-    console.log(this.items);
     
     this.gameObj.controlsLayer.refreshInfo();
+    
+    //game goal for now..
+    if(this.gameObj.numItems == 0) {
+        HuungryUI.showEndofGameDialog(this.gameObj);
+    }
 }
 
 /**

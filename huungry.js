@@ -28,7 +28,7 @@ huungry.start = function(){
     
     this.levels = [
         {
-            codeName: 'level1_new',
+            codeName: 'level1',
             displayName: 'Level 1',
             image: 'assets/images/items/scroll-fire.png',
             introText: 'This is an introduction to level 1',
@@ -55,10 +55,10 @@ huungry.start = function(){
         
     gameObj.player.maxNumUnits = 10;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 5),
-        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 5),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 10),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
         gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 7),
         gameObj.cloneUnit(gameObj.unitTypes['archer'], 8)
     ];
     
@@ -70,9 +70,13 @@ huungry.start = function(){
     gameObj.splashScreen.startBtn = new lime.GlossyButton().setColor('#133242').setText('Start')
         .setPosition(gameObj.tileSize*3, gameObj.tileSize*7)
         .setSize(gameObj.tileSize*2, gameObj.tileSize);
+    gameObj.splashScreen.aboutBtn = new lime.GlossyButton().setColor('#133242').setText('About')
+        .setPosition(gameObj.tileSize*7, gameObj.tileSize*7)
+        .setSize(gameObj.tileSize*3, gameObj.tileSize);
     
     gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.background);
     gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.startBtn);
+    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.aboutBtn);
     
     //level selection screen
     gameObj.levelSelectionScreen = new Object();
@@ -88,7 +92,10 @@ huungry.start = function(){
     var currentObj = this;
     goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
         //HuungryUI.showLevelselDialog(currentObj.levels, gameObj);
-				gameObj.runLevel('level1_new');
+				gameObj.runLevel('level1');
+    });
+    goog.events.listen(gameObj.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
+        HuungryUI.showEndofGameDialog(this.gameObj);
     });
     
     gameObj.director.replaceScene(gameObj.splashScreen.scene);

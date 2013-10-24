@@ -111,6 +111,7 @@ huungry.Map.prototype.initLevel = function() {
     this.gameObj.map = this;
     
     //load items
+    this.gameObj.numItems = 0;
     var item, pos;
     for(var i=0, arrayLen = this.level.items.length; i<arrayLen; i++) {
         pos = this.gameObj.map.getXYFromColRow(this.level.items[i].x,this.level.items[i].y);
@@ -122,6 +123,7 @@ huungry.Map.prototype.initLevel = function() {
             .setData(this.level.items[i])
             .init();
         this.gameObj.gameLayer.appendChild(item);
+        this.gameObj.numItems++;
     }
     
     //shops
@@ -147,6 +149,7 @@ huungry.Map.prototype.initLevel = function() {
             .setMap(this.gameObj.map)
             .refreshMapPos()); 
         this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
+        this.gameObj.enemyArmies[i].background = this.level.enemyArmies[i].background;
         this.gameObj.enemyArmies[i].init();
         this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
     }
@@ -210,16 +213,16 @@ huungry.Map.prototype.removeElement = function(element) {
     var index = -1;
     for(var i=0; i<this.elements.length; i++) {
         if(element.id == this.elements[i].id) {
-            console.log(this.elements);
-            console.log('removed:'+i);
+            //console.log(this.elements);
+            //console.log('removed:'+i);
             index = i;
             break;
         }
     }
     if(index >= 0) {
         this.elements.splice(index,1);
-        console.log('after splice');
-        console.log(this.elements);
+        //console.log('after splice');
+        //console.log(this.elements);
     }
 }
 
@@ -250,7 +253,6 @@ huungry.Map.prototype.removeElement = function(element) {
  * @param int row
  */
 huungry.Map.prototype.getTargetType = function(col,row) {
-    console.log(this.elements);
     var cellCoord = this.getXYFromColRow(col, row);    
     for(var i=0; i<this.elements.length; i++) {
         var elementPos = this.elements[i].getPosition();

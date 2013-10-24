@@ -162,7 +162,7 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
         for(var i=0; i<gameObj.player.units.length; i++) {          
             thumbnail = new lime.Sprite().setAnchorPoint(0,0)
                 .setSize(gameObj.tileSize/2*0.8,gameObj.tileSize/2*0.8)
-                .setFill('assets/'+gameObj.player.units[i].image)
+                .setFill('assets/images/units/'+gameObj.player.units[i].image)
                 .setPosition(gameObj.tileSize/3, y_title+gameObj.tileSize+h_row*i);
             playerInfoLayer.appendChild(thumbnail);
             
@@ -257,7 +257,7 @@ huungry.ControlsLayer.prototype.refreshPlayerUnits = function() {
         
         thumbnail = new lime.Sprite().setAnchorPoint(0,0)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
-            .setFill('assets/'+this.gameObj.player.units[i].image)
+            .setFill('assets/images/units/'+this.gameObj.player.units[i].image)
             .setPosition(0,0);        
         
         lifeBar = new lime.Label().setPosition(11,10)
@@ -387,7 +387,7 @@ huungry.ControlsLayer.prototype.refreshItems = function() {
         
         thumbnail = new lime.Sprite().setAnchorPoint(0,0)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
-            .setFill('assets/'+this.gameObj.player.items[i].image)
+            .setFill('assets/images/items/'+this.gameObj.player.items[i].image)
             .setPosition(0,0);        
         
         thumbnailLayers[i].item = this.gameObj.player.items[i];

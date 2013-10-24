@@ -6,7 +6,6 @@ goog.require('lime.Circle');
  * Takes care of the fighting
  */
 huungry.FightEngine = function() {
-    this.floorColor = 'rgb(0,125,0)';
     this.playerUnits = new Array();
     this.enemyUnits = new Array();
     this.rangeTargets = new Array();
@@ -36,7 +35,7 @@ huungry.FightEngine.prototype.init = function() {
     
     this.map = new huungry.Map().setGameObj(this.gameObj)
         .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight-this.gameObj.tileSize})
-        .setBackground(this.floorColor);
+        .setBackground('assets/images/backgrounds/'+this.enemyArmy.background);
     
     this.fightLayer.appendChild(this.map.backgroundSprite);
         
@@ -45,17 +44,7 @@ huungry.FightEngine.prototype.init = function() {
         var target = currentObj.map.getColRowFromXY(e.position.x, e.position.y);
         //console.log(currentObj.map.getTargetType(target.col, target.row));
     });
-            
-    var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
-        .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.7)
-        .setAnchorPoint(0,0)
-        .setText('Run').setColor('#00CD00'); 
-    this.fightUILayer.appendChild(runButton);
-    //run away
-    var currentObj = this;
-    goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
-        currentObj.exitFight();
-    });
+    
     
     var passButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
         .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.7)
@@ -68,20 +57,37 @@ huungry.FightEngine.prototype.init = function() {
         currentObj.pass();
     });
     
-    var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
-        .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.7)
-        .setAnchorPoint(0,0)
-        .setText('Kill').setColor('#00CD00'); 
-    this.fightUILayer.appendChild(killButton);
     
-    //pass
-    goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
-        for(var j=0; j<currentObj.enemyUnits.length; j++) {
-            currentObj.enemyUnits[j].life = -1;           
-        }
+    
+    //kill
+    if(this.gameObj.developmentMode) {
+        var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
+            .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.7)
+            .setAnchorPoint(0,0)
+            .setText('Kill').setColor('#00CD00'); 
+        this.fightUILayer.appendChild(killButton);
         
-        currentObj.pass();
-    });
+        goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
+            for(var j=0; j<currentObj.enemyUnits.length; j++) {
+                currentObj.enemyUnits[j].life = -1;           
+            }
+
+            currentObj.pass();
+        });
+
+        //run away    
+        var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
+            .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.7)
+            .setAnchorPoint(0,0)
+            .setText('Run').setColor('#00CD00'); 
+        this.fightUILayer.appendChild(runButton);
+
+        var currentObj = this;
+        goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
+            currentObj.exitFight();
+        });
+    }
+    
     
     //battle items
     this.initItemsWindow();
@@ -97,7 +103,6 @@ huungry.FightEngine.prototype.init = function() {
         if(currObj.playerMoves) {
             
             if(currObj.selectedItem === undefined) {
-                console.log('show items window');
                 //show player items
                 currObj.refreshItems();        
                 currObj.gameObj.director.pushScene(currObj.itemsScene);
@@ -158,7 +163,8 @@ huungry.FightEngine.prototype.initArmies = function() {
     var i = 0, pos, unit;
     var takenCells = new Array();    
     var position, cellIndex;
-    while(this.playerUnitPositions.length < this.gameObj.player.units.length) {
+    var len = this.gameObj.player.units.length;
+    while(i < len) {
         position = {
             col: this.gameObj.fightScenePlayerStartX + goog.math.randomInt(this.gameObj.fightScenePlayerEndX-this.gameObj.fightScenePlayerStartX+1),
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+1)
@@ -170,7 +176,7 @@ huungry.FightEngine.prototype.initArmies = function() {
             this.playerUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
             unit = new huungry.Unit()
-                .setUnitData(this.gameObj.player.units[i])
+                .setUnitData(this.gameObj.player.units[i],true)
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
                 .setElementType(this.gameObj.PLAYER_UNIT)
@@ -191,7 +197,8 @@ huungry.FightEngine.prototype.initArmies = function() {
     
     i=0;
     takenCells = new Array();    
-    while(this.enemyUnitPositions.length < this.enemyArmy.units.length) {
+    len = this.enemyArmy.units.length;
+    while(i < len) {
         position = {
             col: this.gameObj.fightSceneEnemyStartX + goog.math.randomInt(this.gameObj.fightSceneEnemyEndX-this.gameObj.fightSceneEnemyStartX+0.99),
             row: this.gameObj.fightSceneEnemyStartY + goog.math.randomInt(this.gameObj.fightSceneEnemyEndY-this.gameObj.fightSceneEnemyStartY+0.99)
@@ -204,7 +211,7 @@ huungry.FightEngine.prototype.initArmies = function() {
             this.enemyUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
             unit = new huungry.Unit()
-                .setUnitData(this.enemyArmy.units[i])
+                .setUnitData(this.enemyArmy.units[i], false)
                 .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
                 .setElementType(this.gameObj.ENEMY_UNIT)

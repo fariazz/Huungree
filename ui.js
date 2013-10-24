@@ -34,3 +34,15 @@ HuungryUI.showLeveldesDialog = function(level, gameObj) {
         gameObj.runLevel(level.codeName);
     });
 };
+
+/**
+ * end of game dialog
+ */
+HuungryUI.showEndofGameDialog = function(gameObj) {    
+    $('.zva_dialog_leveldesc').css('display', 'block');
+    $('.zva_dialog_leveldesc_txt').html('<h2>The Journey is not Complete</h2><br/><p>We are working on adding more levels and content to the game. If you like the game and want more LET ME KNOW!! @ZenvaTweets</p>')
+    
+    $('.zva_dialog_btn').bind('click', function(e) {
+        location.reload();
+    });
+};
