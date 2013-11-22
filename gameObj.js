@@ -71,7 +71,7 @@ huungry.GameObj.prototype.cloneUnit = function(unit, number) {
 huungry.GameObj.prototype.runLevel = function(levelName) {
     
     //game scene
-    this.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    this.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     this.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.darknessLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.gameScene.appendChild(this.gameLayer);
@@ -265,7 +265,7 @@ huungry.GameObj.prototype.centerCameraTo = function(x,y) {
 huungry.GameObj.prototype.fight = function(enemy) {
     var FightEngine = new huungry.FightEngine().setGameObj(this).setEnemyArmy(enemy);
     FightEngine.init();
-}
+};
 
 /**
  * load and open a level
@@ -279,3 +279,57 @@ huungry.GameObj.prototype.setUnitTypes = function(unitTypes) {
     }
     return this;
 };
+
+/**
+* show splash screen
+*
+*/
+huungry.GameObj.prototype.showSplashScreen = function() {
+    this.splashScreen = new Object();
+    this.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    this.splashScreen.background = new lime.Sprite().setAnchorPoint(0,0).
+        setFill('assets/images/backgrounds/home.png').setSize(this.screenWidth, this.screenHeight);
+   
+    this.splashScreen.startBtn = new lime.Sprite().
+        setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
+        .setPosition(this.screenWidth/2, this.tileSize*4); 
+   var startBtnTxt = new lime.Label().setText('NEW').setPosition(0,0).
+        setFontColor('#E9DDB9').setFontSize(16);
+   this.splashScreen.startBtn.appendChild(startBtnTxt);
+
+    this.splashScreen.loadBtn = new lime.Sprite().
+            setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
+            .setPosition(this.screenWidth/2, this.tileSize*5.4);
+    var loadBtnTxt = new lime.Label().setText('LOAD').setPosition(0,0).
+        setFontColor('#E9DDB9').setFontSize(16);
+   this.splashScreen.loadBtn.appendChild(loadBtnTxt);
+
+
+    this.splashScreen.aboutBtn = new lime.Sprite().
+            setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
+            .setPosition(this.screenWidth/2, this.tileSize*6.8);
+    var aboutBtnTxt = new lime.Label().setText('ABOUT').setPosition(0,0).
+        setFontColor('#E9DDB9').setFontSize(16);
+   this.splashScreen.aboutBtn.appendChild(aboutBtnTxt);
+
+    this.splashScreen.scene.appendChild(this.splashScreen.background);
+    this.splashScreen.scene.appendChild(this.splashScreen.startBtn);
+    this.splashScreen.scene.appendChild(this.splashScreen.aboutBtn);
+    this.splashScreen.scene.appendChild(this.splashScreen.loadBtn);
+    
+    //level selection screen
+    this.levelSelectionScreen = new Object();
+    this.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    this.levelSelectionScreen.background = new lime.Sprite().setAnchorPoint(0,0).
+        setFill('assets/splashscreen.png').setSize(this.screenWidth, this.screenHeight);
+    
+    var currentObj = this;
+    goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
+        currentObj.runLevel('level1');
+    });
+    goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
+        HuungryUI.showAboutDialog(this.this);
+    });
+    
+    this.director.replaceScene(this.splashScreen.scene); 
+}

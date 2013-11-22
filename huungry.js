@@ -65,60 +65,7 @@ huungry.start = function(){
     ];
     
     //start screen
-    gameObj.splashScreen = new Object();
-    gameObj.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
-    gameObj.splashScreen.background = new lime.Sprite().setAnchorPoint(0,0).
-        setFill('assets/images/backgrounds/home.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
-   
-    gameObj.splashScreen.startBtn = new lime.Sprite().
-        setFill('assets/images/backgrounds/home_button.png').setSize(gameObj.tileSize*3, gameObj.tileSize)
-        .setPosition(gameObj.screenWidth/2, gameObj.tileSize*4); 
-   var startBtnTxt = new lime.Label().setText('NEW').setPosition(0,0).
-        setFontColor('#E9DDB9').setFontSize(16);
-   gameObj.splashScreen.startBtn.appendChild(startBtnTxt);
-
-    gameObj.splashScreen.loadBtn = new lime.Sprite().
-            setFill('assets/images/backgrounds/home_button.png').setSize(gameObj.tileSize*3, gameObj.tileSize)
-            .setPosition(gameObj.screenWidth/2, gameObj.tileSize*5.4);
-    var loadBtnTxt = new lime.Label().setText('LOAD').setPosition(0,0).
-        setFontColor('#E9DDB9').setFontSize(16);
-   gameObj.splashScreen.loadBtn.appendChild(loadBtnTxt);
-
-
-    gameObj.splashScreen.aboutBtn = new lime.Sprite().
-            setFill('assets/images/backgrounds/home_button.png').setSize(gameObj.tileSize*3, gameObj.tileSize)
-            .setPosition(gameObj.screenWidth/2, gameObj.tileSize*6.8);
-    var aboutBtnTxt = new lime.Label().setText('ABOUT').setPosition(0,0).
-        setFontColor('#E9DDB9').setFontSize(16);
-   gameObj.splashScreen.aboutBtn.appendChild(aboutBtnTxt);
-
-    
-    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.background);
-    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.startBtn);
-    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.aboutBtn);
-    gameObj.splashScreen.scene.appendChild(gameObj.splashScreen.loadBtn);
-    
-    //level selection screen
-    gameObj.levelSelectionScreen = new Object();
-    gameObj.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
-    gameObj.levelSelectionScreen.background = new lime.Sprite().setAnchorPoint(0,0).
-        setFill('assets/splashscreen.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
-    
-//    var i; var levelBtn;
-//    for(i in this.levels) {
-//        levelBtn = new lime.Sprite().setAnchorPoint
-//    }
-//    
-    var currentObj = this;
-    goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
-        //HuungryUI.showLevelselDialog(currentObj.levels, gameObj);
-        gameObj.runLevel('level1');
-    });
-    goog.events.listen(gameObj.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
-        HuungryUI.showAboutDialog(this.gameObj);
-    });
-    
-    gameObj.director.replaceScene(gameObj.splashScreen.scene);    
+    gameObj.showSplashScreen();       
 }
 
 

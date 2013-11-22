@@ -22,7 +22,7 @@ huungry.ControlsLayer.prototype.setGameObj = function(gameObj) {
 }
 
 huungry.ControlsLayer.prototype.init = function() {
-    this.sideBar = new lime.Sprite().setAnchorPoint(0,0).setFill('#D6B896')
+    this.sideBar = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/backgrounds/sidebar_noicons.png')
         .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide,0)
         .setSize(this.gameObj.tileSize, this.gameObj.screenHeight);
 
@@ -31,16 +31,25 @@ huungry.ControlsLayer.prototype.init = function() {
     //listeners for map navigation
     map = this.gameObj.map;
 
-    //side bar
-    this.goldValue = new lime.Label().setPosition(2,5).setText()
-        .setAnchorPoint(0,0).setFontColor('#000000').setFontSize(8);
-        
+    //gold info
+    this.goldValue = new lime.Label().setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize*7.5).setText()
+        .setFontColor('#000000').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     this.sideBar.appendChild(this.goldValue);    
     
+    var goldIcon = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/gold.png')
+        .setPosition(0, this.gameObj.tileSize*6.2);
+    this.sideBar.appendChild(goldIcon);
+
+
     //player details window
     this.initPlayerInfoWindow();
     this.initArrangeArmiesWindow();
     this.initItemsWindow();
+    this.initQuestWindow();
+    this.initHelp();
+    this.initSave();
     
 }
 
@@ -57,9 +66,9 @@ huungry.ControlsLayer.prototype.refreshInfo = function() {
 huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
     //icon to launch
     var infoWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
-        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
-        .setFill('assets/images/units/knight.png')
-        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize);
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_player.png')
+        .setPosition(0, 0);
     this.sideBar.appendChild(infoWindowBtn);
     
     //player details screen
@@ -120,9 +129,9 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
 huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
     //icon to launch
     var arrangeArmiesBtn = new lime.Sprite().setAnchorPoint(0,0)
-        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
-        .setFill('assets/images/units/knight.png')
-        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize*2.2);
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_army.png')
+        .setPosition(0, this.gameObj.tileSize);
     this.sideBar.appendChild(arrangeArmiesBtn);
     
     //player details screen
@@ -256,9 +265,9 @@ huungry.ControlsLayer.prototype.refreshPlayerUnits = function() {
 huungry.ControlsLayer.prototype.initItemsWindow = function() {
     //icon to launch
     var itemsBtn = new lime.Sprite().setAnchorPoint(0,0)
-        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
-        .setFill('assets/scroll-fire.png')
-        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize*3.6);
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_items.png')
+        .setPosition(0, this.gameObj.tileSize*2);
     this.sideBar.appendChild(itemsBtn);
     
     //player details screen
@@ -343,4 +352,39 @@ huungry.ControlsLayer.prototype.refreshItems = function() {
         })(thumbnailLayers, i, this.gameObj, this);
         
     }
+};
+
+/**
+ * init player quest window
+ */
+huungry.ControlsLayer.prototype.initQuestWindow = function() {
+    //icon to launch
+    var questWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_quest.png')
+        .setPosition(0, this.gameObj.tileSize*3);
+    this.sideBar.appendChild(questWindowBtn);
+};
+
+/**
+ * help button
+ */
+huungry.ControlsLayer.prototype.initHelp = function() {
+    //icon to launch
+    var btn = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_help.png')
+        .setPosition(0, this.gameObj.tileSize*4);
+    this.sideBar.appendChild(btn);
+};
+/**
+ * init save game btn
+ */
+huungry.ControlsLayer.prototype.initSave = function() {
+    //icon to launch
+    var btn = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/btn_save.png')
+        .setPosition(0, this.gameObj.tileSize*5);
+    this.sideBar.appendChild(btn);
 };
