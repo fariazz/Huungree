@@ -347,8 +347,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
             unit.movementTargets[i].sprite.setPosition(posX,posY);            
         }
         else if(targetType == this.gameObj.ENEMY_UNIT) {
-            console.log('showing sword');
-            console.log(posCell);
+
             //show attack option            
             unit.attackTargets[i].sprite.setHidden(false);
             unit.attackTargets[i].sprite.setPosition(posX,posY);
@@ -362,7 +361,6 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         this.rangeTargets = new Array();
         var enemyPos;
         var emnemyunitPos;
-        console.log('can shoot');
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
             this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/rangeattack-icon.png')
@@ -455,8 +453,9 @@ huungry.FightEngine.prototype.updateDead = function() {
     
     //check army defeated
     if(this.playerUnits.length == 0) {
-        console.log('game over');
-        this.exitFight();  
+        alert('Game Over!');
+        location.reload();
+//        /this.exitFight();  
     }
     
     if(this.enemyUnits.length == 0) {
@@ -641,7 +640,6 @@ huungry.FightEngine.prototype.showItemTargets = function() {
        
         this.rangeTargets = new Array();
         var enemyPos;
-        console.log('attack spell');
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
             this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/'+item.image)

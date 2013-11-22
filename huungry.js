@@ -42,7 +42,7 @@ huungry.start = function(){
             introText: 'This is an introduction to level 2',
             introImg: 'scroll-fire.png',
             questText: 'Your goal in this level is to blablabablab'
-        },
+        }
         
     ];
     
@@ -64,7 +64,7 @@ huungry.start = function(){
     
     //start screen
     gameObj.splashScreen = new Object();
-    gameObj.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    gameObj.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     gameObj.splashScreen.background = new lime.Sprite().setAnchorPoint(0,0).
         setFill('assets/splashscreen.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
     gameObj.splashScreen.startBtn = new lime.GlossyButton().setColor('#133242').setText('Start')
@@ -80,7 +80,7 @@ huungry.start = function(){
     
     //level selection screen
     gameObj.levelSelectionScreen = new Object();
-    gameObj.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    gameObj.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     gameObj.levelSelectionScreen.background = new lime.Sprite().setAnchorPoint(0,0).
         setFill('assets/splashscreen.png').setSize(gameObj.screenWidth, gameObj.screenHeight);
     
@@ -92,7 +92,7 @@ huungry.start = function(){
     var currentObj = this;
     goog.events.listen(gameObj.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
         //HuungryUI.showLevelselDialog(currentObj.levels, gameObj);
-				gameObj.runLevel('level1');
+        gameObj.runLevel('level1');
     });
     goog.events.listen(gameObj.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
         HuungryUI.showEndofGameDialog(this.gameObj);
