@@ -4,26 +4,36 @@
 <head>
     <meta charset="utf-8"/>
     <title>huungry</title>
+    
+    <link rel="stylesheet" type="text/css" href="reset.css" />   
+    <link rel="stylesheet" type="text/css" href="huungry.css" />   
+</head>
+<body style="background-color:black">    
+    <div class="zva_dialog">
+        <div class="zva_dialog_header">
+            <h2></h2>
+        </div>
+        <div class="zva_dialog_body">
+        </div>
+        <div class="zva_dialog_actions">
+            
+        </div>
+    </div>
+    <script>
+        function initApplication() {
+            if(navigator.splashscreen) {
+                navigator.splashscreen.hide();
+            }            
+            huungry.start();
+        }
+    </script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="ui.js"></script>
     <script type="text/javascript" src="../closure/closure/goog/base.js"></script>
     <script type='text/javascript' src='units.js'></script>
     <script type='text/javascript' src='levels/level1.js'></script>
     <script type="text/javascript" src="huungry.js"></script>    
-    <link rel="stylesheet" type="text/css" href="reset.css" />   
-    <link rel="stylesheet" type="text/css" href="huungry.css" />   
-</head>
-
-<body onload="huungry.start()" style="background-color:black">
-    <div class="zva_dialog zva_dialog_levelsel">
-        <h2>Campaigns</h2>
-        <div class="zva_dialog_levelsel_listcont"></div>
-    </div>
-    <div class="zva_dialog zva_dialog_leveldesc">
-        <div class="zva_dialog_leveldesc_img" ></div>            
-        <div class="zva_dialog_leveldesc_txt" ></div>            
-        <button class="zva_dialog_btn">Ok</button>
-    </div>
+    <script type="text/javascript" src="pg-event-assist.js"></script>    
 </body>
 
 </html>

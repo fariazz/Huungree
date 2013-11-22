@@ -4,9 +4,9 @@ goog.provide('huungry.GameObj');
  * GameObj
  */
 huungry.GameObj = function(document) {
-    this.screenWidth = 240;
-    this.screenHeight= 160;
-    this.tileSize= 20;
+    this.screenWidth = 480;
+    this.screenHeight= 320;
+    this.tileSize= 40;
     this.FREE_TARGET= 1;
     this.PLAYER_ARMY= 2;
     this.ENEMY_ARMY= 3;

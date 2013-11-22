@@ -105,11 +105,11 @@ huungryGameMaps.level1.enemyArmies = [
                 id: 'snake',
                 number: 2
             },
-						{
+            {
                 id: 'snake',
                 number: 3
             },
-						{
+            {
                 id: 'snake',
                 number: 3
             },
@@ -249,7 +249,31 @@ huungryGameMaps.level1.enemyArmies = [
     },
 ];
 
-huungryGameMaps.level1.shops = [];
+huungryGameMaps.level1.shops = [
+      {
+        x: 4,
+        y: 4,
+        name: 'Le Mirage',
+        image: 'house-1.png',
+        units: [
+            {
+                id: 'archer',
+                price: 90,
+                qty: 10
+            },
+            {                
+                id: 'lion',
+                price: 40,
+                qty: 10
+            },
+            {
+                id: 'peasant',
+                price: 30,
+                qty: 10
+            }
+        ]
+    }
+  ];
 
 huungryGameMaps.level1.items = [
     {
