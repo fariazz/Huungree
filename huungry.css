@@ -42,3 +42,10 @@
     margin-right: 10px;
     border: 0px;
 }
+
+.unit-cell {
+    float: left;
+    font-size: 10pt;
+    width: 80px;
+    text-align: center;
+}

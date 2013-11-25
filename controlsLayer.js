@@ -103,7 +103,10 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
     
     //launch event
     goog.events.listen(infoWindowBtn,['mousedown', 'touchstart'], function(e) {
-        playerInfoLayer.removeAllChildren();
+        HuungryUI.showPlayerInfoWindow();
+
+
+        /*playerInfoLayer.removeAllChildren();
         
         //player units
         var thumbnail, label;
@@ -120,6 +123,8 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
             playerInfoLayer.appendChild(label);
         }
         gameObj.director.replaceScene(playerInfoScene);
+        */
+
     });
 }
 

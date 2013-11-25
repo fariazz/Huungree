@@ -1,4 +1,4 @@
-var HuungryUI = new Object();
+var HuungryUI = HuungryUI || new Object();
 
 /**
  * show level selection dialog
@@ -112,4 +112,28 @@ HuungryUI.prepareDialog = function(gameObj) {
         //$('.zva_dialog').css('transform-origin-x', '0px');
         $('.zva_dialog').css('transform-origin', 'left');
     }
+}
+
+/**
+show player info window
+*/
+HuungryUI.showPlayerInfoWindow = function() {
+    var thumbnail, label;
+    var html = '<div style="clear:both;height:62px;">';
+    for(var i=0; i< this.gameObj.player.units.length; i++) {
+        html += '<div class="unit-cell">\
+                    <div class="unit-num">'+ Math.ceil(this.gameObj.player.units[i].life)+'</div>'+
+                    '<img src="assets/images/units/' + this.gameObj.player.units[i].image+'" /> \
+                    <div class="unit-name">' + this.gameObj.player.units[i].name+'</div>'+ 
+                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + this.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + this.gameObj.player.units[i].defense+'</div>';  
+        
+        if(i == 4) {
+            html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
+        }
+    }
+    html += '</div>';
+    HuungryUI.showDialog('MY ARMY',html
+        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}]);
+
 }
