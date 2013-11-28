@@ -42,15 +42,13 @@ huungry.ControlsLayer.prototype.init = function() {
         .setPosition(0, this.gameObj.tileSize*6.2);
     this.sideBar.appendChild(goldIcon);
 
-
     //player details window
     this.initPlayerInfoWindow();
     this.initArrangeArmiesWindow();
     this.initItemsWindow();
     this.initQuestWindow();
     this.initHelp();
-    this.initSave();
-    
+    this.initSave();    
 }
 
 /**
@@ -67,64 +65,13 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
     //icon to launch
     var infoWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
-        .setFill('assets/images/backgrounds/btn_player.png')
+        .setFill('assets/images/backgrounds/btn_army.png')
         .setPosition(0, 0);
     this.sideBar.appendChild(infoWindowBtn);
-    
-    //player details screen
-    var playerInfoScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
-    
-    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
-    
-    //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
-        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);
-    playerInfoScene.appendChild(winBackground);
-    playerInfoScene.appendChild(closeButton);         
         
-    //title
-    var y_title = this.gameObj.tileSize/2;
-    var h_row = this.gameObj.tileSize/2+2;
-    var title = new lime.Label().setText('Units').setFontColor('#E8FC08')
-        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
-        .setFontSize(11);
-    playerInfoScene.appendChild(title);
-    
-    //close event
-    var gameObj = this.gameObj;
-    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
-        gameObj.director.replaceScene(gameObj.gameScene);
-    });
-    
-    playerInfoLayer = new lime.Layer().setAnchorPoint(0, 0);       
-    playerInfoScene.appendChild(playerInfoLayer);
-    
     //launch event
     goog.events.listen(infoWindowBtn,['mousedown', 'touchstart'], function(e) {
         HuungryUI.showPlayerInfoWindow();
-
-
-        /*playerInfoLayer.removeAllChildren();
-        
-        //player units
-        var thumbnail, label;
-        for(var i=0; i<gameObj.player.units.length; i++) {          
-            thumbnail = new lime.Sprite().setAnchorPoint(0,0)
-                .setSize(gameObj.tileSize/2*0.8,gameObj.tileSize/2*0.8)
-                .setFill('assets/images/units/'+gameObj.player.units[i].image)
-                .setPosition(gameObj.tileSize/3, y_title+gameObj.tileSize+h_row*i);
-            playerInfoLayer.appendChild(thumbnail);
-            
-            label = new lime.Label().setText(Math.ceil(gameObj.player.units[i].life)+' x '+gameObj.player.units[i].name+' (attack:'+gameObj.player.units[i].attack+' defense:'+gameObj.player.units[i].defense+')')
-            .setFontColor('#E8FC08').setFontSize(9)
-            .setPosition(gameObj.tileSize, y_title+gameObj.tileSize+h_row*i).setAnchorPoint(0,0);
-            playerInfoLayer.appendChild(label);
-        }
-        gameObj.director.replaceScene(playerInfoScene);
-        */
-
     });
 }
 
@@ -132,32 +79,9 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
  * init player arrange armies window
  */
 huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
-    //icon to launch
-    var arrangeArmiesBtn = new lime.Sprite().setAnchorPoint(0,0)
-        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
-        .setFill('assets/images/backgrounds/btn_army.png')
-        .setPosition(0, this.gameObj.tileSize);
-    this.sideBar.appendChild(arrangeArmiesBtn);
-    
-    //player details screen
-    arrangeArmiesScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
-    
-    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
-    
-    //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
-        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);
-    arrangeArmiesScene.appendChild(winBackground);
-    arrangeArmiesScene.appendChild(closeButton);
-    
-    //title
-    var y_title = this.gameObj.tileSize/2;
-    var title = new lime.Label().setText('Arrange Units').setFontColor('#E8FC08')
-        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
-        .setFontSize(11);
-    arrangeArmiesScene.appendChild(title);
+
+    /*
+
     
     //close event
     var gameObj = this.gameObj;
@@ -168,21 +92,8 @@ huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
     var gridX = 5, gridY= 40;
     this.playerUnitsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
     arrangeArmiesScene.appendChild(this.playerUnitsLayer);
-    
-    //launch event
-    var currObj = this, helpMerge;
-    goog.events.listen(arrangeArmiesBtn,['mousedown', 'touchstart'], function(e) {
-        
-        //show player units
-        currObj.refreshPlayerUnits();        
-    
-        helpMerge = new lime.Label().setText('To merge units, touch source then target.')
-            .setPosition(gridX, gridY + 45).setFontColor('#E8FC08').setFontSize(8)
-            .setAnchorPoint(0,0);
-        arrangeArmiesScene.appendChild(helpMerge);
-        
-        gameObj.director.replaceScene(arrangeArmiesScene);
-    });        
+*/
+     
 };
 
 /**
@@ -272,7 +183,7 @@ huungry.ControlsLayer.prototype.initItemsWindow = function() {
     var itemsBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_items.png')
-        .setPosition(0, this.gameObj.tileSize*2);
+        .setPosition(0, this.gameObj.tileSize*1);
     this.sideBar.appendChild(itemsBtn);
     
     //player details screen
@@ -367,7 +278,7 @@ huungry.ControlsLayer.prototype.initQuestWindow = function() {
     var questWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_quest.png')
-        .setPosition(0, this.gameObj.tileSize*3);
+        .setPosition(0, this.gameObj.tileSize*2);
     this.sideBar.appendChild(questWindowBtn);
 };
 
@@ -379,7 +290,7 @@ huungry.ControlsLayer.prototype.initHelp = function() {
     var btn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_help.png')
-        .setPosition(0, this.gameObj.tileSize*4);
+        .setPosition(0, this.gameObj.tileSize*3);
     this.sideBar.appendChild(btn);
 };
 /**
@@ -390,6 +301,6 @@ huungry.ControlsLayer.prototype.initSave = function() {
     var btn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_save.png')
-        .setPosition(0, this.gameObj.tileSize*5);
+        .setPosition(0, this.gameObj.tileSize*4);
     this.sideBar.appendChild(btn);
 };

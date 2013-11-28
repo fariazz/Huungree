@@ -59,13 +59,14 @@ HuungryUI.showAboutDialog = function(gameObj) {
 /**
 * show dialog
 */
-HuungryUI.showDialog = function(headerHtml, bodyHtml, actions) {
+HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
     HuungryUI.gameObj.director.setPaused(true);
     var height = $(window).height();
     $('.lime-director').css('top', height);
     $('.zva_dialog').css('display', 'block');
     $('.zva_dialog_header').html(headerHtml);
     $('.zva_dialog_body').html(bodyHtml);
+    $('.zva_dialog_help').html(help || '')
     var i;
     for(i = 0; i < actions.length; i++) {
         (function(i) {
@@ -118,15 +119,16 @@ HuungryUI.prepareDialog = function(gameObj) {
 show player info window
 */
 HuungryUI.showPlayerInfoWindow = function() {
+    HuungryUI.hideDialog();
     var thumbnail, label;
     var html = '<div style="clear:both;height:62px;">';
-    for(var i=0; i< this.gameObj.player.units.length; i++) {
+    for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell">\
-                    <div class="unit-num">'+ Math.ceil(this.gameObj.player.units[i].life)+'</div>'+
-                    '<img src="assets/images/units/' + this.gameObj.player.units[i].image+'" /> \
-                    <div class="unit-name">' + this.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + this.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + this.gameObj.player.units[i].defense+'</div>';  
+                    <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
+                    '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
+                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
         
         if(i == 4) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
@@ -134,6 +136,59 @@ HuungryUI.showPlayerInfoWindow = function() {
     }
     html += '</div>';
     HuungryUI.showDialog('MY ARMY',html
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}]);
+        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog},
+        {text: 'MERGE UNITS', class: 'button-home', callback: HuungryUI.showArrangeUnitsWindow}]);
+}
+/**
+show arrange units window
+*/
+HuungryUI.showArrangeUnitsWindow = function() {
+    HuungryUI.hideDialog();
+    var thumbnail, label;
+    var html = '<div style="clear:both;height:62px;">';
+    for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
+        html += '<div class="unit-cell" data-index="'+i+'">\
+                    <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
+                    '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
+                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
+        
+        if(i == 4) {
+            html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
+        }
+    }
+    html += '</div>';
+    var help = 'Touch two units of the same kind to combine.';
+    HuungryUI.showDialog('MERGE UNITS',html
+        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.showPlayerInfoWindow}], help);
 
+    $('.unit-cell').click(function(e){
+        e.preventDefault();
+        var newIndex = $(this).attr('data-index');
+        if(HuungryUI.selectedUnit) {
+            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('background-color', 'transparent');
+            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('opacity', '1');
+            if(HuungryUI.selectedUnit != newIndex) {
+                var firstType = HuungryUI.gameObj.player.units[HuungryUI.selectedUnit].id;
+                var secondType = HuungryUI.gameObj.player.units[newIndex].id;
+                if(firstType == secondType) {
+                    HuungryUI.gameObj.player.units[newIndex].life += HuungryUI.gameObj.player.units[HuungryUI.selectedUnit].life;
+                    HuungryUI.gameObj.player.units.splice([HuungryUI.selectedUnit],1);
+                    HuungryUI.showArrangeUnitsWindow();
+                }
+                
+            }            
+            HuungryUI.selectedUnit = undefined;            
+
+        }
+        else {
+            HuungryUI.selectedUnit = newIndex;
+            $(this).css('background-color', '#F6EBC6');
+            $(this).css('opacity', '0.5');
+        }
+        
+        
+        
+    });
 }
