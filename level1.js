@@ -271,7 +271,7 @@ huungryGameMaps.level1.shops = [
     {
         x: 1,
         y: 1,
-        name: 'Le Mirage',
+        name: 'LE MIRAGE - SHOP',
         image: 'house-1.png',
         units: [
             {
@@ -321,6 +321,20 @@ huungryGameMaps.level1.items = [
         type: 'ITEM.GOLD'
     },
     {
+        x: 2,
+        y: 2,
+        name: 'Fire Scroll',
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL',
+        attack: 10
+    },{
+        x: 1,
+        y: 2,
+        name: 'Fire Scroll',
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL',
+        attack: 10
+    },{
         x: 3,
         y: 2,
         name: 'Fire Scroll',

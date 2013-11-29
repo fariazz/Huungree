@@ -51,11 +51,11 @@
 }
 
 .zva_dialog_help {
-font-size: 9pt;
-color: #F6EBC6;
-text-align: center;
-margin-top: 5px;
-font-weight: bold;
+    font-size: 9pt;
+    color: #F6EBC6;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 .item-img {
@@ -70,4 +70,66 @@ font-weight: bold;
 
 .button-hidden {
     visibility: hidden;
+}
+
+.unit-left {
+    font-size: 8pt;
+}
+
+.shop-products {
+    width: 240;    
+    float: left;
+    padding: 5px;
+}
+
+.shop-player-units {
+    width: 120px;
+    float: left;
+    padding: 10px;
+    border: 1px solid #F6EBC6;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.shop-player-unit {
+    float:left;
+    font-size: 8pt;
+    margin: 2px;
+    text-align: center;
+    
+}
+
+.shop-player-title {
+    clear: left;
+    font-size: 10pt;
+    color: #F6EBC6;
+    font-weight: bold;
+}
+
+.shop-unit-cell {
+    float: left;
+    font-size: 10pt;
+    width: 80px;
+    text-align: center;
+    border: 1px solid #F6EBC6;
+    padding: 5px;
+}
+
+.shop-player-gold-coin {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.shop-player-gold-number {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    width: 60px;
+    margin-top: 31px;
+    color: #F6EBC6;
+    font-weight: bold;
+    font-size: 16pt;
 }

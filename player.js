@@ -100,11 +100,23 @@ huungry.Player.prototype.collect = function(item) {
 
 /**
  * buy a unit
+ * @param unitType
+ * @param price
+ * @param qty
+ */
+huungry.Player.prototype.buy = function(unitType, price, qty) {
+    this.gold -= price;
+    this.units.push(this.gameObj.cloneUnit(unitType, qty));
+}
+
+/**
+ * buy a unit
  * @param unit
  * @param price
  * @param qty
  */
-huungry.Player.prototype.buy = function(unit, price, qty) {
+huungry.Player.prototype.buyAdd = function(unit, price, qty) {
     this.gold -= price;
-    this.units.push(this.gameObj.cloneUnit(unit, qty));
+    unit.life += qty;
 }
+

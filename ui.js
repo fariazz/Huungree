@@ -120,7 +120,6 @@ show player info window
 */
 HuungryUI.showPlayerInfoWindow = function() {
     HuungryUI.hideDialog();
-    var thumbnail, label;
     var html = '<div style="clear:both;height:62px;">';
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell">\
@@ -144,7 +143,6 @@ show arrange units window
 */
 HuungryUI.showArrangeUnitsWindow = function() {
     HuungryUI.hideDialog();
-    var thumbnail, label;
     var html = '<div style="clear:both;height:62px;">';
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell" data-index="'+i+'">\
@@ -198,7 +196,6 @@ show items info window
 */
 HuungryUI.showItemsWindow = function() {
     HuungryUI.hideDialog();
-    var thumbnail, label;
     var html = '<div style="clear:both;height:62px;">';   
     var info; 
     for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
@@ -231,7 +228,6 @@ show items info window
 */
 HuungryUI.showBattleItemsWindow = function() {
     HuungryUI.hideDialog();
-    var thumbnail, label;
     var html = '<div style="clear:both;height:62px;">';   
     var info; 
     for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
@@ -285,5 +281,45 @@ HuungryUI.showBattleItemsWindow = function() {
 
         //show help
         $('.zva_dialog_help').html($(this).attr('data-info'));
+    });
+}
+
+/**
+show show window
+*/
+HuungryUI.showShopWindow = function(shop, result) {
+    HuungryUI.hideDialog();
+    var html = '<div class="shop-products"><div>';  
+    var length = shop.data.units.length;
+    var unit;
+    for(var i=0; i < length; i++) {
+        unit = HuungryUI.gameObj.unitTypes[shop.data.units[i].id];
+        html += '<div class="shop-unit-cell" data-index="'+i+'">\
+                    <div class="unit-num"><img width="10" src="assets/images/backgrounds/gold.png" style="display:inline;" />'+ shop.data.units[i].price +'</div>'+
+                    '<img src="assets/images/units/' + unit.image+'" /> \
+                    <div class="unit-name">' + unit.name+'</div>'+ 
+                    '<img width="10" src="assets/images/items/' + (unit.canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + unit.attack+' '+ 
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + unit.defense+
+                    '<div class="unit-left">'+shop.data.units[i].qty+' left</div></div>';                 
+    }
+    html += '</div></div>\
+        <div class="shop-player-gold-coin"><img width="40" src="assets/images/backgrounds/gold.png" style="display:inline;" /></div>\
+        <div class="shop-player-gold-number">'+HuungryUI.gameObj.player.gold+'</div>\
+        <div class="shop-player-units"><div class="shop-player-title">Your Army</div>';
+
+    for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
+        html += '<div class="shop-player-unit">\
+                    <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
+                    '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /></div>';
+    }
+    html += '</div>';
+    var help = result === undefined ? 'Touch units to purchase' : result.msg;
+    HuungryUI.showDialog(shop.data.name,html
+        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
+    $('.shop-unit-cell').on('click touchstart', function(e){
+        e.preventDefault();        
+        var index = $(this).attr('data-index');
+        var result = shop.purchase(shop.data.units[index]);
+        HuungryUI.showShopWindow(shop, result);
     });
 }
