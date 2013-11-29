@@ -207,6 +207,13 @@ huungry.Character.prototype.initGamepad = function() {
         targetLayer.appendChild(this.movementTargets[i].sprite);
         targetLayer.appendChild(this.attackTargets[i].sprite);
     }
+
+    //show highlighted
+    this.currentHighlight = new lime.Sprite().setAnchorPoint(0,0).setFill('#FFF000')
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setOpacity(0.3).setHidden(true);
+    targetLayer.appendChild(this.currentHighlight);
+
     
     //register movement according to user input
     var character = this;
@@ -284,6 +291,7 @@ huungry.Character.prototype.toggleGamepad = function(isVisible) {
         }    
     }
     else {
+        this.currentHighlight.setHidden(true);
         for(var i=0; i<this.movementTargets.length; i++) {
             this.movementTargets[i].sprite.setHidden(true);
             this.attackTargets[i].sprite.setHidden(true);

@@ -350,6 +350,9 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
     //remove previous target
     unit.currentTarget = [];
 
+    unit.currentHighlight.setPosition(pos.x, pos.y);
+    unit.currentHighlight.setHidden(false);
+
     for(var i=0, arrLen = unit.movementTargets.length; i<arrLen; i++) {
         var posX=pos.x+tileSize*unit.movementTargets[i].dx,
             posY=pos.y+tileSize*unit.movementTargets[i].dy;
@@ -375,7 +378,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         
         this.rangeTargets = new Array();
         var enemyPos;
-        var emnemyunitPos;
+        var enemyUnitPos;
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
             this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/rangeattack-icon.png')
@@ -385,8 +388,8 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
             (function(i, currentObj) {
                 goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
                     e.preventDefault();
-                    unit.toggleGamepad(false);
-                    emnemyunitPos = currentObj.enemyUnits[i].getPosition();
+                    unit.toggleGamepad(false);                    
+                    enemyUnitPos = currentObj.enemyUnits[i].getPosition();
                     
                     //create bullet
                     var bullet = new lime.Circle().setPosition(pos.x+currentObj.gameObj.tileSize/2, pos.y+currentObj.gameObj.tileSize/2)
@@ -394,7 +397,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
                     currentObj.fightLayer.appendChild(bullet);
 
                     var movement = new lime.animation
-                        .MoveTo(emnemyunitPos.x+currentObj.gameObj.tileSize/2,emnemyunitPos.y+currentObj.gameObj.tileSize/2)
+                        .MoveTo(enemyUnitPos.x+currentObj.gameObj.tileSize/2,enemyUnitPos.y+currentObj.gameObj.tileSize/2)
                         .setDuration(currentObj.gameObj.movementDuration);                    
                     bullet.runAction(movement); 
 
