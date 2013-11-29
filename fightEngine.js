@@ -53,8 +53,10 @@ huungry.FightEngine.prototype.init = function() {
     this.fightUILayer.appendChild(passButton);
     
     //pass
-    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {        
-        currentObj.pass();
+    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {    
+        if(currentObj.playerMoves) {    
+            currentObj.pass();
+        }
     });
     
     
@@ -459,14 +461,18 @@ huungry.FightEngine.prototype.updateDead = function() {
     }
     
     if(this.enemyUnits.length == 0) {
-        this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
-            .setTitleText("You've won!")
-            .setMainText("You've found "+this.enemyArmy.gold+" pieces of\ngold in their corpses.")
-            .setCallback(function(fightScene) {
-                fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
-                fightScene.enemyArmy.die();
-                fightScene.exitFight();
-            }, this).init();            
+        var fightScene = this;
+
+        var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
+        HuungryUI.showDialog('YOU HAVE WON!',message
+                    ,[{text: 'OK', class: 'button-home', callback: function() {
+                        HuungryUI.hideDialog();
+                        fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
+                        fightScene.enemyArmy.die();
+                        fightScene.exitFight();
+                        
+                    }
+                    }]);     
     }
 }
 

@@ -59,7 +59,7 @@ huungry.Player.prototype.playerMoved = function() {
                 
                 this.gameObj.numItems--;
                 
-                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div>'+message
+                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
                     ,[{text: 'OK', class: 'button-home', callback: HuungryUI.hideDialog}]);
 
                 this.collect(item);     
