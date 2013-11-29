@@ -53,19 +53,16 @@ huungry.Player.prototype.playerMoved = function() {
                         message = "You've found "+this.map.elements[i].gold+'\npieces of gold.';
                         break;
                     case 'ITEM.ATTACK-SPELL':
-                        message = "Use this spell on your enemies during battle.";
+                        message = "Use in battle to damage your enemies.";
                         break;        
                 }
                 
                 this.gameObj.numItems--;
                 
-                this.gameObj.dialog = new huungry.DialogScene().setGameObj(this.gameObj)
-                .setTitleText(this.map.elements[i].name)
-                .setMainText(message)
-                .setSceneAfter(this.gameObj.gameScene)
-                .setCallback(function(params) {                    
-                    params.player.collect(item);
-                }, {player: this, item: item}).init();                    
+                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div>'+message
+                    ,[{text: 'OK', class: 'button-home', callback: HuungryUI.hideDialog}]);
+
+                this.collect(item);     
             }
             else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
                 this.map.elements[i].showDialog();

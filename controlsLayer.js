@@ -44,7 +44,6 @@ huungry.ControlsLayer.prototype.init = function() {
 
     //player details window
     this.initPlayerInfoWindow();
-    this.initArrangeArmiesWindow();
     this.initItemsWindow();
     this.initQuestWindow();
     this.initHelp();
@@ -76,106 +75,6 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
 }
 
 /**
- * init player arrange armies window
- */
-huungry.ControlsLayer.prototype.initArrangeArmiesWindow = function() {
-
-    /*
-
-    
-    //close event
-    var gameObj = this.gameObj;
-    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
-        gameObj.director.replaceScene(gameObj.gameScene);
-    });
-    
-    var gridX = 5, gridY= 40;
-    this.playerUnitsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
-    arrangeArmiesScene.appendChild(this.playerUnitsLayer);
-*/
-     
-};
-
-/**
- * refresh player's units
- */
-huungry.ControlsLayer.prototype.refreshPlayerUnits = function() {
-    this.playerUnitsLayer.removeAllChildren();
-    var gridX = 0, gridY = 0;
-    var playerUnitsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/units_grid.png')
-        .setPosition(gridX,gridY).setSize(106,43);
-    this.playerUnitsLayer.appendChild(playerUnitsRect);    
-    
-    this.thumbnailLayers = new Array();
-    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
-    for(i=0; i < this.gameObj.player.units.length; i++) {  
-        
-        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
-        
-        if(i == 5) {
-            thumbY += this.gameObj.tileSize+1;
-        }
-        
-        this.thumbnailLayers.push(
-            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
-        
-        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
-            .setFill('assets/images/units/'+this.gameObj.player.units[i].image)
-            .setPosition(0,0);        
-        
-        lifeBar = new lime.Label().setPosition(11,10)
-            .setText(Math.ceil(this.gameObj.player.units[i].life)).setFontSize(9)
-            .setAnchorPoint(0,0).setFontColor('#E8FC08');
-        
-        this.thumbnailLayers[i].unit = this.gameObj.player.units[i];
-        this.thumbnailLayers[i].index = i;
-        this.thumbnailLayers[i].appendChild(thumbnail);       
-        this.thumbnailLayers[i].appendChild(lifeBar);       
-        this.playerUnitsLayer.appendChild(this.thumbnailLayers[i]);  
-        
-        (function(thumbnailLayers, i, gameObj, currentObj) {
-            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
-                e.stopPropagation();
-                
-                if(thumbnailLayers[i].highlightCell) {
-                    thumbnailLayers[i].removeChild(thumbnailLayers[i].highlightCell);
-                    thumbnailLayers[i].highlightCell = undefined;
-                }
-                else {
-                    //check if a unit is selected, if not, select current
-                    var prevSelected;
-                    for(var j=0, arrLen2 = thumbnailLayers.length; j < arrLen2; j++) {
-                        if(i != j && thumbnailLayers[j].highlightCell) {
-                            prevSelected = thumbnailLayers[j]
-                        }
-                    }
-                    
-                    if(!prevSelected) {                    
-                        thumbnailLayers[i].highlightCell = new lime.Sprite().setAnchorPoint(0,0)
-                            .setPosition(0,0).setSize(gameObj.tileSize, gameObj.tileSize)
-                            .setFill(232,252,8,0.5);
-                        thumbnailLayers[i].appendChild(thumbnailLayers[i].highlightCell);
-                    }
-                    
-                    else {
-                        //if it's the same unit, merge
-                        if(prevSelected.unit.id == thumbnailLayers[i].unit.id) {
-                            gameObj.player.units[i].life += prevSelected.unit.life;
-                            gameObj.player.units.splice(prevSelected.index,1);
-                            thumbnailLayers[prevSelected.index].removeChild(thumbnailLayers[prevSelected.index].highlightCell);
-                            currentObj.refreshPlayerUnits();
-                        }
-                    }
-                }
-                
-            });
-        })(this.thumbnailLayers, i, this.gameObj, this);
-        
-    }
-};
-
-/**
  * init items window
  */
 huungry.ControlsLayer.prototype.initItemsWindow = function() {
@@ -185,44 +84,10 @@ huungry.ControlsLayer.prototype.initItemsWindow = function() {
         .setFill('assets/images/backgrounds/btn_items.png')
         .setPosition(0, this.gameObj.tileSize*1);
     this.sideBar.appendChild(itemsBtn);
-    
-    //player details screen
-    itemsScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
-    
-    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
-    
-    //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
-        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);
-    itemsScene.appendChild(winBackground);
-    itemsScene.appendChild(closeButton);
-    
-    //title
-    var y_title = this.gameObj.tileSize/2;
-    var title = new lime.Label().setText('Items').setFontColor('#E8FC08')
-        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
-        .setFontSize(11);
-    itemsScene.appendChild(title);
-    
-    //close event
-    var gameObj = this.gameObj;
-    goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
-        gameObj.director.replaceScene(gameObj.gameScene);
-    });
-    
-    var gridX = 5, gridY= 40;
-    this.playerItemsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
-    itemsScene.appendChild(this.playerItemsLayer);
-    
-    //launch event
-    var currObj = this, helpMerge;
-    goog.events.listen(itemsBtn,['mousedown', 'touchstart'], function(e) {
         
-        //show player items
-        currObj.refreshItems();        
-        gameObj.director.replaceScene(itemsScene);
+    //launch event
+    goog.events.listen(itemsBtn,['mousedown', 'touchstart'], function(e) {
+        HuungryUI.showItemsWindow();
     });        
 };
 

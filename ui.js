@@ -192,3 +192,37 @@ HuungryUI.showArrangeUnitsWindow = function() {
         
     });
 }
+
+/**
+show items info window
+*/
+HuungryUI.showItemsWindow = function() {
+    HuungryUI.hideDialog();
+    var thumbnail, label;
+    var html = '<div style="clear:both;height:62px;">';   
+    var info; 
+    for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
+        switch(HuungryUI.gameObj.player.items[i].type) {
+            case 'ITEM.ATTACK-SPELL':
+                info = "Use in battle to damage your enemies";
+            break;            
+        }
+
+        html += '<div class="unit-cell" data-info="'+info+'">\
+                <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
+                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
+                '</div>';  
+        
+        if(i == 4) {
+            html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
+        }
+    }
+    html += '</div>';
+    var help = 'Touch items for info.';
+    HuungryUI.showDialog('ITEMS',html
+        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
+    $('.unit-cell').click(function(e){
+        e.preventDefault();
+        $('.zva_dialog_help').html($(this).attr('data-info'));
+    });
+}
