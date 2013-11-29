@@ -48,6 +48,7 @@ huungry.start = function(){
     ];
     
     var gameObj = new huungry.GameObj(document);
+    gameObj.developmentMode = true;
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
     

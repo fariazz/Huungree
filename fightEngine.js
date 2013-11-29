@@ -38,7 +38,15 @@ huungry.FightEngine.prototype.init = function() {
         .setBackground('assets/images/backgrounds/'+this.enemyArmy.background);
     
     this.fightLayer.appendChild(this.map.backgroundSprite);
-        
+    
+    //bottom bar
+    var bottomBar = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.screenWidth, this.gameObj.tileSize)
+        .setFill('assets/images/backgrounds/battleBottomBar.png')
+        .setPosition(0, this.gameObj.screenHeight - this.gameObj.tileSize);
+
+    this.fightLayer.appendChild(bottomBar);
+
     currentObj = this;
     goog.events.listen(this.map.backgroundSprite, ['mousedown', 'touchstart'], function(e){
         var target = currentObj.map.getColRowFromXY(e.position.x, e.position.y);
@@ -46,10 +54,13 @@ huungry.FightEngine.prototype.init = function() {
     });
     
     
-    var passButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
-        .setPosition(this.gameObj.tileSize*3.5,this.gameObj.tileSize*7.7)
-        .setAnchorPoint(0,0)
-        .setText('Pass').setColor('#00CD00'); 
+    var passButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
+        .setPosition(2*this.gameObj.tileSize, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+        .setFill('assets/images/backgrounds/button.png');
+    var passButtonText = new lime.Label().setText('PASS').setPosition(0,0)
+        .setFontColor('#000000').setFontSize(16);
+    passButton.appendChild(passButtonText);
+
     this.fightUILayer.appendChild(passButton);
     
     //pass
@@ -63,11 +74,14 @@ huungry.FightEngine.prototype.init = function() {
     
     //kill
     if(this.gameObj.developmentMode) {
-        var killButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
-            .setPosition(this.gameObj.tileSize*6.0,this.gameObj.tileSize*7.7)
-            .setAnchorPoint(0,0)
-            .setText('Kill').setColor('#00CD00'); 
-        this.fightUILayer.appendChild(killButton);
+        var killButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
+        .setPosition(this.gameObj.tileSize*9, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+        .setFill('assets/images/backgrounds/button.png');
+    var killButtonText = new lime.Label().setText('KILL').setPosition(0,0)
+        .setFontColor('#000000').setFontSize(16);
+    killButton.appendChild(killButtonText);
+
+    this.fightUILayer.appendChild(killButton);
         
         goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
             for(var j=0; j<currentObj.enemyUnits.length; j++) {
@@ -93,14 +107,19 @@ huungry.FightEngine.prototype.init = function() {
     
     //battle items
     this.initItemsWindow();
-    this.itemsButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2.5,this.gameObj.tileSize*0.8)
-        .setPosition(this.gameObj.tileSize*8.5,this.gameObj.tileSize*7.7)
-        .setAnchorPoint(0,0)
-        .setText('Items').setColor('#00CD00'); 
-    this.fightUILayer.appendChild(this.itemsButton);
     
+    var itemsButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
+        .setPosition(this.gameObj.tileSize*5.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+        .setFill('assets/images/backgrounds/button.png');
+    var itemsButtonText = new lime.Label().setText('ITEMS').setPosition(0,0)
+        .setFontColor('#000000').setFontSize(16);
+    itemsButton.appendChild(itemsButtonText);
+
+    this.fightUILayer.appendChild(itemsButton);
+
+
     var currObj = this;
-    goog.events.listen(this.itemsButton, ['mousedown','touchstart'], function(e) {        
+    goog.events.listen(itemsButton, ['mousedown','touchstart'], function(e) {        
         //can only use items when player is moving
         if(currObj.playerMoves) {
             
@@ -178,9 +197,9 @@ huungry.FightEngine.prototype.initArmies = function() {
             this.playerUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
             unit = new huungry.Unit()
-                .setUnitData(this.gameObj.player.units[i],true)
-                .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
+                .setUnitData(this.gameObj.player.units[i],true)
+                .setPosition(pos.x, pos.y)                
                 .setElementType(this.gameObj.PLAYER_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();     
@@ -213,9 +232,9 @@ huungry.FightEngine.prototype.initArmies = function() {
             this.enemyUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
             unit = new huungry.Unit()
-                .setUnitData(this.enemyArmy.units[i], false)
-                .setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
+                .setUnitData(this.enemyArmy.units[i], false)
+                .setPosition(pos.x, pos.y)                
                 .setElementType(this.gameObj.ENEMY_UNIT)
                 .setMap(this.map)
                 .refreshMapPos();   

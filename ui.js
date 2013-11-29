@@ -14,7 +14,7 @@ HuungryUI.showLevelselDialog = function(levels, gameObj) {
     $('.zva_dialog_levelsel_listcont').html(html);
     $('.zva_dialog_levelsel').css('display', 'block');
     
-    $('.zva_dialog_levelsel_listcont ul li').bind('click', function(e) {
+    $('.zva_dialog_levelsel_listcont ul li').on('click touchstart', function(e) {
         $('.zva_dialog_levelsel').css('display', 'none');
         var index = $('.zva_dialog_levelsel_listcont ul li').attr('zva_level'); 
         HuungryUI.showLeveldesDialog(levels[index], gameObj);        
@@ -42,7 +42,7 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
     $('.zva_dialog_leveldesc').css('display', 'block');
     $('.zva_dialog_leveldesc_txt').html('The Journey is not Complete<br/>We are working on adding more levels and content to the game. If you like the game and want more LET ME KNOW!! @ZenvaTweets')
     
-    $('.zva_dialog_btn').bind('click', function(e) {
+    $('.zva_dialog_btn').on('click touchstart', function(e) {
         location.reload();
     });
 };
@@ -163,7 +163,7 @@ HuungryUI.showArrangeUnitsWindow = function() {
     HuungryUI.showDialog('MERGE UNITS',html
         ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.showPlayerInfoWindow}], help);
 
-    $('.unit-cell').click(function(e){
+    $('.unit-cell').on('click touchstart', function(e){
         e.preventDefault();
         var newIndex = $(this).attr('data-index');
         if(HuungryUI.selectedUnit) {
@@ -221,7 +221,7 @@ HuungryUI.showItemsWindow = function() {
     var help = 'Touch items for info.';
     HuungryUI.showDialog('ITEMS',html
         ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
-    $('.unit-cell').click(function(e){
+    $('.unit-cell').on('click touchstart', function(e){
         e.preventDefault();
         $('.zva_dialog_help').html($(this).attr('data-info'));
     });

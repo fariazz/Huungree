@@ -25,12 +25,16 @@ huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     
-    var color = isPlayer ? '#FFFFFF' : '#FFCCCC';
+    var color = isPlayer ? '#FFFFFF' : '#FF0000';
     
-    this.lifeBar = new lime.Label().setPosition(15,12).setText(Math.max(Math.ceil(this.life),0)).setFontSize(8)
-        .setAnchorPoint(0,0).setFontColor(color);
+    this.lifeBar = new lime.Label().setPosition(this.gameObj.tileSize * 0.7,this.gameObj.tileSize * 0.6)
+        .setText(Math.max(Math.ceil(this.life),0))
+        .setFontSize(16)
+        .setAnchorPoint(0,0)
+        .setFontColor(color);
     this.appendChild(this.lifeBar);
     
+
     return this;
 }
 
