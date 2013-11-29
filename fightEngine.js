@@ -25,6 +25,8 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
  * initiate fighting
  */
 huungry.FightEngine.prototype.init = function() {
+    this.gameObj.fightEngine = this;
+
     this.fightScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
     this.fightUILayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
@@ -69,11 +71,11 @@ huungry.FightEngine.prototype.init = function() {
             currentObj.pass();
         }
     });
+        
     
     
-    
-    //kill
     if(this.gameObj.developmentMode) {
+        //kill all
         var killButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
         .setPosition(this.gameObj.tileSize*9, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
@@ -104,16 +106,12 @@ huungry.FightEngine.prototype.init = function() {
         });
     }
     
-    
-    //battle items
-    this.initItemsWindow();
-    
     var itemsButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
         .setPosition(this.gameObj.tileSize*5.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
-    var itemsButtonText = new lime.Label().setText('ITEMS').setPosition(0,0)
+    this.itemsButtonText = new lime.Label().setText('ITEMS').setPosition(0,0)
         .setFontColor('#000000').setFontSize(16);
-    itemsButton.appendChild(itemsButtonText);
+    itemsButton.appendChild(this.itemsButtonText);
 
     this.fightUILayer.appendChild(itemsButton);
 
@@ -123,15 +121,13 @@ huungry.FightEngine.prototype.init = function() {
         //can only use items when player is moving
         if(currObj.playerMoves) {
             
-            if(currObj.selectedItem === undefined) {
+            if(HuungryUI.selectedItem === undefined) {
                 //show player items
-                currObj.refreshItems();        
-                currObj.gameObj.director.pushScene(currObj.itemsScene);
+                HuungryUI.showBattleItemsWindow();  
             }
             else {
-                currObj.hideItemTargets();                
-            }            
-            
+                currObj.hideItemTargets();
+            }
         }
     });    
     
@@ -358,8 +354,6 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         var posX=pos.x+tileSize*unit.movementTargets[i].dx,
             posY=pos.y+tileSize*unit.movementTargets[i].dy;
         
-        //var posXM=pos.x+tileSize*unit.movementTargets[i].dx+(unit.movementTargets[i].dx < 0 ? tileSize/2 : unit.movementTargets[i].dx == 0 ? tileSize/4 : 0),
-        //    posYM=pos.y+tileSize/2*unit.movementTargets[i].dy+(unit.movementTargets[i].dy > 0 ? tileSize/2 : unit.movementTargets[i].dy == 0 ? tileSize/4 : 0);
         var posCell = this.map.getColRowFromXY(posX, posY);
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
@@ -549,33 +543,7 @@ huungry.FightEngine.prototype.hideTargets = function() {
  * init items window
  */
 huungry.FightEngine.prototype.initItemsWindow = function() {
-    
-    //player details screen
-    this.itemsScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
-    
-    var winBackground = new lime.Sprite().setAnchorPoint(0,0).setPosition(0,0)
-            .setSize(this.gameObj.width, this.gameObj.height).setFill('#0D0D0D');
-    this.itemsScene.appendChild(winBackground);
-    
-    //close button
-    var closeButton = new lime.GlossyButton().setColor('#133242').setText('Back')
-        .setPosition(this.gameObj.tileSize*10, this.gameObj.tileSize*7)
-        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize);    
-    this.itemsScene.appendChild(closeButton);
-    
-    //use button
-    this.useButton = new lime.GlossyButton().setColor('#133242').setText('Use')
-        .setPosition(this.gameObj.tileSize*2, this.gameObj.tileSize*7)
-        .setSize(this.gameObj.tileSize*2, this.gameObj.tileSize)
-        .setHidden(true);
-    this.itemsScene.appendChild(this.useButton);    
-    
-    //title
-    var y_title = this.gameObj.tileSize/2;
-    var title = new lime.Label().setText('Items').setFontColor('#E8FC08')
-        .setPosition(this.gameObj.tileSize/3, y_title).setAnchorPoint(0,0)
-        .setFontSize(11);
-    this.itemsScene.appendChild(title);
+
     
     //close event
     var currObj = this;
@@ -649,8 +617,8 @@ huungry.FightEngine.prototype.refreshItems = function() {
  * show item targets
  */
 huungry.FightEngine.prototype.showItemTargets = function() {
-    this.itemsButton.setText('Cancel');
-    this.useButton.setHidden(true);
+    this.itemsButtonText.setText('CANCEL');
+    //this.useButton.setHidden(true);
     this.hideTargets();
         
     var unit = this.playerUnits[this.currentPlayerIndex];
@@ -658,7 +626,7 @@ huungry.FightEngine.prototype.showItemTargets = function() {
     var tileSize = this.gameObj.tileSize;
     var currentObj = this;
     
-    var item = this.gameObj.player.items[this.selectedItem];
+    var item = this.gameObj.player.items[HuungryUI.selectedItem];
 
     //show range attack targets if attack spell
     if(item.type == 'ITEM.ATTACK-SPELL') {
@@ -688,8 +656,8 @@ huungry.FightEngine.prototype.showItemTargets = function() {
  * hide item target
  */
 huungry.FightEngine.prototype.hideItemTargets = function() {
-    this.selectedItem = undefined;
-    this.itemsButton.setText('Items');
+    HuungryUI.selectedItem = undefined;
+    this.itemsButtonText.setText('ITEMS');
     this.clearRangeTargets();
     this.updateDead();
     this.showCurrentGamepad();

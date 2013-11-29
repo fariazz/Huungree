@@ -53,7 +53,7 @@ huungry.Player.prototype.playerMoved = function() {
                         message = "You've found "+this.map.elements[i].gold+'\npieces of gold.';
                         break;
                     case 'ITEM.ATTACK-SPELL':
-                        message = "Use in battle to damage your enemies.";
+                        message = "Use in battle to damage your enemies. Damage: "+this.map.elements[i].attack;
                         break;        
                 }
                 

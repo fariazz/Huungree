@@ -323,6 +323,20 @@ huungryGameMaps.level1.items = [
         attack: 20,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
+    },{
+        x: 2,
+        y: 3,
+        name: 'Fire Scroll',
+        attack: 20,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },{
+        x: 2,
+        y: 2,
+        name: 'Fire Scroll',
+        attack: 20,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
     },
     {
         x: 4,

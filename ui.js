@@ -127,7 +127,7 @@ HuungryUI.showPlayerInfoWindow = function() {
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
                     <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
         
         if(i == 4) {
@@ -204,7 +204,7 @@ HuungryUI.showItemsWindow = function() {
     for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
         switch(HuungryUI.gameObj.player.items[i].type) {
             case 'ITEM.ATTACK-SPELL':
-                info = "Use in battle to damage your enemies";
+                info = "Use in battle to damage your enemies Damage: "+HuungryUI.gameObj.player.items[i].attack;
             break;            
         }
 
@@ -223,6 +223,67 @@ HuungryUI.showItemsWindow = function() {
         ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
     $('.unit-cell').on('click touchstart', function(e){
         e.preventDefault();
+        $('.zva_dialog_help').html($(this).attr('data-info'));
+    });
+}
+/**
+show items info window
+*/
+HuungryUI.showBattleItemsWindow = function() {
+    HuungryUI.hideDialog();
+    var thumbnail, label;
+    var html = '<div style="clear:both;height:62px;">';   
+    var info; 
+    for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
+        switch(HuungryUI.gameObj.player.items[i].type) {
+            case 'ITEM.ATTACK-SPELL':
+                info = "Use in battle to damage your enemies. Damage: "+HuungryUI.gameObj.player.items[i].attack;
+            break;            
+        }
+
+        html += '<div class="unit-cell" data-info="'+info+'" data-index="'+i+'">\
+                <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
+                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
+                '</div>';  
+        
+        if(i == 4) {
+            html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
+        }
+    }
+    html += '</div>';
+    var help = 'Touch items for info and usage.';
+    HuungryUI.showDialog('ITEMS',html
+        ,[{text: 'BACK', class: 'button-home', callback: function() {
+            HuungryUI.selectedItem = undefined;
+            HuungryUI.hideDialog();
+        }},
+        {text: 'USE ITEM', class: 'button-hidden', callback: function() {
+            if(HuungryUI.selectedItem) {
+                HuungryUI.hideDialog();
+                HuungryUI.gameObj.fightEngine.showItemTargets();
+            }
+        }}], help);
+    
+    $('.unit-cell').on('click touchstart', function(e){
+        e.preventDefault();
+        var newIndex = $(this).attr('data-index');
+
+        if(HuungryUI.selectedItem) {
+            $('[data-index="'+HuungryUI.selectedItem+'"]').css('background-color', 'transparent');
+            $('[data-index="'+HuungryUI.selectedItem+'"]').css('opacity', '1');
+            HuungryUI.selectedItem = undefined;   
+        }
+
+        //select item
+        HuungryUI.selectedItem = newIndex;
+        $(this).css('background-color', '#F6EBC6');
+        $(this).css('opacity', '0.5');
+
+        //show use button
+        $($('button')[1]).removeClass('button-hidden');
+        $($('button')[1]).addClass('button-home');
+
+        //show help
         $('.zva_dialog_help').html($(this).attr('data-info'));
     });
 }
