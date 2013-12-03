@@ -58,16 +58,16 @@ huungry.start = function(){
         
     gameObj.player.maxNumUnits = 10;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
+        //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
         //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
         //gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
         //gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 8),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 8)
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 8),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];
     
     //start screen

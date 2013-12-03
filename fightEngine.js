@@ -250,7 +250,7 @@ huungry.FightEngine.prototype.playTurn = function() {
     
     this.updateDead();
     
-    if(!this. gameObj.player.inFightScene) {
+    if(!this.gameObj.player.inFightScene) {
         return false;
     }
     
@@ -471,9 +471,15 @@ huungry.FightEngine.prototype.updateDead = function() {
     
     //check army defeated
     if(this.playerUnits.length == 0) {
-        alert('Game Over!');
-        location.reload();
-//        /this.exitFight();  
+        var fightScene = this;
+        fightScene.exitFight();
+        HuungryUI.showDialog('GAME OVER', 
+        'Your troops have been defeated, your treasures plundered by your enemies, and your name forgotten forever in History.',
+        [{text: 'TRY AGAIN', class: 'button-home', callback: function() {
+            HuungryUI.hideDialog();            
+            huungry.start();
+        }}]
+        );      
     }
     
     if(this.enemyUnits.length == 0) {
@@ -485,8 +491,7 @@ huungry.FightEngine.prototype.updateDead = function() {
                         HuungryUI.hideDialog();
                         fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                         fightScene.enemyArmy.die();
-                        fightScene.exitFight();
-                        
+                        fightScene.exitFight();                        
                     }
                     }]);     
     }
@@ -564,57 +569,6 @@ huungry.FightEngine.prototype.initItemsWindow = function() {
     this.itemsScene.appendChild(this.playerItemsLayer);     
 };
 
-
-
-/**
- * refresh player's units
- */
-huungry.FightEngine.prototype.refreshItems = function() {
-    this.playerItemsLayer.removeAllChildren();
-    var gridX = 0, gridY = 0;
-    var playerItemsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/items_grid.png')
-        .setPosition(gridX,gridY);
-    this.playerItemsLayer.appendChild(playerItemsRect);    
-    
-    this.itemHelp = new lime.Label().setText('')
-        .setPosition(gridX, gridY + 70).setFontColor('#E8FC08').setFontSize(8)
-        .setAnchorPoint(0,0);
-    this.playerItemsLayer.appendChild(this.itemHelp);
-    
-    var thumbnailLayers = new Array();
-    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
-    for(i=0; i < this.gameObj.player.items.length; i++) {  
-        
-        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
-        
-        if(i == 5) {
-            thumbY += this.gameObj.tileSize+1;
-        }
-        
-        thumbnailLayers.push(
-            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
-        
-        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
-            .setFill('assets/'+this.gameObj.player.items[i].image)
-            .setPosition(0,0);        
-        
-        thumbnailLayers[i].item = this.gameObj.player.items[i];
-        thumbnailLayers[i].index = i;
-        thumbnailLayers[i].appendChild(thumbnail);       
-        this.playerItemsLayer.appendChild(thumbnailLayers[i]);  
-        
-        (function(thumbnailLayers, i, gameObj, currentObj) {
-            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
-                e.stopPropagation();
-                currentObj.selectedItem = i;     
-                currentObj.itemHelp.setText(gameObj.player.items[i].name);
-                currentObj.useButton.setHidden(false);
-            });
-        })(thumbnailLayers, i, this.gameObj, this);
-        
-    }
-};
 
 /**
  * show item targets
