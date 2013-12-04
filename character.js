@@ -316,7 +316,9 @@ huungry.Character.prototype.playerMoved = function() {
  */
 huungry.Character.prototype.die = function() {
     this.setHidden(true);
-    this.map.removeElement(this);
+    if(this.map) {
+        this.map.removeElement(this);
+    }
 }
 
 /**

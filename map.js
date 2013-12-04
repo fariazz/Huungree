@@ -107,52 +107,112 @@ huungry.Map.prototype.init = function() {
 /**
  *Initiate level data, only for maps that are levels
  */
-huungry.Map.prototype.initLevel = function() {
+huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
     this.gameObj.map = this;
     
     //load items
     this.gameObj.numItems = 0;
-    var item, pos;
-    for(var i=0, arrayLen = this.level.items.length; i<arrayLen; i++) {
-        pos = this.gameObj.map.getXYFromColRow(this.level.items[i].x,this.level.items[i].y);
-        item = new huungry.Item()
-            .setGameObj(this.gameObj)
-            .setPosition(pos.x, pos.y)
-            .setMap(this)
-            .refreshMapPos()
-            .setData(this.level.items[i])
-            .init();
-        this.gameObj.gameLayer.appendChild(item);
-        this.gameObj.numItems++;
+    var item, pos, shop;    
+    var arrayLen;
+
+    this.gameObj.mapItems = new Array();
+    if(mapItems === undefined) {
+        arrayLen = this.level.items.length;
+        for(var i=0; i<arrayLen; i++) {
+            pos = this.gameObj.map.getXYFromColRow(this.level.items[i].x,this.level.items[i].y);
+            item = new huungry.Item()
+                .setGameObj(this.gameObj)
+                .setPosition(pos.x, pos.y)
+                .setMap(this)
+                .refreshMapPos()
+                .setData(this.level.items[i])
+                .init();
+            this.gameObj.mapItems.push(item);
+            this.gameObj.gameLayer.appendChild(item);
+            this.gameObj.numItems++;
+        }
+    }
+    else {
+        arrayLen = mapItems.length;
+        for(var i=0; i<arrayLen; i++) {
+            item = new huungry.Item()
+                .setGameObj(this.gameObj)
+                .setPosition(mapItems[i].x, mapItems[i].y)
+                .setMap(this)
+                .refreshMapPos()
+                .setData(mapItems[i])
+                .init();
+            this.gameObj.mapItems.push(item);
+            this.gameObj.gameLayer.appendChild(item);
+            this.gameObj.numItems++;
+        }
     }
     
+    
     //shops
-    var shop;
-    for(i=0, arrayLen = this.level.shops.length; i<arrayLen; i++) {
-        pos = this.gameObj.map.getXYFromColRow(this.level.shops[i].x,this.level.shops[i].y);
-        shop = new huungry.Shop()
-            .setGameObj(this.gameObj)
-            .setPosition(pos.x, pos.y)
-            .setMap(this)
-            .refreshMapPos()
-            .setData(this.level.shops[i])
-            .init();
-        this.gameObj.gameLayer.appendChild(shop);
+    this.gameObj.mapShops = new Array();
+    if(mapShops === undefined) {
+        arrayLen = this.level.shops.length;
+        for(i=0; i<arrayLen; i++) {
+            pos = this.gameObj.map.getXYFromColRow(this.level.shops[i].x,this.level.shops[i].y);
+            shop = new huungry.Shop()
+                .setGameObj(this.gameObj)
+                .setPosition(pos.x, pos.y)
+                .setMap(this)
+                .refreshMapPos()
+                .setData(this.level.shops[i])
+                .init();
+            this.gameObj.mapShops.push(shop);
+            this.gameObj.gameLayer.appendChild(shop);
+        }
+    }
+    else {
+        arrayLen = mapShops.length;
+        for(i=0; i<arrayLen; i++) {
+            shop = new huungry.Shop()
+                .setGameObj(this.gameObj)
+                .setPosition(mapShops[i].x, mapShops[i].y)
+                .setMap(this)
+                .refreshMapPos()
+                .setData(mapShops[i])
+                .init();
+            this.gameObj.mapShops.push(shop);
+            this.gameObj.gameLayer.appendChild(shop);
+        }
     }
     
     //enemyArmies
     this.gameObj.enemyArmies = new Array();
-    for(var i=0, arrayLen = this.level.enemyArmies.length; i<arrayLen; i++) {
-        var pos = this.gameObj.map.getXYFromColRow(this.level.enemyArmies[i].x,this.level.enemyArmies[i].y);
-        this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
-            .setGameObj(this.gameObj)
-            .setMap(this.gameObj.map)
-            .refreshMapPos()); 
-        this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
-        this.gameObj.enemyArmies[i].background = this.level.enemyArmies[i].background;
-        this.gameObj.enemyArmies[i].init();
-        this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
+    if(enemyArmies === undefined) {
+        arrayLen = this.level.enemyArmies.length;
+        for(var i=0; i<arrayLen; i++) {
+            pos = this.gameObj.map.getXYFromColRow(this.level.enemyArmies[i].x,this.level.enemyArmies[i].y);
+            this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
+                .setGameObj(this.gameObj)
+                .setMap(this.gameObj.map)
+                .refreshMapPos()); 
+            this.gameObj.enemyArmies[i].image = this.level.enemyArmies[i].image;
+            this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
+            this.gameObj.enemyArmies[i].background = this.level.enemyArmies[i].background;
+            this.gameObj.enemyArmies[i].init();
+            this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
+        }
     }
+    else {
+        arrayLen = enemyArmies.length;
+        for(var i=0; i<arrayLen; i++) {
+            this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+enemyArmies[i].image).setPosition(enemyArmies[i].x, enemyArmies[i].y)
+                .setGameObj(this.gameObj)
+                .setMap(this.gameObj.map)
+                .refreshMapPos()); 
+            this.gameObj.enemyArmies[i].image = enemyArmies[i].image;
+            this.gameObj.enemyArmies[i].unitsSummary = enemyArmies[i].unitsSummary;
+            this.gameObj.enemyArmies[i].background = enemyArmies[i].background;
+            this.gameObj.enemyArmies[i].init();
+            this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
+        }
+    }
+    
 };
 
 /**

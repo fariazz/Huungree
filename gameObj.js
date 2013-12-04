@@ -68,8 +68,10 @@ huungry.GameObj.prototype.cloneUnit = function(unit, number) {
  * load and open a level
  * @param levelName
  */
-huungry.GameObj.prototype.runLevel = function(levelName) {
+huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems, enemyArmies, mapShops) {
     
+    this.currentLevel = levelName;
+
     //game scene
     this.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
     this.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
@@ -81,19 +83,32 @@ huungry.GameObj.prototype.runLevel = function(levelName) {
     this.map = new huungry.Map().setGameObj(this)
         .setLevel(levelName);
     this.map.init();
-    this.map.initLevel();
+    this.map.initLevel(mapItems, enemyArmies, mapShops);
     
-    //init map visibility
-    this.darkness = new Array();
-    for(i = 0, arrayLen = this.map.num_cols; i<arrayLen; i++) {        
-        this.darkness.push(new Array());
-        for(var j = 0, arrayLen2 = this.map.num_rows; j<arrayLen2; j++) {
-            this.darkness[i][j] = 1;            
-        }        
+    if(!darkness) {
+      //init map visibility    
+      this.darkness = new Array();
+      for(i = 0, arrayLen = this.map.num_cols; i<arrayLen; i++) {        
+          this.darkness.push(new Array());
+          for(var j = 0, arrayLen2 = this.map.num_rows; j<arrayLen2; j++) {
+              this.darkness[i][j] = 1;            
+          }        
+      }  
+    }
+    else {
+      this.darkness = darkness;
     }
     
+    
     //place player
-    var pos = this.map.getXYFromColRow(this.map.playerInitialX,this.map.playerInitialY);
+    var posRC;
+    if(!pos) {
+      posCR = {col: this.map.playerInitialX, row: this.map.playerInitialY};
+      pos = this.map.getXYFromColRow(this.map.playerInitialX,this.map.playerInitialY);
+    }
+    else {
+      posCR = this.map.getColRowFromXY(pos.x, pos.y);
+    }
     this.player.setPosition(pos.x, pos.y);
     this.player.setMap(this.map);
     this.player.refreshMapPos()
@@ -101,7 +116,8 @@ huungry.GameObj.prototype.runLevel = function(levelName) {
     
     this.gameLayer.appendChild(this.player);
     this.player.toggleGamepad(true);
-    this.updateVisiblity(this.map.playerInitialX, this.map.playerInitialY);
+    this.centerCameraTo(pos.x,pos.y);
+    this.updateVisiblity(posCR.col, posCR.row);
     
     //controls layer
     this.controlsLayer = new huungry.ControlsLayer().setGameObj(this);
@@ -327,9 +343,40 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
         currentObj.runLevel('level1');
     });
+    goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {        
+        currentObj.loadGame();
+    });
     goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
         HuungryUI.showAboutDialog(this.this);
     });
     
     this.director.replaceScene(this.splashScreen.scene); 
+}
+
+/**
+load a game
+*/
+huungry.GameObj.prototype.loadGame = function() {
+  if(localStorage.getItem('currentLevel')) {
+    var playerPos = JSON.parse(localStorage.getItem('currentLocation'));
+    var darkness = JSON.parse(localStorage.getItem('currentDarkness'));
+    this.player.gold = parseInt(localStorage.getItem('currentGold'));
+    this.player.units = JSON.parse(localStorage.getItem('currentUnits'));
+
+    //load items
+    var items = JSON.parse(localStorage.getItem('currentItems'));
+    var itemsLen = items.length;
+    var item;
+    for(var i=0; i<itemsLen; i++) {
+      item = new huungry.Item();
+      item.setData(items[i]).setGameObj(this);
+      this.player.collect(item, true);
+    }
+    
+    var mapItems = JSON.parse(localStorage.getItem('mapItems'));
+    var enemyArmies = JSON.parse(localStorage.getItem('enemyArmies'));
+    var mapShops = JSON.parse(localStorage.getItem('mapShops'));
+
+    this.runLevel(localStorage.getItem('currentLevel'), playerPos, darkness, mapItems, enemyArmies, mapShops);
+  }        
 }

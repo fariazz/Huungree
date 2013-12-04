@@ -46,7 +46,7 @@ huungry.ControlsLayer.prototype.init = function() {
     this.initPlayerInfoWindow();
     this.initItemsWindow();
     this.initQuestWindow();
-    this.initHelp();
+    //this.initHelp();
     this.initSave();    
 }
 
@@ -78,7 +78,6 @@ huungry.ControlsLayer.prototype.initPlayerInfoWindow = function() {
  * init items window
  */
 huungry.ControlsLayer.prototype.initItemsWindow = function() {
-    //icon to launch
     var itemsBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_items.png')
@@ -91,55 +90,11 @@ huungry.ControlsLayer.prototype.initItemsWindow = function() {
     });        
 };
 
-/**
- * refresh player's units
- */
-huungry.ControlsLayer.prototype.refreshItems = function() {
-    this.playerItemsLayer.removeAllChildren();
-    var gridX = 0, gridY = 0;
-    var playerItemsRect = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/items_grid.png')
-        .setPosition(gridX,gridY);
-    this.playerItemsLayer.appendChild(playerItemsRect);    
-    
-    var thumbnailLayers = new Array();
-    var thumbnail, thumbX, thumbY = gridY+1, lifeBar;
-    for(i=0; i < this.gameObj.player.items.length; i++) {  
-        
-        thumbX = gridX + 1 + i%5*(this.gameObj.tileSize+1);
-        
-        if(i == 5) {
-            thumbY += this.gameObj.tileSize+1;
-        }
-        
-        thumbnailLayers.push(
-            new lime.Layer().setAnchorPoint(0,0).setPosition(thumbX, thumbY));
-        
-        thumbnail = new lime.Sprite().setAnchorPoint(0,0)
-            .setSize(this.gameObj.tileSize,this.gameObj.tileSize)
-            .setFill('assets/images/items/'+this.gameObj.player.items[i].image)
-            .setPosition(0,0);        
-        
-        thumbnailLayers[i].item = this.gameObj.player.items[i];
-        thumbnailLayers[i].index = i;
-        thumbnailLayers[i].appendChild(thumbnail);       
-        this.playerItemsLayer.appendChild(thumbnailLayers[i]);  
-        
-        (function(thumbnailLayers, i, gameObj, currentObj) {
-            goog.events.listen(thumbnailLayers[i], ['mousedown', 'touchstart'], function(e) {
-                e.stopPropagation();
-                                
-                
-            });
-        })(thumbnailLayers, i, this.gameObj, this);
-        
-    }
-};
 
 /**
  * init player quest window
  */
 huungry.ControlsLayer.prototype.initQuestWindow = function() {
-    //icon to launch
     var questWindowBtn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_quest.png')
@@ -151,7 +106,6 @@ huungry.ControlsLayer.prototype.initQuestWindow = function() {
  * help button
  */
 huungry.ControlsLayer.prototype.initHelp = function() {
-    //icon to launch
     var btn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_help.png')
@@ -162,10 +116,65 @@ huungry.ControlsLayer.prototype.initHelp = function() {
  * init save game btn
  */
 huungry.ControlsLayer.prototype.initSave = function() {
-    //icon to launch
     var btn = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('assets/images/backgrounds/btn_save.png')
-        .setPosition(0, this.gameObj.tileSize*4);
+        .setPosition(0, this.gameObj.tileSize*3);
     this.sideBar.appendChild(btn);
+
+    var that = this;
+    goog.events.listen(btn,['mousedown', 'touchstart'], function(e) {
+        //save level
+        localStorage.setItem('currentLevel', that.gameObj.currentLevel);
+
+        //save player location
+        localStorage.setItem('currentLocation', JSON.stringify(that.gameObj.player.getPosition()));
+
+        //save gold
+        localStorage.setItem('currentGold', that.gameObj.player.gold);
+
+        //save units
+        localStorage.setItem('currentUnits', JSON.stringify(that.gameObj.player.units));
+
+        //save player items
+        var items = [];
+        var itemsLen = that.gameObj.player.items.length;
+        for(var i=0; i<itemsLen; i++) {
+            items.push(that.gameObj.player.items[i].getData());
+        }
+        localStorage.setItem('currentItems', JSON.stringify(items));
+
+        //save map items
+        var mapItems = [];
+        var mapItemsLen = that.gameObj.mapItems.length;
+        for(var i=0; i<mapItemsLen; i++) {
+            mapItems.push(that.gameObj.mapItems[i].getData());
+        }
+        localStorage.setItem('mapItems', JSON.stringify(mapItems));
+
+        //save map enemy armies
+        var enemyArmies = [];
+        var enemyArmiesLen = that.gameObj.enemyArmies.length;
+        for(var i=0; i<enemyArmiesLen; i++) {
+            enemyArmies.push(that.gameObj.enemyArmies[i].getData());
+        }
+        localStorage.setItem('enemyArmies', JSON.stringify(enemyArmies));
+        
+        //save map enemy armies
+        var mapShops = [];
+        var mapShopsLen = that.gameObj.mapShops.length;
+        for(var i=0; i<mapShopsLen; i++) {
+            mapShops.push(that.gameObj.mapShops[i].getData());
+        }
+        localStorage.setItem('mapShops', JSON.stringify(mapShops));
+
+        //save visibility
+        localStorage.setItem('currentDarkness', JSON.stringify(that.gameObj.darkness));
+
+        HuungryUI.showDialog('GAME SAVED!', '', [{
+            text: 'OK',
+            class: 'button-home', 
+            callback: HuungryUI.hideDialog}]);
+
+    });       
 };

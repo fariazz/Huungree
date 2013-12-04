@@ -150,6 +150,12 @@ huungry.Shop.prototype.refreshPlayerUnits = function() {
                 
             });
         })(this.thumbnailLayers, i, this.gameObj, this);
-        
     }
 }
+
+/**
+ * get data
+ */
+huungry.Shop.prototype.getData = function() {
+    return _.extend(this.data, {x: this.getPosition().x, y: this.getPosition().y});
+};

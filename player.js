@@ -79,7 +79,7 @@ huungry.Player.prototype.playerMoved = function() {
  * collect item
  * @param {} item
  */
-huungry.Player.prototype.collect = function(item) {
+huungry.Player.prototype.collect = function(item, loading) {
     switch(item.type) {
         case 'ITEM.GOLD':
             this.gold += item.gold;            
@@ -89,13 +89,16 @@ huungry.Player.prototype.collect = function(item) {
             break;        
     }
     item.die();
+
+    if(!loading) {
+        this.gameObj.controlsLayer.refreshInfo();
     
-    this.gameObj.controlsLayer.refreshInfo();
-    
-    //game goal for now..
-    if(this.gameObj.numItems == 0) {
-        HuungryUI.showEndofGameDialog(this.gameObj);
+        //game goal for now..
+        if(this.gameObj.numItems == 0) {
+            HuungryUI.showEndofGameDialog(this.gameObj);
+        }
     }
+    
 }
 
 /**

@@ -62,3 +62,34 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
     this.gameObj.player.items.splice(attackedUnit.fightEngine.selectedItem,1);
     //console.log(this.gameObj.player.items);
 };
+
+/**
+ * get data
+ */
+huungry.Item.prototype.getData = function() {
+    return {
+        image: this.image,
+        name: this.name,
+        type: this.type,
+        gold: this.gold,
+        attack: this.attack,
+        x: this.getPosition().x,
+        y: this.getPosition().y
+    };
+};
+
+/**
+* remove element
+*/
+huungry.Item.prototype.die = function() {
+    goog.base(this, 'die');
+    var index;
+    _.each(this.gameObj.mapItems, function(value, key) {
+        if(value.id == this.id) {
+            index = key;
+        }
+    }, this);
+    if(index) {
+        this.gameObj.mapItems.splice(index, 1);
+    }
+};

@@ -28,6 +28,34 @@ huungry.EnemyArmy.prototype.init = function() {
         //for(var j = 0; j< this.unitsSummary[i].number; j++) {
             this.units.push(this.gameObj.cloneUnit(unit,this.unitsSummary[i].number ));
         //}
-    }
-    
+    }    
 }
+
+/**
+* remove element
+*/
+huungry.EnemyArmy.prototype.die = function() {
+    goog.base(this, 'die');
+    var index;
+    _.each(this.gameObj.enemyArmies, function(value, key) {
+        if(value.id == this.id) {
+            index = key;
+        }
+    }, this);
+    if(index !== undefined) {
+        this.gameObj.enemyArmies.splice(index, 1);
+    }
+};
+
+/**
+ * get data
+ */
+huungry.EnemyArmy.prototype.getData = function() {
+    return {
+        image: this.image,
+        unitsSummary: this.unitsSummary,
+        background: this.background,
+        x: this.getPosition().x,
+        y: this.getPosition().y
+    };
+};
