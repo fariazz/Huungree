@@ -126,6 +126,12 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     this.controlsLayer.refreshInfo();
     
     this.director.replaceScene(this.gameScene);
+
+    //show quest
+    if(!darkness) {
+      this.showQuest();
+    }
+    
 };
 
 /**
@@ -378,5 +384,53 @@ huungry.GameObj.prototype.loadGame = function() {
     var mapShops = JSON.parse(localStorage.getItem('mapShops'));
 
     this.runLevel(localStorage.getItem('currentLevel'), playerPos, darkness, mapItems, enemyArmies, mapShops);
-  }        
+  }   
 }
+
+/**
+  show quest of the current level
+  */
+  huungry.GameObj.prototype.showQuest = function() {
+    HuungryUI.showSequence('LEVEL INTRO', huungryGameMaps[this.currentLevel].quest.screens)
+  }
+
+  /**
+  check quest completion
+  */
+  huungry.GameObj.prototype.checkQuestCompletion = function() {    
+    var i;
+    var aliveEnemies;
+    var numQuests = huungryGameMaps[this.currentLevel].quest.goals.length;
+    var numRemainingQuests = numQuests;
+    for(i = 0; i < numQuests; i++) {
+      if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-KILL') {
+        //for kill quests check that goal armies are dead
+        aliveEnemies = 0;
+        _.each(this.enemyArmies, function(value, key) {
+          if(value.isQuestGoal) {
+            aliveEnemies++;
+          }
+        });
+
+        if(aliveEnemies == 0) {
+          numRemainingQuests--;
+        }
+      }
+    }
+
+    if(numRemainingQuests == 0) {
+      this.levelCompleted();
+    }
+  };
+
+  /**
+  move to the next level
+  */
+  huungry.GameObj.prototype.levelCompleted = function() {
+    var that = this;
+    HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
+      [{text: 'OK', btnClass: 'button-home', callback: function() {
+          //that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
+          HuungryUI.showEndofGameDialog();
+      }}]);
+  }

@@ -100,6 +100,12 @@ huungry.ControlsLayer.prototype.initQuestWindow = function() {
         .setFill('assets/images/backgrounds/btn_quest.png')
         .setPosition(0, this.gameObj.tileSize*2);
     this.sideBar.appendChild(questWindowBtn);
+
+    //launch event
+    var that = this;
+    goog.events.listen(questWindowBtn,['mousedown', 'touchstart'], function(e) {
+        that.gameObj.showQuest();
+    });     
 };
 
 /**

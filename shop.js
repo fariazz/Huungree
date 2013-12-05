@@ -23,7 +23,7 @@ huungry.Shop.prototype.init = function() {
  * @param {} data
  */
 huungry.Shop.prototype.setData = function(data) {
-    this.setFill('assets/'+data.image);
+    this.setFill('assets/images/places/'+data.image);
     this.data = data;
     
     return this;

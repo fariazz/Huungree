@@ -89,6 +89,8 @@
     border: 1px solid #F6EBC6;
     margin-left: 30px;
     margin-top: 5px;
+    clear: both;
+    height: 80px;
 }
 
 .shop-player-unit {

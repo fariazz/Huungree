@@ -56,6 +56,7 @@ huungry.EnemyArmy.prototype.getData = function() {
         unitsSummary: this.unitsSummary,
         background: this.background,
         x: this.getPosition().x,
-        y: this.getPosition().y
+        y: this.getPosition().y,
+        isQuestGoal: this.isQuestGoal
     };
 };

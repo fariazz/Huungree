@@ -11,7 +11,7 @@ huungry.Player = function() {
     
     this.inFightScene = false;    
     this.canMove = false;
-    this.gold = 1000;
+    this.gold = 0;
     this.items = new Array();
 }
 

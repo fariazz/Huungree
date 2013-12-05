@@ -48,7 +48,7 @@ huungry.start = function(){
     ];
     
     var gameObj = new huungry.GameObj(document);
-    gameObj.developmentMode = true;
+    gameObj.developmentMode = false;
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
     
@@ -57,17 +57,18 @@ huungry.start = function(){
         .setGameObj(gameObj);
         
     gameObj.player.maxNumUnits = 10;   
+    gameObj.player.gold = 60;   
     gameObj.player.units = [
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
-        //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
-        //gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
-        //gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6),
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 8),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 2),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 3),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
+        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];
     
     //start screen

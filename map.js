@@ -192,6 +192,7 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
                 .setMap(this.gameObj.map)
                 .refreshMapPos()); 
             this.gameObj.enemyArmies[i].image = this.level.enemyArmies[i].image;
+            this.gameObj.enemyArmies[i].isQuestGoal = this.level.enemyArmies[i].isQuestGoal;
             this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
             this.gameObj.enemyArmies[i].background = this.level.enemyArmies[i].background;
             this.gameObj.enemyArmies[i].init();
@@ -206,6 +207,7 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
                 .setMap(this.gameObj.map)
                 .refreshMapPos()); 
             this.gameObj.enemyArmies[i].image = enemyArmies[i].image;
+            this.gameObj.enemyArmies[i].isQuestGoal = enemyArmies[i].isQuestGoal;
             this.gameObj.enemyArmies[i].unitsSummary = enemyArmies[i].unitsSummary;
             this.gameObj.enemyArmies[i].background = enemyArmies[i].background;
             this.gameObj.enemyArmies[i].init();

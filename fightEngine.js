@@ -495,7 +495,8 @@ huungry.FightEngine.prototype.updateDead = function() {
                         HuungryUI.hideDialog();
                         fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                         fightScene.enemyArmy.die();
-                        fightScene.exitFight();                        
+                        fightScene.exitFight();    
+                        fightScene.gameObj.checkQuestCompletion();               
                     }
                     }]);     
     }
