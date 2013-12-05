@@ -1,5 +1,10 @@
 var HuungryUI = HuungryUI || new Object();
 
+$(function() {
+    FastClick.attach(document.body);
+});
+
+
 /**
  * show level selection dialog
  */
@@ -14,7 +19,7 @@ HuungryUI.showLevelselDialog = function(levels, gameObj) {
     $('.zva_dialog_levelsel_listcont').html(html);
     $('.zva_dialog_levelsel').css('display', 'block');
     
-    $('.zva_dialog_levelsel_listcont ul li').on('click touchstart', function(e) {
+    $('.zva_dialog_levelsel_listcont ul li').on('touchstart', function(e) {
         $('.zva_dialog_levelsel').css('display', 'none');
         var index = $('.zva_dialog_levelsel_listcont ul li').attr('zva_level'); 
         HuungryUI.showLeveldesDialog(levels[index], gameObj);        
@@ -29,7 +34,7 @@ HuungryUI.showLeveldesDialog = function(level, gameObj) {
     $('.zva_dialog_leveldesc_img').css('background-image', 'url(assets/'+level.introImg+')')
     $('.zva_dialog_leveldesc_txt').html(level.introText)
     
-    $('.zva_dialog_btn').bind('click', function(e) {
+    $('.zva_dialog_btn').bind('touchstart', function(e) {
         $('.zva_dialog_leveldesc').css('display', 'none');
         gameObj.runLevel(level.codeName);
     });
@@ -42,7 +47,7 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
     $('.zva_dialog_leveldesc').css('display', 'block');
     $('.zva_dialog_leveldesc_txt').html('The Journey is not Complete<br/>We are working on adding more levels and content to the game. If you like the game and want more LET ME KNOW!! @ZenvaTweets')
     
-    $('.zva_dialog_btn').on('click touchstart', function(e) {
+    $('.zva_dialog_btn').on('touchstart', function(e) {
         location.reload();
     });
 };
@@ -53,7 +58,9 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
 HuungryUI.showAboutDialog = function(gameObj) {        
     HuungryUI.showDialog('ABOUT HUUNGREE', 
         'Huungree is an RPG created by ZENVA. We have free and premium online courses to learn how to make apps and games.</br></br>More levels and content are being cooked. If you like this game LET US KNOW!'
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', class: 'button-home', callback: function(){console.log('visit www.zenva.com');}}]);
+        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){
+            window.open('http://eepurl.com/vACtD', '_blank', 'location=yes');
+        }}]);
 };
 
 /**
@@ -71,10 +78,11 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
     var i;
     for(i = 0; i < actions.length; i++) {
         (function(i) {
-            $('.zva_dialog_actions').append('<button data-role="action-btn-'+i+'" class="'+actions[i].class+'" ">'+actions[i].text+'</button>');
-            $('button[data-role="action-btn-'+i+'"]').unbind('touchstart click');
-            $('button[data-role="action-btn-'+i+'"]').bind('touchstart click', function(e) {
+            $('.zva_dialog_actions').append('<button ontouchstart="return true;" data-role="action-btn-'+i+'" class="'+actions[i].btnClass+'" ">'+actions[i].text+'</button>');
+            $('button[data-role="action-btn-'+i+'"]').unbind('touchstart');
+            $('button[data-role="action-btn-'+i+'"]').bind('touchstart', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 actions[i].callback();
             });
         })(i);
@@ -137,8 +145,8 @@ HuungryUI.showPlayerInfoWindow = function() {
     }
     html += '</div>';
     HuungryUI.showDialog('MY ARMY',html
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog},
-        {text: 'MERGE UNITS', class: 'button-home', callback: HuungryUI.showArrangeUnitsWindow}]);
+        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog},
+        {text: 'MERGE UNITS', btnClass: 'button-home', callback: HuungryUI.showArrangeUnitsWindow}]);
 }
 /**
 show arrange units window
@@ -151,7 +159,7 @@ HuungryUI.showArrangeUnitsWindow = function() {
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
                     <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/attack-icon.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + ' style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
         
         if(i == 4) {
@@ -161,10 +169,11 @@ HuungryUI.showArrangeUnitsWindow = function() {
     html += '</div>';
     var help = 'Touch two units of the same kind to combine.';
     HuungryUI.showDialog('MERGE UNITS',html
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.showPlayerInfoWindow}], help);
+        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.showPlayerInfoWindow}], help);
 
-    $('.unit-cell').on('click touchstart', function(e){
+    $('.unit-cell').on('touchstart', function(e){
         e.preventDefault();
+        e.stopPropagation();
         var newIndex = $(this).attr('data-index');
         if(HuungryUI.selectedUnit) {
             $('[data-index="'+HuungryUI.selectedUnit+'"]').css('background-color', 'transparent');
@@ -219,9 +228,10 @@ HuungryUI.showItemsWindow = function() {
     html += '</div>';
     var help = 'Touch items for info.';
     HuungryUI.showDialog('ITEMS',html
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
-    $('.unit-cell').on('click touchstart', function(e){
+        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);
+    $('.unit-cell').on(' touchstart', function(e){
         e.preventDefault();
+        e.stopPropagation();
         $('.zva_dialog_help').html($(this).attr('data-info'));
     });
 }
@@ -251,19 +261,20 @@ HuungryUI.showBattleItemsWindow = function() {
     html += '</div>';
     var help = 'Touch items for info and usage.';
     HuungryUI.showDialog('ITEMS',html
-        ,[{text: 'BACK', class: 'button-home', callback: function() {
+        ,[{text: 'BACK', btnClass: 'button-home', callback: function() {
             HuungryUI.selectedItem = undefined;
             HuungryUI.hideDialog();
         }},
-        {text: 'USE ITEM', class: 'button-hidden', callback: function() {
+        {text: 'USE ITEM', btnClass: 'button-hidden', callback: function() {
             if(HuungryUI.selectedItem) {
                 HuungryUI.hideDialog();
                 HuungryUI.gameObj.fightEngine.showItemTargets();
             }
         }}], help);
     
-    $('.unit-cell').on('click touchstart', function(e){
+    $('.unit-cell').on('touchstart', function(e){
         e.preventDefault();
+        e.stopPropagation();
         var newIndex = $(this).attr('data-index');
 
         if(HuungryUI.selectedItem) {
@@ -317,9 +328,10 @@ HuungryUI.showShopWindow = function(shop, result) {
     html += '</div>';
     var help = result === undefined ? 'Touch units to purchase' : result.msg;
     HuungryUI.showDialog(shop.data.name,html
-        ,[{text: 'BACK', class: 'button-home', callback: HuungryUI.hideDialog}], help);
-    $('.shop-unit-cell').on('click touchstart', function(e){
-        e.preventDefault();        
+        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);
+    $('.shop-unit-cell').on('touchstart', function(e){
+        e.preventDefault();
+        e.stopPropagation();        
         var index = $(this).attr('data-index');
         var result = shop.purchase(shop.data.units[index]);
         HuungryUI.showShopWindow(shop, result);

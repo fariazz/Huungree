@@ -347,7 +347,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
         currentObj.loadGame();
     });
     goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
-        HuungryUI.showAboutDialog(this.this);
+        HuungryUI.showAboutDialog(currentObj);
     });
     
     this.director.replaceScene(this.splashScreen.scene); 

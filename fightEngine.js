@@ -85,12 +85,14 @@ huungry.FightEngine.prototype.init = function() {
 
     this.fightUILayer.appendChild(killButton);
         
-        goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {        
-            for(var j=0; j<currentObj.enemyUnits.length; j++) {
-                currentObj.enemyUnits[j].life = -1;           
-            }
+        goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {
+            if(currentObj.playerMoves) {           
+                for(var j=0; j<currentObj.enemyUnits.length; j++) {
+                    currentObj.enemyUnits[j].life = -1;           
+                }
 
-            currentObj.pass();
+                currentObj.pass();
+            }
         });
 
         //run away    
@@ -102,7 +104,9 @@ huungry.FightEngine.prototype.init = function() {
 
         var currentObj = this;
         goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
-            currentObj.exitFight();
+            if(currentObj.playerMoves) {   
+                currentObj.exitFight();
+            }
         });
     }
     
@@ -475,7 +479,7 @@ huungry.FightEngine.prototype.updateDead = function() {
         fightScene.exitFight();
         HuungryUI.showDialog('GAME OVER', 
         'Your troops have been defeated, your treasures plundered by your enemies, and your name forgotten forever in History.',
-        [{text: 'TRY AGAIN', class: 'button-home', callback: function() {
+        [{text: 'TRY AGAIN', btnClass: 'button-home', callback: function() {
             HuungryUI.hideDialog();            
             huungry.start();
         }}]
@@ -487,7 +491,7 @@ huungry.FightEngine.prototype.updateDead = function() {
 
         var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
         HuungryUI.showDialog('YOU HAVE WON!',message
-                    ,[{text: 'OK', class: 'button-home', callback: function() {
+                    ,[{text: 'OK', btnClass: 'button-home', callback: function() {
                         HuungryUI.hideDialog();
                         fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                         fightScene.enemyArmy.die();

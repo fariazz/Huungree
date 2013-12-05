@@ -173,7 +173,7 @@ huungry.ControlsLayer.prototype.initSave = function() {
 
         HuungryUI.showDialog('GAME SAVED!', '', [{
             text: 'OK',
-            class: 'button-home', 
+            btnClass: 'button-home', 
             callback: HuungryUI.hideDialog}]);
 
     });       

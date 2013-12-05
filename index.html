@@ -5,19 +5,20 @@
     <meta charset="utf-8"/>
     <title>huungry</title>
     
-    <link rel="stylesheet" type="text/css" href="reset.css" />   
-    <link rel="stylesheet" type="text/css" href="huungry.css" />   
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />   
+    <link rel="stylesheet" type="text/css" href="css/huungry.css" />   
 </head>
-
-<body style="background-color:black">
-    <div class="zva_dialog zva_dialog_levelsel">
-        <h2>Campaigns</h2>
-        <div class="zva_dialog_levelsel_listcont"></div>
-    </div>
-    <div class="zva_dialog zva_dialog_leveldesc">
-        <div class="zva_dialog_leveldesc_img" ></div>            
-        <div class="zva_dialog_leveldesc_txt" ></div>            
-        <button class="zva_dialog_btn">Ok</button>
+<body style="background-color:black">    
+    <div class="zva_dialog">
+        <div class="zva_dialog_header">
+            <h2></h2>
+        </div>
+        <div class="zva_dialog_body">
+        </div>
+        <div class="zva_dialog_actions">            
+        </div>
+        <div class="zva_dialog_help">            
+        </div>
     </div>
     <script>
         function initApplication() {
@@ -28,11 +29,13 @@
         }
     </script>
     <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="underscore-min.js"></script>
     <script type="text/javascript" src="ui.js"></script>
     <script type='text/javascript' src='units.js'></script>
     <script type='text/javascript' src='levels/level1.js'></script>
-    <script type="text/javascript" src="huungry_compiled.js"></script>    
+    <script type="text/javascript" src="huungry_compiled.js"></script>
     <script type="text/javascript" src="pg-event-assist.js"></script>    
+    <script type="text/javascript" src="fastclick.js"></script>    
 </body>
 
 </html>
