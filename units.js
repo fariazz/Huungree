@@ -3,7 +3,7 @@ var UnitTypes = [
             id: 'archer',
             name: 'archer',
             image: 'archer.png',
-            attack: 12,
+            attack: 10,
             defense: 1,
             canShoot: true,
             gold: 5,

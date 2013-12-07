@@ -130,57 +130,7 @@ huungry.ControlsLayer.prototype.initSave = function() {
 
     var that = this;
     goog.events.listen(btn,['mousedown', 'touchstart'], function(e) {
-        //save level
-        localStorage.setItem('currentLevel', that.gameObj.currentLevel);
-
-        //save player location
-        localStorage.setItem('currentLocation', JSON.stringify(that.gameObj.player.getPosition()));
-
-        //save gold
-        localStorage.setItem('currentGold', that.gameObj.player.gold);
-
-        //save units
-        localStorage.setItem('currentUnits', JSON.stringify(that.gameObj.player.units));
-
-        //save player items
-        var items = [];
-        var itemsLen = that.gameObj.player.items.length;
-        for(var i=0; i<itemsLen; i++) {
-            items.push(that.gameObj.player.items[i].getData());
-        }
-        localStorage.setItem('currentItems', JSON.stringify(items));
-
-        //save map items
-        var mapItems = [];
-        var mapItemsLen = that.gameObj.mapItems.length;
-        for(var i=0; i<mapItemsLen; i++) {
-            mapItems.push(that.gameObj.mapItems[i].getData());
-        }
-        localStorage.setItem('mapItems', JSON.stringify(mapItems));
-
-        //save map enemy armies
-        var enemyArmies = [];
-        var enemyArmiesLen = that.gameObj.enemyArmies.length;
-        for(var i=0; i<enemyArmiesLen; i++) {
-            enemyArmies.push(that.gameObj.enemyArmies[i].getData());
-        }
-        localStorage.setItem('enemyArmies', JSON.stringify(enemyArmies));
-        
-        //save map enemy armies
-        var mapShops = [];
-        var mapShopsLen = that.gameObj.mapShops.length;
-        for(var i=0; i<mapShopsLen; i++) {
-            mapShops.push(that.gameObj.mapShops[i].getData());
-        }
-        localStorage.setItem('mapShops', JSON.stringify(mapShops));
-
-        //save visibility
-        localStorage.setItem('currentDarkness', JSON.stringify(that.gameObj.darkness));
-
-        HuungryUI.showDialog('GAME SAVED!', '', [{
-            text: 'OK',
-            btnClass: 'button-home', 
-            callback: HuungryUI.hideDialog}]);
-
+        that.gameObj.saveGame(true);
     });       
 };
+

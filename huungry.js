@@ -66,7 +66,7 @@ huungry.start = function(){
         gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
         gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
         gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
-        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6),
+        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];

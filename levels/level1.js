@@ -363,12 +363,11 @@ huungryGameMaps.level1.quest = {
         The Republic of Ingeber and their privateers went inland and took over the Mystical Cities.',
 
         'You play the role of Jakkal, aspiring privateer from Ingeber. \
-        You\'ve just arrived to Crab Bay in Tamaca to join your older brother Jekkel \
-        who is in the mystical city of Crisal. He is a seasoned privateer you look after. \
-        Maybe he can help you get started with your own enterprise.',
+        You\'ve just arrived to Crab Bay to join your older brother Jekkel,\
+        a seasoned privateer who is in the Mystical City of Crisal, far inland in Tamaca.',
 
         'You\'ll need a few nights in Crab Bay to prepare your operations. \
-        Kill all the wild animals so you can set your camp in peace.'
+        <div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill all the wild animals so you can set your camp in peace.</li><ul>'
     ],
     goals: [{type: 'QUEST-KILL'}]
 };

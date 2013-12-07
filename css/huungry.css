@@ -23,7 +23,7 @@
 .zva_dialog_body {
     padding-left: 30px;
     padding-right: 30px;
-    font-size: 14pt;
+    font-size: 13pt;
     height: 150px;
 }
 
@@ -139,4 +139,10 @@
 * {
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
     -webkit-tap-highlight-color: transparent;
+}
+
+.quests-title {
+    color: #E9DDB9;
+    font-weight: bold;
+    margin: 10px 0px;
 }

@@ -434,3 +434,62 @@ huungry.GameObj.prototype.loadGame = function() {
           HuungryUI.showEndofGameDialog();
       }}]);
   }
+
+  /**
+  save gameObj*/
+  huungry.GameObj.prototype.saveGame = function(showSaveSuccess) {
+    //save level
+      localStorage.setItem('currentLevel', this.currentLevel);
+
+      //save player location
+      localStorage.setItem('currentLocation', JSON.stringify(this.player.getPosition()));
+
+      //save gold
+      localStorage.setItem('currentGold', this.player.gold);
+
+      //save units
+      localStorage.setItem('currentUnits', JSON.stringify(this.player.units));
+
+      //save player items
+      var items = [];
+      var itemsLen = this.player.items.length;
+      for(var i=0; i<itemsLen; i++) {
+          items.push(this.player.items[i].getData());
+      }
+      localStorage.setItem('currentItems', JSON.stringify(items));
+
+      //save map items
+      var mapItems = [];
+      var mapItemsLen = this.mapItems.length;
+      for(var i=0; i<mapItemsLen; i++) {
+          mapItems.push(this.mapItems[i].getData());
+      }
+      localStorage.setItem('mapItems', JSON.stringify(mapItems));
+
+      //save map enemy armies
+      var enemyArmies = [];
+      var enemyArmiesLen = this.enemyArmies.length;
+      for(var i=0; i<enemyArmiesLen; i++) {
+          enemyArmies.push(this.enemyArmies[i].getData());
+      }
+      localStorage.setItem('enemyArmies', JSON.stringify(enemyArmies));
+      
+      //save map enemy armies
+      var mapShops = [];
+      var mapShopsLen = this.mapShops.length;
+      for(var i=0; i<mapShopsLen; i++) {
+          mapShops.push(this.mapShops[i].getData());
+      }
+      localStorage.setItem('mapShops', JSON.stringify(mapShops));
+
+      //save visibility
+      localStorage.setItem('currentDarkness', JSON.stringify(this.darkness));
+
+      if(showSaveSuccess) {
+        HuungryUI.showDialog('GAME SAVED!', '', [{
+          text: 'OK',
+          btnClass: 'button-home', 
+          callback: HuungryUI.hideDialog}]);
+      }
+      
+  }
