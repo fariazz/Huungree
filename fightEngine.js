@@ -157,7 +157,7 @@ huungry.FightEngine.prototype.exitFight = function() {
             defense: this.playerUnits[i].defense,
             canShoot: this.playerUnits[i].canShoot,
             life: this.playerUnits[i].life,
-            movements: this.playerUnits[i].movements,
+            movements: this.playerUnits[i].movements
         });
     }
     
