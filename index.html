@@ -21,13 +21,14 @@
         </div>
     </div>
     <script>
-        function initApplication() {
+        document.addEventListener("deviceready", function() {
             if(navigator.splashscreen) {
                 navigator.splashscreen.hide();
             }            
             huungry.start();
-        }
+        },  false);
     </script>
+    <script type="text/javascript" src="phonegap.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="underscore-min.js"></script>
     <script type="text/javascript" src="ui.js"></script>

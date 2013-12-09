@@ -67,9 +67,9 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
     var effect = new lime.animation.FadeTo(0.2).setDuration(this.gameObj.movementDuration);                    
     this.runAction(effect);     
     var unit = this;
-    console.log(unit.name);
+    //console.log(unit.name);
     goog.events.listen(effect,lime.animation.Event.STOP,function(){
-        console.log(unit.name+' was attacked');
+        //console.log(unit.name+' was attacked');
         var effect2 = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
         unit.runAction(effect2);   
         goog.events.listen(effect2,lime.animation.Event.STOP,function(){
