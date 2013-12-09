@@ -195,7 +195,7 @@ HuungryUI.showArrangeUnitsWindow = function() {
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
                     <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + ' style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
         
         if(i == 4) {

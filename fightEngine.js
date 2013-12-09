@@ -385,8 +385,9 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
         var enemyUnitPos;
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
-            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/rangeattack-icon.png')
-                .setSize(tileSize,tileSize)
+            
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C')
+                .setSize(tileSize,tileSize).setOpacity(0.5)
                 .setPosition(enemyPos.x, enemyPos.y));
             
             (function(i, currentObj) {

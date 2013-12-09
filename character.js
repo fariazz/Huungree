@@ -146,56 +146,56 @@ huungry.Character.prototype.initGamepad = function() {
     this.attackTargets = [];
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 0,
         'dy': 1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 0
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 0
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': 1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': -1,
         'dy': -1
     });
 
     this.attackTargets.push({
-        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('assets/sword-icon.png')
+        'sprite': new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C').setOpacity(0.5)
             .setSize(this.gameObj.tileSize,this.gameObj.tileSize).setHidden(true),
         'dx': 1,
         'dy': 1
