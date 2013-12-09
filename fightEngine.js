@@ -156,7 +156,8 @@ huungry.FightEngine.prototype.exitFight = function() {
             attack: this.playerUnits[i].attack,
             defense: this.playerUnits[i].defense,
             canShoot: this.playerUnits[i].canShoot,
-            life: this.playerUnits[i].life
+            life: this.playerUnits[i].life,
+            movements: this.playerUnits[i].movements,
         });
     }
     
@@ -327,12 +328,14 @@ huungry.FightEngine.prototype.playTurn = function() {
 
                         var engine = this;
                         goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                            engine.remainingMoves--;
                             engine.playTurn();
                         })
                     }
                 }
                 //otherwise pass
                 else {
+                    this.remainingMoves = 0;
                     this.playTurn();
                 }
             }                        
@@ -409,7 +412,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
                         currentObj.fightLayer.removeChild(bullet);                        
                         unit.attackUnit(currentObj.enemyUnits[i]);  
-                        
+                        this.remainingMoves = 0;
                     })
                 });
             })(i, currentObj);
@@ -508,33 +511,37 @@ huungry.FightEngine.prototype.updateDead = function() {
  */
 huungry.FightEngine.prototype.updateNextMovingUnits = function() {
     
-    //reset previous unit if any
-    if(this.playerMoves === true) {
+    //reset previous unit if any, in case the movements run out
+    if(this.playerMoves === true && this.remainingMoves == 0) {
         this.playerUnits[this.currentPlayerIndex].readiness = 0;
     }
-    else if(this.playerMoves === false) {
+    else if(this.playerMoves === false && this.remainingMoves == 0) {
         this.enemyUnits[this.currentEnemyIndex].readiness = 0;
     }
     
-    //get the unit with the highest "readiness"    
-    var maxReady = -99;
-    for(var i=0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
-        this.playerUnits[i].readiness+= Math.random();
-        if(this.playerUnits[i].readiness > maxReady) {
-            this.currentPlayerIndex = i;
-            maxReady = this.playerUnits[i].readiness;
-            this.playerMoves = true;
-        }        
-    }
-    
-    for(i=0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
-        this.enemyUnits[i].readiness+= Math.random();
-        if(this.enemyUnits[i].readiness > maxReady) {
-            this.currentEnemyIndex = i;            
-            maxReady = this.enemyUnits[i].readiness;
-            this.playerMoves = false;
-        }        
-    }   
+    if(!this.remainingMoves) {
+        //get the unit with the highest "readiness"    
+        var maxReady = -99;
+        for(var i=0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
+            this.playerUnits[i].readiness+= Math.random();
+            if(this.playerUnits[i].readiness > maxReady) {
+                this.currentPlayerIndex = i;
+                maxReady = this.playerUnits[i].readiness;
+                this.playerMoves = true;
+                this.remainingMoves = this.playerUnits[i].movements;
+            }        
+        }
+        
+        for(i=0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
+            this.enemyUnits[i].readiness+= Math.random();
+            if(this.enemyUnits[i].readiness > maxReady) {
+                this.currentEnemyIndex = i;            
+                maxReady = this.enemyUnits[i].readiness;
+                this.playerMoves = false;
+                this.remainingMoves = this.enemyUnits[i].movements;
+            }        
+        }  
+    }    
 }
 
 /**
@@ -542,6 +549,7 @@ huungry.FightEngine.prototype.updateNextMovingUnits = function() {
  */
 huungry.FightEngine.prototype.pass = function() {
     this.hideTargets();
+    this.remainingMoves = 0;
     this.playTurn();
 }
 

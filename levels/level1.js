@@ -104,15 +104,15 @@ huungryGameMaps.level1.enemyArmies = [
         unitsSummary: [
             {
                 id: 'lion',
-                number: 2
+                number: 4
             },
             {
                 id: 'lion',
-                number: 3
+                number: 5
             },
             {
                 id: 'lion',
-                number: 3
+                number: 5
             },
         ]
     },
@@ -125,15 +125,15 @@ huungryGameMaps.level1.enemyArmies = [
         unitsSummary: [
             {
                 id: 'lion',
-                number: 1
+                number: 3
             },
             {
                 id: 'lion',
-                number: 1
+                number: 3
             },
             {
                 id: 'lion',
-                number: 1
+                number: 3
             },
             {
                 id: 'lion',
@@ -167,11 +167,11 @@ huungryGameMaps.level1.enemyArmies = [
             },    
             {
                 id: 'wolf',
-                number: 1
+                number: 7
             },     
             {
                 id: 'lion',
-                number: 2
+                number: 5
             },            
         ]
     },
@@ -192,12 +192,16 @@ huungryGameMaps.level1.enemyArmies = [
             },     
             {
                 id: 'snake',
-                number: 1
+                number: 6
+            },     
+            {
+                id: 'snake',
+                number: 3
             },     
             {
                 id: 'snake',
                 number: 1
-            },     
+            },      
             {
                 id: 'snake',
                 number: 1
@@ -217,15 +221,15 @@ huungryGameMaps.level1.enemyArmies = [
             },    
             {
                 id: 'snake',
-                number: 1
+                number: 4
             },
             {
                 id: 'snake',
-                number: 1
+                number: 5
             },
             {
                 id: 'snake',
-                number: 1
+                number: 5
             },    
             {
                 id: 'snake',
@@ -263,6 +267,10 @@ huungryGameMaps.level1.enemyArmies = [
             {
                 id: 'snake',
                 number: 2
+            },     
+            {
+                id: 'snake',
+                number: 7
             },                 
         ]
     }
@@ -281,9 +289,9 @@ huungryGameMaps.level1.enemyArmies = [
                 qty: 20
             },
             {                
-                id: 'archer',
-                price: 50,
-                qty: 5
+                id: 'wolf',
+                price: 45,
+                qty: 10
             }           
         ]
     }

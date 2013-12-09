@@ -7,6 +7,7 @@ var UnitTypes = [
             defense: 1,
             canShoot: true,
             gold: 5,
+            movements: 1,
         },
         {
             id: 'axeman',
@@ -15,7 +16,8 @@ var UnitTypes = [
             attack: 14,
             defense: 3,
             canShoot: false,
-            gold: 6
+            gold: 6,
+            movements: 1,
         },
         {
             id: 'tribalwarrior',
@@ -24,7 +26,8 @@ var UnitTypes = [
             attack: 13,
             defense: 2,
             canShoot: false,
-            gold: 8
+            gold: 8,
+            movements: 1,
         },
         {
             id: 'snake',
@@ -33,7 +36,8 @@ var UnitTypes = [
             attack: 14,
             defense: 1,
             canShoot: false,
-            gold: 2
+            gold: 2,
+            movements: 1,
         },
         {
             id: 'wolf',
@@ -42,7 +46,8 @@ var UnitTypes = [
             attack: 12,
             defense: 2,
             canShoot: false,
-            gold: 3
+            gold: 3,
+            movements: 2,
         },
         {
             id: 'peasant',
@@ -51,7 +56,8 @@ var UnitTypes = [
             attack: 10,
             defense: 1,
             canShoot: false,
-            gold: 9
+            gold: 9,
+            movements: 1,
         },
         {
             id: 'halfling',
@@ -60,7 +66,8 @@ var UnitTypes = [
             attack: 12,
             defense: 2,
             canShoot: false,
-            gold: 12
+            gold: 12,
+            movements: 1,
         },
         {
             id: 'dwarfaxe',
@@ -69,7 +76,8 @@ var UnitTypes = [
             attack: 15,
             defense: 5,
             canShoot: false,
-            gold: 15
+            gold: 15,
+            movements: 1,
         },
         {
             id: 'lion',
@@ -78,7 +86,8 @@ var UnitTypes = [
             attack: 15,
             defense: 4,
             canShoot: false,
-            gold: 4
+            gold: 4,
+            movements: 2,
         },
         {
             id: 'insectman',
@@ -87,7 +96,8 @@ var UnitTypes = [
             attack: 14,
             defense: 3,
             canShoot: true,
-            gold: 13
+            gold: 13,
+            movements: 2,
         },
         
     ];

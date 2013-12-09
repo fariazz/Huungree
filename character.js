@@ -242,7 +242,12 @@ huungry.Character.prototype.initGamepad = function() {
                 else {
                     character.setPosition(targetX, targetY);
                     character.playerMoved();
-                }                
+                }
+
+                if(character.fightEngine) {                    
+                    character.fightEngine.remainingMoves--;
+                    console.log(character.fightEngine.remainingMoves);
+                }           
             });
             
             //attack

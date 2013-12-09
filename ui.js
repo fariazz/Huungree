@@ -173,7 +173,8 @@ HuungryUI.showPlayerInfoWindow = function() {
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
                     <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
                     '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+ 
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
         
         if(i == 4) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
@@ -196,7 +197,8 @@ HuungryUI.showArrangeUnitsWindow = function() {
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
                     <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
                     '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+'</div>';  
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+  
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
         
         if(i == 4) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';

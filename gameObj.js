@@ -59,7 +59,8 @@ huungry.GameObj.prototype.cloneUnit = function(unit, number) {
             defense: unit.defense,
             canShoot: unit.canShoot,
             life: number,
-            gold: unit.gold
+            gold: unit.gold,
+            movements: unit.movements
     }
     return cloned;
 };

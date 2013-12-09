@@ -24,7 +24,7 @@ huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
     this.name = unitData.name;
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
-    
+    this.movements = unitData.movements;
     var color = isPlayer ? '#FFFFFF' : '#FF0000';
     
     this.lifeBar = new lime.Label().setPosition(this.gameObj.tileSize * 0.7,this.gameObj.tileSize * 0.6)
@@ -56,6 +56,7 @@ huungry.Unit.prototype.attackUnit = function(attackedUnit) {
     attackedUnit.life -= damage;
     //console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);
+    this.fightEngine.remainingMoves = 0;
 }
 
 /**
