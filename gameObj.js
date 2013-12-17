@@ -17,7 +17,10 @@ huungry.GameObj = function(document) {
     this.SHOP_TARGET= 8;
     this.CITY_TARGET= 9;
     this.QUEST_TARGET= 10;
-      
+    
+    //4/9 para 5 max, 6/9 para 7 max
+    this.powerNumFactor = 6/9;
+
     this.screenNumTilesX = this.screenWidth/this.tileSize;
     this.screenNumTilesY = this.screenHeight/this.tileSize;
     
@@ -74,7 +77,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     this.currentLevel = levelName;
 
     //game scene
-    this.gameScene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
+    this.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
     this.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.darknessLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.gameScene.appendChild(this.gameLayer);
@@ -132,7 +135,6 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     if(!darkness) {
       this.showQuest();
     }
-    
 };
 
 /**
@@ -340,12 +342,6 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     this.splashScreen.scene.appendChild(this.splashScreen.aboutBtn);
     this.splashScreen.scene.appendChild(this.splashScreen.loadBtn);
     
-    //level selection screen
-    this.levelSelectionScreen = new Object();
-    this.levelSelectionScreen.scene = new lime.Scene().setRenderer(lime.Renderer.CANVAS);
-    this.levelSelectionScreen.background = new lime.Sprite().setAnchorPoint(0,0).
-        setFill('assets/splashscreen.png').setSize(this.screenWidth, this.screenHeight);
-    
     var currentObj = this;
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
         currentObj.runLevel('level1');
@@ -430,9 +426,13 @@ huungry.GameObj.prototype.loadGame = function() {
   huungry.GameObj.prototype.levelCompleted = function() {
     var that = this;
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
-      [{text: 'OK', btnClass: 'button-home', callback: function() {
-          //that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
-          HuungryUI.showEndofGameDialog();
+      [{text: 'NEXT LEVEL', btnClass: 'button-home', callback: function() {
+          if(huungryGameMaps[that.currentLevel].nextLevel) {
+            that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
+          }
+          else {
+            HuungryUI.showEndofGameDialog();
+          }
       }}]);
   }
 

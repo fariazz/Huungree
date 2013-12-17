@@ -70,8 +70,8 @@ HuungryUI.showAboutDialog = function(gameObj) {
 /**
 * show dialog
 */
-HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
-    HuungryUI.hideDialog();
+HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) { 
+    HuungryUI.hideDialog();   
     HuungryUI.gameObj.director.setPaused(true);
     var height = $(window).height();
     $('.lime-director').css('top', height);
@@ -87,6 +87,7 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
             $('button[data-role="action-btn-'+i+'"]').bind('click ', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                HuungryUI.hideDialog();
                 actions[i].callback();
             });
         })(i);
@@ -340,6 +341,7 @@ show show window
 */
 HuungryUI.showShopWindow = function(shop, result) {
     HuungryUI.hideDialog();
+    console.log('showShopWindow');
     var html = '<div class="shop-products"><div>';  
     var length = shop.data.units.length;
     var unit;
@@ -350,9 +352,11 @@ HuungryUI.showShopWindow = function(shop, result) {
                     '<img src="assets/images/units/' + unit.image+'" /> \
                     <div class="unit-name">' + unit.name+'</div>'+ 
                     '<img width="10" src="assets/images/items/' + (unit.canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + unit.attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + unit.defense+
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + unit.defense+' '+
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + unit.movements+
                     '<div class="unit-left">'+shop.data.units[i].qty+' left</div></div>';                 
     }
+
     html += '</div></div>\
         <div class="shop-player-gold-coin"><img width="40" src="assets/images/backgrounds/gold.png" style="display:inline;" /></div>\
         <div class="shop-player-gold-number">'+HuungryUI.gameObj.player.gold+'</div>\

@@ -26,26 +26,6 @@ goog.require('lime.GlossyButton');
 
 // entrypoint
 huungry.start = function(){
-
-    this.levels = [
-        {
-            codeName: 'level1',
-            displayName: 'Level 1',
-            image: 'assets/images/items/scroll-fire.png',
-            introText: 'This is an introduction to level 1',
-            introImg: 'scroll-fire.png',
-            questText: 'Your goal in this level is to blablabablab'
-        },
-        {
-            codeName: 'level2',
-            displayName: 'Level 2',
-            image: 'assets/images/items/scroll-fire.png',
-            introText: 'This is an introduction to level 2',
-            introImg: 'scroll-fire.png',
-            questText: 'Your goal in this level is to blablabablab'
-        }
-        
-    ];
     
     var gameObj = new huungry.GameObj(document);
     gameObj.developmentMode = false;
@@ -57,16 +37,17 @@ huungry.start = function(){
         .setGameObj(gameObj);
         
     gameObj.player.maxNumUnits = 10;   
-    gameObj.player.gold = 60;   
+    gameObj.player.gold = 120;   
     gameObj.player.units = [
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 2),
         gameObj.cloneUnit(gameObj.unitTypes['archer'], 3),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 3),
+        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
         gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
-        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 6)
+        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 10)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];

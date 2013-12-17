@@ -278,19 +278,19 @@ huungryGameMaps.level1.enemyArmies = [
 
     huungryGameMaps.level1.shops = [
       {
-        x: 20,
-        y: 8,
+        x: 21,
+        y: 9,
         name: 'THE CRAB INN',
         image: 'house-1.png',
         units: [
             {
                 id: 'peasant',
-                price: 30,
+                price: 15,
                 qty: 20
             },
             {                
                 id: 'wolf',
-                price: 45,
+                price: 25,
                 qty: 10
             }           
         ]

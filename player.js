@@ -91,12 +91,7 @@ huungry.Player.prototype.collect = function(item, loading) {
     item.die();
 
     if(!loading) {
-        this.gameObj.controlsLayer.refreshInfo();
-
-        //game goal for now..
-        if(this.gameObj.numItems == 0) {
-            HuungryUI.showEndofGameDialog(this.gameObj);
-        }
+        this.gameObj.controlsLayer.refreshInfo();        
     }
     
 }

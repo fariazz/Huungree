@@ -179,6 +179,12 @@ huungry.FightEngine.prototype.exitFight = function() {
  * initiate armies
  */
 huungry.FightEngine.prototype.initArmies = function() {
+
+    this.armyStats = {
+        startPlayerPower: 0,
+        startEnemyPower: 0
+    };
+
     //init player army
     this.playerUnitPositions = new Array();
     
@@ -210,9 +216,11 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.readiness = Math.random();
             this.playerUnits.push(unit);
             this.fightLayer.appendChild(unit);
+            this.armyStats.startPlayerPower += unit.getPower();
             i++;
         }
     }
+    this.armyStats.startPlayerPower *= 1 + this.gameObj.powerNumFactor*(len-1);
 
     //init enemy army
     this.enemyUnitPositions = new Array();    
@@ -243,9 +251,13 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.readiness = Math.random();
             this.enemyUnits.push(unit);
             this.fightLayer.appendChild(unit);
+            this.armyStats.startEnemyPower += unit.getPower();
             i++;
         }            
     }
+    this.armyStats.startEnemyPower *= 1 + this.gameObj.powerNumFactor*(len-1);
+
+     console.log(this.armyStats);
 }
 
 /**
@@ -461,13 +473,20 @@ huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
  */
 huungry.FightEngine.prototype.updateDead = function() {
     
+    this.armyStats.endPlayerPower = 0;
+    this.armyStats.endEnemyPower = 0;
+
     var num_players = this.playerUnits.length;
     for(var i=num_players-1; i>= 0; i--) {
         if(this.playerUnits[i].life <= 0) {
             this.playerUnits[i].die();
             this.playerUnits.splice(i,1);
         }
+        else {
+            this.armyStats.endPlayerPower += this.playerUnits[i].getPower();
+        }
     }
+    this.armyStats.endPlayerPower *= 1 + this.gameObj.powerNumFactor*(num_players-1);
     
     var num_enemies = this.enemyUnits.length;
     for(i=num_enemies-1; i>= 0; i--) {
@@ -475,7 +494,11 @@ huungry.FightEngine.prototype.updateDead = function() {
             this.enemyUnits[i].die();
             this.enemyUnits.splice(i,1);
         }
+        else {
+            this.armyStats.endEnemyPower += this.enemyUnits[i].getPower();
+        }
     }
+    this.armyStats.endEnemyPower *= 1 + this.gameObj.powerNumFactor*(num_enemies-1);
     
     //check army defeated
     if(this.playerUnits.length == 0) {
@@ -484,7 +507,8 @@ huungry.FightEngine.prototype.updateDead = function() {
         HuungryUI.showDialog('GAME OVER', 
         'Your troops have been defeated, your treasures plundered by your enemies, and your name forgotten forever in History.',
         [{text: 'TRY AGAIN', btnClass: 'button-home', callback: function() {
-            HuungryUI.hideDialog();            
+            HuungryUI.hideDialog();    
+            fightScene.exitFight();            
             huungry.start();
         }}]
         );      
@@ -493,6 +517,11 @@ huungry.FightEngine.prototype.updateDead = function() {
     if(this.enemyUnits.length == 0) {
         var fightScene = this;
 
+var delta = fightScene.armyStats.endPlayerPower-fightScene.armyStats.startPlayerPower;
+var ratio = delta / fightScene.armyStats.startEnemyPower;
+console.log('delta power:'+delta);
+console.log('ratio:'+ratio);       
+
         var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
         HuungryUI.showDialog('YOU HAVE WON!',message
                     ,[{text: 'OK', btnClass: 'button-home', callback: function() {
@@ -500,7 +529,8 @@ huungry.FightEngine.prototype.updateDead = function() {
                         fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                         fightScene.enemyArmy.die();
                         fightScene.exitFight();    
-                        fightScene.gameObj.checkQuestCompletion();               
+                        fightScene.gameObj.checkQuestCompletion();        
+
                     }
                     }]);     
     }
