@@ -299,6 +299,13 @@ huungryGameMaps.level1.enemyArmies = [
 
   huungryGameMaps.level1.items = [
     {
+        x: 7,
+        y: 8,
+        name: 'Magic Shield',
+        image: 'shield.png',
+        type: 'ITEM.DEFENSE-SPELL'
+    },
+    {
         x: 20,
         y: 1,
         name: 'Gold',

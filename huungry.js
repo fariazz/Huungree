@@ -36,19 +36,19 @@ huungry.start = function(){
     gameObj.player = new huungry.Player().setFill('assets/images/units/knight.png')
         .setGameObj(gameObj);
         
-    gameObj.player.maxNumUnits = 10;   
+    gameObj.player.maxNumUnits = 8;   
     gameObj.player.gold = 120;   
     gameObj.player.units = [
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 3),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 3),
-        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
-        //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
-        //gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
-        //gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
-        //gameObj.cloneUnit(gameObj.unitTypes['wolf'], 10)
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 5),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 5),
+        //gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15)
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
+        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
+        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 10)
+        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];
     

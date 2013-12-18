@@ -52,7 +52,7 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
     HuungryUI.showDialog('THE JOURNEY IS NOT OVER', 
         'We are working on adding more content to the game. If you would like to get free access to more levels send us your feedback in the form below or contact us on Twitter @ZenvaTweets.'
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){
-            window.open('http://eepurl.com/vACtD', '_blank', 'location=yes');
+            window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
         }}]);
 };
 
@@ -63,7 +63,7 @@ HuungryUI.showAboutDialog = function(gameObj) {
     HuungryUI.showDialog('ABOUT HUUNGREE', 
         'Huungree is an RPG created by ZENVA (@ZenvaTweets). We have free and premium online courses to learn how to make apps and games.</br></br>If you\'d like to get FREE access to more levels LET US KNOW using the link below or Twitter.'
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){            
-            window.open('http://eepurl.com/vACtD', '_blank', 'location=yes');
+            window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
         }}]);
 };
 
@@ -177,7 +177,7 @@ HuungryUI.showPlayerInfoWindow = function() {
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+ 
                     '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
         
-        if(i == 4) {
+        if(i == 3) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
         }
     }
@@ -201,7 +201,7 @@ HuungryUI.showArrangeUnitsWindow = function() {
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+  
                     '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
         
-        if(i == 4) {
+        if(i == 3) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
         }
     }
@@ -252,6 +252,9 @@ HuungryUI.showItemsWindow = function() {
         switch(HuungryUI.gameObj.player.items[i].type) {
             case 'ITEM.ATTACK-SPELL':
                 info = "Use in battle to damage your enemies Damage: "+HuungryUI.gameObj.player.items[i].attack;
+            break;     
+            case 'ITEM.DEFENSE-SPELL':
+                info = "Use in battle to protect one of your troops";
             break;            
         }
 
@@ -285,7 +288,10 @@ HuungryUI.showBattleItemsWindow = function() {
         switch(HuungryUI.gameObj.player.items[i].type) {
             case 'ITEM.ATTACK-SPELL':
                 info = "Use in battle to damage your enemies. Damage: "+HuungryUI.gameObj.player.items[i].attack;
-            break;            
+            break;  
+            case 'ITEM.DEFENSE-SPELL':
+                info = "Use in battle to protect one of your troops";
+            break;             
         }
 
         html += '<div class="unit-cell" data-info="'+info+'" data-index="'+i+'">\

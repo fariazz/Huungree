@@ -56,7 +56,8 @@ huungry.FightEngine.prototype.init = function() {
     });
     
     
-    this.infoText = new lime.Label().setText('').setPosition(this.gameObj.tileSize*9.7, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+    this.DEFAULT_MSG_POS = {x: this.gameObj.tileSize*8.5, y: this.gameObj.screenHeight - this.gameObj.tileSize/2};
+    this.infoText = new lime.Label().setText('').setPosition(this.gameObj.tileSize*8.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     this.fightUILayer.appendChild(this.infoText);
     
@@ -185,8 +186,8 @@ huungry.FightEngine.prototype.exitFight = function() {
 huungry.FightEngine.prototype.initArmies = function() {
 
     this.armyStats = {
-        startPlayerPower: 0,
-        startEnemyPower: 0
+        ps: 0,
+        es: 0
     };
 
     //init player army
@@ -220,11 +221,11 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.readiness = Math.random();
             this.playerUnits.push(unit);
             this.fightLayer.appendChild(unit);
-            this.armyStats.startPlayerPower += unit.getPower();
+            this.armyStats.ps += unit.getPower();
             i++;
         }
     }
-    this.armyStats.startPlayerPower *= 1 + this.gameObj.powerNumFactor*(len-1);
+    this.armyStats.ps *= 1 + this.gameObj.powerNumFactor*(len-1);
 
     //init enemy army
     this.enemyUnitPositions = new Array();    
@@ -255,11 +256,11 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.readiness = Math.random();
             this.enemyUnits.push(unit);
             this.fightLayer.appendChild(unit);
-            this.armyStats.startEnemyPower += unit.getPower();
+            this.armyStats.es += unit.getPower();
             i++;
         }            
     }
-    this.armyStats.startEnemyPower *= 1 + this.gameObj.powerNumFactor*(len-1);
+    this.armyStats.es *= 1 + this.gameObj.powerNumFactor*(len-1);
 
      console.log(this.armyStats);
 }
@@ -315,7 +316,9 @@ huungry.FightEngine.prototype.playTurn = function() {
                 var currentObj = this;
                 goog.events.listen(movement,lime.animation.Event.STOP,function(){
                     layer.removeChild(bullet);
-                    enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
+                    if(Math.random() < currentObj.gameObj.accuracyProbability) {
+                        enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
+                    }
                 })
             }
             
@@ -433,7 +436,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
                         }  
                         else {
                             unit.endMove();
-                            currentObj.showBrief('missed!', currentObj.enemyUnits[i].getCenter());
+                            currentObj.showBrief('missed!', unit.getCenter());
                         }               
                         
                         this.remainingMoves = 0;
@@ -450,12 +453,12 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
  * remove range targets from layer
  */
  huungry.FightEngine.prototype.clearRangeTargets = function() {
-     if(this.rangeTargets.length) {
-        for(var i=0, arrayLen = this.enemyUnits.length; i < arrayLen; i++) {    
-            this.rangeTargets[i].setHidden(true);
-            this.fightLayer.removeChild(this.rangeTargets[i]);
-        }
-     }
+    var len = this.rangeTargets.length, i;
+    for(i=0, arrayLen = len; i < arrayLen; i++) {    
+        this.rangeTargets[i].setHidden(true);
+        this.fightLayer.removeChild(this.rangeTargets[i]);
+    }
+     
  } 
 
 
@@ -485,8 +488,8 @@ huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
  */
 huungry.FightEngine.prototype.updateDead = function() {
     
-    this.armyStats.endPlayerPower = 0;
-    this.armyStats.endEnemyPower = 0;
+    this.armyStats.pe = 0;
+    this.armyStats.ee = 0;
 
     var num_players = this.playerUnits.length;
     for(var i=num_players-1; i>= 0; i--) {
@@ -495,10 +498,10 @@ huungry.FightEngine.prototype.updateDead = function() {
             this.playerUnits.splice(i,1);
         }
         else {
-            this.armyStats.endPlayerPower += this.playerUnits[i].getPower();
+            this.armyStats.pe += this.playerUnits[i].getPower();
         }
     }
-    this.armyStats.endPlayerPower *= 1 + this.gameObj.powerNumFactor*(num_players-1);
+    this.armyStats.pe *= 1 + this.gameObj.powerNumFactor*(num_players-1);
     
     var num_enemies = this.enemyUnits.length;
     for(i=num_enemies-1; i>= 0; i--) {
@@ -507,14 +510,15 @@ huungry.FightEngine.prototype.updateDead = function() {
             this.enemyUnits.splice(i,1);
         }
         else {
-            this.armyStats.endEnemyPower += this.enemyUnits[i].getPower();
+            this.armyStats.ee += this.enemyUnits[i].getPower();
         }
     }
-    this.armyStats.endEnemyPower *= 1 + this.gameObj.powerNumFactor*(num_enemies-1);
+    this.armyStats.ee *= 1 + this.gameObj.powerNumFactor*(num_enemies-1);
     
     //check army defeated
     if(this.playerUnits.length == 0) {
         var fightScene = this;
+        fightScene.sendStats();
         fightScene.exitFight();
         HuungryUI.showDialog('GAME OVER', 
         'Your troops have been defeated, your treasures plundered by your enemies, and your name forgotten forever in History.',
@@ -528,11 +532,11 @@ huungry.FightEngine.prototype.updateDead = function() {
     
     if(this.enemyUnits.length == 0) {
         var fightScene = this;
-
-var delta = fightScene.armyStats.endPlayerPower-fightScene.armyStats.startPlayerPower;
-var ratio = delta / fightScene.armyStats.startEnemyPower;
-console.log('delta power:'+delta);
-console.log('ratio:'+ratio);       
+        fightScene.sendStats();
+        var delta = fightScene.armyStats.pe-fightScene.armyStats.ps;
+        var ratio = delta / fightScene.armyStats.es;
+        console.log('delta power:'+delta);
+        console.log('ratio:'+ratio);       
 
         var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
         HuungryUI.showDialog('YOU HAVE WON!',message
@@ -648,7 +652,7 @@ huungry.FightEngine.prototype.showItemTargets = function() {
         var enemyPos;
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
-            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/'+item.image)
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/items/'+item.image)
                 .setOpacity(0.5)
                 .setSize(tileSize,tileSize)
                 .setPosition(enemyPos.x, enemyPos.y));
@@ -662,6 +666,29 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                 
             this.fightLayer.appendChild(this.rangeTargets[i]);
         }
+        this.showBrief('pick an enemy', this.DEFAULT_MSG_POS);
+    }
+    else if(item.type == 'ITEM.DEFENSE-SPELL') {
+        this.rangeTargets = new Array();
+        var unitPos;
+        for(var i = 0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
+            unitPos = this.playerUnits[i].getPosition();
+            this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/items/'+item.image)
+                .setOpacity(0.5)
+                .setSize(tileSize,tileSize)
+                .setPosition(unitPos.x, unitPos.y));
+            
+            (function(i, currentObj) {
+                goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
+                    e.preventDefault();                         
+                    item.protectUnit(currentObj.playerUnits[i]);  
+                    currentObj.showBrief('unit protected!', currentObj.DEFAULT_MSG_POS);
+                });
+            })(i, currentObj);
+                
+            this.fightLayer.appendChild(this.rangeTargets[i]);
+        }
+        this.showBrief('pick a unit', this.DEFAULT_MSG_POS);
     }
 };
 
@@ -686,5 +713,15 @@ huungry.FightEngine.prototype.showBrief = function(text, position) {
     var that = this;
     setTimeout(function() {
         that.infoText.setText('');
-    }, 500);
+    }, 1000);
+}
+
+/**
+* send stats to server
+*/
+huungry.FightEngine.prototype.sendStats = function() {
+    var that = this;
+    $.ajax(this.gameObj.API_BATTLE_URL, {
+        data: that.armyStats
+    });
 }

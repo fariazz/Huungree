@@ -64,6 +64,17 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
 };
 
 /**
+* use an item to protect a unit
+*
+ * @param huungry.Unit attackedUnit
+ */
+huungry.Item.prototype.protectUnit = function(attackedUnit) {
+    attackedUnit.defenseSpell(2);
+    this.gameObj.fightEngine.hideItemTargets();
+};
+
+
+/**
  * get data
  */
 huungry.Item.prototype.getData = function() {

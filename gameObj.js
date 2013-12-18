@@ -18,6 +18,9 @@ huungry.GameObj = function(document) {
     this.CITY_TARGET= 9;
     this.QUEST_TARGET= 10;
     
+    //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
+    this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
+
     //4/9 para 5 max, 6/9 para 7 max
     this.powerNumFactor = 6/9;
 
@@ -28,20 +31,20 @@ huungry.GameObj = function(document) {
     this.screenNumTilesY = this.screenHeight/this.tileSize;
     
     //area in fight scene where units appear
-    this.fightScenePlayerStartX = 3;
-    this.fightScenePlayerEndX = 5;
+    this.fightScenePlayerStartX = 2;
+    this.fightScenePlayerEndX = 4;
     this.fightScenePlayerStartY = 0;
     this.fightScenePlayerEndY = this.screenNumTilesY-2;
     
-    this.fightSceneEnemyStartX = this.screenNumTilesX-4;
-    this.fightSceneEnemyEndX = this.screenNumTilesX-2;
+    this.fightSceneEnemyStartX = this.screenNumTilesX-5;
+    this.fightSceneEnemyEndX = this.screenNumTilesX-3;
     this.fightSceneEnemyStartY = 0;
     this.fightSceneEnemyEndY = this.screenNumTilesY-2;
     
     this.maxRandPercentage = 0.15;
     
     //probability that a range attack unit shoots
-    this.shootProbability = 0.85;
+    this.shootProbability = 0.80;
     
     //animation
     this.animationOn = true;

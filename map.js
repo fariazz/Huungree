@@ -95,13 +95,13 @@ huungry.Map.prototype.setBackground = function(background) {
 huungry.Map.prototype.init = function() {
     this.gameObj.gameLayer.appendChild(this.backgroundSprite);
 
-//    var map = this;
-//    goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
-//        e.event.stopPropagation();
-//
-//        cell = map.getColRowFromXY(e.position.x, e.position.y);
-//        console.log('blocked cell:'+map.blockedCells[cell.row][cell.col]);
-//    });
+   var map = this;
+   goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
+       e.event.stopPropagation();
+
+       cell = map.getColRowFromXY(e.position.x, e.position.y);
+       console.log(cell);
+   });
 }
 
 /**

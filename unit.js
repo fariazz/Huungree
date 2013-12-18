@@ -52,7 +52,17 @@ huungry.Unit.prototype.playerMoved = function() {
  * @param huungry.Unit attackedUnit
  */
 huungry.Unit.prototype.attackUnit = function(attackedUnit) {
-    var damage = this.attack*0.06 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
+    var damage = 0;
+    if(!attackedUnit.numDefenseHits) {
+        damage = this.attack*0.06 + Math.max(0, this.attack - attackedUnit.defense)*(this.gameObj.maxRandPercentage + Math.random()*0.1);
+    }
+    else {
+        attackedUnit.numDefenseHits--;
+        if(attackedUnit.numDefenseHits == 0) {
+            attackedUnit.removeChild(attackedUnit.effectSprite);
+            this.fightEngine.showBrief('defense spell is up!', attackedUnit.getCenter());
+        }
+    }
     attackedUnit.life -= damage;
     //console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);
@@ -110,4 +120,16 @@ huungry.Unit.prototype.getPower = function() {
     var alfa_shoot = this.canShoot ? 3 : 1;
     var alfa_mov = 1 + (this.movements-1) * 0.5;
     return this.life * this.attack * alfa_shoot * alfa_mov;
+}
+
+/**
+* set defense spell
+* @param int numDefenseHits
+*/
+huungry.Unit.prototype.defenseSpell = function(numDefenseHits) {
+    this.numDefenseHits = numDefenseHits;
+    this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
+        .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('#11E38C').setOpacity(0.3);
+    this.appendChild(this.effectSprite);
 }
