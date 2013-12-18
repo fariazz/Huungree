@@ -56,7 +56,7 @@ huungry.Player.prototype.playerMoved = function() {
                         message = "Use in battle to damage your enemies. Damage: "+this.map.elements[i].attack;
                         break;       
                     case 'ITEM.DEFENSE-SPELL':
-                        message = "Use in battle to protect one of your troops";
+                        message = "Use in battle to protect a unit against "+this.map.elements[i].numHits+" enemy hits";
                         break;        
                 }
                 

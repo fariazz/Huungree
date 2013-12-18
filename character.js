@@ -246,7 +246,7 @@ huungry.Character.prototype.initGamepad = function() {
 
                 if(character.fightEngine) {                    
                     character.fightEngine.remainingMoves--;
-                    console.log(character.fightEngine.remainingMoves);
+                    //console.log(character.fightEngine.remainingMoves);
                 }           
             });
             

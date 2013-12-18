@@ -254,7 +254,7 @@ HuungryUI.showItemsWindow = function() {
                 info = "Use in battle to damage your enemies Damage: "+HuungryUI.gameObj.player.items[i].attack;
             break;     
             case 'ITEM.DEFENSE-SPELL':
-                info = "Use in battle to protect one of your troops";
+                info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
             break;            
         }
 
@@ -290,7 +290,7 @@ HuungryUI.showBattleItemsWindow = function() {
                 info = "Use in battle to damage your enemies. Damage: "+HuungryUI.gameObj.player.items[i].attack;
             break;  
             case 'ITEM.DEFENSE-SPELL':
-                info = "Use in battle to protect one of your troops";
+                info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
             break;             
         }
 

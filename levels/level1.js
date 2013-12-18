@@ -303,7 +303,8 @@ huungryGameMaps.level1.enemyArmies = [
         y: 8,
         name: 'Magic Shield',
         image: 'shield.png',
-        type: 'ITEM.DEFENSE-SPELL'
+        type: 'ITEM.DEFENSE-SPELL',
+        numHits: 3
     },
     {
         x: 20,

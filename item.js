@@ -30,6 +30,7 @@ huungry.Item.prototype.setData = function(data) {
     this.type = data.type;        
     this.gold = data.gold;
     this.attack = data.attack;
+    this.numHits = data.numHits;
     
     return this;
 }
@@ -44,7 +45,8 @@ huungry.Item.prototype.clone = function() {
             image: this.image,
             type: this.type,            
             gold: this.gold,            
-            attack: this.attack            
+            attack: this.attack,
+            numHits: this.numHits          
     };
     return cloned.setData(props).setGameObj(this.gameObj);
 };
@@ -69,7 +71,7 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
  * @param huungry.Unit attackedUnit
  */
 huungry.Item.prototype.protectUnit = function(attackedUnit) {
-    attackedUnit.defenseSpell(2);
+    attackedUnit.defenseSpell(this.numHits);
     this.gameObj.fightEngine.hideItemTargets();
 };
 
@@ -85,7 +87,8 @@ huungry.Item.prototype.getData = function() {
         gold: this.gold,
         attack: this.attack,
         x: this.getPosition().x,
-        y: this.getPosition().y
+        y: this.getPosition().y,
+        numHits: this.numHits
     };
 };
 
@@ -96,11 +99,12 @@ huungry.Item.prototype.die = function() {
     goog.base(this, 'die');
     var index;
     _.each(this.gameObj.mapItems, function(value, key) {
+        console.log(value.id);
         if(value.id == this.id) {
             index = key;
         }
     }, this);
-    if(index) {
+    if(index !== undefined) {
         this.gameObj.mapItems.splice(index, 1);
     }
 };
