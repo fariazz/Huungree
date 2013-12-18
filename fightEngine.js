@@ -56,11 +56,15 @@ huungry.FightEngine.prototype.init = function() {
     });
     
     
-    var passButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
-        .setPosition(2*this.gameObj.tileSize, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+    this.infoText = new lime.Label().setText('').setPosition(this.gameObj.tileSize*9.7, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+        .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
+    this.fightUILayer.appendChild(this.infoText);
+    
+    var passButton = new lime.Sprite().setSize(this.gameObj.tileSize*3*3/4, this.gameObj.tileSize*3/4)
+        .setPosition(1.5*this.gameObj.tileSize, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
     var passButtonText = new lime.Label().setText('PASS').setPosition(0,0)
-        .setFontColor('#000000').setFontSize(16);
+        .setFontColor('#000000').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     passButton.appendChild(passButtonText);
 
     this.fightUILayer.appendChild(passButton);
@@ -110,11 +114,11 @@ huungry.FightEngine.prototype.init = function() {
         });
     }
     
-    var itemsButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
-        .setPosition(this.gameObj.tileSize*5.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+    var itemsButton = new lime.Sprite().setSize(this.gameObj.tileSize*3*3/4, this.gameObj.tileSize*3/4)
+        .setPosition(this.gameObj.tileSize*4.2, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
     this.itemsButtonText = new lime.Label().setText('ITEMS').setPosition(0,0)
-        .setFontColor('#000000').setFontSize(16);
+        .setFontColor('#000000').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     itemsButton.appendChild(this.itemsButtonText);
 
     this.fightUILayer.appendChild(itemsButton);
@@ -422,8 +426,16 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
                     bullet.runAction(movement); 
 
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                        currentObj.fightLayer.removeChild(bullet);                        
-                        unit.attackUnit(currentObj.enemyUnits[i]);  
+                        currentObj.fightLayer.removeChild(bullet);    
+
+                        if(Math.random() < currentObj.gameObj.accuracyProbability) {
+                            unit.attackUnit(currentObj.enemyUnits[i]);  
+                        }  
+                        else {
+                            unit.endMove();
+                            currentObj.showBrief('missed!', currentObj.enemyUnits[i].getCenter());
+                        }               
+                        
                         this.remainingMoves = 0;
                     })
                 });
@@ -664,3 +676,15 @@ huungry.FightEngine.prototype.hideItemTargets = function() {
     this.showCurrentGamepad();
     
 };
+
+/**
+* show something briefly in the info area
+*/
+huungry.FightEngine.prototype.showBrief = function(text, position) {
+    this.infoText.setText(text);
+    this.infoText.setPosition(position);
+    var that = this;
+    setTimeout(function() {
+        that.infoText.setText('');
+    }, 500);
+}

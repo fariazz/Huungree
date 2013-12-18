@@ -21,6 +21,9 @@ huungry.GameObj = function(document) {
     //4/9 para 5 max, 6/9 para 7 max
     this.powerNumFactor = 6/9;
 
+    //probability to reach target for range attack units
+    this.accuracyProbability = 0.65;
+
     this.screenNumTilesX = this.screenWidth/this.tileSize;
     this.screenNumTilesY = this.screenHeight/this.tileSize;
     

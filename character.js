@@ -336,3 +336,10 @@ huungry.Character.prototype.setElementType = function(elementType) {
     this.elementType = elementType;
     return this;
 }
+
+/**
+get the center of the unit*/
+huungry.Character.prototype.getCenter = function() {
+    var pos = this.getPosition();
+    return {x: pos.x + this.gameObj.tileSize/2, y: pos.y + this.gameObj.tileSize/2}
+}

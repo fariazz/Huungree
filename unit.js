@@ -74,24 +74,27 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
         var effect2 = new lime.animation.FadeTo(1).setDuration(unit.gameObj.movementDuration);                    
         unit.runAction(effect2);   
         goog.events.listen(effect2,lime.animation.Event.STOP,function(){
-            //console.log(unit);
-            //console.log(unit.fightEngine);
-            if(unit.fightEngine.playerMoves) {
-                unit.refreshLifeBar();   
-                if(!attacker.isItem) {
-                    attacker.playerMoved(); 
-                }
-                else {
-                    unit.fightEngine.hideItemTargets();
-                }
-            }    
-            else {
-                unit.refreshLifeBar();
-                unit.fightEngine.playTurn();
-            }            
+            unit.refreshLifeBar(); 
+            attacker.endMove();            
         });
     })
-}
+};
+
+huungry.Unit.prototype.endMove = function(attacker) {
+    if(this.fightEngine.playerMoves) {
+        if(!this.isItem) {
+            this.fightEngine.remainingMoves = 0;
+            this.playerMoved(); 
+        }
+        else {
+            this.fightEngine.hideItemTargets();
+        }
+    }    
+    else {
+        this.fightEngine.remainingMoves = 0;
+        this.fightEngine.playTurn();
+    }            
+};
 
 /**
  * udpate life bar
