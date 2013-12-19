@@ -61,7 +61,7 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
     attackedUnit.life -= damage;
     //console.log(attackedUnit.name+' received a damage of '+damage);
     attackedUnit.showBeingAttacked(this);
-    this.gameObj.player.items.splice(attackedUnit.fightEngine.selectedItem,1);
+    this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
     //console.log(this.gameObj.player.items);
 };
 
@@ -73,6 +73,7 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
 huungry.Item.prototype.protectUnit = function(attackedUnit) {
     attackedUnit.defenseSpell(this.numHits);
     this.gameObj.fightEngine.hideItemTargets();
+    this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
 };
 
 
@@ -99,7 +100,6 @@ huungry.Item.prototype.die = function() {
     goog.base(this, 'die');
     var index;
     _.each(this.gameObj.mapItems, function(value, key) {
-        console.log(value.id);
         if(value.id == this.id) {
             index = key;
         }

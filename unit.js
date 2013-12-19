@@ -85,7 +85,13 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
         unit.runAction(effect2);   
         goog.events.listen(effect2,lime.animation.Event.STOP,function(){
             unit.refreshLifeBar(); 
-            attacker.endMove();            
+
+            if(!attacker.isItem) {
+                attacker.endMove();   
+            }
+            else {
+                unit.fightEngine.hideItemTargets();
+            }                     
         });
     })
 };

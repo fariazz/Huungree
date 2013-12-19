@@ -525,7 +525,7 @@ huungry.FightEngine.prototype.updateDead = function() {
         [{text: 'TRY AGAIN', btnClass: 'button-home', callback: function() {
             HuungryUI.hideDialog();    
             fightScene.exitFight();            
-            huungry.start();
+            window.location = '';
         }}]
         );      
     }

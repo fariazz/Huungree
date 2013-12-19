@@ -4,6 +4,9 @@ goog.provide('huungry.GameObj');
  * GameObj
  */
 huungry.GameObj = function(document) {
+
+    this.GAME_VERSION = '0.1.7';
+
     this.screenWidth = 480;
     this.screenHeight= 320;
     this.tileSize= 40;
@@ -20,6 +23,7 @@ huungry.GameObj = function(document) {
     
     //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
     this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
+    this.API_EVENT_URL = 'http://zenva.com/huungreeEvent';
 
     //4/9 para 5 max, 6/9 para 7 max
     this.powerNumFactor = 6/9;
@@ -49,6 +53,9 @@ huungry.GameObj = function(document) {
     //animation
     this.animationOn = true;
     this.movementDuration = 0.2;    
+
+    //register event
+    this.sendEvent('GAME_INIT', 1, null);
 
     this.director = new lime.Director(document.body, this.screenWidth, this.screenHeight);
     this.director.makeMobileWebAppCapable();    
@@ -430,6 +437,10 @@ huungry.GameObj.prototype.loadGame = function() {
   move to the next level
   */
   huungry.GameObj.prototype.levelCompleted = function() {
+
+    //save event
+    this.sendEvent('LEVEL_COMPLETE', this.currentLevel, this.player.getPower());
+
     var that = this;
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
       [{text: 'NEXT LEVEL', btnClass: 'button-home', callback: function() {
@@ -500,3 +511,25 @@ huungry.GameObj.prototype.loadGame = function() {
       }
       
   }
+
+  /**
+* send stats to server
+*/
+huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
+    var that = this;
+
+    if(window.device) {
+        $.ajax(this.API_EVENT_URL, {
+          data: {
+            platform: window.device.platform,
+            platform_version: window.device.version,
+            device_id: window.device.uuid,
+            key: key,
+            value: value,
+            game_version: that.GAME_VERSION,
+            strength: strength
+          }
+      });
+    }
+    
+}

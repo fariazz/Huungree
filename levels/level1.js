@@ -383,7 +383,16 @@ huungryGameMaps.level1.quest = {
         a seasoned privateer who is in the Mystical City of Crisal, far inland in Tamaca.',
 
         'You\'ll need a few nights in Crab Bay to prepare your operations. \
-        <div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill all the wild animals so you can set your camp in peace.</li><ul>'
+        <div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill all the wild animals so you can set your camp in peace.\
+        <div class="quest-icons-container"><img src="assets/images/units/snake.png" width="20" /> \
+        <img src="assets/images/units/snake.png" width="20" /> \
+        <img src="assets/images/units/snake.png" width="20" /> \
+        <img src="assets/images/units/snake.png" width="20" /> \
+        <img src="assets/images/units/wolf.png" width="20" /> \
+        <img src="assets/images/units/lion.png" width="20" /> \
+        <img src="assets/images/units/lion.png" width="20" /> \
+        <img src="assets/images/units/lion.png" width="20" /> \
+        </div></li><ul>'
     ],
     goals: [{type: 'QUEST-KILL'}]
 };

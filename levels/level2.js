@@ -827,7 +827,12 @@ huungryGameMaps.level2.quest = {
      Taking over these settlements can provide good bounty, supplies and more men, \
      but be prepared as they might have some protection.',
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 4 Ghornian farmer settlers in the region.</li><ul>'
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 4 Ghornian farmer settlers in the region. \
+        <img src="assets/images/units/peasant.png" width="20" /> \
+        <img src="assets/images/units/peasant.png" width="20" /> \
+        <img src="assets/images/units/peasant.png" width="20" /> \
+        <img src="assets/images/units/peasant.png" width="20" /> \
+        </div></li><ul>'
     ],
     goals: [{type: 'QUEST-KILL'}]
 };

@@ -28,7 +28,6 @@ huungry.Player.prototype.init = function() {
  * show gamepad after movement
  */
 huungry.Player.prototype.playerMoved = function() {
-        
     this.refreshMapPos();
     this.toggleGamepad(true);
     
@@ -109,7 +108,7 @@ huungry.Player.prototype.buy = function(unitType, price, qty) {
     this.gold -= price;
     this.units.push(this.gameObj.cloneUnit(unitType, qty));
     this.gameObj.controlsLayer.refreshInfo();
-}
+};
 
 /**
  * buy a unit
@@ -121,5 +120,20 @@ huungry.Player.prototype.buyAdd = function(unit, price, qty) {
     this.gold -= price;
     unit.life += qty;
     this.gameObj.controlsLayer.refreshInfo();
-}
+};
 
+/**
+* get army strengy
+*/
+huungry.Player.prototype.getPower = function() {
+    var power = 0;
+    var unit;
+    _.each(this.units, function(value, key) {
+        unit = new huungry.Unit()
+                .setGameObj(this.gameObj)
+                .setUnitData(this.units[key],true);
+        power += unit.getPower();
+    }, this);
+    power *= 1 + this.gameObj.powerNumFactor*(this.units.length-1);
+    return power;
+};
