@@ -26,9 +26,12 @@ goog.require('lime.GlossyButton');
 
 // entrypoint
 huungry.start = function(){
-    
     var gameObj = new huungry.GameObj(document);
-    gameObj.developmentMode = false;
+
+    //intro music
+    gameObj.playSound('barde-intro.mp3');
+
+    gameObj.developmentMode = true;
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
     

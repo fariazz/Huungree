@@ -97,27 +97,6 @@ huungryGameMaps.level1.tiledData = {
 huungryGameMaps.level1.enemyArmies = [
     {
         isQuestGoal: true,
-        x: 15,
-        y: 3,
-        image: 'lion.png',
-        background: 'sand_background.png',
-        unitsSummary: [
-            {
-                id: 'lion',
-                number: 4
-            },
-            {
-                id: 'lion',
-                number: 5
-            },
-            {
-                id: 'lion',
-                number: 5
-            },
-        ]
-    },
-    {
-        isQuestGoal: true,
         x: 21,
         y: 3,
         image: 'lion.png',

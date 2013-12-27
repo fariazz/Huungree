@@ -394,6 +394,7 @@ HuungryUI.showSequence = function(title, screens) {
                     HuungryUI.showSequence(title, screens.slice(1, screens.length));
                 }
                 else {
+                    HuungryUI.gameObj.stopSound();
                     HuungryUI.hideDialog();
                 }
             }}]);

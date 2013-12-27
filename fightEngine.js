@@ -319,6 +319,10 @@ huungry.FightEngine.prototype.playTurn = function() {
                     if(Math.random() < currentObj.gameObj.accuracyProbability) {
                         enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
                     }
+                    else {
+                        enemy.endMove();   
+                        currentObj.showBrief('missed!', enemy.getCenter());
+                    }
                 })
             }
             
@@ -429,8 +433,7 @@ huungry.FightEngine.prototype.showCurrentGamepad = function() {
                     bullet.runAction(movement); 
 
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                        currentObj.fightLayer.removeChild(bullet);    
-
+                        currentObj.fightLayer.removeChild(bullet);  
                         if(Math.random() < currentObj.gameObj.accuracyProbability) {
                             unit.attackUnit(currentObj.enemyUnits[i]);  
                         }  
@@ -721,7 +724,25 @@ huungry.FightEngine.prototype.showBrief = function(text, position) {
 */
 huungry.FightEngine.prototype.sendStats = function() {
     var that = this;
+    var platform = 'desktop', 
+    platform_version='', 
+    device_id='';
+
+    if(window.device) {
+        platform = window.device.platform;
+        platform_version = window.device.version;
+        device_id = window.device.uuid;
+    }
+
     $.ajax(this.gameObj.API_BATTLE_URL, {
-        data: that.armyStats
+        data: _.extend(that.armyStats, {
+            game_version: that.gameObj.GAME_VERSION,
+            platform: platform,
+            platform_version: platform_version,
+            device_id: device_id,
+            level: that.gameObj.currentLevel,
+            gold: that.gameObj.player.gold,
+            currTimestamp: (new Date).getTime()
+        })
     });
 }

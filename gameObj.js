@@ -5,7 +5,7 @@ goog.provide('huungry.GameObj');
  */
 huungry.GameObj = function(document) {
 
-    this.GAME_VERSION = '0.1.7';
+    this.GAME_VERSION = '0.1.8';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -24,6 +24,10 @@ huungry.GameObj = function(document) {
     //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
     this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
     this.API_EVENT_URL = 'http://zenva.com/huungreeEvent';
+    this.unsavedMinutes = 0;
+    this.sessionId = null;
+    this.timeInCurrentLevel = 0;
+    this.notifyInterval = null;
 
     //4/9 para 5 max, 6/9 para 7 max
     this.powerNumFactor = 6/9;
@@ -56,6 +60,7 @@ huungry.GameObj = function(document) {
 
     //register event
     this.sendEvent('GAME_INIT', 1, null);
+    this.notifyServer();
 
     this.director = new lime.Director(document.body, this.screenWidth, this.screenHeight);
     this.director.makeMobileWebAppCapable();    
@@ -356,10 +361,11 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     this.splashScreen.scene.appendChild(this.splashScreen.loadBtn);
     
     var currentObj = this;
-    goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {        
+    goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {              
         currentObj.runLevel('level1');
     });
-    goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {        
+    goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
+        currentObj.stopSound();
         currentObj.loadGame();
     });
     goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
@@ -374,6 +380,20 @@ load a game
 */
 huungry.GameObj.prototype.loadGame = function() {
   if(localStorage.getItem('currentLevel')) {
+
+    //check if the current game version is compatible with the saved one
+    var savedVersion = localStorage.getItem('gameVersion');
+
+    if(this.GAME_VERSION != savedVersion) {
+      HuungryUI.showDialog(
+        'OOPS!', 
+        'The new game version is not compatible with the previous saved game, so you will have to start from scratch. Sorry about the inconvenience and thank you so much for your support!', 
+        [{text: 'OK', btnClass: 'button-home', callback: function(){}}]
+      );
+      return;
+    }
+
+
     var playerPos = JSON.parse(localStorage.getItem('currentLocation'));
     var darkness = JSON.parse(localStorage.getItem('currentDarkness'));
     this.player.gold = parseInt(localStorage.getItem('currentGold'));
@@ -392,6 +412,10 @@ huungry.GameObj.prototype.loadGame = function() {
     var mapItems = JSON.parse(localStorage.getItem('mapItems'));
     var enemyArmies = JSON.parse(localStorage.getItem('enemyArmies'));
     var mapShops = JSON.parse(localStorage.getItem('mapShops'));
+
+    //load analytics
+    //console.log('time in level:'+localStorage.getItem('timeInCurrentLevel'));
+    this.timeInCurrentLevel = parseFloat(localStorage.getItem('timeInCurrentLevel'));
 
     this.runLevel(localStorage.getItem('currentLevel'), playerPos, darkness, mapItems, enemyArmies, mapShops);
   }   
@@ -440,6 +464,9 @@ huungry.GameObj.prototype.loadGame = function() {
 
     //save event
     this.sendEvent('LEVEL_COMPLETE', this.currentLevel, this.player.getPower());
+
+    //reset level timing
+    this.timeInCurrentLevel = 0;
 
     var that = this;
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
@@ -503,20 +530,27 @@ huungry.GameObj.prototype.loadGame = function() {
       //save visibility
       localStorage.setItem('currentDarkness', JSON.stringify(this.darkness));
 
+      //save analytics
+      localStorage.setItem('timeInCurrentLevel', this.timeInCurrentLevel);
+      localStorage.setItem('gameVersion', this.GAME_VERSION);
+
       if(showSaveSuccess) {
         HuungryUI.showDialog('GAME SAVED!', '', [{
           text: 'OK',
           btnClass: 'button-home', 
           callback: HuungryUI.hideDialog}]);
       }
+
+
       
   }
 
-  /**
+/**
 * send stats to server
 */
 huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
     var that = this;
+    var gold = this.player ? (this.player.gold !== undefined ? this.player.gold : null) : null;
 
     if(window.device) {
         $.ajax(this.API_EVENT_URL, {
@@ -527,9 +561,78 @@ huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
             key: key,
             value: value,
             game_version: that.GAME_VERSION,
-            strength: strength
+            strength: strength,
+            gold: gold,
+            sessionId: that.sessionId ? that.sessionId : '',
+            level: that.currentLevel,
+            unsavedMinutes: that.unsavedMinutes ? that.unsavedMinutes : 0,
+            timeInCurrentLevel: that.timeInCurrentLevel,
+            currTimestamp: (new Date).getTime()
           }
-      });
-    }
-    
+      })
+      .done(function(data) {    
+        if(key == 'GAME_INIT' || key == 'NOTIFY') {
+          if(!that.sessionId && data.sessionId) {
+            that.unsavedMinutes = 0;
+            that.sessionId = data.sessionId;
+            console.log('new sessionId: '+that.sessionId);
+          }
+          else if(data.sessionId) {
+            that.unsavedMinutes = 0;
+            that.sessionId = data.sessionId;
+          }
+          else {
+            console.log('no session id received');
+          }        
+        }            
+      })      
+      ;
+    }    
 }
+
+/**
+* play sound
+@param string sound file
+*/
+huungry.GameObj.prototype.playSound = function(fileName) {
+  if(window.device) {
+    var getPhonegaPath = function() {
+      var path = window.location.pathname;
+      path = path.substr(path, path.length - 10);
+      return 'file://' + path;
+    };
+
+    this.currentSound = new Media(getPhonegaPath() + 'assets/music/' + fileName);
+    this.currentSound.play();
+  }
+};
+
+/**
+* stop the current sound
+*/
+huungry.GameObj.prototype.stopSound = function() {
+  if(window.device && this.currentSound) {
+    this.currentSound.stop();
+  }
+};
+
+
+/**
+* notify the server after each minute of play
+*/
+huungry.GameObj.prototype.notifyServer = function() {
+  var that = this;
+  //.log('init notifying server');
+  if(window.device) {
+    that.notifyInterval = setInterval(function() {
+      //console.log('notifying server');
+
+      if(that.currentLevel) {
+        that.timeInCurrentLevel += 0.5;
+      }
+
+      that.unsavedMinutes += 0.5;
+      that.sendEvent('NOTIFY');
+    }, 30000);
+  }
+};
