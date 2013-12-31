@@ -31,7 +31,7 @@ huungry.start = function(){
     //intro music
     gameObj.playSound('barde-intro.mp3');
 
-    gameObj.developmentMode = true;
+    gameObj.developmentMode = false;
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
     
@@ -40,17 +40,16 @@ huungry.start = function(){
         .setGameObj(gameObj);
         
     gameObj.player.maxNumUnits = 8;   
-    gameObj.player.gold = 120;   
+    gameObj.player.gold = 100;   
     gameObj.player.units = [
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 5),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 5),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 6),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 6),
         //gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15)
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 20),
-        gameObj.cloneUnit(gameObj.unitTypes['peasant'], 15),
-        gameObj.cloneUnit(gameObj.unitTypes['wolf'], 10)
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 15),
+        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 12)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];

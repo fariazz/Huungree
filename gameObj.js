@@ -5,7 +5,7 @@ goog.provide('huungry.GameObj');
  */
 huungry.GameObj = function(document) {
 
-    this.GAME_VERSION = '0.1.8';
+    this.GAME_VERSION = '0.2.0';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -364,7 +364,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     
     var currentObj = this;
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {              
-        currentObj.runLevel('level3');
+        currentObj.runLevel('level1');
     });
     goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
         currentObj.stopSound();

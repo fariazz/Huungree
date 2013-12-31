@@ -24,7 +24,7 @@ huungry.Item.prototype.init = function() {
         this.attack = parseInt(this.attack * (1 + 0.4*(Math.random() - Math.random())));
     }
     else if(this.type == 'ITEM.DEFENSE-SPELL') {
-        this.numHits = parseInt(this.numHits * (1 + 0.4*(Math.random() - Math.random())));
+        this.numHits = Math.max(1, parseInt(this.numHits * (1 + 0.5*(Math.random() - Math.random()))));
     }
 
     return this;
