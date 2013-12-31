@@ -97,7 +97,7 @@ var UnitTypes = [
             defense: 3,
             canShoot: true,
             gold: 13,
-            movements: 2,
+            movements: 1,
         },
         
     ];

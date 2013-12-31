@@ -16,6 +16,17 @@ goog.inherits(huungry.Item,huungry.Character);
 
 huungry.Item.prototype.init = function() {
     this.elementType = this.gameObj.ITEM_TARGET;
+
+    if(this.type == 'ITEM.GOLD') {
+        this.gold = parseInt(this.gold * (1 + 0.2*(Math.random() - Math.random())));
+    }
+    else if(this.type == 'ITEM.ATTACK-SPELL') {
+        this.attack = parseInt(this.attack * (1 + 0.4*(Math.random() - Math.random())));
+    }
+    else if(this.type == 'ITEM.DEFENSE-SPELL') {
+        this.numHits = parseInt(this.numHits * (1 + 0.4*(Math.random() - Math.random())));
+    }
+
     return this;
 }
 
@@ -31,7 +42,8 @@ huungry.Item.prototype.setData = function(data) {
     this.gold = data.gold;
     this.attack = data.attack;
     this.numHits = data.numHits;
-    
+    this.isQuestGoal = data.isQuestGoal;
+
     return this;
 }
 
@@ -46,7 +58,8 @@ huungry.Item.prototype.clone = function() {
             type: this.type,            
             gold: this.gold,            
             attack: this.attack,
-            numHits: this.numHits          
+            numHits: this.numHits,    
+            isQuestGoal: this.isQuestGoal      
     };
     return cloned.setData(props).setGameObj(this.gameObj);
 };
@@ -89,7 +102,8 @@ huungry.Item.prototype.getData = function() {
         attack: this.attack,
         x: this.getPosition().x,
         y: this.getPosition().y,
-        numHits: this.numHits
+        numHits: this.numHits,
+        isQuestGoal: this.isQuestGoal
     };
 };
 

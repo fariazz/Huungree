@@ -32,6 +32,7 @@ huungry.Player.prototype.playerMoved = function() {
     this.toggleGamepad(true);
     
     var pos = this.getPosition();
+    var that = this;
     this.gameObj.centerCameraTo(pos.x,pos.y);
     this.gameObj.updateVisiblity(this.cell.col,this.cell.row);
     
@@ -60,11 +61,15 @@ huungry.Player.prototype.playerMoved = function() {
                 }
                 
                 this.gameObj.numItems--;
-                
-                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
-                    ,[{text: 'OK', btnClass: 'button-home', callback: HuungryUI.hideDialog}]);
+                this.collect(item);   
 
-                this.collect(item);     
+                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
+                    ,[{text: 'OK', btnClass: 'button-home', callback: function() {
+                        HuungryUI.hideDialog();
+                        that.gameObj.checkQuestCompletion();   
+                    }}]);
+
+                  
             }
             else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
                 this.map.elements[i].showDialog();
@@ -93,7 +98,7 @@ huungry.Player.prototype.collect = function(item, loading) {
     item.die();
 
     if(!loading) {
-        this.gameObj.controlsLayer.refreshInfo();        
+        this.gameObj.controlsLayer.refreshInfo();             
     }
     
 }

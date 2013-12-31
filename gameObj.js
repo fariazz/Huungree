@@ -153,6 +153,8 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     if(!darkness) {
       this.showQuest();
     }
+
+    this.checkQuestCompletion(true);
 };
 
 /**
@@ -362,7 +364,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     
     var currentObj = this;
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {              
-        currentObj.runLevel('level1');
+        currentObj.runLevel('level3');
     });
     goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
         currentObj.stopSound();
@@ -430,12 +432,21 @@ huungry.GameObj.prototype.loadGame = function() {
 
   /**
   check quest completion
+
+  @param isLevelInit true if the level is being initiated, so that the total of goals can be extracted
   */
-  huungry.GameObj.prototype.checkQuestCompletion = function() {    
+  huungry.GameObj.prototype.checkQuestCompletion = function(isLevelInit) {    
     var i;
     var aliveEnemies;
     var numQuests = huungryGameMaps[this.currentLevel].quest.goals.length;
-    var numRemainingQuests = numQuests;
+    this.numRemainingQuests = numQuests;
+    this.numRemainingQuestsGoals = 0;
+
+    if(isLevelInit) {
+      this.levelNumGoals = 0;
+    }
+
+
     for(i = 0; i < numQuests; i++) {
       if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-KILL') {
         //for kill quests check that goal armies are dead
@@ -443,16 +454,39 @@ huungry.GameObj.prototype.loadGame = function() {
         _.each(this.enemyArmies, function(value, key) {
           if(value.isQuestGoal) {
             aliveEnemies++;
+            this.numRemainingQuestsGoals++;
+
+            if(isLevelInit) {
+              this.levelNumGoals++;
+            }
           }
-        });
+        }, this);
 
         if(aliveEnemies == 0) {
-          numRemainingQuests--;
+          this.numRemainingQuests--;
+        }
+      }
+      else if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-ITEMS') {
+        remainingItems = 0;
+        _.each(this.mapItems, function(value, key) {
+          if(value.isQuestGoal) {
+            remainingItems++;
+            this.numRemainingQuestsGoals++;
+            if(isLevelInit) {
+              this.levelNumGoals++;
+            }
+          }
+        }, this);
+
+        if(remainingItems == 0) {
+          this.numRemainingQuests--;
         }
       }
     }
 
-    if(numRemainingQuests == 0) {
+    this.goalsCompleted = this.levelNumGoals-this.numRemainingQuestsGoals;
+
+    if(this.numRemainingQuests == 0) {
       this.levelCompleted();
     }
   };

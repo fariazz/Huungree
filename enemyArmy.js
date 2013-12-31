@@ -20,14 +20,37 @@ huungry.EnemyArmy.prototype.init = function() {
     this.gold = 0;
     this.units = new Array();
     
-    for(var i = 0, arrayLen = this.unitsSummary.length; i < arrayLen; i++) {
-        var unit = this.gameObj.unitTypes[this.unitsSummary[i].id];
-        
-        this.gold += unit.gold * this.unitsSummary[i].number;
-        
-        //for(var j = 0; j< this.unitsSummary[i].number; j++) {
-            this.units.push(this.gameObj.cloneUnit(unit,this.unitsSummary[i].number ));
-        //}
+    var i, j;
+    var arrayLen = this.unitsSummary.length;
+    var subArrayLen, unit, num, powerFactor, totalPower, unitPower, k; 
+    for(i = 0; i < arrayLen; i++) {
+        subArrayLen = this.unitsSummary[i].length;
+        for(j = 0; j < subArrayLen; j++) {
+            unit = this.gameObj.unitTypes[this.unitsSummary[i][j].id];
+            num = 1 + Math.round(Math.random()*(this.unitsSummary[i][j].maxNum-1));
+            powerFactor = 1 + this.gameObj.powerNumFactor*(num -1);
+            totalPower = 0;
+
+            //create temp unit
+            tempUnit = new huungry.Unit()
+                .setGameObj(this.gameObj)
+                .setUnitData(_.extend(unit, {life: 1}), false);
+
+            unitPower = tempUnit.getPower()*powerFactor;
+
+            for(k = 0; k < num; k++) {
+                totalPower += unitPower;
+                this.units.push(this.gameObj.cloneUnit(unit,1));
+                this.gold += parseInt(unit.gold * (1 + 0.2*(Math.random() - Math.random())));
+            }
+            
+            while(totalPower < this.unitsSummary[i][j].power) {
+                randomPos = 0 + Math.round(Math.random() * (num - 1));
+                this.units[randomPos].life++;
+                totalPower += unitPower;
+                this.gold += unit.gold;
+            }
+        }
     }    
 }
 
@@ -57,6 +80,6 @@ huungry.EnemyArmy.prototype.getData = function() {
         background: this.background,
         x: this.getPosition().x,
         y: this.getPosition().y,
-        isQuestGoal: this.isQuestGoal
+        isQuestGoal: this.isQuestGoal ? this.isQuestGoal : false 
     };
 };

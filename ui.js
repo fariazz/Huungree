@@ -61,7 +61,7 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
  */
 HuungryUI.showAboutDialog = function(gameObj) {        
     HuungryUI.showDialog('ABOUT HUUNGREE', 
-        'Huungree is an RPG created by ZENVA (@ZenvaTweets). We have free and premium online courses to learn how to make apps and games.</br></br>If you\'d like to get FREE access to more levels LET US KNOW using the link below or Twitter.'
+        'Huungree is an RPG created by ZENVA (@ZenvaTweets). We have free and premium online courses to learn how to make apps and games. If you\'d like to get FREE access to more levels LET US KNOW using the link below or Twitter. <br/><br/><span tyle="font-weight:bold;">Soundtrack (CC) by Spiritualmatrix</span>.'
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){            
             window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
         }}]);
