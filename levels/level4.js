@@ -264,4 +264,4 @@ huungryGameMaps.level4.quest = {
     goals: [{type: 'QUEST-ITEMS'}]
 };
 
-huungryGameMaps.level4.nextLevel = null;
+huungryGameMaps.level4.nextLevel = 'level5';

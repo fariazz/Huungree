@@ -43,6 +43,7 @@ huungry.Item.prototype.setData = function(data) {
     this.attack = data.attack;
     this.numHits = data.numHits;
     this.isQuestGoal = data.isQuestGoal;
+    this.text = data.text;
 
     return this;
 }
@@ -59,7 +60,8 @@ huungry.Item.prototype.clone = function() {
             gold: this.gold,            
             attack: this.attack,
             numHits: this.numHits,    
-            isQuestGoal: this.isQuestGoal      
+            isQuestGoal: this.isQuestGoal,
+            text: this.text   
     };
     return cloned.setData(props).setGameObj(this.gameObj);
 };
@@ -103,7 +105,8 @@ huungry.Item.prototype.getData = function() {
         x: this.getPosition().x,
         y: this.getPosition().y,
         numHits: this.numHits,
-        isQuestGoal: this.isQuestGoal
+        isQuestGoal: this.isQuestGoal,
+        text: this.text
     };
 };
 

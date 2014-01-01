@@ -99,5 +99,15 @@ var UnitTypes = [
             gold: 13,
             movements: 1,
         },
+        {
+            id: 'troll',
+            name: 'troll',
+            image: 'troll.png',
+            attack: 20,
+            defense: 10,
+            canShoot: false,
+            gold: 10,
+            movements: 1,
+        },
         
     ];

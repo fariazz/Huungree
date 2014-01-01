@@ -57,16 +57,29 @@ huungry.Player.prototype.playerMoved = function() {
                         break;       
                     case 'ITEM.DEFENSE-SPELL':
                         message = "Use in battle to protect a unit against "+this.map.elements[i].numHits+" enemy hits";
-                        break;        
+                        break;
+                    case 'ITEM.LANDMARK':
+                        message = this.map.elements[i].text;
+                        break;       
                 }
                 
-                this.gameObj.numItems--;                
+                if(item.type != 'ITEM.LANDMARK') {
+                    this.gameObj.numItems--;  
+                }                              
 
                 HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
                     ,[{text: 'OK', btnClass: 'button-home', callback: function() {
                         HuungryUI.hideDialog();
-                        that.collect(item);   
-                        that.gameObj.checkQuestCompletion();   
+
+                        if(item.type != 'ITEM.LANDMARK') {
+                            that.collect(item);   
+                            that.gameObj.checkQuestCompletion(); 
+                        }
+                        else {
+                            if(item.isQuestGoal) {
+                                that.gameObj.levelCompleted();
+                            }
+                        }                          
                     }}]);
 
                   
