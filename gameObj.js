@@ -364,7 +364,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     
     var currentObj = this;
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {              
-        currentObj.runLevel('level1');
+        currentObj.runLevel('level5');
     });
     goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
         currentObj.stopSound();
@@ -506,7 +506,12 @@ huungry.GameObj.prototype.loadGame = function() {
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
       [{text: 'NEXT LEVEL', btnClass: 'button-home', callback: function() {
           if(huungryGameMaps[that.currentLevel].nextLevel) {
-            that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
+            if(!that.isFullVersion && _.indexOf(['level1', 'level2', 'level3', 'level4', 'level5', ], huungryGameMaps[that.currentLevel].nextLevel) == -1) {
+              HuungryUI.showGoPremiumDialog();
+            }
+            else {
+              that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
+            }            
           }
           else {
             HuungryUI.showEndofGameDialog();
