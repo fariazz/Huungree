@@ -97,7 +97,8 @@ a seasoned privateer who is in the Mystical City of Crisal, far inland in Tamaca
 <img src="assets/images/units/snake.png" width="20" /> \
 </div></li><ul>'
     ],
-    goals: [{type: 'QUEST-KILL'}]
+    goals: [{type: 'QUEST-KILL'}],
+    totalNumGoals: 2
 };
 
 huungryGameMaps.level1.nextLevel = 'level2';

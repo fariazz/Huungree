@@ -27,6 +27,8 @@ huungry.Item.prototype.init = function() {
         this.numHits = Math.max(1, parseInt(this.numHits * (1 + 0.5*(Math.random() - Math.random()))));
     }
 
+    this.showGoalIcon();  
+    
     return this;
 }
 

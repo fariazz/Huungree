@@ -145,8 +145,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     this.controlsLayer = new huungry.ControlsLayer().setGameObj(this);
     this.controlsLayer.init();
     this.gameScene.appendChild(this.controlsLayer);    
-    this.controlsLayer.refreshInfo();
-    
+        
     this.director.replaceScene(this.gameScene);
 
     //show quest
@@ -155,6 +154,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     }
 
     this.checkQuestCompletion(true);
+    this.controlsLayer.refreshInfo();
 };
 
 /**
@@ -442,11 +442,6 @@ huungry.GameObj.prototype.loadGame = function() {
     this.numRemainingQuests = numQuests;
     this.numRemainingQuestsGoals = 0;
 
-    if(isLevelInit) {
-      this.levelNumGoals = 0;
-    }
-
-
     for(i = 0; i < numQuests; i++) {
       if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-KILL') {
         //for kill quests check that goal armies are dead
@@ -454,11 +449,7 @@ huungry.GameObj.prototype.loadGame = function() {
         _.each(this.enemyArmies, function(value, key) {
           if(value.isQuestGoal) {
             aliveEnemies++;
-            this.numRemainingQuestsGoals++;
-
-            if(isLevelInit) {
-              this.levelNumGoals++;
-            }
+            this.numRemainingQuestsGoals++;          
           }
         }, this);
 
@@ -466,15 +457,12 @@ huungry.GameObj.prototype.loadGame = function() {
           this.numRemainingQuests--;
         }
       }
-      else if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-ITEMS') {
+      else if(huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-ITEMS' || huungryGameMaps[this.currentLevel].quest.goals[i].type == 'QUEST-LANDMARK') {
         remainingItems = 0;
         _.each(this.mapItems, function(value, key) {
           if(value.isQuestGoal) {
             remainingItems++;
-            this.numRemainingQuestsGoals++;
-            if(isLevelInit) {
-              this.levelNumGoals++;
-            }
+            this.numRemainingQuestsGoals++;          
           }
         }, this);
 
@@ -484,7 +472,7 @@ huungry.GameObj.prototype.loadGame = function() {
       }
     }
 
-    this.goalsCompleted = this.levelNumGoals-this.numRemainingQuestsGoals;
+    this.goalsCompleted = huungryGameMaps[this.currentLevel].quest.totalNumGoals-this.numRemainingQuestsGoals;
 
     if(this.numRemainingQuests == 0) {
       this.levelCompleted();

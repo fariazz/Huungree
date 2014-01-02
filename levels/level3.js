@@ -231,7 +231,8 @@ huungryGameMaps.level3.quest = {
 <img src="assets/images/items/chest-jewels.png" width="20" /> \
 </div></li><ul>'
     ],
-    goals: [{type: 'QUEST-ITEMS'}]
+    goals: [{type: 'QUEST-ITEMS'}],
+    totalNumGoals: 3
 };
 
 huungryGameMaps.level3.nextLevel = 'level4';

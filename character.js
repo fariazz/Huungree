@@ -334,3 +334,16 @@ huungry.Character.prototype.getCenter = function() {
     var pos = this.getPosition();
     return {x: pos.x + this.gameObj.tileSize/2, y: pos.y + this.gameObj.tileSize/2}
 }
+
+/**
+* show goal icon
+*/
+huungry.Character.prototype.showGoalIcon = function() {
+    if(this.isQuestGoal) {
+            var goalIcon = new lime.Sprite()
+            .setSize(this.gameObj.tileSize*0.35, this.gameObj.tileSize*0.35)
+            .setFill('assets/images/backgrounds/trophy.png')
+            .setPosition(this.gameObj.tileSize*0.9, this.gameObj.tileSize*0.9);
+        this.appendChild(goalIcon);
+    }    
+}

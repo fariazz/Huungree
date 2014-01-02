@@ -42,6 +42,17 @@ huungry.ControlsLayer.prototype.init = function() {
         .setPosition(0, this.gameObj.tileSize*6.2);
     this.sideBar.appendChild(goldIcon);
 
+    //goals info
+    this.goalValue = new lime.Label().setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize*5.9).setText()
+        .setFontColor('#000000').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
+    this.sideBar.appendChild(this.goalValue);    
+    
+    var goalIcon = new lime.Sprite().setAnchorPoint(0,0)
+        .setSize(this.gameObj.tileSize*0.8, this.gameObj.tileSize*0.8)
+        .setFill('assets/images/backgrounds/trophy.png')
+        .setPosition(this.gameObj.tileSize*0.1, this.gameObj.tileSize*4.7);
+    this.sideBar.appendChild(goalIcon);
+
     //player details window
     this.initPlayerInfoWindow();
     this.initItemsWindow();
@@ -55,6 +66,7 @@ huungry.ControlsLayer.prototype.init = function() {
  */
 huungry.ControlsLayer.prototype.refreshInfo = function() {
     this.goldValue.setText(this.gameObj.player.gold);
+    this.goalValue.setText(this.gameObj.goalsCompleted+'/'+huungryGameMaps[this.gameObj.currentLevel].quest.totalNumGoals);
 }
 
 /**

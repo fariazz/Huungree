@@ -549,7 +549,7 @@ huungry.FightEngine.prototype.updateDead = function() {
                         fightScene.enemyArmy.die();
                         fightScene.exitFight();    
                         fightScene.gameObj.checkQuestCompletion();        
-
+                        fightScene.gameObj.controlsLayer.refreshInfo();
                     }
                     }]);     
     }

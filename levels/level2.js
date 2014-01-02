@@ -189,7 +189,8 @@ but be prepared as they might have some protection.',
 <img src="assets/images/units/peasant.png" width="20" /> \
 </div></li><ul>'
     ],
-    goals: [{type: 'QUEST-KILL'}]
+    goals: [{type: 'QUEST-KILL'}],
+    totalNumGoals: 3
 };
 
 huungryGameMaps.level2.nextLevel = 'level3';

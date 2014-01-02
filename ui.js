@@ -410,7 +410,7 @@ HuungryUI.showSequence = function(title, screens) {
 HuungryUI.showGoPremiumDialog = function(gameObj) {
     HuungryUI.gameObj.saveGame(false);    
     HuungryUI.showDialog('END OF THE FREE VERSION', 
-        'You can\'t continue exploring the exciting continent of Tamaca unless you buy the developer a rum & coke ;)<br/> \
+        'You can\'t continue exploring the exciting continent of Tamaca unless you buy the developer a rum & coke ;)<br/><br/> \
         Use the link below to get the Premium version and get access to hours of gameplay, all the way to the mysterious city of Huungree.'
         ,[{text: 'GO PREMIUM', btnClass: 'button-home', callback: function(){
             window.open('http://zenva.com', '_blank', 'location=yes');

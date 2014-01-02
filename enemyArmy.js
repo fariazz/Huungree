@@ -51,7 +51,8 @@ huungry.EnemyArmy.prototype.init = function() {
                 this.gold += unit.gold;
             }
         }
-    }    
+    }  
+    this.showGoalIcon();  
 }
 
 /**

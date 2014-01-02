@@ -276,7 +276,8 @@ huungryGameMaps.level5.quest = {
 <img src="assets/images/items/white-door.png" width="20" /> \
 </div></li><ul>'
     ],
-    goals: [{type: 'QUEST-LANDMARK'}]
+    goals: [{type: 'QUEST-LANDMARK'}],
+    totalNumGoals: 1
 };
 
 huungryGameMaps.level5.nextLevel = 'level6';
