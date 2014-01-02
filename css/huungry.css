@@ -1,4 +1,7 @@
-.lime-scene {display:block !important;}     
+.lime-scene {
+    display:block !important;
+    position: relative;
+}     
 
 .zva_dialog {
     background: url('../assets/images/backgrounds/dialog_no_borders.png') no-repeat center;
@@ -6,9 +9,13 @@
     width: 480px;
     height: 320px;
     display: none;
-    margin-left: auto;
-    margin-right: auto;
+/*    margin-left: auto;
+    margin-right: auto;*/
     font-family: Courier;
+    position: absolute;
+    top: 0;
+    left: 50%;    
+    z-index: 9999;
 }
 
 .zva_dialog_header {

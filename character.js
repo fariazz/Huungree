@@ -26,15 +26,6 @@ huungry.Character.prototype.getCell = function() {
     return this.gameObj.map.getColRowFromXY(this.getPosition().x, this.getPosition().y);
 }
 
-/**
-* Walk the character to a destination using the A* path finding algorithm
-* @param int col target tile column
-* @param int row target tile row
-*/
-huungry.Character.prototype.walkTo = function(col,row) {
-    this.setPathTo(col, row);
-    this.walkPath();
-}
 
 /**
  * set game object

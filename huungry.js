@@ -19,7 +19,6 @@ goog.require('huungry.Item');
 goog.require('huungry.Shop');
 goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
-goog.require('huungry.DialogScene');
 goog.require('huungry.FightEngine');
 goog.require('huungry.Unit');
 goog.require('lime.GlossyButton');

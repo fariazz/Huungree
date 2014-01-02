@@ -173,11 +173,11 @@ huungry.FightEngine.prototype.exitFight = function() {
     this.gameObj.gameScene.setDirty(255);
 
     //move player to previous position
-    var previousPos = this.gameObj.player.previousPosition;
-    this.gameObj.player.setPosition(previousPos.x, previousPos.y);
+    //var previousPos = this.gameObj.player.previousPosition;
+    //this.gameObj.player.setPosition(previousPos.x, previousPos.y);
     this.gameObj.player.inFightScene = false;
     this.gameObj.controlsLayer.refreshInfo();
-    this.gameObj.player.playerMoved();
+    //this.gameObj.player.playerMoved();
 }
 
 /**

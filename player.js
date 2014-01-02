@@ -42,6 +42,7 @@ huungry.Player.prototype.playerMoved = function() {
             && this.id != this.map.elements[i].id) {
             if(this.map.elements[i].elementType == this.gameObj.ENEMY_ARMY) {
                 this.gameObj.fight(this.map.elements[i]);
+                break;
             }
             else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
                 
@@ -67,25 +68,29 @@ huungry.Player.prototype.playerMoved = function() {
                     this.gameObj.numItems--;  
                 }                              
 
-                HuungryUI.showDialog(this.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
-                    ,[{text: 'OK', btnClass: 'button-home', callback: function() {
-                        HuungryUI.hideDialog();
-
-                        if(item.type != 'ITEM.LANDMARK') {
-                            that.collect(item);   
-                            that.gameObj.checkQuestCompletion(); 
-                        }
-                        else {
-                            if(item.isQuestGoal) {
-                                that.gameObj.levelCompleted();
-                            }
-                        }                          
-                    }}]);
-
+          //      (function(that, i) {
+          //          setTimeout(function() {
+                        HuungryUI.showDialog(that.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
+                            ,[{text: 'OK', btnClass: 'button-home', callback: function() {
+                                if(item.type != 'ITEM.LANDMARK') {
+                                    that.collect(item);  
+                                    that.gameObj.checkQuestCompletion(); 
+                                }
+                                else {
+                                    if(item.isQuestGoal) {
+                                        that.gameObj.levelCompleted();
+                                    }
+                                }    
+                                HuungryUI.hideDialog();                      
+                            }}]);
+           //         },10);
+         //       })(that,i);
+         //       break;
                   
             }
             else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
                 this.map.elements[i].showDialog();
+                break;
             }
             else {
                 //console.log(this.map.elements[i]);

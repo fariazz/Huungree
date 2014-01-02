@@ -74,7 +74,7 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
     HuungryUI.hideDialog();   
     HuungryUI.gameObj.director.setPaused(true);
     var height = $(window).height();
-    $('.lime-director').css('top', height);
+    //$('.lime-director').css('top', height);
     $('.zva_dialog').css('display', 'block');
     $('.zva_dialog_header').html(headerHtml);
     $('.zva_dialog_body').html(bodyHtml);
@@ -99,13 +99,14 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
 * hide dialog
 */
 HuungryUI.hideDialog = function() {
-    HuungryUI.gameObj.director.setPaused(false);
-    $('.lime-director').css('top', 0);
+    setTimeout(function() {HuungryUI.gameObj.director.setPaused(false);}, 100);
+        
     $('.zva_dialog').css('display', 'none');  
     $('.zva_dialog_header').empty(); 
     $('.zva_dialog_body').empty(); 
     $('.zva_dialog_actions').empty(); 
     $('.zva_dialog_help').empty();
+    //$('.lime-director').css('top', 0);
 }
 
 /**
@@ -142,6 +143,9 @@ HuungryUI.prepareDialog = function(gameObj) {
         width = height;
         height = temp;
     }
+
+    //var left = (width - gameObj.screenWidth*ratio)/2;
+    $('.zva_dialog').css('margin-left', -gameObj.screenWidth/2);
 
     var winRatio = width/height;        
     var ratio = gameRatio < winRatio ? height/HuungryUI.gameObj.screenHeight : width/HuungryUI.gameObj.screenWidth;
@@ -347,7 +351,6 @@ show show window
 */
 HuungryUI.showShopWindow = function(shop, result) {
     HuungryUI.hideDialog();
-    console.log('showShopWindow');
     var html = '<div class="shop-products"><div>';  
     var length = shop.data.units.length;
     var unit;
