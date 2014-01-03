@@ -149,7 +149,7 @@ huungryGameMaps.level4.shops = [
             {
                 id: 'insectman',
                 price: 60,
-                qty: 10
+                qty: 20
             }          
         ]
     }

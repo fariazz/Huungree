@@ -139,12 +139,12 @@ huungryGameMaps.level3.shops = [
             {
                 id: 'halfling',
                 price: 25,
-                qty: 12
+                qty: 22
             },
             {
                 id: 'archer',
                 price: 45,
-                qty: 5
+                qty: 15
             }
         ]
     }

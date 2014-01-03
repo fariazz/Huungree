@@ -29,8 +29,7 @@ huungry.GameObj = function(document) {
     this.timeInCurrentLevel = 0;
     this.notifyInterval = null;
 
-    //4/9 para 5 max, 6/9 para 7 max
-    this.powerNumFactor = 6/9;
+    this.powerNumFactor = 0.5;
 
     //probability to reach target for range attack units
     this.accuracyProbability = 0.65;

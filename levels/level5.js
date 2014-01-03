@@ -176,17 +176,17 @@ huungryGameMaps.level5.shops = [
             {
                 id: 'wolf',
                 price: 45,
-                qty: 15
+                qty: 25
             },
             {
                 id: 'axeman',
                 price: 55,
-                qty: 15
+                qty: 25
             },
             {
                 id: 'archer',
                 price: 75,
-                qty: 10
+                qty: 20
             }                     
         ]
     }

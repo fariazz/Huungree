@@ -124,7 +124,7 @@
 .shop-unit-cell {
     float: left;
     font-size: 10pt;
-    width: 80px;
+    width: 90px;
     text-align: center;
     border: 1px solid #F6EBC6;
     padding: 5px;
@@ -135,7 +135,6 @@
     width: 40px;
     height: 40px;
     margin-top: 30px;
-    margin-left: 20px;
 }
 
 .shop-player-gold-number {
