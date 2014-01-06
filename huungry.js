@@ -31,7 +31,7 @@ huungry.start = function(isFullVersion){
     //intro music
     gameObj.playSound('barde-intro.mp3');
 
-    gameObj.developmentMode = false;
+    gameObj.developmentMode = true;
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
     

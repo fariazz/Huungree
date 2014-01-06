@@ -364,17 +364,15 @@ HuungryUI.showShopWindow = function(shop, result) {
                     '<div class="unit-left">'+shop.data.units[i].qty+' left</div></div>';                 
     }
 
-    html += '</div></div>\
-        <div class="shop-player-gold-coin"><img width="40" src="assets/images/backgrounds/gold.png" style="display:inline;" /></div>\
-        <div class="shop-player-gold-number">'+HuungryUI.gameObj.player.gold+'</div>\
-        <div class="shop-player-units"><div class="shop-player-title">Your Army</div>';
+    html += '</div></div><div class="shop-player-units"><div class="shop-player-title">Your Army</div>';
 
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="shop-player-unit">\
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /></div>';
     }
-    html += '</div>';
+    html += '</div><div class="shop-player-gold-coin"><img width="40" src="assets/images/backgrounds/gold.png" style="display:inline;" /></div>\
+        <div class="shop-player-gold-number">'+HuungryUI.gameObj.player.gold+'</div></div>';
     var help = result === undefined ? 'Touch units to purchase' : result.msg;
     HuungryUI.showDialog(shop.data.name,html
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);

@@ -59,7 +59,31 @@ huungryGameMaps.level1.enemyArmies = [
     }
 ];
 
-huungryGameMaps.level1.shops = []
+huungryGameMaps.level1.shops = [
+/*{
+        x: 4,
+        y: 5,
+        name: 'BROWN BIG INN',
+        image: 'house-1.png',
+        units: [
+            {
+                id: 'armoredaxeman',
+                price: 40,
+                qty: 40
+            },
+            {
+                id: 'armoredaxeman',
+                price: 40,
+                qty: 40
+            },
+            {
+                id: 'elitearcher',
+                price: 45,
+                qty: 30
+            }              
+        ]
+    }*/
+]
 
 huungryGameMaps.level1.items = [
     {
