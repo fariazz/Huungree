@@ -51,6 +51,21 @@
     border: 0px;
 }
 
+.items-area {    
+    clear:both;
+    height: 150px;
+}
+
+.item-cell {
+    float: left;
+    font-size: 8pt;
+    width: 95px;
+    text-align: center;
+    margin: 2px;
+    margin-bottom: 10px;
+}
+
+
 .unit-cell {
     float: left;
     font-size: 8pt;

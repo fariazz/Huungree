@@ -77,7 +77,137 @@ huungryGameMaps.level1.items = [
         gold: 50,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
+    },
+    //borrar
+    {
+        x: 2,
+        y: 2,
+        name: 'Defense Spell',
+        numHits: 5,
+        image: 'shield.png',
+        type: 'ITEM.DEFENSE-SPELL'
+    },
+    {
+        x: 2,
+        y: 3,
+        name: 'Fire Spell',
+        attack: 50,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 2,
+        y: 4,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 3,
+        y: 2,
+        name: 'Defense Spell',
+        numHits: 5,
+        image: 'shield.png',
+        type: 'ITEM.DEFENSE-SPELL'
+    },
+    {
+        x: 3,
+        y: 4,
+        name: 'Fire Spell',
+        attack: 50,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 4,
+        y: 2,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 4,
+        y: 3,
+        name: 'Defense Spell',
+        numHits: 5,
+        image: 'shield.png',
+        type: 'ITEM.DEFENSE-SPELL'
+    },
+    {
+        x: 4,
+        y: 4,
+        name: 'Fire Spell',
+        attack: 50,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 5,
+        y: 2,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 5,
+        y: 3,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 5,
+        y: 4,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 5,
+        y: 5,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 6,
+        y: 2,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 3,
+        y: 8,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 4,
+        y: 6,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 4,
+        y: 7,
+        name: 'Fire Spell',
+        attack: 80,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
     }
+    //end borrar
 ];
 
 huungryGameMaps.level1.quest = {
