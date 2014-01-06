@@ -103,13 +103,22 @@ huungry.Player.prototype.playerMoved = function() {
 huungry.Player.prototype.collect = function(item, loading) {
     switch(item.type) {
         case 'ITEM.GOLD':
-            this.gold += item.gold;            
+            this.gold += item.gold;   
+            item.die();         
             break;
         default:
-            this.items.push(item.clone());
+            if(this.items.length < 12) {
+                this.items.push(item.clone());
+                item.die();
+            }
+            else {
+                HuungryUI.showDialog('TOO MANY ITEMS!', 'You don\'t have any room for more items..',
+                    [{text: 'OK', btnClass: 'button-home', callback: function(){}}]);
+            }
+            
             break;        
     }
-    item.die();
+    
 
     if(!loading) {
         this.gameObj.controlsLayer.refreshInfo();             

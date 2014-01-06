@@ -79,7 +79,7 @@ huungryGameMaps.level1.items = [
         type: 'ITEM.GOLD'
     },
     //borrar
-    {
+    /*{
         x: 2,
         y: 2,
         name: 'Defense Spell',
@@ -206,7 +206,7 @@ huungryGameMaps.level1.items = [
         attack: 80,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
-    }
+    }*/
     //end borrar
 ];
 

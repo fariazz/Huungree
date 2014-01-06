@@ -148,6 +148,26 @@ var UnitTypes = [
             canShoot: false,
             gold: 15,
             movements: 1,
+        },
+        {
+            id: 'swordelf',
+            name: 'sword elf',
+            image: 'swordelf.png',
+            attack: 19,
+            defense: 9,
+            canShoot: true,
+            gold: 35,
+            movements: 1,
+        },
+        {
+            id: 'elitearcher',
+            name: 'elite archer',
+            image: 'elitearcher.png',
+            attack: 17,
+            defense: 6,
+            canShoot: true,
+            gold: 30,
+            movements: 1,
         }
         
     ];

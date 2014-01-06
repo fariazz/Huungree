@@ -232,8 +232,8 @@ huungryGameMaps.level7.shops = [
         units: [
             {
                 id: 'armoredaxeman',
-                price: 75,
-                qty: 20
+                price: 50,
+                qty: 30
             }           
         ]
     },
@@ -330,7 +330,7 @@ huungryGameMaps.level7.items = [
 ];
 
 huungryGameMaps.level7.quest = {
-    screens: ['You\'ve reached Crisal but Jekkel is not there. Tiego, your brother\'s liutenant tells \
+    screens: ['You\'ve reached the city of Crisal but Jekkel is not there. Tiego, your brother\'s liutenant tells \
     you they are fighting over the Mystical Cities against another privateer from Ingeber named Kraul. \
     Also, they are all fighting Nothul Empire troops in the north. Lastly, there have been rebelions among the mysticals.',
 

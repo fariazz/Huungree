@@ -398,7 +398,16 @@ huungry.GameObj.prototype.loadGame = function() {
     var playerPos = JSON.parse(localStorage.getItem('currentLocation'));
     var darkness = JSON.parse(localStorage.getItem('currentDarkness'));
     this.player.gold = parseInt(localStorage.getItem('currentGold'));
-    this.player.units = JSON.parse(localStorage.getItem('currentUnits'));
+
+    //load units
+    this.player.units = [];
+    var units = JSON.parse(localStorage.getItem('currentUnits'));
+    var unitsLen = units.length;
+
+    for(var i=0; i<unitsLen; i++) {
+      console.log(units[i]['id']);
+      this.player.units.push(this.cloneUnit(this.unitTypes[units[i]['id']], units[i]['life']));
+    }
 
     //load items
     var items = JSON.parse(localStorage.getItem('currentItems'));
@@ -519,7 +528,15 @@ huungry.GameObj.prototype.loadGame = function() {
       localStorage.setItem('currentGold', this.player.gold);
 
       //save units
-      localStorage.setItem('currentUnits', JSON.stringify(this.player.units));
+      var units = [];
+      var unitsLen = this.player.units.length;
+      for(var i=0; i<unitsLen; i++) {
+        units.push({
+          id: this.player.units[i].id,
+          life: this.player.units[i].life
+        });
+      }
+      localStorage.setItem('currentUnits', JSON.stringify(units));
 
       //save player items
       var items = [];
