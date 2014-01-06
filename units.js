@@ -168,6 +168,16 @@ var UnitTypes = [
             canShoot: true,
             gold: 30,
             movements: 1,
+        },
+        {
+            id: 'prairiehorseman',
+            name: 'prairie horseman',
+            image: 'prairiehorseman.png',
+            attack: 20,
+            defense: 10,
+            canShoot: false,
+            gold: 33,
+            movements: 2,
         }
         
     ];

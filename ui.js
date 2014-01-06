@@ -51,7 +51,7 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
     HuungryUI.gameObj.saveGame(false);    
     HuungryUI.showDialog('THE JOURNEY IS NOT OVER', 
         'We are working on adding more content to the game. If you would like to get free access to more levels send us your feedback in the form below or contact us on Twitter @ZenvaTweets.'
-        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){
+        ,[{text: 'REACH US', btnClass: 'button-home', callback: function(){
             window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
         }}]);
 };
