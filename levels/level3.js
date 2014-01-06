@@ -63,7 +63,7 @@ huungryGameMaps.level3.enemyArmies = [
                 },
                 {
                     id: 'wolf',
-                    power: 50,
+                    power: 150,
                     maxNum: 1
                 }
             ],
@@ -102,7 +102,7 @@ huungryGameMaps.level3.enemyArmies = [
                 },
                 {
                     id: 'wolf',
-                    power: 50,
+                    power: 150,
                     maxNum: 2
                 }
             ],
@@ -138,13 +138,13 @@ huungryGameMaps.level3.shops = [
         units: [
             {
                 id: 'halfling',
-                price: 25,
-                qty: 22
+                price: 20,
+                qty: 30
             },
             {
                 id: 'archer',
-                price: 45,
-                qty: 15
+                price: 30,
+                qty: 20
             }
         ]
     }
@@ -187,7 +187,7 @@ huungryGameMaps.level3.items = [
         x: 10,
         y: 10,
         name: 'Fire Spell',
-        attack: 20,
+        attack: 60,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
     },
@@ -205,7 +205,7 @@ huungryGameMaps.level3.items = [
         x: 13,
         y: 10,
         name: 'Ghornian Treasure',
-        gold: 100,
+        gold: 200,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },

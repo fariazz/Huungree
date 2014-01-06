@@ -128,6 +128,11 @@ huungryGameMaps.level2.shops = [
             {
                 id: 'peasant',
                 price: 15,
+                qty: 30
+            },
+            {
+                id: 'axeman',
+                price: 20,
                 qty: 20
             }
         ]

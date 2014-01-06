@@ -175,18 +175,18 @@ huungryGameMaps.level5.shops = [
         units: [
             {
                 id: 'wolf',
-                price: 45,
-                qty: 25
+                price: 30,
+                qty: 35
             },
             {
                 id: 'axeman',
-                price: 55,
-                qty: 25
+                price: 35,
+                qty: 45
             },
             {
                 id: 'archer',
-                price: 75,
-                qty: 20
+                price: 45,
+                qty: 30
             }                     
         ]
     }
@@ -237,7 +237,7 @@ huungryGameMaps.level5.items = [
         x: 9,
         y: 6,
         name: 'Fire Spell',
-        attack: 20,
+        attack: 40,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
     },
@@ -245,7 +245,7 @@ huungryGameMaps.level5.items = [
         x: 8,
         y: 7,
         name: 'Fire Spell',
-        attack: 20,
+        attack: 50,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
     },
@@ -253,7 +253,7 @@ huungryGameMaps.level5.items = [
         x: 2,
         y: 15,
         name: 'Fire Spell',
-        attack: 20,
+        attack: 60,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
     },

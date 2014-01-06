@@ -84,7 +84,12 @@ huungryGameMaps.level7.enemyArmies = [
                 {
                     id: 'troll',
                     power: 650,
-                    maxNum: 8
+                    maxNum: 6
+                },
+                {
+                    id: 'orc',
+                    power: 100,
+                    maxNum: 2
                 }
             ]
         ]
@@ -164,7 +169,12 @@ huungryGameMaps.level7.enemyArmies = [
                 {
                     id: 'tribalwarrior',
                     power: 700,
-                    maxNum: 8
+                    maxNum: 7
+                },
+                {
+                    id: 'lion',
+                    power: 40,
+                    maxNum: 1
                 }
             ]
         ]
@@ -180,7 +190,12 @@ huungryGameMaps.level7.enemyArmies = [
                 {
                     id: 'ritualwarrior',
                     power: 700,
-                    maxNum: 8
+                    maxNum: 6
+                },
+                {
+                    id: 'snake',
+                    power: 60,
+                    maxNum: 2
                 }
             ]
         ]
@@ -196,7 +211,12 @@ huungryGameMaps.level7.enemyArmies = [
                 {
                     id: 'ritualwarrior',
                     power: 700,
-                    maxNum: 8
+                    maxNum: 6
+                },
+                {
+                    id: 'lion',
+                    power: 60,
+                    maxNum: 2
                 }
             ]
         ]
@@ -220,23 +240,23 @@ huungryGameMaps.level7.shops = [
     {
         x: 4,
         y: 3,
-        name: 'MOON CORNER TAVERN',
+        name: 'LAKE BARNYARD',
         image: 'fence.png',
         units: [
             {
                 id: 'wolf',
-                price: 45,
-                qty: 25
+                price: 35,
+                qty: 45
             },
             {
                 id: 'lion',
-                price: 55,
+                price: 35,
                 qty: 30
             },
             {
                 id: 'centaur',
-                price: 85,
-                qty: 25
+                price: 45,
+                qty: 55
             }           
         ]
     }
@@ -255,7 +275,7 @@ huungryGameMaps.level7.items = [
         x: 7,
         y: 0,
         name: 'Gold',
-        gold: 140,
+        gold: 240,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -263,7 +283,7 @@ huungryGameMaps.level7.items = [
         x: 5,
         y: 7,
         name: 'Gold',
-        gold: 100,
+        gold: 200,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -271,7 +291,7 @@ huungryGameMaps.level7.items = [
         x: 13,
         y: 6,
         name: 'Gold',
-        gold: 80,
+        gold: 180,
         image: 'gold-pile.png',
         type: 'ITEM.GOLD'
     },

@@ -87,7 +87,11 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
             $('button[data-role="action-btn-'+i+'"]').bind('click ', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                HuungryUI.hideDialog();
+
+                if(!actions[i].noHide) {
+                    HuungryUI.hideDialog();
+                }
+                
                 actions[i].callback();
             });
         })(i);
@@ -188,7 +192,8 @@ HuungryUI.showPlayerInfoWindow = function() {
     html += '</div>';
     HuungryUI.showDialog('MY ARMY',html
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog},
-        {text: 'MERGE UNITS', btnClass: 'button-home', callback: HuungryUI.showArrangeUnitsWindow}]);
+        {text: 'MERGE', btnClass: 'button-home', callback: HuungryUI.showArrangeUnitsWindow},
+        {text: 'EXPEL', btnClass: 'button-home', callback: HuungryUI.showExpelUnitsWindow}]);
 }
 /**
 show arrange units window
@@ -409,3 +414,64 @@ HuungryUI.showGoPremiumDialog = function(gameObj) {
             window.open('http://zenva.com', '_blank', 'location=yes');
         }}]);
 };
+
+/**
+show expel units window
+*/
+HuungryUI.showExpelUnitsWindow = function() {
+    HuungryUI.hideDialog();
+    var html = '<div style="clear:both;height:62px;">';
+    for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
+        html += '<div class="unit-cell" data-index="'+i+'">\
+                    <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
+                    '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+  
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
+        
+        if(i == 3) {
+            html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
+        }
+    }
+    html += '</div>';
+    var help = 'Touch the units you want to expel from your army.';
+    HuungryUI.showDialog('EXPEL UNITS',html
+        ,[
+            {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.showPlayerInfoWindow},
+            {text: 'EXPEL UNIT', noHide: true, btnClass: 'button-hidden', callback: function() {
+                if(HuungryUI.selectedUnit) {
+                    if(HuungryUI.gameObj.player.units.length > 1) {
+                        HuungryUI.gameObj.player.units.splice(HuungryUI.selectedUnit,1);
+                        HuungryUI.showExpelUnitsWindow();
+                    }
+                    else {
+                        $('.zva_dialog_help').html('You can\'t fire all of your army!');
+                    }                    
+                }
+            }}
+        ], help);
+
+    $('.unit-cell').on('click ', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var newIndex = $(this).attr('data-index');
+        if(HuungryUI.selectedUnit) {
+            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('background-color', 'transparent');
+            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('opacity', '1');   
+        }
+        
+        HuungryUI.selectedUnit = newIndex;
+        $(this).css('background-color', '#F6EBC6');
+        $(this).css('opacity', '0.5');
+        
+        //show use button
+        $($('button')[1]).removeClass('button-hidden');
+        $($('button')[1]).addClass('button-home');
+
+        //show help
+        $('.zva_dialog_help').html('Are you sure you want to expel this unit?');
+        
+        
+    });
+}

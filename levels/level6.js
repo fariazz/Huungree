@@ -165,13 +165,13 @@ huungryGameMaps.level6.shops = [
         units: [
             {
                 id: 'dwarfaxe',
-                price: 45,
-                qty: 25
+                price: 30,
+                qty: 45
             },
             {
                 id: 'insectman',
-                price: 75,
-                qty: 25
+                price: 45,
+                qty: 45
             }                  
         ]
     }
@@ -238,7 +238,7 @@ huungryGameMaps.level6.items = [
         x: 1,
         y: 16,
         name: 'Fire Spell',
-        attack: 40,
+        attack: 70,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
     },
