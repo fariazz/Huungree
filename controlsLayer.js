@@ -33,7 +33,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
     //gold info
     this.goldValue = new lime.Label().setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize*7.5).setText()
-        .setFontColor('#000000').setFontSize(14).setFontFamily('Courier').setFontWeight('bold');
+        .setFontColor('#000000').setFontSize(11).setFontFamily('Courier').setFontWeight('bold');
     this.sideBar.appendChild(this.goldValue);    
     
     var goldIcon = new lime.Sprite().setAnchorPoint(0,0)
@@ -44,7 +44,7 @@ huungry.ControlsLayer.prototype.init = function() {
 
     //goals info
     this.goalValue = new lime.Label().setPosition(this.gameObj.tileSize/2,this.gameObj.tileSize*5.9).setText()
-        .setFontColor('#000000').setFontSize(14).setFontFamily('Courier').setFontWeight('bold');
+        .setFontColor('#000000').setFontSize(11).setFontFamily('Courier').setFontWeight('bold');
     this.sideBar.appendChild(this.goalValue);    
     
     var goalIcon = new lime.Sprite().setAnchorPoint(0,0)

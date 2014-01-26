@@ -264,6 +264,9 @@ HuungryUI.showItemsWindow = function() {
             break;     
             case 'ITEM.DEFENSE-SPELL':
                 info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
+            break;
+            case 'ITEM.PARALYZE-SPELL':
+                info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
             break;            
         }
 
@@ -296,7 +299,10 @@ HuungryUI.showBattleItemsWindow = function() {
             break;  
             case 'ITEM.DEFENSE-SPELL':
                 info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
-            break;             
+            break;     
+            case 'ITEM.PARALYZE-SPELL':
+                info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
+            break;           
         }
 
         html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
@@ -409,7 +415,7 @@ HuungryUI.showGoPremiumDialog = function(gameObj) {
         'You can\'t continue exploring the exciting continent of Tamaca unless you buy the developer a rum & coke ;)<br/><br/> \
         Use the link below to get the Premium version and get access to hours of gameplay, all the way to the mysterious city of Huungree.'
         ,[{text: 'GO PREMIUM', btnClass: 'button-home', callback: function(){
-            window.open('http://zenva.com', '_blank', 'location=yes');
+            window.open('https://play.google.com/store/apps/details?id=com.zenva.huungreefull', '_blank', 'location=yes');
         }}]);
 };
 

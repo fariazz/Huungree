@@ -26,6 +26,9 @@ huungry.Item.prototype.init = function() {
     else if(this.type == 'ITEM.DEFENSE-SPELL') {
         this.numHits = Math.max(1, parseInt(this.numHits * (1 + 0.5*(Math.random() - Math.random()))));
     }
+    else if(this.type == 'ITEM.PARALIZE-SPELL') {
+        this.numHits = Math.max(1, parseInt(this.numHits * (1 + 0.5*(Math.random() - Math.random()))));
+    }
 
     this.showGoalIcon();  
     
@@ -85,10 +88,21 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
 /**
 * use an item to protect a unit
 *
- * @param huungry.Unit attackedUnit
+ * @param huungry.Unit spellTargetUnit
  */
-huungry.Item.prototype.protectUnit = function(attackedUnit) {
-    attackedUnit.defenseSpell(this.numHits);
+huungry.Item.prototype.protectUnit = function(spellTargetUnit) {
+    spellTargetUnit.defenseSpell(this.numHits);
+    this.gameObj.fightEngine.hideItemTargets();
+    this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+};
+
+/**
+* paralize unit
+*
+ * @param huungry.Unit spellTargetUnit
+ */
+huungry.Item.prototype.paralyzeUnit = function(spellTargetUnit) {
+    spellTargetUnit.paralyzeSpell(this.numHits);
     this.gameObj.fightEngine.hideItemTargets();
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
 };

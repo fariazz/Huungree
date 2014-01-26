@@ -273,98 +273,140 @@ huungry.FightEngine.prototype.playTurn = function() {
     this.updateDead();
     
     if(!this.gameObj.player.inFightScene) {
-        return false;
+        return;
     }
     
     this.updateNextMovingUnits();
+
+    if(this.checkParalyzedUnit()) {
+        this.remainingMoves = 0;
+        this.playTurn();
+        return;
+    }
 
     if(this.playerMoves) {
         //show gamepad for current unit
         this.showCurrentGamepad();        
     }
     else {
-        //enemy moves
-        var enemy = this.enemyUnits[this.currentEnemyIndex]
-        var unitPos = enemy.getPosition();
+        this.enemyPlayTurn();
+    }
+}
+
+/**
+* check whether the current unit is paralyzed. If so skip turn
+*/
+huungry.FightEngine.prototype.checkParalyzedUnit = function() {
+    
+    var unit;
+    if(this.playerMoves) {
+        unit = this.playerUnits[this.currentPlayerIndex]
+    }
+    else {
+        unit = this.enemyUnits[this.currentEnemyIndex]
+    }
+
+    //check for paralyzed
+    if(unit.numTurnsParalyzed) {
+        this.showBrief('can\'t move!', unit.getCenter());
+        unit.numTurnsParalyzed--;
+
+        if(unit.numTurnsParalyzed == 0) {
+            unit.clearVisualEffects('paralyze spell is up!');            
+        }
+        return true;        
+    }
+    return false;
+}
+
+/**
+* enemy play turn
+*/
+huungry.FightEngine.prototype.enemyPlayTurn = function() {
+
+    //enemy moves
+    var enemy = this.enemyUnits[this.currentEnemyIndex]
+
+    var unitPos = enemy.getPosition();
+    
+    //attach adjacent enemy if any
+    var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
+    if(adjacentEnemy) {
+        enemy.attackUnit(adjacentEnemy);
+    }
+    
+    else {
+        //if range decide between shooting and moving
+        var willShoot = Math.random();
         
-        //attach adjacent enemy if any
-        var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
-        if(adjacentEnemy) {
-            enemy.attackUnit(adjacentEnemy);
+        if(enemy.canShoot && willShoot <= this.gameObj.shootProbability) {
+            //define target
+            var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
+            var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
+            
+            //create bullet
+            var bullet = new lime.Circle().setPosition(unitPos.x+this.gameObj.tileSize/2, unitPos.y+this.gameObj.tileSize/2)
+                .setSize(this.gameObj.tileSize/5,this.gameObj.tileSize/5).setFill('#B0171F');
+            this.fightLayer.appendChild(bullet);
+            
+            var movement = new lime.animation
+                .MoveTo(targetUnitPos.x+this.gameObj.tileSize/2,targetUnitPos.y+this.gameObj.tileSize/2)
+                .setDuration(this.gameObj.movementDuration);                    
+            bullet.runAction(movement); 
+            
+            var layer = this.fightLayer;
+            var currentObj = this;
+            goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                layer.removeChild(bullet);
+                if(Math.random() < currentObj.gameObj.accuracyProbability) {
+                    enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
+                }
+                else {
+                    enemy.endMove();   
+                    currentObj.showBrief('missed!', enemy.getCenter());
+                }
+            })
         }
         
         else {
-            //if range decide between shooting and moving
-            var willShoot = Math.random();
-            
-            if(enemy.canShoot && willShoot <= this.gameObj.shootProbability) {
-                //define target
-                var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
-                var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
-                
-                //create bullet
-                var bullet = new lime.Circle().setPosition(unitPos.x+this.gameObj.tileSize/2, unitPos.y+this.gameObj.tileSize/2)
-                    .setSize(this.gameObj.tileSize/5,this.gameObj.tileSize/5).setFill('#B0171F');
-                this.fightLayer.appendChild(bullet);
-                
-                var movement = new lime.animation
-                    .MoveTo(targetUnitPos.x+this.gameObj.tileSize/2,targetUnitPos.y+this.gameObj.tileSize/2)
-                    .setDuration(this.gameObj.movementDuration);                    
-                bullet.runAction(movement); 
-                
-                var layer = this.fightLayer;
-                var currentObj = this;
-                goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                    layer.removeChild(bullet);
-                    if(Math.random() < currentObj.gameObj.accuracyProbability) {
-                        enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
-                    }
-                    else {
-                        enemy.endMove();   
-                        currentObj.showBrief('missed!', enemy.getCenter());
-                    }
-                })
+            //define target player unit
+            var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);                
+            var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
+            var diffX = targetUnitPos.x - unitPos.x,
+                diffY = targetUnitPos.y - unitPos.y;
+
+            var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
+                dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
+
+            var targetX = unitPos.x + this.gameObj.tileSize*dX,
+                targetY = unitPos.y + this.gameObj.tileSize*dY;
+
+            //check blocked
+            var targetCell = this.map.getColRowFromXY(targetX,targetY);
+            var targetType = this.map.getTargetType(targetCell.col, targetCell.row);
+
+            //if not blocked move
+            if(targetType == this.gameObj.FREE_TARGET) {
+                if(this.gameObj.animationOn) {
+                    var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
+                    enemy.runAction(movement);     
+
+                    var engine = this;
+                    goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                        engine.remainingMoves--;
+                        engine.playTurn();
+                    })
+                }
             }
-            
+            //otherwise pass
             else {
-                //define target player unit
-                var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);                
-                var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
-                var diffX = targetUnitPos.x - unitPos.x,
-                    diffY = targetUnitPos.y - unitPos.y;
-
-                var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
-                    dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
-
-                var targetX = unitPos.x + this.gameObj.tileSize*dX,
-                    targetY = unitPos.y + this.gameObj.tileSize*dY;
-
-                //check blocked
-                var targetCell = this.map.getColRowFromXY(targetX,targetY);
-                var targetType = this.map.getTargetType(targetCell.col, targetCell.row);
-
-                //if not blocked move
-                if(targetType == this.gameObj.FREE_TARGET) {
-                    if(this.gameObj.animationOn) {
-                        var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
-                        enemy.runAction(movement);     
-
-                        var engine = this;
-                        goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                            engine.remainingMoves--;
-                            engine.playTurn();
-                        })
-                    }
-                }
-                //otherwise pass
-                else {
-                    this.remainingMoves = 0;
-                    this.playTurn();
-                }
-            }                        
-        }   
-    }
+                this.remainingMoves = 0;
+                this.playTurn();
+            }
+        }                        
+    }   
 }
+
 
 
 /**
@@ -649,7 +691,7 @@ huungry.FightEngine.prototype.showItemTargets = function() {
     var item = this.gameObj.player.items[HuungryUI.selectedItem];
 
     //show range attack targets if attack spell
-    if(item.type == 'ITEM.ATTACK-SPELL') {
+    if(item.type == 'ITEM.ATTACK-SPELL' || item.type == 'ITEM.PARALYZE-SPELL') {
        
         this.rangeTargets = new Array();
         var enemyPos;
@@ -662,8 +704,16 @@ huungry.FightEngine.prototype.showItemTargets = function() {
             
             (function(i, currentObj) {
                 goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
-                    e.preventDefault();                         
-                    item.attackUnit(currentObj.enemyUnits[i]);  
+                    e.preventDefault(); 
+
+                    if(item.type == 'ITEM.ATTACK-SPELL')  {
+                        item.attackUnit(currentObj.enemyUnits[i]);  
+                    }   
+                    else if(item.type == 'ITEM.PARALYZE-SPELL') {
+                        item.paralyzeUnit(currentObj.enemyUnits[i]);
+                        currentObj.showBrief('unit paralyzed!', currentObj.DEFAULT_MSG_POS);
+                    }                   
+                    
                 });
             })(i, currentObj);
                 
@@ -742,7 +792,8 @@ huungry.FightEngine.prototype.sendStats = function() {
             device_id: device_id,
             level: that.gameObj.currentLevel,
             gold: that.gameObj.player.gold,
-            currTimestamp: (new Date).getTime()
+            currTimestamp: (new Date).getTime(),
+            isFullVersion: that.gameObj.isFullVersion ? 1 : 0
         })
     });
 }

@@ -5,7 +5,7 @@ goog.provide('huungry.GameObj');
  */
 huungry.GameObj = function(document) {
 
-    this.GAME_VERSION = '0.2.0';
+    this.GAME_VERSION = '0.3.0';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -352,7 +352,10 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     this.splashScreen.aboutBtn = new lime.Sprite().
             setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
             .setPosition(this.screenWidth/2, this.tileSize*6.8);
-    var aboutBtnTxt = new lime.Label().setText('ABOUT').setPosition(0,0).
+
+    var aboutTxt = this.isFullVersion ? 'ABOUT' : 'UPGRADE';
+
+    var aboutBtnTxt = new lime.Label().setText(aboutTxt).setPosition(0,0).
         setFontColor('#E9DDB9').setFontSize(16);
    this.splashScreen.aboutBtn.appendChild(aboutBtnTxt);
 
@@ -369,8 +372,13 @@ huungry.GameObj.prototype.showSplashScreen = function() {
         currentObj.stopSound();
         currentObj.loadGame();
     });
-    goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {        
+    goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {   
+      if (currentObj.isFullVersion) {
         HuungryUI.showAboutDialog(currentObj);
+      }   
+      else {
+        window.open('https://play.google.com/store/apps/details?id=com.zenva.huungreefull', '_blank', 'location=yes');
+      }
     });
     
     this.director.replaceScene(this.splashScreen.scene); 
@@ -610,7 +618,8 @@ huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
             level: that.currentLevel,
             unsavedMinutes: that.unsavedMinutes ? that.unsavedMinutes : 0,
             timeInCurrentLevel: that.timeInCurrentLevel,
-            currTimestamp: (new Date).getTime()
+            currTimestamp: (new Date).getTime(),
+            isFullVersion: that.isFullVersion ? 1 : 0
           }
       })
       .done(function(data) {    

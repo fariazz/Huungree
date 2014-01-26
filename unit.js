@@ -59,8 +59,7 @@ huungry.Unit.prototype.attackUnit = function(attackedUnit) {
     else {
         attackedUnit.numDefenseHits--;
         if(attackedUnit.numDefenseHits == 0) {
-            attackedUnit.removeChild(attackedUnit.effectSprite);
-            this.fightEngine.showBrief('defense spell is up!', attackedUnit.getCenter());
+            attackedUnit.clearVisualEffects('defense spell is up!');            
         }
     }
     attackedUnit.life -= damage;
@@ -138,4 +137,25 @@ huungry.Unit.prototype.defenseSpell = function(numDefenseHits) {
         .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('#11E38C').setOpacity(0.3);
     this.appendChild(this.effectSprite);
+}
+
+/**
+* set paralyze spell
+* @param int numTurnsHits
+*/
+huungry.Unit.prototype.paralyzeSpell = function(numTurns) {
+    this.numTurnsParalyzed = numTurns;
+    this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
+        .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('#5A5953').setOpacity(0.7);
+    this.appendChild(this.effectSprite);
+}
+
+/**
+* clear visual effectSprite
+* @param string brief optional text to show
+*/
+huungry.Unit.prototype.clearVisualEffects = function(brief) {
+    this.removeChild(this.effectSprite);
+    this.fightEngine.showBrief('defense spell is up!', this.getCenter());
 }

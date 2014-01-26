@@ -59,6 +59,9 @@ huungry.Player.prototype.playerMoved = function() {
                     case 'ITEM.DEFENSE-SPELL':
                         message = "Use in battle to protect a unit against "+this.map.elements[i].numHits+" enemy hits";
                         break;
+                    case 'ITEM.PARALYZE-SPELL':
+                        message = "Use in battle to freeze an enemy unit for "+this.map.elements[i].numHits+" turns";
+                        break;
                     case 'ITEM.LANDMARK':
                         message = this.map.elements[i].text;
                         break;       

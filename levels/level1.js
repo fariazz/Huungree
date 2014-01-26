@@ -102,15 +102,48 @@ huungryGameMaps.level1.items = [
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
-    //borrar
-    /*{
+    
+    {
         x: 2,
         y: 2,
-        name: 'Defense Spell',
-        numHits: 5,
-        image: 'shield.png',
-        type: 'ITEM.DEFENSE-SPELL'
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
     },
+    {
+        x: 4,
+        y: 2,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 3,
+        y: 4,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 3,
+        y: 2,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 2,
+        y: 4,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    /*
     {
         x: 2,
         y: 3,
