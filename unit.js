@@ -122,7 +122,7 @@ huungry.Unit.prototype.refreshLifeBar = function() {
 get unit power
 */
 huungry.Unit.prototype.getPower = function() {
-    var alfa_shoot = this.canShoot ? 2 : 1;
+    var alfa_shoot = this.canShoot ? 1.5 : 1;
     var alfa_mov = 1 + (this.movements-1) * 0.5;
     return this.life * this.attack * alfa_shoot * alfa_mov;
 }

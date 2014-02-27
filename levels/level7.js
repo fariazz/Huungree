@@ -144,8 +144,8 @@ huungryGameMaps.level7.enemyArmies = [
     },
     {
         isQuestGoal: true,
-        x: 18,
-        y: 7,
+        x: 17,
+        y: 8,
         image: 'tribalwarrior.png',
         background: 'dirt_background.png',
         unitsSummary: [
@@ -161,7 +161,7 @@ huungryGameMaps.level7.enemyArmies = [
     {
         isQuestGoal: true,
         x: 1,
-        y: 10,
+        y: 8,
         image: 'tribalwarrior.png',
         background: 'dirt_background.png',
         unitsSummary: [
@@ -326,7 +326,31 @@ huungryGameMaps.level7.items = [
         attack: 80,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
-    }
+    },
+    {
+        x: 16,
+        y: 8,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 1,
+        y: 9,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 1,
+        y: 10,
+        name: 'Gold',
+        gold: 200,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
+    },
 ];
 
 huungryGameMaps.level7.quest = {

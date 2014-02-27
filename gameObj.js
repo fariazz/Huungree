@@ -5,7 +5,10 @@ goog.provide('huungry.GameObj');
  */
 huungry.GameObj = function(document) {
 
-    this.GAME_VERSION = '0.3.0';
+    this.GAME_VERSION = '0.3.1';
+    this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1'];
+    this.developmentMode = true;
+    this.initialLevel = 'level12';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -29,10 +32,10 @@ huungry.GameObj = function(document) {
     this.timeInCurrentLevel = 0;
     this.notifyInterval = null;
 
-    this.powerNumFactor = 0.5;
+    this.powerNumFactor = 0.4;
 
     //probability to reach target for range attack units
-    this.accuracyProbability = 0.65;
+    this.accuracyProbability = 0.6;
 
     this.screenNumTilesX = this.screenWidth/this.tileSize;
     this.screenNumTilesY = this.screenHeight/this.tileSize;
@@ -105,7 +108,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
         .setLevel(levelName);
     this.map.init();
     this.map.initLevel(mapItems, enemyArmies, mapShops);
-    
+
     if(!darkness) {
       //init map visibility    
       this.darkness = new Array();
@@ -118,8 +121,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     }
     else {
       this.darkness = darkness;
-    }
-    
+    }    
     
     //place player
     var posRC;
@@ -366,7 +368,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     
     var currentObj = this;
     goog.events.listen(this.splashScreen.startBtn,['mousedown', 'touchstart'], function(e) {              
-        currentObj.runLevel('level1');
+        currentObj.runLevel(currentObj.initialLevel);
     });
     goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
         currentObj.stopSound();
@@ -393,7 +395,7 @@ huungry.GameObj.prototype.loadGame = function() {
     //check if the current game version is compatible with the saved one
     var savedVersion = localStorage.getItem('gameVersion');
 
-    if(this.GAME_VERSION != savedVersion) {
+    if($.inArray(savedVersion, this.COMPATIBLE_VERSIONS) == -1) {
       HuungryUI.showDialog(
         'OOPS!', 
         'The new game version is not compatible with the previous saved game, so you will have to start from scratch. Sorry about the inconvenience and thank you so much for your support!', 
@@ -434,7 +436,6 @@ huungry.GameObj.prototype.loadGame = function() {
     //load analytics
     //console.log('time in level:'+localStorage.getItem('timeInCurrentLevel'));
     this.timeInCurrentLevel = parseFloat(localStorage.getItem('timeInCurrentLevel'));
-
     this.runLevel(localStorage.getItem('currentLevel'), playerPos, darkness, mapItems, enemyArmies, mapShops);
   }   
 }

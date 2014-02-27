@@ -152,7 +152,7 @@ huungryGameMaps.level8.enemyArmies = [
         ]
     },
     {
-        isQuestGoal: true,
+        isQuestGoal: false,
         x: 0,
         y: 9,
         image: 'lion.png',
@@ -283,23 +283,31 @@ huungryGameMaps.level8.items = [
         type: 'ITEM.LANDMARK',
         text: 'The Kooghul appears as a small shrine emanating the black energy that powers the mystical chamans. \
         Not without fear, you order your troops to burn it to the ground.'
-    }
-    /*{
+    },
+    {
         x: 9,
         y: 9,
-        name: 'Afterlife Spell',
-        numHits: 5,
-        image: 'scroll-skull.png',
-        type: 'ITEM.AFTERLIFE-SPELL'
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
     },
     {
         x: 9,
         y: 5,
-        name: 'Afterlife Spell',
-        numHits: 5,
-        image: 'scroll-skull.png',
-        type: 'ITEM.AFTERLIFE-SPELL'
-    }  */
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 9,
+        y: 2,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    }    
 
 ];
 

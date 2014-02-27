@@ -101,9 +101,9 @@ huungryGameMaps.level1.items = [
         gold: 50,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
-    },
+    }
     
-    {
+    /*{
         x: 2,
         y: 2,
         name: 'Paralyze Spell',
@@ -142,7 +142,7 @@ huungryGameMaps.level1.items = [
         numHits: 3,
         image: 'scroll-paralyze.png',
         type: 'ITEM.PARALYZE-SPELL'
-    },
+    },*/
     /*
     {
         x: 2,

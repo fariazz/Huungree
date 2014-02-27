@@ -422,6 +422,7 @@ huungry.Map.prototype.getAdjacentElement = function(element, elementType) {
  */
 huungry.Map.prototype.setLevel = function(level) {
     this.level = huungryGameMaps[level];
+
     this.gameObj.width = this.level.width;
     this.gameObj.height = this.level.height;
     this.setJsonMap(this.level.tiledData,'blocked');

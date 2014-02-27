@@ -100,17 +100,17 @@ huungryGameMaps.level9.enemyArmies = [
             [              
                 {
                     id: 'prairiehorseman',
-                    power: 1200,
+                    power: 1500,
                     maxNum: 5
                 },
                 {
                     id: 'elitearcher',
-                    power: 1200,
+                    power: 1500,
                     maxNum: 3
                 },
                 {
                     id: 'dwarfaxe',
-                    power: 500,
+                    power: 700,
                     maxNum: 3
                 }
             ]
@@ -126,23 +126,23 @@ huungryGameMaps.level9.enemyArmies = [
             [              
                 {
                     id: 'elitearcher',
-                    power: 1200,
+                    power: 1400,
                     maxNum: 5
                 },
                 {
                     id: 'armoredaxeman',
-                    power: 800,
+                    power: 1200,
                     maxNum: 3
                 },
                 {
                     id: 'axeman',
-                    power: 500,
+                    power: 800,
                     maxNum: 2
                 },
                 {
                     id: 'wolf',
-                    power: 500,
-                    maxNum: 2
+                    power: 700,
+                    maxNum: 4
                 }
             ]
         ]
@@ -259,14 +259,15 @@ huungryGameMaps.level9.items = [
         image: 'shield.png',
         type: 'ITEM.DEFENSE-SPELL'
     },
-    /*{
-        x: 5,
-        y: 3,
-        name: 'Afterlife Spell',
-        image: 'scroll-skull.png',
-        type: 'ITEM.AFTERLIFE-SPELL'
-    },
-    }  */
+    {
+        x: 10,
+        y: 12,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    }   
+ 
 
 ];
 

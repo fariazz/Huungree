@@ -10,7 +10,7 @@ huungryGameMaps.level10.playerInitialX = 13;
 huungryGameMaps.level10.playerInitialY = 0;
 huungryGameMaps.level10.tiledData = { "layers":[        
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 0, 0, 193, 0, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 193, 193, 0, 0, 193, 193, 193, 0, 0, 193, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 193, 0, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 193, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 0, 0, 193, 0, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 193, 193, 0, 0, 193, 193, 193, 0, 200, 193, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 193, 0, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 193, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0],
          "height":9,
          "name":"blocked",
          "opacity":0.75,
@@ -33,7 +33,7 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'armoredaxeman',
-                    power: 800,
+                    power: 900,
                     maxNum: 8
                 },                
             ]
@@ -49,7 +49,7 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'insectman',
-                    power: 800,
+                    power: 1200,
                     maxNum: 8
                 },                
             ]
@@ -65,7 +65,7 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'wolf',
-                    power: 800,
+                    power: 1200,
                     maxNum: 8
                 },                
             ]
@@ -81,12 +81,12 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'troll',
-                    power: 200,
+                    power: 800,
                     maxNum: 2
                 },
                 {
                     id: 'snake',
-                    power: 200,
+                    power: 400,
                     maxNum: 2
                 },
                 {
@@ -107,12 +107,12 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'prairiehorseman',
-                    power: 1200,
+                    power: 1400,
                     maxNum: 5
                 },
                 {
                     id: 'elitearcher',
-                    power: 300,
+                    power: 600,
                     maxNum: 2
                 }
             ]
@@ -133,8 +133,8 @@ huungryGameMaps.level10.enemyArmies = [
                 },
                 {
                     id: 'snake',
-                    power: 200,
-                    maxNum: 2
+                    power: 400,
+                    maxNum: 4
                 }
             ]
         ]
@@ -149,13 +149,13 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'elitearcher',
-                    power: 1000,
+                    power: 1200,
                     maxNum: 6
                 },
                 {
                     id: 'armoredaxeman',
-                    power: 200,
-                    maxNum: 2
+                    power: 500,
+                    maxNum: 3
                 }
             ]
         ]
@@ -170,7 +170,7 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'orc',
-                    power: 700,
+                    power: 1000,
                     maxNum: 6
                 }               
             ]
@@ -186,13 +186,13 @@ huungryGameMaps.level10.enemyArmies = [
             [              
                 {
                     id: 'armoredaxeman',
-                    power: 1000,
+                    power: 1200,
                     maxNum: 6
                 },
                 {
                     id: 'axeman',
                     power: 400,
-                    maxNum: 3
+                    maxNum: 4
                 }               
             ]
         ]
@@ -208,17 +208,17 @@ huungryGameMaps.level10.shops = [
         units: [
             {
                 id: 'armoredaxeman',
-                price: 50,
+                price: 70,
                 qty: 40
             },
             {
                 id: 'elitearcher',
-                price: 45,
+                price: 95,
                 qty: 20
             },
             {
                 id: 'prairiehorseman',
-                price: 70,
+                price: 120,
                 qty: 30
             }              
         ]
@@ -231,7 +231,7 @@ huungryGameMaps.level10.shops = [
         units: [
             {
                 id: 'insectman',
-                price: 25,
+                price: 45,
                 qty: 55
             }            
         ]
@@ -339,4 +339,4 @@ huungryGameMaps.level10.quest = {
     totalNumGoals: 8
 };
 
-huungryGameMaps.level10.nextLevel = null;
+huungryGameMaps.level10.nextLevel = 'level11';

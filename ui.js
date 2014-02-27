@@ -72,7 +72,7 @@ HuungryUI.showAboutDialog = function(gameObj) {
 */
 HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) { 
     HuungryUI.hideDialog();   
-    setTimeout(function() {HuungryUI.gameObj.director.setPaused(true);}, 100);
+    HuungryUI.gameObj.director.setPaused(true);
     var height = $(window).height();
     //$('.lime-director').css('top', height);
     $('.zva_dialog').css('display', 'block');
