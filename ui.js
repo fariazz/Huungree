@@ -72,7 +72,8 @@ HuungryUI.showAboutDialog = function(gameObj) {
 */
 HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) { 
     HuungryUI.hideDialog();   
-    HuungryUI.gameObj.director.setPaused(true);
+    //HuungryUI.gameObj.director.setPaused(true);
+    setTimeout(function() {HuungryUI.gameObj.director.setPaused(true);}, 200);
     var height = $(window).height();
     //$('.lime-director').css('top', height);
     $('.zva_dialog').css('display', 'block');
@@ -267,21 +268,56 @@ HuungryUI.showItemsWindow = function() {
             break;
             case 'ITEM.PARALYZE-SPELL':
                 info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
+            break;  
+            case 'ITEM.KEY':
+                info = "You can open a "+HuungryUI.gameObj.player.items[i].attribute+" door with this key";
             break;            
         }
 
-        html += '<div class="item-cell" data-info="'+info+'">\
+        html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
                 <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
                 <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
                 '</div>';  
+        
     }
     html += '</div>';
     var help = 'Touch items for info.';
+    var selectedItem;
+
     HuungryUI.showDialog('ITEMS',html
-        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);
+        ,[
+        {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog},
+        {text: 'DROP', btnClass: 'button-home', noHide: true, callback: function(){
+            if(selectedItem) {
+                var item = HuungryUI.gameObj.player.items[selectedItem];
+
+                if(!_.contains(['ITEM.KEY'], item.type)) {
+                    HuungryUI.gameObj.player.items.splice(selectedItem,1);
+                    HuungryUI.showItemsWindow();
+                }
+                else if(item.type == 'ITEM.KEY') {
+                    $('.zva_dialog_help').html('You can\'t drop keys or may get stuck in the level!');
+                }
+                
+            }
+            else {
+                $('.zva_dialog_help').html('You haven\'t selected an item to drop');
+            }
+        }}
+    ], help);
+    
     $('.item-cell').on('click ', function(e){
         e.preventDefault();
         e.stopPropagation();
+        $('.item-cell').css('background-color', 'inherit');
+        $('.item-cell').css('opacity', 1);
+        $(this).css('background-color', '#F6EBC6');
+        $(this).css('opacity', '0.5');
+
+        //select item
+        selectedItem = $(this).attr('data-index');
+
+        //show item help
         $('.zva_dialog_help').html($(this).attr('data-info'));
     });
 }
@@ -305,11 +341,12 @@ HuungryUI.showBattleItemsWindow = function() {
             break;           
         }
 
-        html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
+        if(!_.contains(['ITEM.KEY'], HuungryUI.gameObj.player.items[i].type)) {
+            html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
                 <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
                 <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
                 '</div>';  
-        
+        }
     }
     html += '</div>';
     var help = 'Touch items for info and usage.';

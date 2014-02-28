@@ -237,17 +237,17 @@ huungryGameMaps.level11.enemyArmies = [
                 {
                     id: 'ritualwarrior',
                     power: 1000,
-                    maxNum: 5
+                    maxNum: 4
                 },
                 {
                     id: 'tribalwarrior',
                     power: 1000,
-                    maxNum: 5
+                    maxNum: 4
                 },
                 {
                     id: 'snake',
-                    power: 500,
-                    maxNum: 5
+                    power: 800,
+                    maxNum: 3
                 }           
             ]
         ]

@@ -8,7 +8,7 @@ huungry.GameObj = function(document) {
     this.GAME_VERSION = '0.3.1';
     this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1'];
     this.developmentMode = true;
-    this.initialLevel = 'level12';
+    this.initialLevel = 'level1';
 
     this.screenWidth = 480;
     this.screenHeight= 320;

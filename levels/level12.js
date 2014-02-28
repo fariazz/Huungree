@@ -379,7 +379,7 @@ huungryGameMaps.level12.items = [
         type: 'ITEM.GOLD'
     },
     {
-        x: 10,
+        x: 11,
         y: 9,
         name: 'Defense Spell',
         numHits: 5,
@@ -452,21 +452,21 @@ huungryGameMaps.level12.items = [
         text: 'You\'ve reach the exit of the Grey Forest'
     },
     {
-        x: 3,
-        y: 9,
+        x: 9,
+        y: 3,
         name: 'Green Key',
-        color: 'green',
-        image: '',
+        attribute: 'green',
+        image: 'key-green.png',
         type: 'ITEM.KEY',
     },
     {
         x: 6,
         y: 11,
         name: 'Green Door',
-        color: 'green',
-        image: '',
+        attribute: 'green',
+        image: 'door-green.png',
         type: 'ITEM.DOOR',
-    }
+    },
 ];
 
 huungryGameMaps.level12.quest = {

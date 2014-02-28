@@ -155,7 +155,7 @@ var UnitTypes = [
             image: 'elfswordman.png',
             attack: 19,
             defense: 9,
-            canShoot: true,
+            canShoot: false,
             gold: 35,
             movements: 1,
         },

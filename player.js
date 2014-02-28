@@ -49,6 +49,7 @@ huungry.Player.prototype.playerMoved = function() {
                 //item dialog content
                 var item = this.map.elements[i];
                 var message;
+                var title = that.map.elements[i].name;
                 switch(item.type) {
                     case 'ITEM.GOLD':
                         message = "You've found "+this.map.elements[i].gold+'\npieces of gold.';
@@ -64,6 +65,30 @@ huungry.Player.prototype.playerMoved = function() {
                         break;
                     case 'ITEM.LANDMARK':
                         message = this.map.elements[i].text;
+                        break;
+                    case 'ITEM.KEY':
+                        message = "You've found a "+this.map.elements[i].attribute+" key! use it to open a door of the same color";
+                        break;       
+                    case 'ITEM.DOOR':
+                        var key, pos;
+                        _.each(this.items, function(element, index){
+                            if(element.type == 'ITEM.KEY' && element.attribute == this.map.elements[i].attribute) {
+                                pos = index;
+                                key = element;
+                            }
+                        }, this);
+
+                        if(key) {
+                            message = 'You\'ve opened the door with the '+this.map.elements[i].attribute+' key';
+                            this.items.splice(pos, 1);
+                            this.map.elements[i].die();   
+
+                        }
+                        else {
+                            message = 'You don\'t have the key to this door';
+                            this.setPosition(this.previousPosition.x, this.previousPosition.y);
+                            this.playerMoved();
+                        }
                         break;       
                 }
                 
@@ -71,11 +96,11 @@ huungry.Player.prototype.playerMoved = function() {
                     this.gameObj.numItems--;  
                 }                              
 
-                HuungryUI.showDialog(that.map.elements[i].name,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
+                HuungryUI.showDialog(title,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
                     ,[{text: 'OK', btnClass: 'button-home', callback: function() {
                         HuungryUI.hideDialog();     
                                                 
-                        if(item.type != 'ITEM.LANDMARK') {
+                        if(!_.contains(['ITEM.LANDMARK', 'ITEM.DOOR'],item.type)) {
                             that.collect(item);  
                             that.gameObj.checkQuestCompletion(); 
                         }
@@ -110,7 +135,7 @@ huungry.Player.prototype.collect = function(item, loading) {
             item.die();         
             break;
         default:
-            if(this.items.length < 12) {
+            if(this.items.length < 12 || item.type == 'ITEM.KEY') {
                 this.items.push(item.clone());
                 item.die();
             }

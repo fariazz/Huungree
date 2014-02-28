@@ -250,7 +250,23 @@ huungryGameMaps.level6.items = [
         image: 'white-door.png',
         type: 'ITEM.LANDMARK',
         text: 'You\'ve reach the exit of the Tunnels of the Tear. The Mystical city of Crisal is on the other side!'
-    }
+    },
+    {
+        x: 10,
+        y: 13,
+        name: 'Red Key',
+        attribute: 'red',
+        image: 'key-red.png',
+        type: 'ITEM.KEY',
+    },
+    {
+        x: 4,
+        y: 2,
+        name: 'Red Door',
+        attribute: 'red',
+        image: 'door-red.png',
+        type: 'ITEM.DOOR',
+    },
 ];
 
 huungryGameMaps.level6.quest = {

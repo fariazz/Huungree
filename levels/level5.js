@@ -265,7 +265,23 @@ huungryGameMaps.level5.items = [
         image: 'white-door.png',
         type: 'ITEM.LANDMARK',
         text: 'You\'ve reach the door to the second half of the mountain'
-    }
+    },
+    {
+        x: 10,
+        y: 11,
+        name: 'Purple Key',
+        attribute: 'purple',
+        image: 'key-purple.png',
+        type: 'ITEM.KEY',
+    },
+    {
+        x: 4,
+        y: 14,
+        name: 'Purple Door',
+        attribute: 'purple',
+        image: 'door-purple.png',
+        type: 'ITEM.DOOR',
+    },
 ];
 
 huungryGameMaps.level5.quest = {
