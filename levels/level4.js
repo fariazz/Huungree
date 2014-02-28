@@ -225,7 +225,7 @@ huungryGameMaps.level4.items = [
         x: 1,
         y: 14,
         name: 'Insect Treasure',
-        gold: 300,
+        gold: 800,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -234,7 +234,7 @@ huungryGameMaps.level4.items = [
         x: 20,
         y: 14,
         name: 'Insect Treasure',
-        gold: 100,
+        gold: 600,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -243,7 +243,7 @@ huungryGameMaps.level4.items = [
         x: 22,
         y: 1,
         name: 'Insect Treasure',
-        gold: 200,
+        gold: 500,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },

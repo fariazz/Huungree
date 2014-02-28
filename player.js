@@ -37,91 +37,93 @@ huungry.Player.prototype.playerMoved = function() {
     this.gameObj.updateVisiblity(this.cell.col,this.cell.row);
     
     //check for enemy collision
-    for(var i=0; i < this.map.elements.length; i++) {    
-        if(this.cell.col == this.map.elements[i].cell.col && this.cell.row == this.map.elements[i].cell.row 
-            && this.id != this.map.elements[i].id) {
-            if(this.map.elements[i].elementType == this.gameObj.ENEMY_ARMY) {
-                this.gameObj.fight(this.map.elements[i]);
-                break;
-            }
-            else if(this.map.elements[i].elementType == this.gameObj.ITEM_TARGET) {
-                
-                //item dialog content
-                var item = this.map.elements[i];
-                var message;
-                var title = that.map.elements[i].name;
-                switch(item.type) {
-                    case 'ITEM.GOLD':
-                        message = "You've found "+this.map.elements[i].gold+'\npieces of gold.';
-                        break;
-                    case 'ITEM.ATTACK-SPELL':
-                        message = "Use in battle to damage your enemies. Damage: "+this.map.elements[i].attack;
-                        break;       
-                    case 'ITEM.DEFENSE-SPELL':
-                        message = "Use in battle to protect a unit against "+this.map.elements[i].numHits+" enemy hits";
-                        break;
-                    case 'ITEM.PARALYZE-SPELL':
-                        message = "Use in battle to freeze an enemy unit for "+this.map.elements[i].numHits+" turns";
-                        break;
-                    case 'ITEM.LANDMARK':
-                        message = this.map.elements[i].text;
-                        break;
-                    case 'ITEM.KEY':
-                        message = "You've found a "+this.map.elements[i].attribute+" key! use it to open a door of the same color";
-                        break;       
-                    case 'ITEM.DOOR':
-                        var key, pos;
-                        _.each(this.items, function(element, index){
-                            if(element.type == 'ITEM.KEY' && element.attribute == this.map.elements[i].attribute) {
-                                pos = index;
-                                key = element;
-                            }
-                        }, this);
-
-                        if(key) {
-                            message = 'You\'ve opened the door with the '+this.map.elements[i].attribute+' key';
-                            this.items.splice(pos, 1);
-                            this.map.elements[i].die();   
-
-                        }
-                        else {
-                            message = 'You don\'t have the key to this door';
-                            this.setPosition(this.previousPosition.x, this.previousPosition.y);
-                            this.playerMoved();
-                        }
-                        break;       
+    setTimeout(function() {
+        for(var i=0; i < that.map.elements.length; i++) {    
+            if(that.cell.col == that.map.elements[i].cell.col && that.cell.row == that.map.elements[i].cell.row 
+                && that.id != that.map.elements[i].id) {
+                if(that.map.elements[i].elementType == that.gameObj.ENEMY_ARMY) {
+                    that.gameObj.fight(that.map.elements[i]);
+                    break;
                 }
-                
-                if(item.type != 'ITEM.LANDMARK') {
-                    this.gameObj.numItems--;  
-                }                              
+                else if(that.map.elements[i].elementType == that.gameObj.ITEM_TARGET) {
+                    
+                    //item dialog content
+                    var item = that.map.elements[i];
+                    var message;
+                    var title = that.map.elements[i].name;
+                    switch(item.type) {
+                        case 'ITEM.GOLD':
+                            message = "You've found "+that.map.elements[i].gold+'\npieces of gold.';
+                            break;
+                        case 'ITEM.ATTACK-SPELL':
+                            message = "Use in battle to damage your enemies. Damage: "+that.map.elements[i].attack;
+                            break;       
+                        case 'ITEM.DEFENSE-SPELL':
+                            message = "Use in battle to protect a unit against "+that.map.elements[i].numHits+" enemy hits";
+                            break;
+                        case 'ITEM.PARALYZE-SPELL':
+                            message = "Use in battle to freeze an enemy unit for "+that.map.elements[i].numHits+" turns";
+                            break;
+                        case 'ITEM.LANDMARK':
+                            message = that.map.elements[i].text;
+                            break;
+                        case 'ITEM.KEY':
+                            message = "You've found a "+that.map.elements[i].attribute+" key! use it to open a door of the same color";
+                            break;       
+                        case 'ITEM.DOOR':
+                            var key, pos;
+                            _.each(that.items, function(element, index){
+                                if(element.type == 'ITEM.KEY' && element.attribute == that.map.elements[i].attribute) {
+                                    pos = index;
+                                    key = element;
+                                }
+                            }, that);
 
-                HuungryUI.showDialog(title,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
-                    ,[{text: 'OK', btnClass: 'button-home', callback: function() {
-                        HuungryUI.hideDialog();     
-                                                
-                        if(!_.contains(['ITEM.LANDMARK', 'ITEM.DOOR'],item.type)) {
-                            that.collect(item);  
-                            that.gameObj.checkQuestCompletion(); 
-                        }
-                        else {
-                            if(item.isQuestGoal) {
-                                that.gameObj.levelCompleted();
+                            if(key) {
+                                message = 'You\'ve opened the door with the '+that.map.elements[i].attribute+' key';
+                                that.items.splice(pos, 1);
+                                that.map.elements[i].die();   
+
                             }
-                        }  
-                        that.gameObj.controlsLayer.refreshInfo();                                           
-                }}]);                  
+                            else {
+                                message = 'You don\'t have the key to that door';
+                                that.setPosition(that.previousPosition.x, that.previousPosition.y);
+                                that.playerMoved();
+                            }
+                            break;       
+                    }
+                    
+                    if(item.type != 'ITEM.LANDMARK') {
+                        that.gameObj.numItems--;  
+                    }                              
+                    
+                    HuungryUI.showDialog(title,'<div class="item-img"><img width="40" src="assets/images/items/' + item.image +'" /></div><div class="centered">'+message+'</div>'
+                        ,[{text: 'OK', btnClass: 'button-home', callback: function() {
+                            HuungryUI.hideDialog();     
+                                                    
+                            if(!_.contains(['ITEM.LANDMARK', 'ITEM.DOOR'],item.type)) {
+                                that.collect(item);  
+                                that.gameObj.checkQuestCompletion(); 
+                            }
+                            else {
+                                if(item.isQuestGoal) {
+                                    that.gameObj.levelCompleted();
+                                }
+                            }  
+                            that.gameObj.controlsLayer.refreshInfo();                                           
+                    }}]); 
+                                   
+                }
+                else if(that.map.elements[i].elementType == that.gameObj.SHOP_TARGET) {
+                    that.map.elements[i].showDialog();
+                    break;
+                }
+                else {
+                    //console.log(that.map.elements[i]);
+                }                
             }
-            else if(this.map.elements[i].elementType == this.gameObj.SHOP_TARGET) {
-                this.map.elements[i].showDialog();
-                break;
-            }
-            else {
-                //console.log(this.map.elements[i]);
-            }
-            
         }
-    }
+    }, this.gameObj.movementDuration*1000*0.4);  
 }
 
 /**

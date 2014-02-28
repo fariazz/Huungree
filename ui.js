@@ -50,10 +50,13 @@ HuungryUI.showLeveldesDialog = function(level, gameObj) {
 HuungryUI.showEndofGameDialog = function(gameObj) {
     HuungryUI.gameObj.saveGame(false);    
     HuungryUI.showDialog('THE JOURNEY IS NOT OVER', 
-        'We are working on adding more content to the game. If you would like to get free access to more levels send us your feedback in the form below or contact us on Twitter @ZenvaTweets.'
-        ,[{text: 'REACH US', btnClass: 'button-home', callback: function(){
+        'We are working on adding more content to the game! Stay tuned for more levels all the way to the sacred city of Huungree. Contact us on Twitter @ZenvaTweets, Facebook and YouTube channel.'
+        ,[{text: 'REACH US', btnClass: 'button-home', callback: function(){            
             window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
-        }}]);
+        }},
+        {text: 'YOUTUBE', btnClass: 'button-home', callback: function(){
+                window.open('https://www.youtube.com/watch?v=P4-Z4H8ZnG0', '_blank', 'location=yes');
+            }}]);
 };
 
 /**
@@ -62,7 +65,9 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
 HuungryUI.showAboutDialog = function(gameObj) {        
     HuungryUI.showDialog('ABOUT HUUNGREE', 
         'Huungree is an RPG created by ZENVA (@ZenvaTweets). We have free and premium online courses to learn how to make apps and games. If you\'d like to get FREE access to more levels LET US KNOW using the link below or Twitter. <br/><br/><span tyle="font-weight:bold;">Soundtrack (CC) by Spiritualmatrix</span>.'
-        ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, {text: 'REACH US', btnClass: 'button-home', callback: function(){            
+        ,[
+        {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, 
+        {text: 'REACH US', btnClass: 'button-home', callback: function(){            
             window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
         }}]);
 };
@@ -71,15 +76,15 @@ HuungryUI.showAboutDialog = function(gameObj) {
 * show dialog
 */
 HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) { 
-    HuungryUI.hideDialog();   
-    //HuungryUI.gameObj.director.setPaused(true);
-    setTimeout(function() {HuungryUI.gameObj.director.setPaused(true);}, 200);
+    HuungryUI.gameObj.director.setPaused(true);
+    //setTimeout(function() {HuungryUI.gameObj.director.setPaused(true);}, 300);
     var height = $(window).height();
     //$('.lime-director').css('top', height);
     $('.zva_dialog').css('display', 'block');
     $('.zva_dialog_header').html(headerHtml);
     $('.zva_dialog_body').html(bodyHtml);
-    $('.zva_dialog_help').html(help || '')
+    $('.zva_dialog_help').html(help || '');
+    $('.zva_dialog_actions').empty();
     var i;
     for(i = 0; i < actions.length; i++) {
         (function(i) {
@@ -105,7 +110,8 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
 */
 HuungryUI.hideDialog = function() {
     HuungryUI.gameObj.director.setPaused(false);
-        
+/*    setTimeout(function() {HuungryUI.gameObj.director.setPaused(false);}, 350); 
+*/
     $('.zva_dialog').css('display', 'none');  
     $('.zva_dialog_header').empty(); 
     $('.zva_dialog_body').empty(); 
@@ -175,7 +181,6 @@ HuungryUI.prepareDialog = function(gameObj) {
 show player info window
 */
 HuungryUI.showPlayerInfoWindow = function() {
-    HuungryUI.hideDialog();
     var html = '<div style="clear:both;height:62px;">';
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell">\
@@ -200,7 +205,6 @@ HuungryUI.showPlayerInfoWindow = function() {
 show arrange units window
 */
 HuungryUI.showArrangeUnitsWindow = function() {
-    HuungryUI.hideDialog();
     var html = '<div style="clear:both;height:62px;">';
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell" data-index="'+i+'">\
@@ -255,7 +259,6 @@ HuungryUI.showArrangeUnitsWindow = function() {
 show items info window
 */
 HuungryUI.showItemsWindow = function() {
-    HuungryUI.hideDialog();
     var info, len = HuungryUI.gameObj.player.items.length; 
     var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';    
     for(var i=0; i< len; i++) {
@@ -325,7 +328,6 @@ HuungryUI.showItemsWindow = function() {
 show items info window
 */
 HuungryUI.showBattleItemsWindow = function() {
-    HuungryUI.hideDialog();
     var info, len = HuungryUI.gameObj.player.items.length; 
     var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';  
     for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
@@ -391,7 +393,6 @@ HuungryUI.showBattleItemsWindow = function() {
 show show window
 */
 HuungryUI.showShopWindow = function(shop, result) {
-    HuungryUI.hideDialog();
     var html = '<div class="shop-products"><div>';  
     var length = shop.data.units.length;
     var unit;
@@ -460,7 +461,6 @@ HuungryUI.showGoPremiumDialog = function(gameObj) {
 show expel units window
 */
 HuungryUI.showExpelUnitsWindow = function() {
-    HuungryUI.hideDialog();
     var html = '<div style="clear:both;height:62px;">';
     for(var i=0; i< HuungryUI.gameObj.player.units.length; i++) {
         html += '<div class="unit-cell" data-index="'+i+'">\

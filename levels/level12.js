@@ -472,10 +472,10 @@ huungryGameMaps.level12.items = [
 huungryGameMaps.level12.quest = {
     screens: ['Kraul was stabbed by one of his captains for unpaid debt, his body given to starving dogs, and his whole unpaid mercenary army deserted to loot on local farmers.',
     'This should be celebrated! But Jekkel seems uneasy and distant. Your informants say he is jelaous of your rising fortune and influence, and that there is a plan to murder you tomorrow.',
-    'You can\'t rival Jekkel\'s army so you leave Crisal at dawn with your troops and head south.<br/><br/>If you can cross the Grey Forest and the Crow Montains you\'ll reach unexplored lands which could be all yours.',
+    'You can\'t rival Jekkel\'s army so you leave Crisal at dawn with your troops and head south.<br/><br/>If you can cross the Dindel Forest and the Crow Montains you\'ll reach unexplored lands which could be all yours.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
-<li>1-Cross the Grey Forest and find the path to the Crow Mountains.<br/>\
+<li>1-Cross the elf-infested Dindel Forest and find the path to the Crow Mountains.<br/>\
 <img src="assets/images/places/white-door.png" width="20" /> \
     </li>\
 <ul>'

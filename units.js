@@ -107,7 +107,7 @@ var UnitTypes = [
             defense: 10,
             canShoot: false,
             gold: 22,
-            movements: 1,
+            movements: 2,
         },
         {
             id: 'orc',

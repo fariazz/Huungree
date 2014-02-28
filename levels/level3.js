@@ -196,7 +196,7 @@ huungryGameMaps.level3.items = [
         x: 13,
         y: 1,
         name: 'Ghornian Treasure',
-        gold: 100,
+        gold: 600,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -205,7 +205,7 @@ huungryGameMaps.level3.items = [
         x: 13,
         y: 10,
         name: 'Ghornian Treasure',
-        gold: 200,
+        gold: 400,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -214,7 +214,7 @@ huungryGameMaps.level3.items = [
         x: 1,
         y: 5,
         name: 'Ghornian Treasure',
-        gold: 100,
+        gold: 700,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -222,7 +222,7 @@ huungryGameMaps.level3.items = [
 ];
 
 huungryGameMaps.level3.quest = {
-    screens: ['Mercenaries trade with the Ghornians in this area. Having access their bounty would allow you to\
+    screens: ['Mercenaries trade with the Ghornians in this area. Having access to their bounty would allow you to\
     buy more troops for the adventures to come and to slow down the Ghornians troops for a while.',
 
      '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Find and seize the treasures kept by the mercenaries. \

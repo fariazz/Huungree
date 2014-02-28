@@ -8,7 +8,7 @@ huungry.GameObj = function(document) {
     this.GAME_VERSION = '0.3.1';
     this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1'];
     this.developmentMode = true;
-    this.initialLevel = 'level1';
+    this.initialLevel = 'level8';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -511,7 +511,7 @@ huungry.GameObj.prototype.loadGame = function() {
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
       [{text: 'NEXT LEVEL', btnClass: 'button-home', callback: function() {
           if(huungryGameMaps[that.currentLevel].nextLevel) {
-            if(!that.isFullVersion && _.indexOf(['level1', 'level2', 'level3', 'level4', 'level5'], huungryGameMaps[that.currentLevel].nextLevel) == -1) {
+            if(!that.isFullVersion && _.indexOf(['level1', 'level2', 'level3', 'level4', 'level5', 'level6'], huungryGameMaps[that.currentLevel].nextLevel) == -1) {
               HuungryUI.showGoPremiumDialog();
             }
             else {
