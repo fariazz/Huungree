@@ -592,4 +592,4 @@ huungryGameMaps.level11.quest = {
     totalNumGoals: 4
 };
 
-huungryGameMaps.level11.nextLevel = 'level11';
+huungryGameMaps.level11.nextLevel = 'level12';

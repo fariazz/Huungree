@@ -28,6 +28,8 @@ var UnitTypes = [
             canShoot: false,
             gold: 8,
             movements: 1,
+            spells: [{name: 'paralyze',numPerBattle: 1, value: 2}],
+            spellUseProbability: 0.2 
         },
         {
             id: 'snake',
@@ -38,6 +40,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 2,
             movements: 1,
+            effect: [
+                {name: 'paralyze',numPerBattle: 5, value: 2}
+            ],
+            effectProbability: 0.2
         },
         {
             id: 'wolf',
@@ -108,6 +114,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 22,
             movements: 2,
+            effect: [
+                {name: 'paralyze',numPerBattle: 5, value: 2}
+            ],
+            effectProbability: 0.2
         },
         {
             id: 'orc',
@@ -138,6 +148,11 @@ var UnitTypes = [
             canShoot: false,
             gold: 15,
             movements: 1,
+            spells: [
+                {name: 'paralyze',numPerBattle: 1, value: 2}
+                //{name: 'possession',numPerBattle: 1, value: 2}
+            ],
+            spellUseProbability: 0.9 //probability of the unit using a spell
         },
         {
             id: 'armoredaxeman',
@@ -208,6 +223,8 @@ var UnitTypes = [
             canShoot: false,
             gold: 18,
             movements: 2,
+            spells: [{name: 'paralyze',numPerBattle: 2, value: 1}],
+            spellUseProbability: 0.1 
         },
         
     ];

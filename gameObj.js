@@ -5,10 +5,10 @@ goog.provide('huungry.GameObj');
  */
 huungry.GameObj = function(document) {
 
-    this.GAME_VERSION = '0.3.1';
-    this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1'];
-    this.developmentMode = true;
-    this.initialLevel = 'level8';
+    this.GAME_VERSION = '0.3.2';
+    this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1', '0.3.2'];
+    this.developmentMode = false;
+    this.initialLevel = 'level1';
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -74,17 +74,8 @@ huungry.GameObj = function(document) {
  * @param number
  */
 huungry.GameObj.prototype.cloneUnit = function(unit, number) {
-    var cloned= {
-            id: unit.id,
-            name: unit.name,
-            image: unit.image,
-            attack: unit.attack,
-            defense: unit.defense,
-            canShoot: unit.canShoot,
-            life: number,
-            gold: unit.gold,
-            movements: unit.movements
-    }
+    var cloned = _.clone(unit);
+    cloned.life = number;
     return cloned;
 };
 

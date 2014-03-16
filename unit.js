@@ -25,6 +25,8 @@ huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
     this.canShoot = unitData.canShoot;
     this.image = unitData.image;
     this.movements = unitData.movements;
+    this.spells = unitData.spells;
+    this.spellUseProbability = unitData.spellUseProbability ? unitData.spellUseProbability : 0;
     var color = isPlayer ? '#FFFFFF' : '#FF0000';
     
     this.lifeBar = new lime.Label().setPosition(this.gameObj.tileSize * 0.7,this.gameObj.tileSize * 0.6)
@@ -34,6 +36,12 @@ huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
         .setFontColor(color);
     this.appendChild(this.lifeBar);
     
+    //init available spells for the unit for the battle
+    this.currentBattleSpells = new Array();
+    _.each(this.spells, function(value, index) {
+        this.currentBattleSpells.push(_.clone(this.spells[index])); 
+    }, this);
+
 
     return this;
 }
@@ -106,6 +114,14 @@ huungry.Unit.prototype.endMove = function(attacker) {
         }
     }    
     else {
+        if(this.numTurnsPossessed > 0) {
+            this.numTurnsPossessed--;    
+
+            if(this.numTurnsPossessed == 0) {
+                this.revertPossession();
+            }
+        }
+        
         this.fightEngine.remainingMoves = 0;
         this.fightEngine.playTurn();
     }            
@@ -132,7 +148,7 @@ huungry.Unit.prototype.getPower = function() {
 * @param int numDefenseHits
 */
 huungry.Unit.prototype.defenseSpell = function(numDefenseHits) {
-    this.numDefenseHits = numDefenseHits;
+    this.numDefenseHits = this.numDefenseHits + numDefenseHits || numDefenseHits;
     this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
         .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('#11E38C').setOpacity(0.3);
@@ -141,21 +157,88 @@ huungry.Unit.prototype.defenseSpell = function(numDefenseHits) {
 
 /**
 * set paralyze spell
-* @param int numTurnsHits
+* @param int numTurns
 */
 huungry.Unit.prototype.paralyzeSpell = function(numTurns) {
-    this.numTurnsParalyzed = numTurns;
+    this.numTurnsParalyzed = this.numTurnsParalyzed + numTurns || numTurns;
+    if(this.effectSprite) {
+        this.removeChild(this.effectSprite);
+    }
     this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
         .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('#5A5953').setOpacity(0.7);
     this.appendChild(this.effectSprite);
+    this.fightEngine.showBrief('paralized!', this.getCenter());
 }
+
+/**
+* set possessed spell
+* @param int numTurns
+*/
+huungry.Unit.prototype.possessionSpell = function(numTurns, isPlayer) {
+    this.numTurnsPossessed = this.numTurnsPossessed + numTurns || numTurns;
+    if(this.effectSprite) {
+        this.removeChild(this.effectSprite);
+    }
+    this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
+        .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setFill('#f92e2e').setOpacity(0.4);
+    this.appendChild(this.effectSprite);
+    this.fightEngine.showBrief('possessed!', this.getCenter());
+
+    //move unit to other party's side
+    console.log(this.elementType);
+    var ownerList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.playerUnits : this.fightEngine.enemyUnits;
+    var rivalList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.enemyUnits : this.fightEngine.playerUnits;
+
+    //add to rival list, remove from owner list, update position   
+    rivalList.push(this);
+    ownerList.splice(this.ownerIndex,1);
+    this.ownerIndex = rivalList.length -1;
+
+    console.log(this.fightEngine.playerUnits);
+}
+
+/**
+* end of possession spell
+*/
+huungry.Unit.prototype.revertPossession = function() {
+    console.log('reverting possession');
+     //move unit to other party's side
+    var ownerList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.playerUnits : this.fightEngine.enemyUnits;
+    var rivalList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.enemyUnits : this.fightEngine.playerUnits;
+
+    ownerList.push(this);
+    rivalList.splice(this.ownerIndex,1);
+    this.ownerIndex = ownerList.length -1;
+    this.clearVisualEffects('possession is over!');
+}
+
 
 /**
 * clear visual effectSprite
 * @param string brief optional text to show
 */
 huungry.Unit.prototype.clearVisualEffects = function(brief) {
-    this.removeChild(this.effectSprite);
-    this.fightEngine.showBrief('defense spell is up!', this.getCenter());
+    brief = brief || '';
+    if(this.effectSprite) {
+        this.removeChild(this.effectSprite);
+    }
+    this.fightEngine.showBrief(brief, this.getCenter());
+}
+
+/**
+* get the number of spells left in the current battle
+*/
+huungry.Unit.prototype.getNumSpellsLeft = function() {
+    if(!this.spells) {
+        return 0;
+    }
+    else {
+        var spellsLeft = 0;
+        _.each(this.spells, function(value, key){
+            spellsLeft += this.currentBattleSpells[key].numPerBattle;
+        }, this);
+        return spellsLeft;
+    }
 }

@@ -56,6 +56,22 @@ huungryGameMaps.level1.enemyArmies = [
                 }
             ]            
         ]
+    },
+    {
+        isQuestGoal: false,
+        x: 2,
+        y: 2,
+        image: 'ritualwarrior.png',
+        background: 'grass_background.png',
+        unitsSummary: [
+            [
+                {
+                    id: 'ritualwarrior',
+                    power: 350,
+                    maxNum: 10
+                }
+            ]            
+        ]
     }
 ];
 

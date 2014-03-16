@@ -60,6 +60,10 @@ huungry.FightEngine.prototype.init = function() {
     this.infoText = new lime.Label().setText('').setPosition(this.gameObj.tileSize*8.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     this.fightUILayer.appendChild(this.infoText);
+
+    this.infoText2 = new lime.Label().setText('').setPosition(this.gameObj.tileSize*8.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
+        .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
+    this.fightUILayer.appendChild(this.infoText);
     
     var passButton = new lime.Sprite().setSize(this.gameObj.tileSize*3*3/4, this.gameObj.tileSize*3/4)
         .setPosition(1.5*this.gameObj.tileSize, this.gameObj.screenHeight - this.gameObj.tileSize/2)
@@ -219,6 +223,7 @@ huungry.FightEngine.prototype.initArmies = function() {
             unit.initGamepad();
             unit.fightEngine = this;
             unit.readiness = Math.random();
+            unit.ownerIndex = this.playerUnits.length;
             this.playerUnits.push(unit);
             this.fightLayer.appendChild(unit);
             this.armyStats.ps += unit.getPower();
@@ -254,6 +259,7 @@ huungry.FightEngine.prototype.initArmies = function() {
                 .refreshMapPos();   
             unit.fightEngine = this;
             unit.readiness = Math.random();
+            unit.ownerIndex = this.enemyUnits.length;
             this.enemyUnits.push(unit);
             this.fightLayer.appendChild(unit);
             this.armyStats.es += unit.getPower();
@@ -312,7 +318,7 @@ huungry.FightEngine.prototype.checkParalyzedUnit = function() {
         unit.numTurnsParalyzed--;
 
         if(unit.numTurnsParalyzed == 0) {
-            unit.clearVisualEffects('paralyze spell is up!');            
+            unit.clearVisualEffects('paralyze effect is up!');            
         }
         return true;        
     }
@@ -324,11 +330,94 @@ huungry.FightEngine.prototype.checkParalyzedUnit = function() {
 */
 huungry.FightEngine.prototype.enemyPlayTurn = function() {
 
-    //enemy moves
-    var enemy = this.enemyUnits[this.currentEnemyIndex]
+    this.currentUnit = this.enemyUnits[this.currentEnemyIndex]
+    var unitPos = this.currentUnit.getPosition();
 
-    var unitPos = enemy.getPosition();
-    
+    //decide whether attacking or casting spell
+    if(Math.random() > this.currentUnit.spellUseProbability || this.currentUnit.getNumSpellsLeft() == 0){
+        this.enemyAttack(this.currentUnit, unitPos);
+    }
+    else {
+        this.enemyCastSpell(this.currentUnit, unitPos);
+    }
+}
+
+/**
+* enemy cast spell
+*/
+huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
+
+    console.log('casting a spell');
+    //get spells that have 
+    var availableSpells = _.filter(enemy.currentBattleSpells, function(element) {return element.numPerBattle > 0;})
+
+    var chosenSpell = availableSpells[_.random(0, availableSpells.length-1)];
+    chosenSpell.numPerBattle--;
+
+    var brief = 'casting a spell'; 
+    switch(chosenSpell.name) {
+        case 'paralyze':
+            var nonAffectedUnits = _.filter(this.playerUnits, function(element){ return !element.numTurnsParalyzed}, this);
+
+            var targetUnit;
+            if(nonAffectedUnits.length) {
+                targetUnit = nonAffectedUnits[_.random(0,nonAffectedUnits.length-1)];
+            }
+            else {
+                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];   
+            }
+            
+            this.showBrief('casting paralize spell', enemy.getCenter());
+
+            setTimeout(function() {
+                targetUnit.paralyzeSpell(chosenSpell.value);
+            }, 800);
+            
+        break;
+        case 'possession':
+            var nonAffectedUnits = _.filter(this.playerUnits, function(element){ return !element.numTurnsPossessed}, this);
+
+            var targetUnit;
+            if(nonAffectedUnits.length) {
+                targetUnit = nonAffectedUnits[_.random(0,nonAffectedUnits.length-1)];
+            }
+            else {
+                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];   
+            }
+            
+            this.showBrief('casting possession spell', enemy.getCenter());
+
+            setTimeout(function() {
+                targetUnit.possessionSpell(chosenSpell.value);
+            }, 800);
+            
+        break;
+        case 'undead':
+        break;
+        case 'summon':
+        break;
+        case 'golem':
+        break;
+        case 'replicate':
+        break;
+        case 'speed':
+        break;
+        case 'weaken':
+        break;
+        case 'strength':
+        break;
+        case 'lightening':
+        break;
+    }
+
+    setTimeout(function() {enemy.endMove()}, 2000);
+}
+
+/**
+* enemy attack the player
+*/
+huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
+
     //attach adjacent enemy if any
     var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
     if(adjacentEnemy) {
@@ -415,6 +504,7 @@ huungry.FightEngine.prototype.enemyPlayTurn = function() {
 huungry.FightEngine.prototype.showCurrentGamepad = function() {
     
     var unit = this.playerUnits[this.currentPlayerIndex];
+    this.currentUnit = unit;
     var pos = unit.getPosition();        
     var tileSize = this.gameObj.tileSize;
     var currentObj = this;
@@ -603,11 +693,13 @@ huungry.FightEngine.prototype.updateDead = function() {
 huungry.FightEngine.prototype.updateNextMovingUnits = function() {
     
     //reset previous unit if any, in case the movements run out
-    if(this.playerMoves === true && this.remainingMoves == 0) {
-        this.playerUnits[this.currentPlayerIndex].readiness = 0;
+    if(this.playerMoves === true && this.remainingMoves == 0 && this.currentUnit) {
+        console.log(this.currentPlayerIndex);
+        console.log(this.playerUnits);
+        this.currentUnit.readiness = 0;
     }
-    else if(this.playerMoves === false && this.remainingMoves == 0) {
-        this.enemyUnits[this.currentEnemyIndex].readiness = 0;
+    else if(this.playerMoves === false && this.remainingMoves == 0 && this.currentUnit) {
+        this.currentUnit.readiness = 0;
     }
     
     if(!this.remainingMoves) {
@@ -761,10 +853,14 @@ huungry.FightEngine.prototype.hideItemTargets = function() {
 * show something briefly in the info area
 */
 huungry.FightEngine.prototype.showBrief = function(text, position) {
+    if(this.briefTimeout) {
+        clearTimeout(this.briefTimeout);
+    }
+    console.log(text);
     this.infoText.setText(text);
     this.infoText.setPosition(position);
     var that = this;
-    setTimeout(function() {
+    this.briefTimeout = setTimeout(function() {
         that.infoText.setText('');
     }, 1000);
 }
