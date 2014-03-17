@@ -144,3 +144,14 @@ huungry.Item.prototype.die = function() {
         this.gameObj.mapItems.splice(index, 1);
     }
 };
+
+/**
+* possess unit
+*
+ * @param huungry.Unit spellTargetUnit
+ */
+huungry.Item.prototype.possessUnit = function(spellTargetUnit) {
+    spellTargetUnit.possessionSpell(this.numHits);
+    this.gameObj.fightEngine.hideItemTargets();
+    this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+};

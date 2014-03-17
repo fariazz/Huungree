@@ -43,12 +43,12 @@ huungry.start = function(isFullVersion){
     gameObj.player.units = [
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 6),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 6),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
         //gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15)
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 15),
-        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 12)
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 120),
+        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 150),
+        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 120)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1)
         //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];

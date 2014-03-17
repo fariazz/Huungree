@@ -149,10 +149,10 @@ var UnitTypes = [
             gold: 15,
             movements: 1,
             spells: [
-                {name: 'paralyze',numPerBattle: 1, value: 2}
-                //{name: 'possession',numPerBattle: 1, value: 2}
+                //{name: 'paralyze',numPerBattle: 1, value: 2},
+                {name: 'possession',numPerBattle: 1, value: 2}
             ],
-            spellUseProbability: 0.9 //probability of the unit using a spell
+            spellUseProbability: 1 //probability of the unit using a spell
         },
         {
             id: 'armoredaxeman',

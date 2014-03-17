@@ -272,6 +272,9 @@ HuungryUI.showItemsWindow = function() {
             case 'ITEM.PARALYZE-SPELL':
                 info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
             break;  
+            case 'ITEM.POSSESSION-SPELL':
+                info = "Use in battle to turn control an enemy for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
+            break;
             case 'ITEM.KEY':
                 info = "You can open a "+HuungryUI.gameObj.player.items[i].attribute+" door with this key";
             break;            
@@ -340,7 +343,10 @@ HuungryUI.showBattleItemsWindow = function() {
             break;     
             case 'ITEM.PARALYZE-SPELL':
                 info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
-            break;           
+            break;  
+            case 'ITEM.POSSESSION-SPELL':
+                info = "Use in battle to turn control an enemy for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
+            break;         
         }
 
         if(!_.contains(['ITEM.KEY'], HuungryUI.gameObj.player.items[i].type)) {

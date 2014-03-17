@@ -114,14 +114,6 @@ huungry.Unit.prototype.endMove = function(attacker) {
         }
     }    
     else {
-        if(this.numTurnsPossessed > 0) {
-            this.numTurnsPossessed--;    
-
-            if(this.numTurnsPossessed == 0) {
-                this.revertPossession();
-            }
-        }
-        
         this.fightEngine.remainingMoves = 0;
         this.fightEngine.playTurn();
     }            
@@ -153,6 +145,7 @@ huungry.Unit.prototype.defenseSpell = function(numDefenseHits) {
         .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
         .setFill('#11E38C').setOpacity(0.3);
     this.appendChild(this.effectSprite);
+    this.fightEngine.showBrief('protected!', this.getCenter());
 }
 
 /**
@@ -180,23 +173,12 @@ huungry.Unit.prototype.possessionSpell = function(numTurns, isPlayer) {
     if(this.effectSprite) {
         this.removeChild(this.effectSprite);
     }
+    //rgb(102, 15, 161);
     this.effectSprite = new lime.Sprite().setAnchorPoint(0,0)
         .setPosition(0,0).setSize(this.gameObj.tileSize, this.gameObj.tileSize)
-        .setFill('#f92e2e').setOpacity(0.4);
+        .setFill('#ac193d').setOpacity(0.5);
     this.appendChild(this.effectSprite);
     this.fightEngine.showBrief('possessed!', this.getCenter());
-
-    //move unit to other party's side
-    console.log(this.elementType);
-    var ownerList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.playerUnits : this.fightEngine.enemyUnits;
-    var rivalList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.enemyUnits : this.fightEngine.playerUnits;
-
-    //add to rival list, remove from owner list, update position   
-    rivalList.push(this);
-    ownerList.splice(this.ownerIndex,1);
-    this.ownerIndex = rivalList.length -1;
-
-    console.log(this.fightEngine.playerUnits);
 }
 
 /**
@@ -204,13 +186,6 @@ huungry.Unit.prototype.possessionSpell = function(numTurns, isPlayer) {
 */
 huungry.Unit.prototype.revertPossession = function() {
     console.log('reverting possession');
-     //move unit to other party's side
-    var ownerList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.playerUnits : this.fightEngine.enemyUnits;
-    var rivalList = this.elementType == this.gameObj.PLAYER_UNIT ? this.fightEngine.enemyUnits : this.fightEngine.playerUnits;
-
-    ownerList.push(this);
-    rivalList.splice(this.ownerIndex,1);
-    this.ownerIndex = ownerList.length -1;
     this.clearVisualEffects('possession is over!');
 }
 

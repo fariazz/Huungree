@@ -64,6 +64,9 @@ huungry.Player.prototype.playerMoved = function() {
                         case 'ITEM.PARALYZE-SPELL':
                             message = "Use in battle to freeze an enemy unit for "+that.map.elements[i].numHits+" turns";
                             break;
+                        case 'ITEM.POSSESSION-SPELL':
+                            message = "Use in battle to turn control an enemy for "+that.map.elements[i].numHits+" turns";
+                            break;
                         case 'ITEM.LANDMARK':
                             message = that.map.elements[i].text;
                             break;

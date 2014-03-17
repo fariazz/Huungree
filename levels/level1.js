@@ -37,6 +37,16 @@ huungryGameMaps.level1.enemyArmies = [
                     id: 'wolf',
                     power: 350,
                     maxNum: 4
+                },
+                {
+                    id: 'ritualwarrior',
+                    power: 350,
+                    maxNum: 5
+                },
+                {
+                    id: 'archer',
+                    power: 350,
+                    maxNum: 5
                 }
             ]            
         ]
@@ -119,14 +129,31 @@ huungryGameMaps.level1.items = [
         type: 'ITEM.GOLD'
     }
     
-/*    ,{
-        x: 2,
+   ,{
+        x: 3,
         y: 2,
-        name: 'Paralyze Spell',
+        name: 'Possession Spell',
         numHits: 3,
-        image: 'scroll-paralyze.png',
-        type: 'ITEM.PARALYZE-SPELL'
-    },
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }
+    ,{
+        x: 4,
+        y: 2,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }
+    ,{
+        x: 3,
+        y: 3,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }
+    /* 
     {
         x: 4,
         y: 2,
