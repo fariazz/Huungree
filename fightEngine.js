@@ -9,6 +9,7 @@ huungry.FightEngine = function() {
     this.playerUnits = new Array();
     this.enemyUnits = new Array();
     this.rangeTargets = new Array();
+    this.skelletons = new Array();
 }
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
@@ -187,11 +188,6 @@ huungry.FightEngine.prototype.exitFight = function() {
  */
 huungry.FightEngine.prototype.initArmies = function() {
 
-    this.armyStats = {
-        ps: 0,
-        es: 0
-    };
-
     //init player army
     this.playerUnitPositions = new Array();
     
@@ -210,26 +206,11 @@ huungry.FightEngine.prototype.initArmies = function() {
             takenCells.push(cellIndex);
             this.playerUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
-            unit = new huungry.Unit()
-                .setGameObj(this.gameObj)
-                .setUnitData(this.gameObj.player.units[i],true)
-                .setPosition(pos.x, pos.y)                
-                .setElementType(this.gameObj.PLAYER_UNIT)
-                .setMap(this.map)
-                .refreshMapPos();   
-            unit.customLayer = this.fightUILayer;
-            unit.initGamepad();
-            unit.fightEngine = this;
-            unit.readiness = Math.random();
-            unit.ownerIndex = this.playerUnits.length;
-            this.playerUnits.push(unit);
-            this.fightLayer.appendChild(unit);
-            this.armyStats.ps += unit.getPower();
+            unit = this.addBattleUnit(this.gameObj.player.units[i], true, pos, this.playerUnits, this.gameObj.PLAYER_UNIT);            
             i++;
         }
     }
-    this.armyStats.ps *= 1 + this.gameObj.powerNumFactor*(len-1);
-
+    
     //init enemy army
     this.enemyUnitPositions = new Array();    
     
@@ -248,26 +229,59 @@ huungry.FightEngine.prototype.initArmies = function() {
             takenCells.push(cellIndex);
             this.enemyUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
-            unit = new huungry.Unit()
-                .setGameObj(this.gameObj)
-                .setUnitData(this.enemyArmy.units[i], false)
-                .setPosition(pos.x, pos.y)                
-                .setElementType(this.gameObj.ENEMY_UNIT)
-                .setMap(this.map)
-                .refreshMapPos();  
-            unit.customLayer = this.fightUILayer;
-            unit.fightEngine = this;
-            unit.readiness = Math.random();
-            unit.ownerIndex = this.enemyUnits.length;
-            this.enemyUnits.push(unit);
-            this.fightLayer.appendChild(unit);
-            this.armyStats.es += unit.getPower();
+            unit = this.addBattleUnit(this.enemyArmy.units[i], false, pos, this.enemyUnits, this.gameObj.ENEMY_UNIT);
             i++;
         }            
     }
-    this.armyStats.es *= 1 + this.gameObj.powerNumFactor*(len-1);
 
-     console.log(this.armyStats);
+    this.initPowerStats();
+}
+
+/**
+* add a unit to the battle
+* @param Object unitData
+* @param Object isPlayer
+* @param Object pos
+* @param Array collection
+* @param int type
+* @return huungry.Unit
+*/
+huungry.FightEngine.prototype.addBattleUnit = function (unitData, isPlayer, pos, collection, type) {
+    var unit = new huungry.Unit()
+        .setGameObj(this.gameObj)
+        .setUnitData(unitData, isPlayer)
+        .setPosition(pos.x, pos.y)                
+        .setElementType(type)
+        .setMap(this.map)
+        .refreshMapPos();   
+    unit.customLayer = this.fightUILayer;
+    unit.initGamepad();
+    unit.fightEngine = this;
+    unit.readiness = Math.random();
+    collection.push(unit);
+    this.fightLayer.appendChild(unit);
+    return unit;
+};
+
+/**
+* init power stats
+*/
+huungry.FightEngine.prototype.initPowerStats = function() {
+    this.armyStats = {
+        ps: 0,
+        es: 0
+    };
+
+    _.each(this.playerUnits, function(value, key){
+        console.log(value);
+        this.armyStats.ps += value.getPower();
+    }, this);
+    this.armyStats.ps *= 1 + this.gameObj.powerNumFactor*(this.playerUnits.length-1);
+
+    _.each(this.enemyUnits, function(value, key){
+        this.armyStats.es += value.getPower();
+    }, this);
+    this.armyStats.es *= 1 + this.gameObj.powerNumFactor*(this.enemyUnits.length-1);
 }
 
 /**
@@ -343,7 +357,6 @@ huungry.FightEngine.prototype.enemyPlayTurn = function() {
     //if possessed the enemy moves the unit
     if(this.currentUnit.numTurnsPossessed) {
         if(!this.currentUnit.movementTargets) {
-            console.log('initiating movementtargets');
             this.currentUnit.initGamepad();
         }
         this.showCurrentGamepad(this.currentUnit, unitPos);
@@ -364,7 +377,6 @@ huungry.FightEngine.prototype.enemyPlayTurn = function() {
 */
 huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
 
-    console.log('casting a spell');
     //get spells that have 
     var availableSpells = _.filter(enemy.currentBattleSpells, function(element) {return element.numPerBattle > 0;})
 
@@ -536,8 +548,6 @@ huungry.FightEngine.prototype.playerPlayTurn = function() {
  * show gamepad for current unit
  */
 huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
-   console.log('show current gamepad');
-   console.log(unit);
     
     var tileSize = this.gameObj.tileSize;
     var currentObj = this;
@@ -685,7 +695,7 @@ huungry.FightEngine.prototype.updateDead = function() {
     this.armyStats.ee *= 1 + this.gameObj.powerNumFactor*(num_enemies-1);
     
     //check army defeated
-    if(this.playerUnits.length == 0) {
+    if(this.playerUnits.length === 0) {
         var fightScene = this;
         fightScene.sendStats();
         fightScene.exitFight();
@@ -706,6 +716,15 @@ huungry.FightEngine.prototype.updateDead = function() {
         var ratio = delta / fightScene.armyStats.es;
         console.log('delta power:'+delta);
         console.log('ratio:'+ratio);       
+
+        if(this.playerUnits.length > this.gameObj.player.maxNumUnits ) {
+            this.playerUnits = _.reject(this.playerUnits, function(element){return element.removeAfterBattle});
+        }
+        else {
+            _.each(this.playerUnits, function(value, key){
+                value.removeAfterBattle = false;
+            });
+        }
 
         var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
         HuungryUI.showDialog('YOU HAVE WON!',message
@@ -883,6 +902,37 @@ huungry.FightEngine.prototype.showItemTargets = function() {
             this.fightLayer.appendChild(this.rangeTargets[i]);
         }
         this.showBrief('pick a unit', this.DEFAULT_MSG_POS);
+    }
+    else if(item.type == 'ITEM.RESURRECTION-SPELL') {
+        this.rangeTargets = new Array();
+        var targetPos;
+
+        if(this.skelletons.length) {
+            for(var i = 0, arrayLen = this.skelletons.length; i< arrayLen; i++) {
+                targetPos = this.skelletons[i].getPosition();
+                this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/items/'+item.image)
+                    .setOpacity(0.5)
+                    .setSize(tileSize,tileSize)
+                    .setPosition(targetPos.x, targetPos.y));
+                
+                (function(i, currentObj) {
+                    goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
+                        e.preventDefault();                         
+                        item.animateInanimated(currentObj.skelletons[i]);  
+                        HuungryUI.selectedItem = undefined;
+                        currentObj.hideTargets();
+                        currentObj.currentUnit.endMove();
+                    });
+                })(i, currentObj);
+                    
+                this.fightLayer.appendChild(this.rangeTargets[i]);
+            }
+            this.showBrief('pick a bone pile', this.DEFAULT_MSG_POS);
+        }
+        else {
+            this.showBrief('there are no bone piles!', this.DEFAULT_MSG_POS);
+        }
+        
     }
 };
 

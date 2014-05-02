@@ -93,9 +93,9 @@ huungry.Item.prototype.attackUnit = function(attackedUnit) {
  * @param huungry.Unit spellTargetUnit
  */
 huungry.Item.prototype.protectUnit = function(spellTargetUnit) {
-    spellTargetUnit.defenseSpell(this.numHits);
-    this.gameObj.fightEngine.hideItemTargets();
+    spellTargetUnit.defenseSpell(this.numHits);    
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+    this.gameObj.fightEngine.hideItemTargets();
 };
 
 /**
@@ -104,9 +104,9 @@ huungry.Item.prototype.protectUnit = function(spellTargetUnit) {
  * @param huungry.Unit spellTargetUnit
  */
 huungry.Item.prototype.paralyzeUnit = function(spellTargetUnit) {
-    spellTargetUnit.paralyzeSpell(this.numHits);
-    this.gameObj.fightEngine.hideItemTargets();
+    spellTargetUnit.paralyzeSpell(this.numHits);    
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+    this.gameObj.fightEngine.hideItemTargets();
 };
 
 
@@ -152,6 +152,17 @@ huungry.Item.prototype.die = function() {
  */
 huungry.Item.prototype.possessUnit = function(spellTargetUnit) {
     spellTargetUnit.possessionSpell(this.numHits);
-    this.gameObj.fightEngine.hideItemTargets();
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+    this.gameObj.fightEngine.hideItemTargets();
+};
+
+/**
+* animate inanimated
+*
+ * @param huungry.Inanimated 
+ */
+huungry.Item.prototype.animateInanimated = function(inanimated) {
+    inanimated.turnIntoUnit(this);    
+    this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
+    this.gameObj.fightEngine.hideItemTargets();
 };

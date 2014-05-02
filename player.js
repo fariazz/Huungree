@@ -67,6 +67,9 @@ huungry.Player.prototype.playerMoved = function() {
                         case 'ITEM.POSSESSION-SPELL':
                             message = "Use in battle to turn control an enemy for "+that.map.elements[i].numHits+" turns";
                             break;
+                        case 'ITEM.RESURRECTION-SPELL':
+                            message = "Use in battle to raise "+that.map.elements[i].numHits+" skeletons from a pile of bones";
+                            break;
                         case 'ITEM.LANDMARK':
                             message = that.map.elements[i].text;
                             break;

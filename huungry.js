@@ -21,6 +21,7 @@ goog.require('huungry.EnemyArmy');
 goog.require('huungry.ControlsLayer');
 goog.require('huungry.FightEngine');
 goog.require('huungry.Unit');
+goog.require('huungry.Inanimated');
 goog.require('lime.GlossyButton');
 
 // entrypoint

@@ -33,7 +33,7 @@ huungry.Shop.prototype.setData = function(data) {
 * evaluate and carry out purchase
 */
 huungry.Shop.prototype.purchase = function(unit) {
-    var unitType = this.gameObj.unitTypes[unit.id];
+    var unitType = this.gameObj.unitTypes[unit.typeid];
     if(this.gameObj.player.gold >= unit.price && unit.qty > 0) {
         if(this.gameObj.player.units.length < this.gameObj.player.maxNumUnits ) {
             this.gameObj.player.buy(unitType, unit.price, 1);

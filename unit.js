@@ -17,15 +17,8 @@ goog.inherits(huungry.Unit,huungry.Character);
 huungry.Unit.prototype.setUnitData = function(unitData, isPlayer) {
     this.setFill('assets/images/units/'+unitData.image);
     
-    this.typeid = unitData.id;
-    this.attack = unitData.attack;
-    this.defense = unitData.defense;
-    this.life = unitData.life;
-    this.name = unitData.name;
-    this.canShoot = unitData.canShoot;
-    this.image = unitData.image;
-    this.movements = unitData.movements;
-    this.spells = unitData.spells;
+    _.extend(this, unitData);
+    
     this.spellUseProbability = unitData.spellUseProbability ? unitData.spellUseProbability : 0;
     var color = isPlayer ? '#FFFFFF' : '#FF0000';
     
@@ -215,5 +208,23 @@ huungry.Unit.prototype.getNumSpellsLeft = function() {
             spellsLeft += this.currentBattleSpells[key].numPerBattle;
         }, this);
         return spellsLeft;
+    }
+}
+
+/**
+* unit die
+*/
+huungry.Unit.prototype.die = function() {
+    this.setHidden(true);
+    var currPos = this.getPosition();
+    var inanimated = new huungry.Inanimated()
+        .setGameObj(this.gameObj)
+        .setSize(this.gameObj.tileSize, this.gameObj.tileSize)
+        .setPosition(currPos.x, currPos.y);
+
+    inanimated.init({type: this.skelleton ? this.gameObj.HUMAN_SKELLETON : this.gameObj.NONHUMAN_SKELLETON });
+
+    if(this.map) {
+        this.map.removeElement(this);
     }
 }

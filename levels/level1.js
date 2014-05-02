@@ -132,10 +132,10 @@ huungryGameMaps.level1.items = [
    ,{
         x: 3,
         y: 2,
-        name: 'Possession Spell',
-        numHits: 3,
-        image: 'scroll-possession.png',
-        type: 'ITEM.POSSESSION-SPELL'
+        name: 'Resurrection Spell',
+        numHits: 5,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
     }
     ,{
         x: 4,

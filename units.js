@@ -1,6 +1,6 @@
 var UnitTypes = [
         {
-            id: 'archer',
+            typeid: 'archer',
             name: 'archer',
             image: 'archer.png',
             attack: 9,
@@ -8,9 +8,10 @@ var UnitTypes = [
             canShoot: true,
             gold: 5,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'axeman',
+            typeid: 'axeman',
             name: 'axeman',
             image: 'axeman.png',
             attack: 14,
@@ -18,9 +19,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 6,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'tribalwarrior',
+            typeid: 'tribalwarrior',
             name: 'tribal warrior',
             image: 'tribalwarrior.png',
             attack: 13,
@@ -29,10 +31,11 @@ var UnitTypes = [
             gold: 8,
             movements: 1,
             spells: [{name: 'paralyze',numPerBattle: 1, value: 2}],
-            spellUseProbability: 0.2 
+            spellUseProbability: 0.2,
+            skelleton: true
         },
         {
-            id: 'snake',
+            typeid: 'snake',
             name: 'snake',
             image: 'snake.png',
             attack: 14,
@@ -43,10 +46,10 @@ var UnitTypes = [
             effect: [
                 {name: 'paralyze',numPerBattle: 5, value: 2}
             ],
-            effectProbability: 0.2
+            effectProbability: 0.3,
         },
         {
-            id: 'wolf',
+            typeid: 'wolf',
             name: 'wolf',
             image: 'wolf.png',
             attack: 12,
@@ -56,7 +59,7 @@ var UnitTypes = [
             movements: 2,
         },
         {
-            id: 'peasant',
+            typeid: 'peasant',
             name: 'peasant',
             image: 'peasant.png',
             attack: 10,
@@ -64,9 +67,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 9,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'halfling',
+            typeid: 'halfling',
             name: 'halfling',
             image: 'halfling.png',
             attack: 12,
@@ -74,9 +78,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 12,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'dwarfaxe',
+            typeid: 'dwarfaxe',
             name: 'dwarf',
             image: 'dwarfaxe.png',
             attack: 15,
@@ -84,9 +89,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 15,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'lion',
+            typeid: 'lion',
             name: 'lion',
             image: 'lion.png',
             attack: 15,
@@ -96,7 +102,7 @@ var UnitTypes = [
             movements: 2,
         },
         {
-            id: 'insectman',
+            typeid: 'insectman',
             name: 'insect man',
             image: 'insectman.png',
             attack: 12,
@@ -106,7 +112,7 @@ var UnitTypes = [
             movements: 1,
         },
         {
-            id: 'troll',
+            typeid: 'troll',
             name: 'troll',
             image: 'troll.png',
             attack: 20,
@@ -117,10 +123,11 @@ var UnitTypes = [
             effect: [
                 {name: 'paralyze',numPerBattle: 5, value: 2}
             ],
-            effectProbability: 0.2
+            effectProbability: 0.2,
+            skelleton: true
         },
         {
-            id: 'orc',
+            typeid: 'orc',
             name: 'orc',
             image: 'orc.png',
             attack: 18,
@@ -128,9 +135,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 17,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'centaur',
+            typeid: 'centaur',
             name: 'centaur',
             image: 'centaur.png',
             attack: 15,
@@ -140,7 +148,7 @@ var UnitTypes = [
             movements: 3,
         },
         {
-            id: 'ritualwarrior',
+            typeid: 'ritualwarrior',
             name: 'ritual warrior',
             image: 'ritualwarrior.png',
             attack: 16,
@@ -149,13 +157,14 @@ var UnitTypes = [
             gold: 15,
             movements: 1,
             spells: [
-                //{name: 'paralyze',numPerBattle: 1, value: 2},
-                {name: 'possession',numPerBattle: 1, value: 2}
+                {name: 'paralyze',numPerBattle: 2, value: 2},
+                {name: 'possession',numPerBattle: 2, value: 2}
             ],
-            spellUseProbability: 1 //probability of the unit using a spell
+            spellUseProbability: 0.2, //probability of the unit using a spell
+            skelleton: true
         },
         {
-            id: 'armoredaxeman',
+            typeid: 'armoredaxeman',
             name: 'armored axeman',
             image: 'armoredaxeman.png',
             attack: 16,
@@ -163,9 +172,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 15,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'elfswordman',
+            typeid: 'elfswordman',
             name: 'elf swordman',
             image: 'elfswordman.png',
             attack: 19,
@@ -173,9 +183,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 35,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'elitearcher',
+            typeid: 'elitearcher',
             name: 'elite archer',
             image: 'elitearcher.png',
             attack: 17,
@@ -183,9 +194,10 @@ var UnitTypes = [
             canShoot: true,
             gold: 30,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'prairiehorseman',
+            typeid: 'prairiehorseman',
             name: 'prairie horseman',
             image: 'prairiehorseman.png',
             attack: 20,
@@ -193,9 +205,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 33,
             movements: 3,
+            skelleton: true
         },
         {
-            id: 'elfarcher',
+            typeid: 'elfarcher',
             name: 'elf archer',
             image: 'elfarcher.png',
             attack: 24,
@@ -203,9 +216,10 @@ var UnitTypes = [
             canShoot: true,
             gold: 35,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'valkyrie',
+            typeid: 'valkyrie',
             name: 'valkyrie',
             image: 'valkyrie.png',
             attack: 17,
@@ -213,9 +227,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 28,
             movements: 1,
+            skelleton: true
         },
         {
-            id: 'satyr',
+            typeid: 'satyr',
             name: 'satyr',
             image: 'satyr.png',
             attack: 15,
@@ -224,7 +239,20 @@ var UnitTypes = [
             gold: 18,
             movements: 2,
             spells: [{name: 'paralyze',numPerBattle: 2, value: 1}],
-            spellUseProbability: 0.1 
+            spellUseProbability: 0.1,
+            skelleton: true
         },
+        {
+            typeid: 'skelletonunarmed',
+            name: 'skelleton',
+            image: 'skelleton-unarmed.png',
+            attack: 16,
+            defense: 8,
+            canShoot: false,
+            gold: 0,
+            movements: 1,
+            skelleton: true
+        },
+        
         
     ];

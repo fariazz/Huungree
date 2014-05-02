@@ -277,7 +277,10 @@ HuungryUI.showItemsWindow = function() {
             break;
             case 'ITEM.KEY':
                 info = "You can open a "+HuungryUI.gameObj.player.items[i].attribute+" door with this key";
-            break;            
+            break;     
+            case 'ITEM.RESURRECTION-SPELL':
+                info = "Use in battle to raise "+HuungryUI.gameObj.player.items[i].numHits+" skeletons from a pile of bones";
+            break;           
         }
 
         html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
@@ -346,7 +349,10 @@ HuungryUI.showBattleItemsWindow = function() {
             break;  
             case 'ITEM.POSSESSION-SPELL':
                 info = "Use in battle to turn control an enemy for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
-            break;         
+            break;  
+            case 'ITEM.RESURRECTION-SPELL':
+                info = "Use in battle to raise "+HuungryUI.gameObj.player.items[i].numHits+" skeletons from a pile of bones";
+            break;       
         }
 
         if(!_.contains(['ITEM.KEY'], HuungryUI.gameObj.player.items[i].type)) {
@@ -403,7 +409,7 @@ HuungryUI.showShopWindow = function(shop, result) {
     var length = shop.data.units.length;
     var unit;
     for(var i=0; i < length; i++) {
-        unit = HuungryUI.gameObj.unitTypes[shop.data.units[i].id];
+        unit = HuungryUI.gameObj.unitTypes[shop.data.units[i].typeid];
         html += '<div class="shop-unit-cell" data-index="'+i+'">\
                     <div class="unit-num"><img width="10" src="assets/images/backgrounds/gold.png" style="display:inline;" />'+ shop.data.units[i].price +'</div>'+
                     '<img src="assets/images/units/' + unit.image+'" /> \

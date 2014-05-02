@@ -7,7 +7,7 @@ huungry.GameObj = function(document) {
 
     this.GAME_VERSION = '0.3.2';
     this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1', '0.3.2'];
-    this.developmentMode = false;
+    this.developmentMode = true;
     this.initialLevel = 'level1';
 
     this.screenWidth = 480;
@@ -23,6 +23,12 @@ huungry.GameObj = function(document) {
     this.SHOP_TARGET= 8;
     this.CITY_TARGET= 9;
     this.QUEST_TARGET= 10;
+
+    //inanimated types
+    this.HUMAN_SKELLETON = 1;
+    this.NONHUMAN_SKELLETON = 2;
+    this.TREE = 3;
+    this.ROCK = 4;
     
     //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
     this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
@@ -312,7 +318,7 @@ huungry.GameObj.prototype.setUnitTypes = function(unitTypes) {
     
     this.unitTypes = new Array();
     for(var i=0, arrayLen = unitTypes.length; i<arrayLen; i++) {
-        this.unitTypes[unitTypes[i].id] = unitTypes[i];
+        this.unitTypes[unitTypes[i].typeid] = unitTypes[i];
     }
     return this;
 };
@@ -406,8 +412,7 @@ huungry.GameObj.prototype.loadGame = function() {
     var unitsLen = units.length;
 
     for(var i=0; i<unitsLen; i++) {
-      console.log(units[i]['id']);
-      this.player.units.push(this.cloneUnit(this.unitTypes[units[i]['id']], units[i]['life']));
+      this.player.units.push(this.cloneUnit(this.unitTypes[units[i]['typeid']], units[i]['life']));
     }
 
     //load items
