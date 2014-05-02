@@ -30,7 +30,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 8,
             movements: 1,
-            spells: [{name: 'paralyze',numPerBattle: 1, value: 2}],
+            spells: [
+                {name: 'paralyze',numPerBattle: 1, value: 2},
+                {name: 'possession',numPerBattle: 1, value: 2}
+            ],
             spellUseProbability: 0.2,
             skelleton: true
         },
@@ -157,10 +160,10 @@ var UnitTypes = [
             gold: 15,
             movements: 1,
             spells: [
-                {name: 'paralyze',numPerBattle: 2, value: 2},
-                {name: 'possession',numPerBattle: 2, value: 2}
+                {name: 'possession',numPerBattle: 2, value: 3},
+                {name: 'resurrection',numPerBattle: 2, value: 5}
             ],
-            spellUseProbability: 0.2, //probability of the unit using a spell
+            spellUseProbability: 0.3, //probability of the unit using a spell
             skelleton: true
         },
         {

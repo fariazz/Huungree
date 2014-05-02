@@ -26,6 +26,7 @@ goog.require('lime.GlossyButton');
 
 // entrypoint
 huungry.start = function(isFullVersion){
+
     var gameObj = new huungry.GameObj(document);
     gameObj.isFullVersion = isFullVersion;
 
@@ -46,12 +47,12 @@ huungry.start = function(isFullVersion){
         //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
         gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
         gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
-        //gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15)
+        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
         gameObj.cloneUnit(gameObj.unitTypes['axeman'], 120),
         gameObj.cloneUnit(gameObj.unitTypes['axeman'], 150),
-        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 120)
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1)
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
+        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 120),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
+        gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];
     
     //start screen

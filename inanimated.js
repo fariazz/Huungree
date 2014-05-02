@@ -31,15 +31,17 @@ huungry.Inanimated.prototype.init = function(data) {
 	this.gameObj.fightEngine.fightLayer.appendChild(this);    
 	this.gameObj.fightEngine.fightLayer.setChildIndex(this, 1);   
 
-	this.gameObj.fightEngine.skelletons.push(this); 
+	this.gameObj.fightEngine.skeletons.push(this); 
 };
 
 /**
 * Turn inanimated object into a unit
 *
-* @param Object item 
+* @param integer life of the skeleton army
+* @param Array collection where to add the new unit
+* @param int owner type of unit (player or enemy)
 */
-huungry.Inanimated.prototype.turnIntoUnit = function(item) {
+huungry.Inanimated.prototype.turnIntoUnit = function(life, collection, owner) {
 	var unitType;
 	switch(this.type) {
 		case this.gameObj.HUMAN_SKELLETON:
@@ -49,11 +51,12 @@ huungry.Inanimated.prototype.turnIntoUnit = function(item) {
 			unitType = 'skelletonunarmed';
 		break;
 	}
-	//@TODO add num hits in text areas
-	var unitData = {life: item.numHits, removeAfterBattle: true};
+	var unitData = {life: life, removeAfterBattle: true};
 
 	this.gameObj.fightEngine.addBattleUnit(_.extend(unitData, this.gameObj.unitTypes[unitType]), 
-		true, this.getPosition(), this.gameObj.fightEngine.playerUnits, this.gameObj.PLAYER_UNIT);
+		owner == this.gameObj.PLAYER_UNIT, this.getPosition(), collection, owner);
+
+	this.gameObj.fightEngine.skeletons = _.reject(this.gameObj.fightEngine.skeletons, function(element){return element.id == this.id}, this);
 
 	this.die();		
 };

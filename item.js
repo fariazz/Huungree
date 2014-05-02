@@ -161,8 +161,8 @@ huungry.Item.prototype.possessUnit = function(spellTargetUnit) {
 *
  * @param huungry.Inanimated 
  */
-huungry.Item.prototype.animateInanimated = function(inanimated) {
-    inanimated.turnIntoUnit(this);    
+huungry.Item.prototype.turnIntoUnit = function(inanimated, collection, owner) {
+    inanimated.turnIntoUnit(this.numHits, collection, owner);    
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
     this.gameObj.fightEngine.hideItemTargets();
 };

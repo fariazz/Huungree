@@ -9,7 +9,7 @@ huungry.FightEngine = function() {
     this.playerUnits = new Array();
     this.enemyUnits = new Array();
     this.rangeTargets = new Array();
-    this.skelletons = new Array();
+    this.skeletons = new Array();
 }
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
@@ -425,7 +425,23 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
             }, 800);
             
         break;
-        case 'undead':
+        case 'resurrection':
+            //can only cast if there are skeletons
+            if(this.skeletons.length) {
+                var inanimatedTarget = _.sample(this.skeletons);
+                this.showBrief('casting resurrection spell', inanimatedTarget.getCenter());
+                console.log(inanimatedTarget);
+                var that = this;
+                setTimeout(function() {
+                    inanimatedTarget.turnIntoUnit(chosenSpell.value, that.gameObj.fightEngine.enemyUnits, that.gameObj.ENEMY_UNIT);
+                    setTimeout(function() {enemy.endMove()}, 1000);
+                }, 800);
+            }
+            else {
+                //else just attack
+                this.enemyAttack(enemy, unitPos);
+            }
+
         break;
         case 'summon':
         break;
@@ -718,7 +734,13 @@ huungry.FightEngine.prototype.updateDead = function() {
         console.log('ratio:'+ratio);       
 
         if(this.playerUnits.length > this.gameObj.player.maxNumUnits ) {
-            this.playerUnits = _.reject(this.playerUnits, function(element){return element.removeAfterBattle});
+            var counter = this.playerUnits.length - this.gameObj.player.maxNumUnits + 1;
+            this.playerUnits = _.reject(this.playerUnits, function(element){
+                if(element.removeAfterBattle) {
+                    counter--;
+                }   
+                return element.removeAfterBattle && counter > 0;             
+            });
         }
         else {
             _.each(this.playerUnits, function(value, key){
@@ -907,9 +929,9 @@ huungry.FightEngine.prototype.showItemTargets = function() {
         this.rangeTargets = new Array();
         var targetPos;
 
-        if(this.skelletons.length) {
-            for(var i = 0, arrayLen = this.skelletons.length; i< arrayLen; i++) {
-                targetPos = this.skelletons[i].getPosition();
+        if(this.skeletons.length) {
+            for(var i = 0, arrayLen = this.skeletons.length; i< arrayLen; i++) {
+                targetPos = this.skeletons[i].getPosition();
                 this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/items/'+item.image)
                     .setOpacity(0.5)
                     .setSize(tileSize,tileSize)
@@ -918,7 +940,7 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                 (function(i, currentObj) {
                     goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
                         e.preventDefault();                         
-                        item.animateInanimated(currentObj.skelletons[i]);  
+                        item.turnIntoUnit(currentObj.skeletons[i], currentObj.gameObj.fightEngine.playerUnits, currentObj.gameObj.PLAYER_UNIT);  
                         HuungryUI.selectedItem = undefined;
                         currentObj.hideTargets();
                         currentObj.currentUnit.endMove();

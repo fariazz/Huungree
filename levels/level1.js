@@ -140,18 +140,34 @@ huungryGameMaps.level1.items = [
     ,{
         x: 4,
         y: 2,
-        name: 'Possession Spell',
+        name: 'Resurrection Spell',
         numHits: 3,
-        image: 'scroll-possession.png',
-        type: 'ITEM.POSSESSION-SPELL'
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
     }
     ,{
         x: 3,
         y: 3,
-        name: 'Possession Spell',
+        name: 'Resurrection Spell',
         numHits: 3,
-        image: 'scroll-possession.png',
-        type: 'ITEM.POSSESSION-SPELL'
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    }
+    ,{
+        x: 3,
+        y: 3,
+        name: 'Resurrection Spell',
+        numHits: 3,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    }
+    ,{
+        x: 3,
+        y: 3,
+        name: 'Resurrection Spell',
+        numHits: 3,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
     }
     /* 
     {
