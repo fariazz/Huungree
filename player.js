@@ -38,9 +38,14 @@ huungry.Player.prototype.playerMoved = function() {
     
     //check for enemy collision
     setTimeout(function() {
+        var noTarget = true;
         for(var i=0; i < that.map.elements.length; i++) {    
             if(that.cell.col == that.map.elements[i].cell.col && that.cell.row == that.map.elements[i].cell.row 
                 && that.id != that.map.elements[i].id) {
+
+                //there was a target found
+                noTarget = false;
+
                 if(that.map.elements[i].elementType == that.gameObj.ENEMY_ARMY) {
                     that.gameObj.fight(that.map.elements[i]);
                     break;
@@ -124,10 +129,61 @@ huungry.Player.prototype.playerMoved = function() {
                     that.map.elements[i].showDialog();
                     break;
                 }
-                else {
-                    //console.log(that.map.elements[i]);
-                }                
+                          
             }
+        }
+
+        if(noTarget) {
+            //find adjacent units
+            var adjacentCells = new Array(
+                {col: that.cell.col-1, row: that.cell.row-1},
+                {col: that.cell.col-1, row: that.cell.row},
+                {col: that.cell.col-1, row: that.cell.row+1},
+                {col: that.cell.col, row: that.cell.row-1},
+                {col: that.cell.col, row: that.cell.row+1},
+                {col: that.cell.col+1, row: that.cell.row-1},
+                {col: that.cell.col+1, row: that.cell.row},
+                {col: that.cell.col+1, row: that.cell.row+1}
+            );
+
+            adjacentCells = _.reject(adjacentCells, function(element) {
+                return (element.col == -1 || element.col == that.map.num_cols || element.row == -1 || element.row == that.map.num_rows);
+            });
+
+            var isAdjacent;
+            var posibleEnemies = _.filter(that.map.elements, function(element){
+                isAdjacent = _.find(adjacentCells, function(cell) {
+                    return (cell.col == element.cell.col && cell.row == element.cell.row && element.elementType  == that.gameObj.ENEMY_ARMY);
+                });
+
+                return isAdjacent ? true : false;          
+            });
+            
+            var numEnemies = posibleEnemies.length;
+            if(numEnemies) {
+                //probs of attack
+                var willAttack = Math.random() <= that.gameObj.PROB_MAP_ARMY_ATTACK;
+
+                if(willAttack) {
+                    var enemyIndex = _.random(numEnemies-1);
+                    
+                    var pos = that.getPosition();
+                    var movement = new lime.animation.MoveTo(pos.x,pos.y)
+                        .setDuration(that.gameObj.movementDuration/2);  
+
+                    posibleEnemies[enemyIndex].runAction(movement);   
+
+                    goog.events.listen(movement,lime.animation.Event.STOP,function(){
+                        posibleEnemies[enemyIndex].refreshMapPos();
+                        that.playerMoved();
+                    });
+                }
+            }            
+
+            //move to player
+
+            //test again so there will be battle
+
         }
     }, this.gameObj.movementDuration*1000*0.4);  
 }

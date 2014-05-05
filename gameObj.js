@@ -9,6 +9,7 @@ huungry.GameObj = function(document) {
     this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1', '0.3.2'];
     this.developmentMode = true;
     this.initialLevel = 'level1';
+    this.renderer = lime.Renderer.DOM;
 
     this.screenWidth = 480;
     this.screenHeight= 320;
@@ -29,6 +30,9 @@ huungry.GameObj = function(document) {
     this.NONHUMAN_SKELLETON = 2;
     this.TREE = 3;
     this.ROCK = 4;
+
+    //map attacks
+    this.PROB_MAP_ARMY_ATTACK = 0.1;
     
     //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
     this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
@@ -94,7 +98,7 @@ huungry.GameObj.prototype.runLevel = function(levelName, pos, darkness, mapItems
     this.currentLevel = levelName;
 
     //game scene
-    this.gameScene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    this.gameScene = new lime.Scene().setRenderer(this.renderer);
     this.gameLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.darknessLayer = new lime.Layer().setAnchorPoint(0, 0);
     this.gameScene.appendChild(this.gameLayer);
@@ -306,6 +310,8 @@ huungry.GameObj.prototype.centerCameraTo = function(x,y) {
 
 //fight scene
 huungry.GameObj.prototype.fight = function(enemy) {
+    this.pauseSound('royal-jester.ogg');
+    this.playSound('enemy-offense.ogg');
     var FightEngine = new huungry.FightEngine().setGameObj(this).setEnemyArmy(enemy);
     FightEngine.init();
 };
@@ -329,7 +335,7 @@ huungry.GameObj.prototype.setUnitTypes = function(unitTypes) {
 */
 huungry.GameObj.prototype.showSplashScreen = function() {
     this.splashScreen = new Object();
-    this.splashScreen.scene = new lime.Scene().setRenderer(lime.Renderer.DOM);
+    this.splashScreen.scene = new lime.Scene().setRenderer(this.renderer);
     this.splashScreen.background = new lime.Sprite().setAnchorPoint(0,0).
         setFill('assets/images/backgrounds/home.png').setSize(this.screenWidth, this.screenHeight);
    
@@ -537,7 +543,7 @@ huungry.GameObj.prototype.loadGame = function() {
       var unitsLen = this.player.units.length;
       for(var i=0; i<unitsLen; i++) {
         units.push({
-          id: this.player.units[i].id,
+          typeid: this.player.units[i].typeid,
           life: this.player.units[i].life
         });
       }
@@ -641,9 +647,13 @@ huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
 
 /**
 * play sound
-@param string sound file
+* @param string sound file
+* @param boolean unique true if turns off all existing sounds, false if it doesn't
 */
-huungry.GameObj.prototype.playSound = function(fileName) {
+huungry.GameObj.prototype.playSound = function(fileName, unique) {
+
+  this.currentSounds = this.currentSounds || {};
+
   if(window.device) {
     var getPhonegaPath = function() {
       var path = window.location.pathname;
@@ -651,17 +661,52 @@ huungry.GameObj.prototype.playSound = function(fileName) {
       return 'file://' + path;
     };
 
-    this.currentSound = new Media(getPhonegaPath() + 'assets/music/' + fileName);
-    this.currentSound.play();
+    if(unique) {
+      _.each(this.currentSounds, function(value, key) {
+        if(key != fileName) {
+          console.log('stopping sound: ' + key);
+          value.stop();
+        }        
+      })
+    }
+
+    if(!this.currentSounds[fileName]) {
+      this.currentSounds[fileName] = new Media(getPhonegaPath() + 'assets/music/' + fileName); 
+      this.currentSounds[fileName].setVolume('1.0'); 
+    }
+    this.currentSounds[fileName].play();
+
   }
 };
 
 /**
 * stop the current sound
+* @param string fileName leave empty to turn off all sounds
 */
-huungry.GameObj.prototype.stopSound = function() {
-  if(window.device && this.currentSound) {
-    this.currentSound.stop();
+huungry.GameObj.prototype.stopSound = function(fileName) {
+  if(window.device) {
+
+    if(fileName) {
+      this.currentSounds[fileName].stop();
+    }
+    else {
+      _.each(this.currentSounds, function(value) {
+        value.stop();
+      })    
+    }
+    
+  }
+};
+
+/**
+* pause the current sound
+* @param string fileName
+*/
+huungry.GameObj.prototype.pauseSound = function(fileName) {
+  if(window.device) {
+    console.log('pausing: '+fileName);
+    console.log(this.currentSounds[fileName]);
+    this.currentSounds[fileName].pause();
   }
 };
 

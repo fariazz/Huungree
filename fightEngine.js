@@ -28,7 +28,7 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
 huungry.FightEngine.prototype.init = function() {
     this.gameObj.fightEngine = this;
 
-    this.fightScene = new lime.Scene().setRenderer(lime.Renderer.DOM);    
+    this.fightScene = new lime.Scene().setRenderer(this.gameObj.renderer);    
     this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
     this.fightUILayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
         
@@ -273,7 +273,6 @@ huungry.FightEngine.prototype.initPowerStats = function() {
     };
 
     _.each(this.playerUnits, function(value, key){
-        console.log(value);
         this.armyStats.ps += value.getPower();
     }, this);
     this.armyStats.ps *= 1 + this.gameObj.powerNumFactor*(this.playerUnits.length-1);
@@ -441,7 +440,6 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
                 //else just attack
                 this.enemyAttack(enemy, unitPos);
             }
-
         break;
         case 'summon':
         break;
@@ -582,7 +580,6 @@ huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
         if(targetType == this.gameObj.FREE_TARGET) {
-            console.log('show free target');            
             unit.movementTargets[i].sprite.setHidden(false);
             unit.movementTargets[i].sprite.setPosition(posX,posY);            
         }
@@ -751,6 +748,9 @@ huungry.FightEngine.prototype.updateDead = function() {
         var message = '<div class="centered">You\'ve found '+this.enemyArmy.gold+' pieces of gold in the corpses of your enemies.</div>';
         HuungryUI.showDialog('YOU HAVE WON!',message
             ,[{text: 'OK', btnClass: 'button-home', callback: function() {
+
+                fightScene.gameObj.playSound('royal-jester.ogg', true);
+
                 HuungryUI.hideDialog();
                 fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                 fightScene.enemyArmy.die();

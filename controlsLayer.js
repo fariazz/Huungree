@@ -11,19 +11,22 @@ huungry.ControlsLayer = function() {
     this.tileFactorLSide = 3;
     this.tileFactorSSide = 1;
     this.setAnchorPoint(0, 0);
-    this.setRenderer(lime.Renderer.DOM);
+    
 }
 
 goog.inherits(huungry.ControlsLayer,lime.Layer);
 
 huungry.ControlsLayer.prototype.setGameObj = function(gameObj) {
     this.gameObj = gameObj;
+    this.setRenderer(gameObj.renderer)
+        .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide,0)
     return this;
 }
 
 huungry.ControlsLayer.prototype.init = function() {
+    this.setSize(this.gameObj.tileSize, this.gameObj.screenHeight);
     this.sideBar = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/backgrounds/sidebar_noicons.png')
-        .setPosition(this.gameObj.screenWidth - this.gameObj.tileSize*this.tileFactorSSide,0)
+        .setPosition(0,0)
         .setSize(this.gameObj.tileSize, this.gameObj.screenHeight);
 
     this.appendChild(this.sideBar);
