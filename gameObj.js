@@ -311,7 +311,7 @@ huungry.GameObj.prototype.centerCameraTo = function(x,y) {
 //fight scene
 huungry.GameObj.prototype.fight = function(enemy) {
     this.pauseSound('royal-jester.ogg');
-    this.playSound('enemy-offense.ogg');
+    this.playSound('enemy-offense.ogg', {loop: true});
     var FightEngine = new huungry.FightEngine().setGameObj(this).setEnemyArmy(enemy);
     FightEngine.init();
 };
@@ -374,7 +374,6 @@ huungry.GameObj.prototype.showSplashScreen = function() {
         currentObj.runLevel(currentObj.initialLevel);
     });
     goog.events.listen(this.splashScreen.loadBtn,['mousedown', 'touchstart'], function(e) {  
-        currentObj.stopSound();
         currentObj.loadGame();
     });
     goog.events.listen(this.splashScreen.aboutBtn,['mousedown', 'touchstart'], function(e) {   
@@ -648,11 +647,19 @@ huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
 /**
 * play sound
 * @param string sound file
-* @param boolean unique true if turns off all existing sounds, false if it doesn't
+* @param array parameters: unique:true if turns off all existing sounds, false if it doesn't. loop: true
 */
-huungry.GameObj.prototype.playSound = function(fileName, unique) {
+huungry.GameObj.prototype.playSound = function(fileName, params) {
 
   this.currentSounds = this.currentSounds || {};
+
+  var unique;
+  var loop;
+
+  if(params) {
+    unique = params.unique;
+    loop = params.loop;
+  }
 
   if(window.device) {
     var getPhonegaPath = function() {
@@ -664,17 +671,25 @@ huungry.GameObj.prototype.playSound = function(fileName, unique) {
     if(unique) {
       _.each(this.currentSounds, function(value, key) {
         if(key != fileName) {
-          console.log('stopping sound: ' + key);
+          value.zvaTurnedOff = true;
           value.stop();
         }        
       })
     }
 
     if(!this.currentSounds[fileName]) {
-      this.currentSounds[fileName] = new Media(getPhonegaPath() + 'assets/music/' + fileName); 
+      var that = this;
+      var replay = function (status) {
+          if (status === Media.MEDIA_STOPPED && loop && !that.currentSounds[fileName].zvaTurnedOff) {
+              that.currentSounds[fileName].play();
+          }
+      };
+
+      this.currentSounds[fileName] = new Media(getPhonegaPath() + 'assets/music/' + fileName, null, null, replay); 
       this.currentSounds[fileName].setVolume('1.0'); 
     }
     this.currentSounds[fileName].play();
+    this.currentSounds[fileName].zvaTurnedOff = false;
 
   }
 };
@@ -687,10 +702,12 @@ huungry.GameObj.prototype.stopSound = function(fileName) {
   if(window.device) {
 
     if(fileName) {
-      this.currentSounds[fileName].stop();
+      this.currentSounds[fileName].zvaTurnedOff = true;
+      this.currentSounds[fileName].stop();      
     }
     else {
       _.each(this.currentSounds, function(value) {
+        value.zvaTurnedOff = true;
         value.stop();
       })    
     }
@@ -704,8 +721,6 @@ huungry.GameObj.prototype.stopSound = function(fileName) {
 */
 huungry.GameObj.prototype.pauseSound = function(fileName) {
   if(window.device) {
-    console.log('pausing: '+fileName);
-    console.log(this.currentSounds[fileName]);
     this.currentSounds[fileName].pause();
   }
 };

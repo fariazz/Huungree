@@ -31,7 +31,7 @@ huungry.start = function(isFullVersion){
     gameObj.isFullVersion = isFullVersion;
 
     //intro music
-    gameObj.playSound('royal-jester.ogg', true);
+    gameObj.playSound('royal-jester.ogg', {unique: true, loop: true});
     
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
