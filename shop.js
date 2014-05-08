@@ -45,13 +45,13 @@ huungry.Shop.prototype.purchase = function(unit) {
             var len = this.gameObj.player.units.length;
             var sameIndexes = new Array(); 
             _.each(this.gameObj.player.units, function(value, key){
-                if(value.id == unit.id) {
+                if(value.typeid == unit.typeid) {
                     sameIndexes.push(key);
                 }
             }, this);
 
             if(sameIndexes.length) {
-                if(this.prevUnit == unit.id) {
+                if(this.prevUnit == unit.typeid) {
                     this.nextIndex++;
                     if(this.nextIndex == sameIndexes.length) {
                         this.nextIndex = 0;
@@ -59,7 +59,7 @@ huungry.Shop.prototype.purchase = function(unit) {
 
                 }
                 else {
-                    this.prevUnit = unit.id;
+                    this.prevUnit = unit.typeid;
                     this.nextIndex = 0;
                 }
                 this.gameObj.player.buyAdd(this.gameObj.player.units[sameIndexes[this.nextIndex]], unit.price, 1);

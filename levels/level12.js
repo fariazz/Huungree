@@ -32,12 +32,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'valkyrie',
+                    typeid: 'valkyrie',
                     power: 900,
                     maxNum: 5
                 },
                 {
-                    id: 'archer',
+                    typeid: 'archer',
                     power: 500,
                     maxNum: 5
                 },
@@ -54,12 +54,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
+                    typeid: 'prairiehorseman',
                     power: 600,
                     maxNum: 6
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 600,
                     maxNum: 6
                 },
@@ -76,12 +76,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
+                    typeid: 'prairiehorseman',
                     power: 600,
                     maxNum: 5
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 600,
                     maxNum: 5
                 },
@@ -98,12 +98,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
+                    typeid: 'armoredaxeman',
                     power: 700,
                     maxNum: 6
                 },
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 200,
                     maxNum: 4
                 },
@@ -120,7 +120,7 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 1500,
                     maxNum: 10
                 }        
@@ -136,12 +136,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
+                    typeid: 'troll',
                     power: 1000,
                     maxNum: 10
                 },
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 800,
                     maxNum: 10
                 }        
@@ -157,7 +157,7 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
                     power: 1000,
                     maxNum: 8
                 }        
@@ -173,12 +173,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'peasant',
+                    typeid: 'peasant',
                     power: 1000,
                     maxNum: 12
                 },
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 800,
                     maxNum: 5
                 }        
@@ -194,12 +194,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
+                    typeid: 'armoredaxeman',
                     power: 1000,
                     maxNum: 6
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 500,
                     maxNum: 5
                 }        
@@ -215,12 +215,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elfswordman',
+                    typeid: 'elfswordman',
                     power: 1000,
                     maxNum: 7
                 },
                 {
-                    id: 'elfarcher',
+                    typeid: 'elfarcher',
                     power: 700,
                     maxNum: 5
                 }        
@@ -236,12 +236,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elfswordman',
+                    typeid: 'elfswordman',
                     power: 700,
                     maxNum: 7
                 },
                 {
-                    id: 'elfarcher',
+                    typeid: 'elfarcher',
                     power: 1000,
                     maxNum: 5
                 }        
@@ -257,12 +257,12 @@ huungryGameMaps.level12.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'satyr',
+                    typeid: 'satyr',
                     power: 2200,
                     maxNum: 10
                 },
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 1200,
                     maxNum: 5
                 }        
@@ -279,17 +279,17 @@ huungryGameMaps.level12.shops = [
         image: 'house-3.png',
         units: [
             {
-                id: 'satyr',
+                typeid: 'satyr',
                 price: 140,
                 qty: 50
             },
             {
-                id: 'elfswordman',
+                typeid: 'elfswordman',
                 price: 200,
                 qty: 45
             },
             {
-                id: 'elfarcher',
+                typeid: 'elfarcher',
                 price: 250,
                 qty: 40
             }              
@@ -467,15 +467,39 @@ huungryGameMaps.level12.items = [
         image: 'door-green.png',
         type: 'ITEM.DOOR',
     },
+    {
+        x: 2,
+        y: 3,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    },
+    {
+        x: 16,
+        y: 3,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    },
+    {
+        x: 1,
+        y: 3,
+        name: 'Resurrection Spell',
+        numHits: 10,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
 ];
 
 huungryGameMaps.level12.quest = {
     screens: ['Kraul was stabbed by one of his captains for unpaid debt, his body given to starving dogs, and his whole unpaid mercenary army deserted to loot on local farmers.',
-    'This should be celebrated! But Jekkel seems uneasy and distant. Your informants say he is jelaous of your rising fortune and influence, and that there is a plan to murder you tomorrow.',
-    'You can\'t rival Jekkel\'s army so you leave Crisal at dawn with your troops and head south.<br/><br/>If you can cross the Dindel Forest and the Crow Montains you\'ll reach unexplored lands which could be all yours.',
+    'This should be celebrated! But Jekkel seems distant. Your informants say he is jelaous of your rising and that there is a plan to murder you.',
+    'You can\'t rival his army so you leave Crisal with your troops and head south to unexplored lands until you can grow stronger.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
-<li>1-Cross the elf-infested Dindel Forest and find the path to the Crow Mountains.<br/>\
+<li>1-Cross the elf-infested Dindel Forest and find your way to the Crow Montains.<br/>\
 <img src="assets/images/places/white-door.png" width="20" /> \
     </li>\
 <ul>'
@@ -484,4 +508,4 @@ huungryGameMaps.level12.quest = {
     totalNumGoals: 1
 };
 
-huungryGameMaps.level12.nextLevel = null;
+huungryGameMaps.level12.nextLevel = 'level13';

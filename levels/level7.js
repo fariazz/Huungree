@@ -34,7 +34,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 700,
                     maxNum: 8
                 }
@@ -50,7 +50,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 800,
                     maxNum: 8
                 }
@@ -66,7 +66,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 600,
                     maxNum: 8
                 }
@@ -82,12 +82,12 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
+                    typeid: 'troll',
                     power: 650,
                     maxNum: 6
                 },
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 100,
                     maxNum: 2
                 }
@@ -103,7 +103,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 500,
                     maxNum: 8
                 }
@@ -119,7 +119,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 600,
                     maxNum: 8
                 }
@@ -135,7 +135,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'centaur',
+                    typeid: 'centaur',
                     power: 400,
                     maxNum: 8
                 }
@@ -151,7 +151,7 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 700,
                     maxNum: 8
                 }
@@ -167,12 +167,12 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 700,
                     maxNum: 7
                 },
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 40,
                     maxNum: 1
                 }
@@ -188,12 +188,12 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
                     power: 700,
                     maxNum: 6
                 },
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 60,
                     maxNum: 2
                 }
@@ -209,12 +209,12 @@ huungryGameMaps.level7.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
                     power: 700,
                     maxNum: 6
                 },
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 60,
                     maxNum: 2
                 }
@@ -231,9 +231,9 @@ huungryGameMaps.level7.shops = [
         image: 'house-1.png',
         units: [
             {
-                id: 'armoredaxeman',
+                typeid: 'armoredaxeman',
                 price: 50,
-                qty: 30
+                qty: 50
             }           
         ]
     },
@@ -244,17 +244,17 @@ huungryGameMaps.level7.shops = [
         image: 'fence.png',
         units: [
             {
-                id: 'wolf',
+                typeid: 'wolf',
                 price: 35,
                 qty: 45
             },
             {
-                id: 'lion',
+                typeid: 'lion',
                 price: 35,
                 qty: 30
             },
             {
-                id: 'centaur',
+                typeid: 'centaur',
                 price: 45,
                 qty: 55
             }           
@@ -351,11 +351,26 @@ huungryGameMaps.level7.items = [
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
+    {
+        x: 18,
+        y: 1,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    },
+    {
+        x: 13,
+        y: 7,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }
 ];
 
 huungryGameMaps.level7.quest = {
-    screens: ['You\'ve reached the city of Crisal but Jekkel is not there. Tiego, your brother\'s liutenant tells \
-    you they are fighting over the Mystical Cities against another privateer from Ingeber named Kraul. \
+    screens: ['You\'ve reached the city of Crisal but Jekkel is not there. He is fighting against another privateer from Ingeber named Kraul. \
     Also, they are all fighting Nothul Empire troops in the north. Lastly, there have been rebelions among the mysticals.',
 
     'Stopping the rebelion is the first priority. Without a secure post it will be impossible to defend against \

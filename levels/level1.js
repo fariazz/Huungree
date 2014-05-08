@@ -3,8 +3,8 @@ if(huungryGameMaps === undefined) {
 }
 
 huungryGameMaps.level1 = new Object();
-huungryGameMaps.level1.width = 380;
-huungryGameMaps.level1.height = 180;
+huungryGameMaps.level1.width = 480;
+huungryGameMaps.level1.height = 240;
 huungryGameMaps.level1.image = 'assets/images/levels/level1.png';
 huungryGameMaps.level1.playerInitialX = 3;
 huungryGameMaps.level1.playerInitialY = 3;
@@ -12,13 +12,13 @@ huungryGameMaps.level1.playerInitialY = 3;
 huungryGameMaps.level1.tiledData = {
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 0, 0, 0, 0, 0, 0, 0, 0, 200, 200, 0, 0, 0, 0, 200, 200, 0, 0, 200, 200, 200, 200, 200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 200, 200, 0, 0, 0, 200, 0, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 200, 200, 200, 0, 200, 0, 0, 0, 0, 200, 200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 200, 0, 200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 200, 200, 0, 0, 0, 0, 0, 200, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 0],
-         "height":9,
+         "data":[193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 0, 0, 193, 193, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 0, 193, 0, 200, 200, 0, 0, 0, 0, 200, 200, 0, 0, 200, 200, 200, 200, 200, 0, 193, 0, 193, 0, 193, 193, 193, 0, 200, 193, 0, 0, 0, 0, 200, 193, 0, 0, 0, 0, 193, 0, 200, 200, 0, 193, 193, 193, 193, 193, 193, 0, 200, 193, 0, 0, 0, 0, 200, 193, 193, 193, 193, 193, 0, 0, 193, 200, 200, 200, 193, 193, 193, 193, 0, 0, 200, 193, 0, 0, 0, 200, 200, 0, 0, 0, 193, 200, 193, 0, 193, 0, 0, 200, 0, 193, 193, 193, 0, 0, 200, 193, 0, 0, 0, 200, 0, 0, 0, 193, 200, 200, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 200, 193, 0, 0, 0, 193, 0, 0, 0, 0, 193, 193, 193, 0, 0, 0, 0, 200, 0, 193, 193, 193, 193, 0, 200, 200, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 200, 0, 200, 0, 0, 0, 0, 193, 193, 193, 0, 0, 193, 0, 193, 0, 0, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 193, 193, 0, 0, 193, 0, 193, 0, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 193],
+         "height":12,
          "name":"blocked",
          "opacity":0.720000028610229,
          "type":"tilelayer",
          "visible":false,
-         "width":19,
+         "width":24,
          "x":0,
          "y":0
         }]
@@ -27,26 +27,16 @@ huungryGameMaps.level1.tiledData = {
 huungryGameMaps.level1.enemyArmies = [
     {
         isQuestGoal: true,
-        x: 5,
-        y: 7,
+        x: 4,
+        y: 8,
         image: 'wolf.png',
         background: 'grass_background.png',
         unitsSummary: [
             [
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 350,
                     maxNum: 4
-                },
-                {
-                    id: 'ritualwarrior',
-                    power: 350,
-                    maxNum: 5
-                },
-                {
-                    id: 'archer',
-                    power: 350,
-                    maxNum: 5
                 }
             ]            
         ]
@@ -60,7 +50,7 @@ huungryGameMaps.level1.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 350,
                     maxNum: 5
                 }
@@ -68,21 +58,22 @@ huungryGameMaps.level1.enemyArmies = [
         ]
     },
     {
-        isQuestGoal: false,
-        x: 2,
-        y: 2,
-        image: 'ritualwarrior.png',
+        isQuestGoal: true,
+        x: 17,
+        y: 6,
+        image: 'snake.png',
         background: 'grass_background.png',
         unitsSummary: [
             [
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'snake',
                     power: 350,
-                    maxNum: 10
+                    maxNum: 5
                 }
             ]            
         ]
-    }
+    },
+    
 ];
 
 huungryGameMaps.level1.shops = [
@@ -93,17 +84,17 @@ huungryGameMaps.level1.shops = [
         image: 'house-1.png',
         units: [
             {
-                id: 'armoredaxeman',
+                typeid: 'armoredaxeman',
                 price: 40,
                 qty: 40
             },
             {
-                id: 'armoredaxeman',
+                typeid: 'armoredaxeman',
                 price: 40,
                 qty: 40
             },
             {
-                id: 'elitearcher',
+                typeid: 'elitearcher',
                 price: 45,
                 qty: 30
             }              
@@ -113,8 +104,8 @@ huungryGameMaps.level1.shops = [
 
 huungryGameMaps.level1.items = [
     {
-        x: 9,
-        y: 3,
+        x: 0,
+        y: 9,
         name: 'Gold',
         gold: 50,
         image: 'chest-gold.png',
@@ -130,44 +121,36 @@ huungryGameMaps.level1.items = [
     }
     
    ,{
-        x: 3,
+        x: 9,
+        y: 3,
+        name: 'Gold',
+        gold: 100,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
+    }
+    ,{
+        x: 19,
         y: 2,
-        name: 'Resurrection Spell',
-        numHits: 5,
-        image: 'scroll-skull.png',
-        type: 'ITEM.RESURRECTION-SPELL'
+        name: 'Gold',
+        gold: 100,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
     }
     ,{
-        x: 4,
+        x: 8,
         y: 2,
-        name: 'Resurrection Spell',
-        numHits: 3,
-        image: 'scroll-skull.png',
-        type: 'ITEM.RESURRECTION-SPELL'
+        name: 'Fire Spell',
+        attack: 20,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
     }
     ,{
-        x: 3,
-        y: 3,
-        name: 'Resurrection Spell',
-        numHits: 3,
-        image: 'scroll-skull.png',
-        type: 'ITEM.RESURRECTION-SPELL'
-    }
-    ,{
-        x: 3,
-        y: 3,
-        name: 'Resurrection Spell',
-        numHits: 3,
-        image: 'scroll-skull.png',
-        type: 'ITEM.RESURRECTION-SPELL'
-    }
-    ,{
-        x: 3,
-        y: 3,
-        name: 'Resurrection Spell',
-        numHits: 3,
-        image: 'scroll-skull.png',
-        type: 'ITEM.RESURRECTION-SPELL'
+        x: 19,
+        y: 1,
+        name: 'Fire Spell',
+        attack: 20,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
     }
     /* 
     {
@@ -327,14 +310,13 @@ huungryGameMaps.level1.items = [
 ];
 
 huungryGameMaps.level1.quest = {
-    screens: ['Three maritime super powers dispute the new continent of Tamaca. \
-The Nothul Empire and their heavy troops occupy the north. \
-The Ghornia Queendom took over the coastal trade. \
-The Republic of Ingeber and their privateers went inland and took over the Mystical Cities.',
+    screens: ['Two rival powers dispute the new continent of Tamaca. \
+The Nothul Empire occupies the north. \
+The Republic of Ingeber went inland and took over the Mystical Cities.',
 
         'You play the role of Jakkal, aspiring privateer from Ingeber. \
 You\'ve just arrived to Crab Bay to join your older brother Jekkel,\
-a seasoned privateer who is in the Mystical City of Crisal, far inland in Tamaca.',
+a seasoned privateer who is in the Mystical City of Crisal.',
 
         'You\'ll need a few nights in Crab Bay to prepare your travel inland. \
 <div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the wild animals so you can set your camp in peace.\

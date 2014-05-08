@@ -79,7 +79,7 @@ var UnitTypes = [
             attack: 12,
             defense: 2,
             canShoot: false,
-            gold: 12,
+            gold: 11,
             movements: 1,
             skelleton: true
         },
@@ -90,7 +90,7 @@ var UnitTypes = [
             attack: 15,
             defense: 5,
             canShoot: false,
-            gold: 15,
+            gold: 12,
             movements: 1,
             skelleton: true
         },
@@ -111,7 +111,7 @@ var UnitTypes = [
             attack: 12,
             defense: 3,
             canShoot: true,
-            gold: 13,
+            gold: 11,
             movements: 1,
         },
         {
@@ -121,7 +121,7 @@ var UnitTypes = [
             attack: 20,
             defense: 10,
             canShoot: false,
-            gold: 22,
+            gold: 16,
             movements: 2,
             effect: [
                 {name: 'paralyze',numPerBattle: 5, value: 2}
@@ -136,7 +136,7 @@ var UnitTypes = [
             attack: 18,
             defense: 8,
             canShoot: false,
-            gold: 17,
+            gold: 15,
             movements: 1,
             skelleton: true
         },
@@ -167,6 +167,23 @@ var UnitTypes = [
             skelleton: true
         },
         {
+            typeid: 'wizardapprentice',
+            name: 'wizard apprentice',
+            image: 'wizardapprentice.png',
+            attack: 10,
+            defense: 6,
+            canShoot: true,
+            gold: 25,
+            movements: 1,
+            spells: [
+                {name: 'possession',numPerBattle: 2, value: 2},
+                {name: 'resurrection',numPerBattle: 2, value: 5},
+                {name: 'paralyze',numPerBattle: 2, value: 3},
+            ],
+            spellUseProbability: 0.5, //probability of the unit using a spell
+            skelleton: true
+        },
+        {
             typeid: 'armoredaxeman',
             name: 'armored axeman',
             image: 'armoredaxeman.png',
@@ -184,7 +201,7 @@ var UnitTypes = [
             attack: 19,
             defense: 9,
             canShoot: false,
-            gold: 35,
+            gold: 25,
             movements: 1,
             skelleton: true
         },
@@ -195,7 +212,7 @@ var UnitTypes = [
             attack: 17,
             defense: 6,
             canShoot: true,
-            gold: 30,
+            gold: 20,
             movements: 1,
             skelleton: true
         },
@@ -206,7 +223,7 @@ var UnitTypes = [
             attack: 20,
             defense: 10,
             canShoot: false,
-            gold: 33,
+            gold: 23,
             movements: 3,
             skelleton: true
         },
@@ -217,7 +234,7 @@ var UnitTypes = [
             attack: 24,
             defense: 14,
             canShoot: true,
-            gold: 35,
+            gold: 26,
             movements: 1,
             skelleton: true
         },
@@ -228,7 +245,7 @@ var UnitTypes = [
             attack: 17,
             defense: 7,
             canShoot: false,
-            gold: 28,
+            gold: 22,
             movements: 1,
             skelleton: true
         },
@@ -239,22 +256,88 @@ var UnitTypes = [
             attack: 15,
             defense: 9,
             canShoot: false,
-            gold: 18,
+            gold: 16,
             movements: 2,
             spells: [{name: 'paralyze',numPerBattle: 2, value: 1}],
             spellUseProbability: 0.1,
             skelleton: true
         },
         {
-            typeid: 'skelletonunarmed',
-            name: 'skelleton',
-            image: 'skelleton-unarmed.png',
+            typeid: 'skeletonunarmed',
+            name: 'skeleton',
+            image: 'skeletonunarmed.png',
             attack: 16,
             defense: 8,
             canShoot: false,
             gold: 0,
             movements: 1,
             skelleton: true
+        },
+        {
+            typeid: 'swordskeleton',
+            name: 'sword skeleton',
+            image: 'swordskeleton.png',
+            attack: 15,
+            defense: 14,
+            canShoot: false,
+            gold: 20,
+            movements: 1,
+            spells: [
+                {name: 'resurrection',numPerBattle: 4, value: 5},
+            ],
+            spellUseProbability: 0.4, //probability of the unit using a spell
+            skelleton: true
+        },
+        {
+            typeid: 'redwizard',
+            name: 'red wizard',
+            image: 'redwizard.png',
+            attack: 14,
+            defense: 12,
+            canShoot: true,
+            gold: 30,
+            movements: 1,
+            spells: [
+                {name: 'possession',numPerBattle: 6, value: 3},
+                {name: 'resurrection',numPerBattle: 6, value: 12},
+                {name: 'paralyze',numPerBattle: 6, value: 4},
+            ],
+            spellUseProbability: 0.5, //probability of the unit using a spell
+            skelleton: true
+        },
+        {
+            typeid: 'snowman',
+            name: 'snowman',
+            image: 'snowman.png',
+            attack: 16,
+            defense: 12,
+            canShoot: true,
+            gold: 10,
+            movements: 2,
+            spells: [{name: 'paralyze',numPerBattle: 3, value: 2}],
+            spellUseProbability: 0.25,
+            skelleton: true
+        },
+        {
+            typeid: 'royalknight',
+            name: 'royal knight',
+            image: 'royalknight.png',
+            attack: 22,
+            defense: 13,
+            canShoot: false,
+            gold: 30,
+            movements: 3,
+            skelleton: true
+        },
+        {
+            typeid: 'demon',
+            name: 'demon',
+            image: 'demon.png',
+            attack: 22,
+            defense: 14,
+            canShoot: false,
+            gold: 10,
+            movements: 3,
         },
         
         

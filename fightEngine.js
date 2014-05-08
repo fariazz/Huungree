@@ -158,7 +158,7 @@ huungry.FightEngine.prototype.exitFight = function() {
     
     for(var i=0; i< this.playerUnits.length; i++) {
         this.gameObj.player.units.push({
-            id: this.playerUnits[i].typeid,
+            typeid: this.playerUnits[i].typeid,
             name: this.playerUnits[i].name,
             image: this.playerUnits[i].image,
             attack: this.playerUnits[i].attack,
@@ -340,6 +340,7 @@ huungry.FightEngine.prototype.checkParalyzedUnit = function() {
         if(unit.numTurnsParalyzed == 0) {
             unit.clearVisualEffects('paralyze effect is up!');            
         }
+        unit.readiness = 0;
         return true;        
     }
     return false;

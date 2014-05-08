@@ -35,7 +35,7 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 200,
                     maxNum: 8
                 }
@@ -51,7 +51,7 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 200,
                     maxNum: 6
                 }               
@@ -67,7 +67,7 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 600,
                     maxNum: 6
                 }               
@@ -84,17 +84,17 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'halfling',
+                    typeid: 'halfling',
                     power: 100,
                     maxNum: 2
                 },
                 {
-                    id: 'axeman',
+                    typeid: 'axeman',
                     power: 200,
                     maxNum: 4
                 },
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 50,
                     maxNum: 2
                 }
@@ -111,7 +111,7 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 600,
                     maxNum: 6
                 }                
@@ -128,7 +128,7 @@ huungryGameMaps.level4.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 500,
                     maxNum: 3
                 }                
@@ -136,7 +136,23 @@ huungryGameMaps.level4.enemyArmies = [
                         
         ]
     },
-    
+    {
+        isQuestGoal: false,
+        x: 21,
+        y: 6,
+        image: 'ritualwarrior.png',
+        background: 'grass_background.png',
+        unitsSummary: [
+            [
+                {
+                    typeid: 'ritualwarrior',
+                    power: 350,
+                    maxNum: 4
+                }                
+            ],
+                        
+        ]
+    },    
 ];
 
 huungryGameMaps.level4.shops = [
@@ -147,8 +163,8 @@ huungryGameMaps.level4.shops = [
         image: 'cave.png',
         units: [
             {
-                id: 'insectman',
-                price: 35,
+                typeid: 'insectman',
+                price: 40,
                 qty: 40
             }          
         ]
@@ -247,7 +263,22 @@ huungryGameMaps.level4.items = [
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
-   
+    {
+        x: 11,
+        y: 7,
+        name: 'Paralyze Spell',
+        numHits: 4,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 20,
+        y: 13,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }   
 ];
 
 huungryGameMaps.level4.quest = {
@@ -255,7 +286,7 @@ huungryGameMaps.level4.quest = {
     mercenaries have disappeared in it\'s surroundings carrying precious treasure. If you can \
     recruit some insect men you might be able to survive the crossing and find bounty.',
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Find and seize the treasures hidden by the insect men. \
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Find the treasures hidden by the insect men. \
 <img src="assets/images/items/chest-jewels.png" width="20" /> \
 <img src="assets/images/items/chest-jewels.png" width="20" /> \
 <img src="assets/images/items/chest-jewels.png" width="20" /> \

@@ -7,8 +7,8 @@ huungry.GameObj = function(document) {
 
     this.GAME_VERSION = '0.3.2';
     this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1', '0.3.2'];
-    this.developmentMode = true;
-    this.initialLevel = 'level1';
+    this.developmentMode = false;
+    this.initialLevel = 'level14';
     this.renderer = lime.Renderer.DOM;
 
     this.screenWidth = 480;
@@ -42,7 +42,7 @@ huungry.GameObj = function(document) {
     this.timeInCurrentLevel = 0;
     this.notifyInterval = null;
 
-    this.powerNumFactor = 0.4;
+    this.powerNumFactor = 0.3;
 
     //probability to reach target for range attack units
     this.accuracyProbability = 0.6;
@@ -415,8 +415,8 @@ huungry.GameObj.prototype.loadGame = function() {
     this.player.units = [];
     var units = JSON.parse(localStorage.getItem('currentUnits'));
     var unitsLen = units.length;
-
     for(var i=0; i<unitsLen; i++) {
+
       this.player.units.push(this.cloneUnit(this.unitTypes[units[i]['typeid']], units[i]['life']));
     }
 

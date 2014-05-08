@@ -35,7 +35,7 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 700,
                     maxNum: 8
                 },                
@@ -51,7 +51,7 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 800,
                     maxNum: 8
                 },                
@@ -67,7 +67,7 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 800,
                     maxNum: 8
                 },                
@@ -83,8 +83,8 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
-                    power: 800,
+                    typeid: 'troll',
+                    power: 1000,
                     maxNum: 8
                 }
             ]
@@ -99,17 +99,22 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
+                    typeid: 'prairiehorseman',
                     power: 1500,
                     maxNum: 5
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 1500,
                     maxNum: 3
                 },
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
+                    power: 700,
+                    maxNum: 3
+                },
+                {
+                    typeid: 'wizardapprentice',
                     power: 700,
                     maxNum: 3
                 }
@@ -125,24 +130,29 @@ huungryGameMaps.level9.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 1400,
                     maxNum: 5
                 },
                 {
-                    id: 'armoredaxeman',
+                    typeid: 'armoredaxeman',
                     power: 1200,
                     maxNum: 3
                 },
                 {
-                    id: 'axeman',
-                    power: 800,
+                    typeid: 'axeman',
+                    power: 1000,
                     maxNum: 2
                 },
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 700,
                     maxNum: 4
+                },
+                {
+                    typeid: 'wizardapprentice',
+                    power: 700,
+                    maxNum: 3
                 }
             ]
         ]
@@ -158,19 +168,19 @@ huungryGameMaps.level9.shops = [
         image: 'house-2.png',
         units: [
             {
-                id: 'armoredaxeman',
-                price: 40,
-                qty: 40
-            },
-            {
-                id: 'elitearcher',
-                price: 35,
-                qty: 40
-            },
-            {
-                id: 'prairiehorseman',
+                typeid: 'armoredaxeman',
                 price: 50,
-                qty: 40
+                qty: 50
+            },
+            {
+                typeid: 'elitearcher',
+                price: 45,
+                qty: 50
+            },
+            {
+                typeid: 'prairiehorseman',
+                price: 55,
+                qty: 50
             }              
         ]
     },
@@ -181,13 +191,13 @@ huungryGameMaps.level9.shops = [
         image: 'tribe-house.png',
         units: [
             {
-                id: 'orc',
-                price: 25,
-                qty: 35
+                typeid: 'orc',
+                price: 35,
+                qty: 45
             },
             {
-                id: 'troll',
-                price: 35,
+                typeid: 'troll',
+                price: 55,
                 qty: 55
             }        
         ]
@@ -272,17 +282,14 @@ huungryGameMaps.level9.items = [
 ];
 
 huungryGameMaps.level9.quest = {
-    screens: ['The rebel menace is over and \
-   your brother\'s rule is secure on this side. Time to go back to Crisal and inform Tiego of the victory.',
-
-    'Back in Crisal, Tiego thanks for your help with the rebels, but he needs you now to command the attack to \
-    the strong Nothul troops. This is another chance to impress your brother Jekkel so you accept the quest.',
+    screens: ['Now that the rebel menace is over the troops of your bother ask you now to command the attack to \
+    the strong Nothul. This is another chance to impress your brother Jekkel so you accept the quest.',
 
     'The Nothul camp has been spotted in the White Mountains. If you attack with a strong army by surprise you \
     could defeat them. Grow a huge army as this will be an epic battle.',
 
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Defeat the Nothul troops that rest in the White Mountains.<br/>\
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Defeat the Nothul troops.<br/>\
 <img src="assets/images/units/elitearcher.png" width="20" /> \
 <img src="assets/images/units/prairiehorseman.png" width="20" /> \
 </div></li><ul>'

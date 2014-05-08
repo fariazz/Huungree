@@ -45,10 +45,10 @@ huungry.Inanimated.prototype.turnIntoUnit = function(life, collection, owner) {
 	var unitType;
 	switch(this.type) {
 		case this.gameObj.HUMAN_SKELLETON:
-			unitType = 'skelletonunarmed';
+			unitType = 'skeletonunarmed';
 		break;
 		case this.gameObj.NONHUMAN_SKELLETON:
-			unitType = 'skelletonunarmed';
+			unitType = 'skeletonunarmed';
 		break;
 	}
 	var unitData = {life: life, removeAfterBattle: true};
@@ -56,7 +56,10 @@ huungry.Inanimated.prototype.turnIntoUnit = function(life, collection, owner) {
 	this.gameObj.fightEngine.addBattleUnit(_.extend(unitData, this.gameObj.unitTypes[unitType]), 
 		owner == this.gameObj.PLAYER_UNIT, this.getPosition(), collection, owner);
 
-	this.gameObj.fightEngine.skeletons = _.reject(this.gameObj.fightEngine.skeletons, function(element){return element.id == this.id}, this);
+	this.gameObj.fightEngine.skeletons = _.reject(this.gameObj.fightEngine.skeletons, 
+		function(element){
+			return element.id == this.id
+		}, this);
 
 	this.die();		
 };

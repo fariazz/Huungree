@@ -104,6 +104,7 @@ huungry.Item.prototype.protectUnit = function(spellTargetUnit) {
  * @param huungry.Unit spellTargetUnit
  */
 huungry.Item.prototype.paralyzeUnit = function(spellTargetUnit) {
+    console.log('about to paralize for: '+ this.numHits);
     spellTargetUnit.paralyzeSpell(this.numHits);    
     this.gameObj.player.items.splice(HuungryUI.selectedItem,1);
     this.gameObj.fightEngine.hideItemTargets();

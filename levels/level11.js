@@ -34,12 +34,12 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'valkyrie',
+                    typeid: 'valkyrie',
                     power: 900,
                     maxNum: 8
                 },
                 {
-                    id: 'archer',
+                    typeid: 'archer',
                     power: 500,
                     maxNum: 4
                 },                
@@ -55,12 +55,12 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'valkyrie',
+                    typeid: 'valkyrie',
                     power: 900,
                     maxNum: 8
                 },
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 500,
                     maxNum: 4
                 },                
@@ -76,7 +76,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 1500,
                     maxNum: 5
                 }           
@@ -92,7 +92,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'centaur',
+                    typeid: 'centaur',
                     power: 1000,
                     maxNum: 5
                 }           
@@ -108,8 +108,8 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
-                    power: 800,
+                    typeid: 'armoredaxeman',
+                    power: 1000,
                     maxNum: 5
                 }           
             ]
@@ -124,12 +124,12 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
+                    typeid: 'prairiehorseman',
                     power: 1000,
                     maxNum: 5
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 500,
                     maxNum: 3
                 }             
@@ -145,12 +145,12 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
+                    typeid: 'prairiehorseman',
                     power: 1000,
                     maxNum: 5
                 },
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 500,
                     maxNum: 3
                 }             
@@ -166,12 +166,12 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 1000,
                     maxNum: 5
                 },
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 500,
                     maxNum: 3
                 }             
@@ -187,7 +187,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
+                    typeid: 'armoredaxeman',
                     power: 800,
                     maxNum: 5
                 }           
@@ -203,8 +203,8 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
-                    power: 800,
+                    typeid: 'wolf',
+                    power: 1000,
                     maxNum: 5
                 }           
             ]
@@ -219,7 +219,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'centaur',
+                    typeid: 'centaur',
                     power: 1200,
                     maxNum: 5
                 }           
@@ -235,17 +235,17 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
+                    power: 1200,
+                    maxNum: 4
+                },
+                {
+                    typeid: 'tribalwarrior',
                     power: 1000,
                     maxNum: 4
                 },
                 {
-                    id: 'tribalwarrior',
-                    power: 1000,
-                    maxNum: 4
-                },
-                {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 800,
                     maxNum: 3
                 }           
@@ -261,7 +261,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elfswordman',
+                    typeid: 'elfswordman',
                     power: 1200,
                     maxNum: 8
                 }           
@@ -277,13 +277,13 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elfswordman',
-                    power: 500,
+                    typeid: 'elfswordman',
+                    power: 700,
                     maxNum: 8
                 },
                 {
-                    id: 'elfarcher',
-                    power: 1500,
+                    typeid: 'elfarcher',
+                    power: 1600,
                     maxNum: 8
                 }           
             ]
@@ -298,7 +298,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'satyr',
+                    typeid: 'satyr',
                     power: 1000,
                     maxNum: 8
                 }                        
@@ -314,7 +314,7 @@ huungryGameMaps.level11.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 2000,
                     maxNum: 20
                 }                        
@@ -331,18 +331,18 @@ huungryGameMaps.level11.enemyArmies = [
         image: 'tribe-house.png',
         units: [
             {
-                id: 'valkyrie',
-                price: 80,
+                typeid: 'valkyrie',
+                price: 90,
                 qty: 50
             },
             {
-                id: 'centaur',
-                price: 100,
+                typeid: 'centaur',
+                price: 110,
                 qty: 40
             },
             {
-                id: 'armoredaxeman',
-                price: 70,
+                typeid: 'armoredaxeman',
+                price: 80,
                 qty: 30
             }              
         ]
@@ -354,13 +354,13 @@ huungryGameMaps.level11.enemyArmies = [
         image: 'house-2.png',
         units: [
             {
-                id: 'elfswordman',
-                price: 180,
+                typeid: 'elfswordman',
+                price: 200,
                 qty: 55
             },
             {
-                id: 'elfarcher',
-                price: 250,
+                typeid: 'elfarcher',
+                price: 270,
                 qty: 45
             }            
         ]
@@ -572,15 +572,39 @@ huungryGameMaps.level11.items = [
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     }, 
+    {
+        x: 24,
+        y: 1,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    },
+    {
+        x: 1,
+        y: 0,
+        name: 'Resurrection Spell',
+        numHits: 5,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
+    {
+        x: 6,
+        y: 3,
+        name: 'Resurrection Spell',
+        numHits: 5,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
 ];
 
 huungryGameMaps.level11.quest = {
-    screens: ['The Nothul troops have been defeated! Back in Crisal you find your brother. There is no time for hugs as the rival privateer Kraul is treatening to take over the Mystical Cities.',
-'Kraul doesn\'t have a strong leadership and he is not loved by the troops, but he is wealthy and has been able to bribe his way to a strong mercenary army',
+    screens: ['The Nothul troops have been defeated! Back in Crisal you find your brother. There is no time for hugs as the rival privateer Kraul is treatening to attack.',
+'Kraul doesn\'t have a strong leadership but he is wealthy and has been able to bribe his way to a strong mercenary army',
 'His strength and weakness is gold. If you can find and take all of his hidden treasures, his own troops will eat him alive.',   
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
-<li>1-Find and seize Kraul\'s hidden treasures.<br/>\
+<li>1-Take over Kraul\'s hidden treasures.<br/>\
 <img src="assets/images/items/chest-jewels.png" width="20" /> \
 <img src="assets/images/items/chest-jewels.png" width="20" /> \
 <img src="assets/images/items/chest-jewels.png" width="20" /> \

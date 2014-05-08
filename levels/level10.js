@@ -32,8 +32,8 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
-                    power: 900,
+                    typeid: 'armoredaxeman',
+                    power: 1200,
                     maxNum: 8
                 },                
             ]
@@ -48,7 +48,7 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 1200,
                     maxNum: 8
                 },                
@@ -64,7 +64,7 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 1200,
                     maxNum: 8
                 },                
@@ -80,17 +80,17 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
+                    typeid: 'troll',
                     power: 800,
                     maxNum: 2
                 },
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 400,
                     maxNum: 2
                 },
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
                     power: 800,
                     maxNum: 2
                 }
@@ -106,13 +106,13 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'prairiehorseman',
-                    power: 1400,
+                    typeid: 'prairiehorseman',
+                    power: 1700,
                     maxNum: 5
                 },
                 {
-                    id: 'elitearcher',
-                    power: 600,
+                    typeid: 'elitearcher',
+                    power: 800,
                     maxNum: 2
                 }
             ]
@@ -127,12 +127,12 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 700,
                     maxNum: 5
                 },
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 400,
                     maxNum: 4
                 }
@@ -148,13 +148,13 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'elitearcher',
+                    typeid: 'elitearcher',
                     power: 1200,
                     maxNum: 6
                 },
                 {
-                    id: 'armoredaxeman',
-                    power: 500,
+                    typeid: 'armoredaxeman',
+                    power: 800,
                     maxNum: 3
                 }
             ]
@@ -169,7 +169,7 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 1000,
                     maxNum: 6
                 }               
@@ -185,15 +185,20 @@ huungryGameMaps.level10.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
-                    power: 1200,
+                    typeid: 'armoredaxeman',
+                    power: 1400,
                     maxNum: 6
                 },
                 {
-                    id: 'axeman',
-                    power: 400,
+                    typeid: 'axeman',
+                    power: 800,
                     maxNum: 4
-                }               
+                },
+                {
+                    typeid: 'wizardapprentice',
+                    power: 700,
+                    maxNum: 3
+                },             
             ]
         ]
     }
@@ -207,19 +212,19 @@ huungryGameMaps.level10.shops = [
         image: 'house-3.png',
         units: [
             {
-                id: 'armoredaxeman',
-                price: 70,
+                typeid: 'armoredaxeman',
+                price: 80,
                 qty: 40
             },
             {
-                id: 'elitearcher',
-                price: 95,
-                qty: 20
+                typeid: 'elitearcher',
+                price: 105,
+                qty: 30
             },
             {
-                id: 'prairiehorseman',
-                price: 120,
-                qty: 30
+                typeid: 'prairiehorseman',
+                price: 140,
+                qty: 40
             }              
         ]
     },
@@ -230,8 +235,8 @@ huungryGameMaps.level10.shops = [
         image: 'cave.png',
         units: [
             {
-                id: 'insectman',
-                price: 45,
+                typeid: 'insectman',
+                price: 65,
                 qty: 55
             }            
         ]
@@ -319,7 +324,7 @@ huungryGameMaps.level10.items = [
 ];
 
 huungryGameMaps.level10.quest = {
-    screens: ['The Nothul are retreating and leaving treasure behind. Its a good time to take it and chase down the remaining troops.',
+    screens: ['The Nothul are retreating and leaving treasure behind. Its a good time to take it and defeat the escaping troops.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
 <li>1-Kill the remaining Northul troops.<br/>\

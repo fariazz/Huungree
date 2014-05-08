@@ -22,14 +22,15 @@ huungry.EnemyArmy.prototype.init = function() {
     
     var i, j;
     var arrayLen = this.unitsSummary.length;
-    var subArrayLen, unit, num, powerFactor, totalPower, unitPower, k; 
+    var subArrayLen, unit, num, powerFactor, totalPower, unitPower, k, newUnits, newUnit; 
     for(i = 0; i < arrayLen; i++) {
         subArrayLen = this.unitsSummary[i].length;
         for(j = 0; j < subArrayLen; j++) {
-            unit = this.gameObj.unitTypes[this.unitsSummary[i][j].id];
-            num = 1 + Math.round(Math.random()*(this.unitsSummary[i][j].maxNum-1));
+            unit = this.gameObj.unitTypes[this.unitsSummary[i][j].typeid];
+            num = _.random(1, this.unitsSummary[i][j].maxNum);
             powerFactor = 1 + this.gameObj.powerNumFactor*(num -1);
             totalPower = 0;
+            newUnits = new Array();
 
             //create temp unit
             tempUnit = new huungry.Unit()
@@ -40,13 +41,15 @@ huungry.EnemyArmy.prototype.init = function() {
 
             for(k = 0; k < num; k++) {
                 totalPower += unitPower;
-                this.units.push(this.gameObj.cloneUnit(unit,1));
+                newUnit = this.gameObj.cloneUnit(unit,1);
+                this.units.push(newUnit);
+                newUnits.push(newUnit);
                 this.gold += parseInt(unit.gold * (1 + 0.2*(Math.random() - Math.random())));
             }
             
             while(totalPower < this.unitsSummary[i][j].power) {
                 randomPos = 0 + Math.round(Math.random() * (num - 1));
-                this.units[randomPos].life++;
+                newUnits[randomPos].life++;
                 totalPower += unitPower;
                 this.gold += unit.gold;
             }

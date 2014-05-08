@@ -3,24 +3,24 @@ if(huungryGameMaps === undefined) {
 }
 
 huungryGameMaps.level8 = new Object();
-huungryGameMaps.level8.width = 240;
-huungryGameMaps.level8.height = 320;
+huungryGameMaps.level8.width = 300;
+huungryGameMaps.level8.height = 460;
 huungryGameMaps.level8.image = 'assets/images/levels/level8.png';
 huungryGameMaps.level8.playerInitialX = 0;
-huungryGameMaps.level8.playerInitialY = 15;
+huungryGameMaps.level8.playerInitialY = 22;
 
 huungryGameMaps.level8.tiledData = {"layers":[       
         {
-         "data":[193, 193, 193, 193, 193, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 193, 0, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 193, 0, 193, 193, 0, 193, 193, 193, 0, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 0, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 0, 0, 193, 0, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":16,
+         "data":[193, 193, 193, 193, 193, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 193, 193, 193, 193, 0, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 193, 193, 193, 193, 0, 193, 193, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 193, 193, 193, 193, 0, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 0, 0, 193, 193, 0, 193, 0, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 0, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 0, 0, 0, 193, 0, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 193, 0, 0, 0, 0, 193, 0, 0, 193, 0, 0, 193, 193, 0, 193, 193, 0, 0, 193, 193, 193, 0, 0, 193, 0, 0, 193, 200, 0, 193, 193, 0, 0, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 0, 193, 193, 0, 0, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 0, 0, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 0, 0, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193],
+         "height":23,
          "name":"blocked",
          "opacity":0.600000023841858,
          "type":"tilelayer",
-         "visible":false,
-         "width":12,
+         "visible":true,
+         "width":15,
          "x":0,
          "y":0
-        }] 
+        },] 
 };
 
 huungryGameMaps.level8.enemyArmies = [
@@ -33,12 +33,12 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 700,
                     maxNum: 8
                 },
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 120,
                     maxNum: 3
                 }
@@ -48,13 +48,13 @@ huungryGameMaps.level8.enemyArmies = [
     {
         isQuestGoal: false,
         x: 10,
-        y: 15,
+        y: 22,
         image: 'armoredaxeman.png',
         background: 'dirt_background.png',
         unitsSummary: [
             [              
                 {
-                    id: 'armoredaxeman',
+                    typeid: 'armoredaxeman',
                     power: 600,
                     maxNum: 8
                 }
@@ -70,7 +70,7 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'wolf',
+                    typeid: 'wolf',
                     power: 600,
                     maxNum: 8
                 }
@@ -86,12 +86,12 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
                     power: 600,
                     maxNum: 6
                 },
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 100,
                     maxNum: 2
                 }
@@ -107,7 +107,7 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 500,
                     maxNum: 8
                 }
@@ -123,7 +123,7 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 700,
                     maxNum: 8
                 }
@@ -139,12 +139,12 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'ritualwarrior',
+                    typeid: 'ritualwarrior',
                     power: 1000,
                     maxNum: 6
                 },
                 {
-                    id: 'tribalwarrior',
+                    typeid: 'tribalwarrior',
                     power: 300,
                     maxNum: 2
                 }
@@ -160,30 +160,126 @@ huungryGameMaps.level8.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 600,
                     maxNum: 6
                 }
             ]
         ]
-    }
+    },
+    {
+        isQuestGoal: false,
+        x: 7,
+        y: 17,
+        image: 'centaur.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'centaur',
+                    power: 500,
+                    maxNum: 4
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 9,
+        y: 17,
+        image: 'tribalwarrior.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'tribalwarrior',
+                    power: 500,
+                    maxNum: 4
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 14,
+        y: 14,
+        image: 'tribalwarrior.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'tribalwarrior',
+                    power: 500,
+                    maxNum: 4
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 14,
+        y: 18,
+        image: 'snake.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'snake',
+                    power: 600,
+                    maxNum: 10
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 12,
+        y: 12,
+        image: 'ritualwarrior.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'ritualwarrior',
+                    power: 700,
+                    maxNum: 6
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 14,
+        y: 10,
+        image: 'ritualwarrior.png',
+        background: 'darkgrass_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'ritualwarrior',
+                    power: 700,
+                    maxNum: 6
+                }
+            ]
+        ]
+    },
   
 ];
 
 huungryGameMaps.level8.shops = [
     {
         x: 11,
-        y: 15,
+        y: 22,
         name: 'BROWN BIG INN',
         image: 'house-1.png',
         units: [
             {
-                id: 'armoredaxeman',
+                typeid: 'armoredaxeman',
                 price: 40,
                 qty: 40
             },
             {
-                id: 'elitearcher',
+                typeid: 'elitearcher',
                 price: 45,
                 qty: 30
             }              
@@ -196,14 +292,32 @@ huungryGameMaps.level8.shops = [
         image: 'tribe-house.png',
         units: [
             {
-                id: 'wolf',
-                price: 25,
-                qty: 55
+                typeid: 'wolf',
+                price: 35,
+                qty: 75
             },
             {
-                id: 'centaur',
-                price: 30,
-                qty: 40
+                typeid: 'centaur',
+                price: 50,
+                qty: 60
+            }        
+        ]
+    },
+    {
+        x: 13,
+        y: 7,
+        name: 'THE DARK WISPER',
+        image: 'house-1.png',
+        units: [
+            {
+                typeid: 'orc',
+                price: 45,
+                qty: 75
+            },
+            {
+                typeid: 'troll',
+                price: 55,
+                qty: 50
             }        
         ]
     }
@@ -275,6 +389,22 @@ huungryGameMaps.level8.items = [
         type: 'ITEM.ATTACK-SPELL'
     },
     {
+        x: 10,
+        y: 14,
+        name: 'Gold',
+        gold: 200,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
+    },
+    {
+        x: 10,
+        y: 13,
+        name: 'Gold',
+        gold: 200,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
+    },
+    {
         isQuestGoal: true,
         x: 10,
         y: 3,
@@ -303,12 +433,59 @@ huungryGameMaps.level8.items = [
     {
         x: 9,
         y: 2,
-        name: 'Paralyze Spell',
-        numHits: 3,
-        image: 'scroll-paralyze.png',
-        type: 'ITEM.PARALYZE-SPELL'
-    }    
-
+        name: 'Resurrection Spell',
+        numHits: 7,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
+    {
+        x: 10,
+        y: 5,
+        name: 'Resurrection Spell',
+        numHits: 5,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
+    {
+        x: 13,
+        y: 8,
+        name: 'Resurrection Spell',
+        numHits: 8,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
+    {
+        x: 13,
+        y: 9,
+        name: 'Resurrection Spell',
+        numHits: 5,
+        image: 'scroll-skull.png',
+        type: 'ITEM.RESURRECTION-SPELL'
+    },
+    {
+        x: 7,
+        y: 15,
+        name: 'Possession Spell',
+        numHits: 4,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    },
+    {
+        x: 8,
+        y: 12,
+        name: 'Yellow Key',
+        attribute: 'yellow',
+        image: 'key-yellow.png',
+        type: 'ITEM.KEY',
+    },
+    {
+        x: 5,
+        y: 3,
+        name: 'Yellow Door',
+        attribute: 'yellow',
+        image: 'door-yellow.png',
+        type: 'ITEM.DOOR',
+    },    
 ];
 
 huungryGameMaps.level8.quest = {
@@ -317,7 +494,7 @@ huungryGameMaps.level8.quest = {
     enchanted forest filled with black magic and rebel strongholds.',
 
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Cross the Grey Woods, seize and destroy the Kooghul.  \
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Seize and destroy the Kooghul.  \
 <img src="assets/images/places/shrine.png" width="20" /> \
 </div></li><ul>'
     ],

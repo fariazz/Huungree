@@ -3,7 +3,7 @@ if(huungryGameMaps === undefined) {
 }
 
 huungryGameMaps.level6 = new Object();
-huungryGameMaps.level6.width = 220;
+huungryGameMaps.level6.width = 300;
 huungryGameMaps.level6.height = 340;
 huungryGameMaps.level6.image = 'assets/images/levels/level6.png';
 huungryGameMaps.level6.playerInitialX = 0;
@@ -12,13 +12,13 @@ huungryGameMaps.level6.playerInitialY = 14;
 huungryGameMaps.level6.tiledData = { 
  "layers":[       
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 193, 193, 193, 193, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 193, 0, 0, 193, 0, 193, 0, 193, 193, 193, 0, 0, 0, 0, 193, 0, 193, 0, 193, 0, 0, 0, 193, 0, 0, 193, 0, 193, 0, 193, 0, 193, 0, 193, 0, 0, 193, 0, 193, 0, 193, 0, 193, 193, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 0, 193, 193, 193, 0, 193, 193, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 0, 0, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 193, 0, 0, 193, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 0, 193, 0, 193, 0, 193, 193, 0, 193, 0, 193, 0, 193, 193, 193, 0, 0, 0, 193, 0, 0, 0, 0, 193, 0, 193, 0, 193, 0, 0, 0, 193, 0, 193, 0, 193, 0, 0, 193, 0, 193, 0, 193, 0, 193, 0, 193, 0, 193, 0, 193, 0, 0, 193, 0, 193, 0, 193, 0, 193, 193, 193, 0, 193, 0, 193, 0, 193, 193, 0, 193, 0, 193, 193, 193, 193, 193, 0, 193, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 0, 193, 0, 193, 193, 193, 0, 193, 193, 193, 193, 0, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          "height":17,
          "name":"blocked",
          "opacity":0.680000007152557,
          "type":"tilelayer",
          "visible":true,
-         "width":11,
+         "width":15,
          "x":0,
          "y":0
         }]
@@ -34,7 +34,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 600,
                     maxNum: 8
                 }
@@ -50,9 +50,25 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 600,
                     maxNum: 8
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 13,
+        y: 4,
+        image: 'snake.png',
+        background: 'dirt_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'snake',
+                    power: 600,
+                    maxNum: 12
                 }
             ]
         ]
@@ -66,9 +82,41 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'orc',
+                    typeid: 'orc',
                     power: 800,
                     maxNum: 8
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 13,
+        y: 9,
+        image: 'orc.png',
+        background: 'dirt_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'orc',
+                    power: 600,
+                    maxNum: 7
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 10,
+        y: 3,
+        image: 'orc.png',
+        background: 'dirt_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'orc',
+                    power: 600,
+                    maxNum: 7
                 }
             ]
         ]
@@ -82,7 +130,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
+                    typeid: 'troll',
                     power: 500,
                     maxNum: 8
                 }
@@ -98,7 +146,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 500,
                     maxNum: 8
                 }
@@ -114,7 +162,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 500,
                     maxNum: 8
                 }
@@ -130,7 +178,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
                     power: 800,
                     maxNum: 8
                 }
@@ -146,7 +194,7 @@ huungryGameMaps.level6.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
                     power: 600,
                     maxNum: 8
                 }
@@ -164,12 +212,12 @@ huungryGameMaps.level6.shops = [
         image: 'house-3.png',
         units: [
             {
-                id: 'dwarfaxe',
+                typeid: 'dwarfaxe',
                 price: 30,
                 qty: 45
             },
             {
-                id: 'insectman',
+                typeid: 'insectman',
                 price: 45,
                 qty: 45
             }                  
@@ -243,6 +291,22 @@ huungryGameMaps.level6.items = [
         type: 'ITEM.ATTACK-SPELL'
     },
     {
+        x: 14,
+        y: 13,
+        name: 'Fire Spell',
+        attack: 50,
+        image: 'scroll-fire.png',
+        type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 14,
+        y: 2,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
         isQuestGoal: true,
         x: 10,
         y: 1,
@@ -252,8 +316,8 @@ huungryGameMaps.level6.items = [
         text: 'You\'ve reach the exit of the Tunnels of the Tear. The Mystical city of Crisal is on the other side!'
     },
     {
-        x: 10,
-        y: 13,
+        x: 13,
+        y: 2,
         name: 'Red Key',
         attribute: 'red',
         image: 'key-red.png',

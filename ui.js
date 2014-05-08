@@ -232,8 +232,8 @@ HuungryUI.showArrangeUnitsWindow = function() {
             $('[data-index="'+HuungryUI.selectedUnit+'"]').css('background-color', 'transparent');
             $('[data-index="'+HuungryUI.selectedUnit+'"]').css('opacity', '1');
             if(HuungryUI.selectedUnit != newIndex) {
-                var firstType = HuungryUI.gameObj.player.units[HuungryUI.selectedUnit].id;
-                var secondType = HuungryUI.gameObj.player.units[newIndex].id;
+                var firstType = HuungryUI.gameObj.player.units[HuungryUI.selectedUnit].typeid;
+                var secondType = HuungryUI.gameObj.player.units[newIndex].typeid;
                 if(firstType == secondType) {
                     HuungryUI.gameObj.player.units[newIndex].life += HuungryUI.gameObj.player.units[HuungryUI.selectedUnit].life;
                     HuungryUI.gameObj.player.units.splice([HuungryUI.selectedUnit],1);

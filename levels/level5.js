@@ -3,7 +3,7 @@ if(huungryGameMaps === undefined) {
 }
 
 huungryGameMaps.level5 = new Object();
-huungryGameMaps.level5.width = 240;
+huungryGameMaps.level5.width = 340;
 huungryGameMaps.level5.height = 340;
 huungryGameMaps.level5.image = 'assets/images/levels/level5.png';
 huungryGameMaps.level5.playerInitialX = 8;
@@ -12,13 +12,13 @@ huungryGameMaps.level5.playerInitialY = 1;
 huungryGameMaps.level5.tiledData = { 
  "layers":[
         {
-         "data":[193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 193, 193, 0, 0, 193, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 193, 0, 193, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 193, 193, 0, 193, 0, 0, 0, 193, 0, 0, 0, 0, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 0, 193, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 0, 0, 0, 193, 0, 0, 193, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193],
+         "data":[193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 193, 193, 0, 0, 193, 193, 193, 193, 193, 0, 0, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 193, 0, 193, 193, 193, 0, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 0, 193, 193, 193, 193, 0, 193, 0, 193, 0, 0, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 0, 193, 193, 193, 0, 0, 0, 0, 0, 193, 0, 0, 0, 0, 193, 0, 0, 0, 0, 193, 193, 0, 193, 0, 0, 0, 193, 0, 0, 0, 0, 193, 0, 193, 193, 193, 193, 193, 0, 193, 0, 0, 0, 0, 0, 0, 193, 193, 193, 0, 193, 0, 0, 0, 193, 0, 193, 193, 193, 193, 193, 0, 193, 193, 0, 0, 0, 193, 0, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 193, 193, 0, 193, 193, 193, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 0, 0, 193, 0, 0, 0, 193, 193, 0, 193, 193, 0, 0, 0, 0, 0, 0, 0, 193, 0, 0, 193, 0, 0, 0, 0, 193, 193, 193, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 0, 0, 0, 193, 0, 0, 193, 0, 0, 0, 0, 0, 0, 0, 0, 0, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193, 193],
          "height":17,
          "name":"blocked",
          "opacity":0.620000004768372,
          "type":"tilelayer",
          "visible":false,
-         "width":12,
+         "width":17,
          "x":0,
          "y":0
         }],
@@ -35,12 +35,12 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'axeman',
+                    typeid: 'axeman',
                     power: 200,
                     maxNum: 5
                 },
                 {
-                    id: 'archer',
+                    typeid: 'archer',
                     power: 100,
                     maxNum: 2
                 }
@@ -56,7 +56,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 300,
                     maxNum: 8
                 }
@@ -72,7 +72,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 400,
                     maxNum: 6
                 }
@@ -88,7 +88,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
                     power: 400,
                     maxNum: 6
                 }
@@ -104,7 +104,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'dwarfaxe',
+                    typeid: 'dwarfaxe',
                     power: 400,
                     maxNum: 6
                 }
@@ -120,7 +120,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 300,
                     maxNum: 8
                 }
@@ -136,7 +136,7 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 550,
                     maxNum: 8
                 }
@@ -152,14 +152,46 @@ huungryGameMaps.level5.enemyArmies = [
         unitsSummary: [
             [              
                 {
-                    id: 'troll',
+                    typeid: 'troll',
                     power: 550,
                     maxNum: 6
                 },
                 {
-                    id: 'insectman',
+                    typeid: 'insectman',
                     power: 300,
                     maxNum: 3
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 14,
+        y: 5,
+        image: 'troll.png',
+        background: 'dirt_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'troll',
+                    power: 400,
+                    maxNum: 5
+                }
+            ]
+        ]
+    },
+    {
+        isQuestGoal: false,
+        x: 15,
+        y: 11,
+        image: 'troll.png',
+        background: 'dirt_background.png',
+        unitsSummary: [
+            [              
+                {
+                    typeid: 'troll',
+                    power: 400,
+                    maxNum: 5
                 }
             ]
         ]
@@ -174,17 +206,17 @@ huungryGameMaps.level5.shops = [
         image: 'house-2.png',
         units: [
             {
-                id: 'wolf',
+                typeid: 'wolf',
                 price: 30,
                 qty: 35
             },
             {
-                id: 'axeman',
+                typeid: 'axeman',
                 price: 35,
                 qty: 45
             },
             {
-                id: 'archer',
+                typeid: 'archer',
                 price: 45,
                 qty: 30
             }                     
@@ -224,6 +256,22 @@ huungryGameMaps.level5.items = [
         gold: 60,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
+    },
+    {
+        x: 15,
+        y: 8,
+        name: 'Gold',
+        gold: 70,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
+    },
+    {
+        x: 14,
+        y: 1,
+        name: 'Gold',
+        gold: 140,
+        image: 'chest-gold.png',
+        type: 'ITEM.GOLD'
     },    
     {
         x: 4,
@@ -259,7 +307,7 @@ huungryGameMaps.level5.items = [
     },
     {
         isQuestGoal: true,
-        x: 11,
+        x: 16,
         y: 15,
         name: 'Mountain Door',
         image: 'white-door.png',
@@ -267,8 +315,8 @@ huungryGameMaps.level5.items = [
         text: 'You\'ve reach the door to the second half of the mountain'
     },
     {
-        x: 10,
-        y: 11,
+        x: 16,
+        y: 9,
         name: 'Purple Key',
         attribute: 'purple',
         image: 'key-purple.png',
@@ -282,6 +330,22 @@ huungryGameMaps.level5.items = [
         image: 'door-purple.png',
         type: 'ITEM.DOOR',
     },
+    {
+        x: 15,
+        y: 1,
+        name: 'Paralyze Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 15,
+        y: 2,
+        name: 'Possession Spell',
+        numHits: 3,
+        image: 'scroll-possession.png',
+        type: 'ITEM.POSSESSION-SPELL'
+    }
 ];
 
 huungryGameMaps.level5.quest = {

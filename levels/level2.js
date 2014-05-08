@@ -35,12 +35,12 @@ huungryGameMaps.level2.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'peasant',
+                    typeid: 'peasant',
                     power: 200,
                     maxNum: 4
                 },
                 {
-                    id: 'axeman',
+                    typeid: 'axeman',
                     power: 200,
                     maxNum: 3
                 }
@@ -56,10 +56,15 @@ huungryGameMaps.level2.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'peasant',
+                    typeid: 'peasant',
                     power: 400,
                     maxNum: 3
-                }                
+                },
+                {
+                    typeid: 'halfling',
+                    power: 200,
+                    maxNum: 3
+                }             
             ]            
         ]
     },
@@ -72,14 +77,19 @@ huungryGameMaps.level2.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'peasant',
+                    typeid: 'peasant',
                     power: 200,
                     maxNum: 3
                 },
                 {
-                    id: 'archer',
+                    typeid: 'archer',
                     power: 100,
                     maxNum: 2
+                },
+                {
+                    typeid: 'wolf',
+                    power: 100,
+                    maxNum: 1
                 }
             ]            
         ]
@@ -93,7 +103,7 @@ huungryGameMaps.level2.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'snake',
+                    typeid: 'snake',
                     power: 300,
                     maxNum: 6
                 }                
@@ -109,7 +119,7 @@ huungryGameMaps.level2.enemyArmies = [
         unitsSummary: [
             [
                 {
-                    id: 'lion',
+                    typeid: 'lion',
                     power: 400,
                     maxNum: 6
                 }                
@@ -126,13 +136,13 @@ huungryGameMaps.level2.shops = [
         image: 'house-3.png',
         units: [
             {
-                id: 'peasant',
-                price: 15,
+                typeid: 'peasant',
+                price: 25,
                 qty: 30
             },
             {
-                id: 'axeman',
-                price: 20,
+                typeid: 'axeman',
+                price: 30,
                 qty: 20
             }
         ]
@@ -179,16 +189,23 @@ huungryGameMaps.level2.items = [
         attack: 20,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
+    },
+    {
+        x: 2,
+        y: 5,
+        name: 'Defense Spell',
+        numHits: 3,
+        image: 'shield.png',
+        type: 'ITEM.DEFENSE-SPELL'
     }
 ];
 
 huungryGameMaps.level2.quest = {
-    screens: ['After going inland for a few days you reach an area \
-occupied by Ghornian farmers who provide supplies to their troops.\
-Taking over these settlements can provide good bounty, supplies and more men, \
+    screens: ['You\'ve reached an area occupied by Nothul farmers who provide supplies to their troops.\
+Taking over these settlements can provide good bounty, \
 but be prepared as they might have some protection.',
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 3 Ghornian farmer settlers in the region. \
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 3 Nothul farmer settlers. \
 <img src="assets/images/units/peasant.png" width="20" /> \
 <img src="assets/images/units/peasant.png" width="20" /> \
 <img src="assets/images/units/peasant.png" width="20" /> \
