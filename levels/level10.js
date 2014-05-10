@@ -324,7 +324,7 @@ huungryGameMaps.level10.items = [
 ];
 
 huungryGameMaps.level10.quest = {
-    screens: ['The Nothul are retreating and leaving treasure behind. Its a good time to take it and defeat the escaping troops.',
+    screens: ['Victory!! The Nothul are retreating and leaving treasure behind. Its a good time to take it and defeat the escaping troops.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
 <li>1-Kill the remaining Northul troops.<br/>\

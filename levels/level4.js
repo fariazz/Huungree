@@ -129,7 +129,7 @@ huungryGameMaps.level4.enemyArmies = [
             [
                 {
                     typeid: 'insectman',
-                    power: 500,
+                    power: 600,
                     maxNum: 3
                 }                
             ],
@@ -146,7 +146,7 @@ huungryGameMaps.level4.enemyArmies = [
             [
                 {
                     typeid: 'ritualwarrior',
-                    power: 350,
+                    power: 450,
                     maxNum: 4
                 }                
             ],
@@ -164,7 +164,7 @@ huungryGameMaps.level4.shops = [
         units: [
             {
                 typeid: 'insectman',
-                price: 40,
+                price: 45,
                 qty: 40
             }          
         ]
@@ -176,7 +176,7 @@ huungryGameMaps.level4.items = [
         x: 9,
         y: 1,
         name: 'Gold',
-        gold: 50,
+        gold: 150,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -184,7 +184,7 @@ huungryGameMaps.level4.items = [
         x: 20,
         y: 0,
         name: 'Gold',
-        gold: 70,
+        gold: 170,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -192,7 +192,7 @@ huungryGameMaps.level4.items = [
         x: 21,
         y: 14,
         name: 'Gold',
-        gold: 80,
+        gold: 180,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -200,7 +200,7 @@ huungryGameMaps.level4.items = [
         x: 10,
         y: 7,
         name: 'Gold',
-        gold: 40,
+        gold: 140,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -208,7 +208,7 @@ huungryGameMaps.level4.items = [
         x: 12,
         y: 7,
         name: 'Gold',
-        gold: 30,
+        gold: 130,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },

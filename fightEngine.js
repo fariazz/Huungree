@@ -1001,18 +1001,18 @@ huungry.FightEngine.prototype.sendStats = function() {
         platform = window.device.platform;
         platform_version = window.device.version;
         device_id = window.device.uuid;
+    
+        $.ajax(this.gameObj.API_BATTLE_URL, {
+            data: _.extend(that.armyStats, {
+                game_version: that.gameObj.GAME_VERSION,
+                platform: platform,
+                platform_version: platform_version,
+                device_id: device_id,
+                level: that.gameObj.currentLevel,
+                gold: that.gameObj.player.gold,
+                currTimestamp: (new Date).getTime(),
+                isFullVersion: that.gameObj.isFullVersion ? 1 : 0
+            })
+        });
     }
-
-    $.ajax(this.gameObj.API_BATTLE_URL, {
-        data: _.extend(that.armyStats, {
-            game_version: that.gameObj.GAME_VERSION,
-            platform: platform,
-            platform_version: platform_version,
-            device_id: device_id,
-            level: that.gameObj.currentLevel,
-            gold: that.gameObj.player.gold,
-            currTimestamp: (new Date).getTime(),
-            isFullVersion: that.gameObj.isFullVersion ? 1 : 0
-        })
-    });
 }

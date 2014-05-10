@@ -772,12 +772,12 @@ huungryGameMaps.level14.items = [
 ];
 
 huungryGameMaps.level14.quest = {
-    screens: ['By following the secret road to Crysal you will be able to take over the city by surprise. The road is not easy but if you succeed you\'ll be the ruler of these lands.',
+    screens: ['By following the secret road to Crisal you will be able to take over the city by surprise. The road is not easy but if you succeed you\'ll be the ruler of these lands.',
     'The hardest part will be once you enter the city walls. Powerful and well-trained troops await.',
     'If you can defeat Jekkel and his army the city and the continent of Tamaca will be yours.<br/><br/>This is the final part of your journey and your chance to become a Legend. Good luck!',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
-<li>1-Defeat Jekkel and take over the Mystical City of Crysal. <img src="assets/images/units/royalknight.png" width="20" /> \
+<li>1-Defeat Jekkel and take over the Mystical City of Crisal. <img src="assets/images/units/royalknight.png" width="20" /> \
     </li>\
 <ul>'
     ],

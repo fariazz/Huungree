@@ -123,10 +123,10 @@ var UnitTypes = [
             canShoot: false,
             gold: 16,
             movements: 2,
-            effect: [
-                {name: 'paralyze',numPerBattle: 5, value: 2}
+            spells: [
+                {name: 'paralyze',numPerBattle: 2, value: 3},
             ],
-            effectProbability: 0.2,
+            spellUseProbability: 0.2,
             skelleton: true
         },
         {

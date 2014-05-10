@@ -27,8 +27,8 @@ goog.require('lime.GlossyButton');
 // entrypoint
 huungry.start = function(isFullVersion){
 
-    var gameObj = new huungry.GameObj(document);
-    gameObj.isFullVersion = isFullVersion;
+    var gameObj = new huungry.GameObj(document, isFullVersion);
+    
 
     //intro music
     gameObj.playSound('royal-jester.ogg', {unique: true, loop: true});
@@ -41,18 +41,18 @@ huungry.start = function(isFullVersion){
         .setGameObj(gameObj);
         
     gameObj.player.maxNumUnits = 8;   
-    gameObj.player.gold = 100;   
+    gameObj.player.gold = 120;   
     gameObj.player.units = [
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 10),
-        //gameObj.cloneUnit(gameObj.unitTypes['archer'], 12),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
-        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 120),
-        gameObj.cloneUnit(gameObj.unitTypes['axeman'], 150),
-        gameObj.cloneUnit(gameObj.unitTypes['halfling'], 120),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
-        gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
+    gameObj.cloneUnit(gameObj.unitTypes['archer'], 15),
+    gameObj.cloneUnit(gameObj.unitTypes['archer'], 15),
+    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
+    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
+    //gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
+    gameObj.cloneUnit(gameObj.unitTypes['axeman'], 22),
+    gameObj.cloneUnit(gameObj.unitTypes['axeman'], 25),
+    gameObj.cloneUnit(gameObj.unitTypes['halfling'], 25)
+    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
+    //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
     ];
     
     //start screen

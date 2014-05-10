@@ -257,7 +257,7 @@ huungryGameMaps.level11.enemyArmies = [
         x: 19,
         y: 5,
         image: 'elfswordman.png',
-        background: 'grass_background.png',
+        background: 'darkgrass_background.png',
         unitsSummary: [
             [              
                 {
@@ -273,7 +273,7 @@ huungryGameMaps.level11.enemyArmies = [
         x: 25,
         y: 8,
         image: 'elfarcher.png',
-        background: 'grass_background.png',
+        background: 'darkgrass_background.png',
         unitsSummary: [
             [              
                 {
@@ -291,10 +291,10 @@ huungryGameMaps.level11.enemyArmies = [
     },
     {
         isQuestGoal: false,
-        x: 18,
-        y: 6,
+        x: 17,
+        y: 7,
         image: 'satyr.png',
-        background: 'grass_background.png',
+        background: 'darkgrass_background.png',
         unitsSummary: [
             [              
                 {
@@ -310,7 +310,7 @@ huungryGameMaps.level11.enemyArmies = [
         x: 24,
         y: 4,
         image: 'snake.png',
-        background: 'grass_background.png',
+        background: 'darkgrass_background.png',
         unitsSummary: [
             [              
                 {

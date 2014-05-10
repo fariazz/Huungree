@@ -183,12 +183,12 @@ huungryGameMaps.level3.shops = [
             {
                 typeid: 'halfling',
                 price: 20,
-                qty: 30
+                qty: 40
             },
             {
                 typeid: 'archer',
-                price: 30,
-                qty: 20
+                price: 40,
+                qty: 25
             }
         ]
     }
@@ -207,7 +207,7 @@ huungryGameMaps.level3.items = [
         x: 10,
         y: 8,
         name: 'Gold',
-        gold: 70,
+        gold: 100,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -215,7 +215,7 @@ huungryGameMaps.level3.items = [
         x: 2,
         y: 10,
         name: 'Gold',
-        gold: 30,
+        gold: 100,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -223,7 +223,7 @@ huungryGameMaps.level3.items = [
         x: 1,
         y: 10,
         name: 'Gold',
-        gold: 30,
+        gold: 100,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },

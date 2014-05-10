@@ -10,53 +10,26 @@ document.addEventListener("backbutton", function() {
 
 
 /**
- * show level selection dialog
- */
-HuungryUI.showLevelselDialog = function(levels, gameObj) {    
-    var html = '<ul>';
-    
-    var i;
-    for(i in levels) {
-        html += '<li zva_level="'+i+'"><img src="assets/'+levels[i].image+'" />'+levels[i].displayName+'</li>';
-    }
-    html += '</ul>';
-    $('.zva_dialog_levelsel_listcont').html(html);
-    $('.zva_dialog_levelsel').css('display', 'block');
-    
-    $('.zva_dialog_levelsel_listcont ul li').on('click ', function(e) {
-        $('.zva_dialog_levelsel').css('display', 'none');
-        var index = $('.zva_dialog_levelsel_listcont ul li').attr('zva_level'); 
-        HuungryUI.showLeveldesDialog(levels[index], gameObj);        
-    });
-};
-
-/**
- * show level description dialog
- */
-HuungryUI.showLeveldesDialog = function(level, gameObj) {    
-    $('.zva_dialog_leveldesc').css('display', 'block');
-    $('.zva_dialog_leveldesc_img').css('background-image', 'url(assets/'+level.introImg+')')
-    $('.zva_dialog_leveldesc_txt').html(level.introText)
-    
-    $('.zva_dialog_btn').bind('click ', function(e) {
-        $('.zva_dialog_leveldesc').css('display', 'none');
-        gameObj.runLevel(level.codeName);
-    });
-};
-
-/**
  * end of game dialog
  */
 HuungryUI.showEndofGameDialog = function(gameObj) {
     HuungryUI.gameObj.saveGame(false);    
-    HuungryUI.showDialog('THE JOURNEY IS NOT OVER', 
-        'We are working on adding more content to the game! Stay tuned for more levels all the way to the sacred city of Huungree. Contact us on Twitter @ZenvaTweets, Facebook and YouTube channel.'
-        ,[{text: 'REACH US', btnClass: 'button-home', callback: function(){            
-            window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
-        }},
-        {text: 'YOUTUBE', btnClass: 'button-home', callback: function(){
-                window.open('https://www.youtube.com/watch?v=P4-Z4H8ZnG0', '_blank', 'location=yes');
-            }}]);
+    HuungryUI.showDialog('YOU HAVE WON THE GAME!', 
+        'Congratulations! you have defeated Jekkel\'s armies and you are now the sole ruler of the Mysical Cities.<br/><br/>It\'s been a long journey! You arrived to Tamaca as a low-grade mercenary and have become Ingeber\'s richest and most powerful privateer and an empire to rule.'
+        ,[{text: 'NEXT', btnClass: 'button-home', callback: function(){            
+            HuungryUI.showDialog('WHAT\'S NEXT?',
+            'My name is Pablo Farias Navarro and as the founder of ZENVA I\'d like to thank you so much for playing our game! Feel free to email me at <span class="strongy">pablofarias@zenva.com</span>.<br/><br/>If you want to learn how to make your own games follow our YouTube Channel ;)'
+            ,[{text: 'YOUTUBE', btnClass: 'button-home', callback: function(){            
+                window.open('https://youtube.com/fariazz2', '_blank', 'location=yes');
+            }},
+            {text: 'PLAY AGAIN!', btnClass: 'button-home', callback: function(){            
+                window.location = '';
+            }},
+
+            ]
+            )
+        }}
+        ]);
 };
 
 /**
@@ -64,11 +37,12 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
  */
 HuungryUI.showAboutDialog = function(gameObj) {        
     HuungryUI.showDialog('ABOUT HUUNGREE', 
-        'Huungree is an RPG created by ZENVA (@ZenvaTweets). We have free and premium online courses to learn how to make apps and games. If you\'d like to get FREE access to more levels LET US KNOW using the link below or Twitter.'
+        'Huungree is a RPG created by ZENVA. Besides making games we also teach game development through online video courses.\
+        <br/><br/>If you\'d like to know about the development process of Huungree feel free to check out YouTube channel.'
         ,[
         {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, 
-        {text: 'REACH US', btnClass: 'button-home', callback: function(){            
-            window.open('https://docs.google.com/forms/d/1AOxTjtV_EmQHugx67t34WlZ8N6YiX-rTjOEVWdzuwI4/viewform', '_blank', 'location=yes');
+        {text: 'YOUTUBE', btnClass: 'button-home', callback: function(){            
+            window.open('https://www.youtube.com/watch?v=P4-Z4H8ZnG0', '_blank', 'location=yes');
         }}]);
 };
 
@@ -460,13 +434,29 @@ HuungryUI.showSequence = function(title, screens) {
  */
 HuungryUI.showGoPremiumDialog = function(gameObj) {
     HuungryUI.gameObj.saveGame(false);    
-    HuungryUI.showDialog('END OF THE FREE VERSION', 
-        'You can\'t continue exploring the exciting continent of Tamaca unless you buy the developer a rum & coke ;)<br/><br/> \
-        Use the link below to get the Premium version and get access to hours of gameplay, all the way to the mysterious city of Huungree.'
-        ,[{text: 'GO PREMIUM', btnClass: 'button-home', callback: function(){
-            window.open('https://play.google.com/store/apps/details?id=com.zenva.huungreefull', '_blank', 'location=yes');
+    HuungryUI.showDialog('EPIC ADVENTURES AWAIT!', 
+        'This is the end of the LITE version but you can continue exploring the exciting continent of Tamaca if you buy the developer a rum & coke ;)<br/><br/> \
+        The full game includes many new levels, monsters, spells and epic battles.'
+        ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+            HuungryUI.showDialog('CONTINUE YOUR JOURNEY', 
+            'Explore echanted forests infested with elfs and evil mystical warriors.\
+            <div class="screenshot"><img src="assets/images/screenshots/screenshot-forest1.png" height="100" /> <img src="assets/images/screenshots/screenshot-forest2.png" height="100" /></div>'
+            ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+                HuungryUI.showDialog('RAISE AN ARMY', 
+                'Raise an army and defeat the powerful Nothul troops in epic battles.\
+                <div class="screenshot"><img src="assets/images/screenshots/screenshot-snow.png" height="100" /> <img src="assets/images/screenshots/screenshot-snow2.png" height="100" /></div>'
+                ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+                    HuungryUI.showDialog('TAKE OVER THE EMPIRE', 
+                    'The sacred city of Huungree holds the secret to victory, but it\'s guarded by demons and wizards.\
+                    <div class="screenshot"><img src="assets/images/screenshots/screenshot-huungree.png" height="80" /></div>'
+                    ,[{text: 'LETS DO IT!', btnClass: 'button-home', callback: function(){
+                        window.location = 'market://details?id=com.zenva.huungreefull';
+                    }}]);
+                }}]);
+            }}]);
         }}]);
 };
+
 
 /**
 show expel units window

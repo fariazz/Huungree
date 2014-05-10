@@ -3,12 +3,14 @@ goog.provide('huungry.GameObj');
 /*
  * GameObj
  */
-huungry.GameObj = function(document) {
+huungry.GameObj = function(document, isFullVersion) {
 
-    this.GAME_VERSION = '0.3.2';
-    this.COMPATIBLE_VERSIONS = ['0.3.0', '0.3.1', '0.3.2'];
+    this.isFullVersion = isFullVersion;
+
+    this.GAME_VERSION = '1.0';
+    this.COMPATIBLE_VERSIONS = ['1.0'];
     this.developmentMode = false;
-    this.initialLevel = 'level14';
+    this.initialLevel = 'level1';
     this.renderer = lime.Renderer.DOM;
 
     this.screenWidth = 480;
@@ -45,7 +47,7 @@ huungry.GameObj = function(document) {
     this.powerNumFactor = 0.3;
 
     //probability to reach target for range attack units
-    this.accuracyProbability = 0.6;
+    this.accuracyProbability = 0.55;
 
     this.screenNumTilesX = this.screenWidth/this.tileSize;
     this.screenNumTilesY = this.screenHeight/this.tileSize;
@@ -70,12 +72,50 @@ huungry.GameObj = function(document) {
     this.animationOn = true;
     this.movementDuration = 0.2;    
 
+    //get platform
+    if(window.device) {
+      this.platform = window.device.platform;
+      this.platform_version = window.device.version;
+    }
+    else {
+      this.platform = 'Browser';
+    }
+
     //register event
     this.sendEvent('GAME_INIT', 1, null);
     this.notifyServer();
 
     this.director = new lime.Director(document.body, this.screenWidth, this.screenHeight);
     this.director.makeMobileWebAppCapable();    
+
+    //pause music on pause and resume
+    var that = this;
+    document.addEventListener("pause", function(){
+      that.activeSounds = new Array();
+
+      _.each(that.currentSounds, function(element, key){
+          element.getCurrentPosition(function(pos){
+            if(that.player.inFightScene) {
+              if(key == "royal-jester.ogg") {
+                pos = false;
+              }
+            }
+
+            if(pos && !element.zvaTurnedOff) {
+              that.activeSounds.push(key);
+            }
+          });
+      });
+
+      that.pauseSound();
+    }, false);
+
+    document.addEventListener("resume", function(){
+      _.each(that.activeSounds, function(element, key){
+        that.playSound(element);
+      });
+    }, false);
+
 };
 
 /**
@@ -342,14 +382,14 @@ huungry.GameObj.prototype.showSplashScreen = function() {
     this.splashScreen.startBtn = new lime.Sprite().
         setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
         .setPosition(this.screenWidth/2, this.tileSize*4); 
-   var startBtnTxt = new lime.Label().setText('NEW').setPosition(0,0).
+   var startBtnTxt = new lime.Label().setText('NEW').setPosition(0,2).
         setFontColor('#E9DDB9').setFontSize(16);
    this.splashScreen.startBtn.appendChild(startBtnTxt);
 
     this.splashScreen.loadBtn = new lime.Sprite().
             setFill('assets/images/backgrounds/home_button.png').setSize(this.tileSize*3, this.tileSize)
             .setPosition(this.screenWidth/2, this.tileSize*5.4);
-    var loadBtnTxt = new lime.Label().setText('LOAD').setPosition(0,0).
+    var loadBtnTxt = new lime.Label().setText('LOAD').setPosition(0,2).
         setFontColor('#E9DDB9').setFontSize(16);
    this.splashScreen.loadBtn.appendChild(loadBtnTxt);
 
@@ -360,7 +400,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
 
     var aboutTxt = this.isFullVersion ? 'ABOUT' : 'UPGRADE';
 
-    var aboutBtnTxt = new lime.Label().setText(aboutTxt).setPosition(0,0).
+    var aboutBtnTxt = new lime.Label().setText(aboutTxt).setPosition(0,2).
         setFontColor('#E9DDB9').setFontSize(16);
    this.splashScreen.aboutBtn.appendChild(aboutBtnTxt);
 
@@ -381,7 +421,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
         HuungryUI.showAboutDialog(currentObj);
       }   
       else {
-        window.open('https://play.google.com/store/apps/details?id=com.zenva.huungreefull', '_blank', 'location=yes');
+        window.location = 'market://details?id=com.zenva.huungreefull';
       }
     });
     
@@ -399,8 +439,8 @@ huungry.GameObj.prototype.loadGame = function() {
 
     if($.inArray(savedVersion, this.COMPATIBLE_VERSIONS) == -1) {
       HuungryUI.showDialog(
-        'OOPS!', 
-        'The new game version is not compatible with the previous saved game, so you will have to start from scratch. Sorry about the inconvenience and thank you so much for your support!', 
+        'A NEW JOURNEY AWAITS', 
+        'We have drastically improved the gameplay of Huungree and most levels have been modified so you can no longer resume your saved game. We are sure you will enjoy this new version much more!', 
         [{text: 'OK', btnClass: 'button-home', callback: function(){}}]
       );
       return;
@@ -512,14 +552,20 @@ huungry.GameObj.prototype.loadGame = function() {
     HuungryUI.showDialog('LEVEL COMPLETED!', '<div class="centered">You have successfully completed all the quests of this level.</div>', 
       [{text: 'NEXT LEVEL', btnClass: 'button-home', callback: function() {
           if(huungryGameMaps[that.currentLevel].nextLevel) {
-            if(!that.isFullVersion && _.indexOf(['level1', 'level2', 'level3', 'level4', 'level5', 'level6'], huungryGameMaps[that.currentLevel].nextLevel) == -1) {
+            if(!that.isFullVersion && _.indexOf(['level1', 'level2', 'level3', 'level4'], huungryGameMaps[that.currentLevel].nextLevel) == -1) {
               HuungryUI.showGoPremiumDialog();
             }
             else {
               that.runLevel(huungryGameMaps[that.currentLevel].nextLevel);
+              HuungryUI.gameObj.saveGame(false);    
             }            
           }
           else {
+            if(!that.completedGame) {
+              that.completedGame = true;
+              that.sendEvent('GAME_COMPLETE', that.currentLevel, that.player.getPower());
+            }
+
             HuungryUI.showEndofGameDialog();
           }
       }}]);
@@ -721,7 +767,16 @@ huungry.GameObj.prototype.stopSound = function(fileName) {
 */
 huungry.GameObj.prototype.pauseSound = function(fileName) {
   if(window.device) {
-    this.currentSounds[fileName].pause();
+
+    if(fileName) {
+      this.currentSounds[fileName].pause();
+    }
+    else {
+      _.each(this.currentSounds, function(element){
+        element.pause();
+      });
+    }
+    
   }
 };
 

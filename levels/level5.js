@@ -36,7 +36,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'axeman',
-                    power: 200,
+                    power: 300,
                     maxNum: 5
                 },
                 {
@@ -57,7 +57,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'snake',
-                    power: 300,
+                    power: 400,
                     maxNum: 8
                 }
             ]
@@ -73,7 +73,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'lion',
-                    power: 400,
+                    power: 500,
                     maxNum: 6
                 }
             ]
@@ -89,7 +89,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'dwarfaxe',
-                    power: 400,
+                    power: 500,
                     maxNum: 6
                 }
             ]
@@ -105,7 +105,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'dwarfaxe',
-                    power: 400,
+                    power: 500,
                     maxNum: 6
                 }
             ]
@@ -137,7 +137,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'insectman',
-                    power: 550,
+                    power: 750,
                     maxNum: 8
                 }
             ]
@@ -158,7 +158,7 @@ huungryGameMaps.level5.enemyArmies = [
                 },
                 {
                     typeid: 'insectman',
-                    power: 300,
+                    power: 400,
                     maxNum: 3
                 }
             ]
@@ -174,7 +174,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'troll',
-                    power: 400,
+                    power: 650,
                     maxNum: 5
                 }
             ]
@@ -190,7 +190,7 @@ huungryGameMaps.level5.enemyArmies = [
             [              
                 {
                     typeid: 'troll',
-                    power: 400,
+                    power: 650,
                     maxNum: 5
                 }
             ]
@@ -207,18 +207,18 @@ huungryGameMaps.level5.shops = [
         units: [
             {
                 typeid: 'wolf',
-                price: 30,
-                qty: 35
+                price: 40,
+                qty: 45
             },
             {
                 typeid: 'axeman',
-                price: 35,
+                price: 50,
                 qty: 45
             },
             {
                 typeid: 'archer',
-                price: 45,
-                qty: 30
+                price: 60,
+                qty: 45
             }                     
         ]
     }
@@ -229,7 +229,7 @@ huungryGameMaps.level5.items = [
         x: 1,
         y: 2,
         name: 'Gold',
-        gold: 50,
+        gold: 150,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -237,7 +237,7 @@ huungryGameMaps.level5.items = [
         x: 10,
         y: 2,
         name: 'Gold',
-        gold: 50,
+        gold: 150,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -245,7 +245,7 @@ huungryGameMaps.level5.items = [
         x: 10,
         y: 9,
         name: 'Gold',
-        gold: 40,
+        gold: 140,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -253,7 +253,7 @@ huungryGameMaps.level5.items = [
         x: 10,
         y: 10,
         name: 'Gold',
-        gold: 60,
+        gold: 160,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -261,7 +261,7 @@ huungryGameMaps.level5.items = [
         x: 15,
         y: 8,
         name: 'Gold',
-        gold: 70,
+        gold: 170,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },

@@ -151,8 +151,8 @@ huungryGameMaps.level1.items = [
         attack: 20,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
-    }
-    /* 
+    },
+    /*
     {
         x: 4,
         y: 2,
@@ -172,7 +172,7 @@ huungryGameMaps.level1.items = [
     {
         x: 3,
         y: 2,
-        name: 'Paralyze Spell',
+        name: 'Resurrection Spell',
         numHits: 3,
         image: 'scroll-paralyze.png',
         type: 'ITEM.PARALYZE-SPELL'
@@ -180,16 +180,24 @@ huungryGameMaps.level1.items = [
     {
         x: 2,
         y: 4,
-        name: 'Paralyze Spell',
+        name: 'Resurrection Spell',
         numHits: 3,
         image: 'scroll-paralyze.png',
         type: 'ITEM.PARALYZE-SPELL'
+    },
+    {
+        x: 2,
+        y: 4,
+        name: 'Resurrection Spell',
+        numHits: 3,
+        image: 'scroll-paralyze.png',
+        type: 'ITEM.RESURRECTION-SPELL'
     },
     
     {
         x: 2,
         y: 3,
-        name: 'Fire Spell',
+        name: 'Resurrection Spell',
         attack: 50,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
@@ -305,16 +313,17 @@ huungryGameMaps.level1.items = [
         attack: 80,
         image: 'scroll-fire.png',
         type: 'ITEM.ATTACK-SPELL'
-    }*/
+    }
+    */
     //end borrar
 ];
 
 huungryGameMaps.level1.quest = {
-    screens: ['Two rival powers dispute the new continent of Tamaca. \
-The Nothul Empire occupies the north. \
+    screens: ['Two rival powers dispute the new continent of Tamaca.<br/><br/>\
+The Nothul Empire occupies the north.<br/><br/>\
 The Republic of Ingeber went inland and took over the Mystical Cities.',
 
-        'You play the role of Jakkal, aspiring privateer from Ingeber. \
+        'You play the role of Jakkal, aspiring privateer from Ingeber.<br/><br/>\
 You\'ve just arrived to Crab Bay to join your older brother Jekkel,\
 a seasoned privateer who is in the Mystical City of Crisal.',
 
@@ -326,7 +335,7 @@ a seasoned privateer who is in the Mystical City of Crisal.',
 </div></li><ul>'
     ],
     goals: [{type: 'QUEST-KILL'}],
-    totalNumGoals: 2
+    totalNumGoals: 3
 };
 
 huungryGameMaps.level1.nextLevel = 'level2';

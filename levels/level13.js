@@ -625,7 +625,7 @@ huungryGameMaps.level13.items = [
 
 huungryGameMaps.level13.quest = {
     screens: ['The Crow Mountains hide the sacred city of Huungree. Whoever finds the heart of the temple can ask anything to the gods',
-    'If you could find that shrine you could ask the gods for the best strategy to attack Jekkel and take over Crysal for yourself',
+    'If you could find that shrine you could ask the gods for the best strategy to attack Jekkel and take over Crisal for yourself',
     'Legends say it is protected by power wizards and demons, but your first challenge will be to find an entrance to the city.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\

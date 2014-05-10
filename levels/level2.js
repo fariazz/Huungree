@@ -137,13 +137,13 @@ huungryGameMaps.level2.shops = [
         units: [
             {
                 typeid: 'peasant',
-                price: 25,
-                qty: 30
+                price: 35,
+                qty: 40
             },
             {
                 typeid: 'axeman',
-                price: 30,
-                qty: 20
+                price: 45,
+                qty: 30
             }
         ]
     }
@@ -205,7 +205,7 @@ huungryGameMaps.level2.quest = {
 Taking over these settlements can provide good bounty, \
 but be prepared as they might have some protection.',
 
-     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 3 Nothul farmer settlers. \
+     '<div class="quests-title">LEVEL QUESTS:</div><ul><li>1-Kill the 3 Nothul farmer settlers.<br/>\
 <img src="assets/images/units/peasant.png" width="20" /> \
 <img src="assets/images/units/peasant.png" width="20" /> \
 <img src="assets/images/units/peasant.png" width="20" /> \

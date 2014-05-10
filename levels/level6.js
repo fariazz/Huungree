@@ -35,8 +35,8 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'snake',
-                    power: 600,
-                    maxNum: 8
+                    power: 800,
+                    maxNum: 13
                 }
             ]
         ]
@@ -51,8 +51,8 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'snake',
-                    power: 600,
-                    maxNum: 8
+                    power: 800,
+                    maxNum: 13
                 }
             ]
         ]
@@ -67,8 +67,8 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'snake',
-                    power: 600,
-                    maxNum: 12
+                    power: 800,
+                    maxNum: 15
                 }
             ]
         ]
@@ -83,7 +83,7 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'orc',
-                    power: 800,
+                    power: 900,
                     maxNum: 8
                 }
             ]
@@ -99,7 +99,7 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'orc',
-                    power: 600,
+                    power: 800,
                     maxNum: 7
                 }
             ]
@@ -115,7 +115,7 @@ huungryGameMaps.level6.enemyArmies = [
             [              
                 {
                     typeid: 'orc',
-                    power: 600,
+                    power: 800,
                     maxNum: 7
                 }
             ]

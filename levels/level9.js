@@ -115,7 +115,7 @@ huungryGameMaps.level9.enemyArmies = [
                 },
                 {
                     typeid: 'wizardapprentice',
-                    power: 700,
+                    power: 300,
                     maxNum: 3
                 }
             ]
@@ -151,7 +151,7 @@ huungryGameMaps.level9.enemyArmies = [
                 },
                 {
                     typeid: 'wizardapprentice',
-                    power: 700,
+                    power: 200,
                     maxNum: 3
                 }
             ]
@@ -170,17 +170,17 @@ huungryGameMaps.level9.shops = [
             {
                 typeid: 'armoredaxeman',
                 price: 50,
-                qty: 50
+                qty: 80
             },
             {
                 typeid: 'elitearcher',
                 price: 45,
-                qty: 50
+                qty: 70
             },
             {
                 typeid: 'prairiehorseman',
                 price: 55,
-                qty: 50
+                qty: 60
             }              
         ]
     },
@@ -193,12 +193,12 @@ huungryGameMaps.level9.shops = [
             {
                 typeid: 'orc',
                 price: 35,
-                qty: 45
+                qty: 65
             },
             {
                 typeid: 'troll',
                 price: 55,
-                qty: 55
+                qty: 75
             }        
         ]
     }
@@ -282,8 +282,8 @@ huungryGameMaps.level9.items = [
 ];
 
 huungryGameMaps.level9.quest = {
-    screens: ['Now that the rebel menace is over the troops of your bother ask you now to command the attack to \
-    the strong Nothul. This is another chance to impress your brother Jekkel so you accept the quest.',
+    screens: ['Now that the rebel menace is over, the troops of your bother asked you now to launch an attack to \
+    the Nothul. This is another chance to impress your brother Jekkel so you accept the quest.',
 
     'The Nothul camp has been spotted in the White Mountains. If you attack with a strong army by surprise you \
     could defeat them. Grow a huge army as this will be an epic battle.',

@@ -154,6 +154,11 @@ huungryGameMaps.level7.enemyArmies = [
                     typeid: 'tribalwarrior',
                     power: 700,
                     maxNum: 8
+                },
+                {
+                    typeid: 'lion',
+                    power: 500,
+                    maxNum: 7
                 }
             ]
         ]
@@ -168,13 +173,13 @@ huungryGameMaps.level7.enemyArmies = [
             [              
                 {
                     typeid: 'tribalwarrior',
-                    power: 700,
+                    power: 800,
                     maxNum: 7
                 },
                 {
                     typeid: 'lion',
-                    power: 40,
-                    maxNum: 1
+                    power: 400,
+                    maxNum: 5
                 }
             ]
         ]
@@ -189,13 +194,13 @@ huungryGameMaps.level7.enemyArmies = [
             [              
                 {
                     typeid: 'ritualwarrior',
-                    power: 700,
+                    power: 900,
                     maxNum: 6
                 },
                 {
                     typeid: 'snake',
-                    power: 60,
-                    maxNum: 2
+                    power: 650,
+                    maxNum: 10
                 }
             ]
         ]
@@ -210,13 +215,13 @@ huungryGameMaps.level7.enemyArmies = [
             [              
                 {
                     typeid: 'ritualwarrior',
-                    power: 700,
+                    power: 900,
                     maxNum: 6
                 },
                 {
-                    typeid: 'lion',
-                    power: 60,
-                    maxNum: 2
+                    typeid: 'snake',
+                    power: 650,
+                    maxNum: 10
                 }
             ]
         ]

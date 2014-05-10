@@ -29,7 +29,7 @@ huungryGameMaps.level8.enemyArmies = [
         x: 3,
         y: 13,
         image: 'tribalwarrior.png',
-        background: 'dirt_background.png',
+        background: 'darkgrass_background.png',
         unitsSummary: [
             [              
                 {
