@@ -90,7 +90,8 @@ huungry.Unit.prototype.showBeingAttacked = function(attacker) {
                 attacker.endMove();   
             }
             else {
-                unit.fightEngine.hideItemTargets();
+                unit.fightEngine.hideTargets();
+                unit.fightEngine.currentUnit.endMove();
             }                     
         });
     })

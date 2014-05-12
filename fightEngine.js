@@ -547,6 +547,9 @@ huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
 * player turn to fight
 */
 huungry.FightEngine.prototype.playerPlayTurn = function() {
+
+    this.itemsButtonText.setText('ITEMS');
+    
     this.currentUnit = this.playerUnits[this.currentPlayerIndex];
     var pos = this.currentUnit.getPosition();        
 
@@ -815,7 +818,7 @@ huungry.FightEngine.prototype.pass = function() {
  * hide unit targets
  */
 huungry.FightEngine.prototype.hideTargets = function() {
-    this.currentUnit.toggleGamepad(false);
+    this.currentUnit.toggleGamepad(false);    
     //this.playerUnits[this.currentPlayerIndex].toggleGamepad(false);
     this.clearRangeTargets();
 }
@@ -880,7 +883,6 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                         currentObj.showBrief('fire!', currentObj.enemyUnits[i].getCenter()); 
                         HuungryUI.selectedItem = undefined;
                         currentObj.hideTargets();
-                        currentObj.currentUnit.endMove();
                     }   
                     else if(item.type == 'ITEM.PARALYZE-SPELL') {
                         item.paralyzeUnit(currentObj.enemyUnits[i]);
