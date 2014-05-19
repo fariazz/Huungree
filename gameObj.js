@@ -3,9 +3,10 @@ goog.provide('huungry.GameObj');
 /*
  * GameObj
  */
-huungry.GameObj = function(document, isFullVersion) {
+huungry.GameObj = function(document, params) {
 
-    this.isFullVersion = isFullVersion;
+    this.isFullVersion = params.isFullVersion;
+    this.upgradeURL = params.upgradeURL;
 
     this.GAME_VERSION = '1.0';
     this.COMPATIBLE_VERSIONS = ['1.0'];
@@ -34,7 +35,7 @@ huungry.GameObj = function(document, isFullVersion) {
     this.ROCK = 4;
 
     //map attacks
-    this.PROB_MAP_ARMY_ATTACK = 0.1;
+    this.PROB_MAP_ARMY_ATTACK = 0.15;
     
     //this.API_BATTLE_URL = 'http://localhost:8097/huungreeBattle';
     this.API_BATTLE_URL = 'http://zenva.com/huungreeBattle';
@@ -73,9 +74,17 @@ huungry.GameObj = function(document, isFullVersion) {
     this.movementDuration = 0.2;    
 
     //get platform
+    this.AUDIO_EXTENSION = 'ogg';
+    this.CLICK_EVENT = 'click';
+
     if(window.device) {
       this.platform = window.device.platform;
       this.platform_version = window.device.version;
+
+      if(this.platform == 'iOS') {
+        this.AUDIO_EXTENSION = 'mp3';
+        this.CLICK_EVENT = 'touchstart';
+      }
     }
     else {
       this.platform = 'Browser';
@@ -86,17 +95,18 @@ huungry.GameObj = function(document, isFullVersion) {
     this.notifyServer();
 
     this.director = new lime.Director(document.body, this.screenWidth, this.screenHeight);
-    this.director.makeMobileWebAppCapable();    
+    //this.director.makeMobileWebAppCapable();    
 
     //pause music on pause and resume
     var that = this;
     document.addEventListener("pause", function(){
+      that.isInBackground = true;
       that.activeSounds = new Array();
 
       _.each(that.currentSounds, function(element, key){
           element.getCurrentPosition(function(pos){
             if(that.player.inFightScene) {
-              if(key == "royal-jester.ogg") {
+              if(key == "royal-jester") {
                 pos = false;
               }
             }
@@ -111,6 +121,7 @@ huungry.GameObj = function(document, isFullVersion) {
     }, false);
 
     document.addEventListener("resume", function(){
+      that.isInBackground = false;
       _.each(that.activeSounds, function(element, key){
         that.playSound(element);
       });
@@ -350,8 +361,8 @@ huungry.GameObj.prototype.centerCameraTo = function(x,y) {
 
 //fight scene
 huungry.GameObj.prototype.fight = function(enemy) {
-    this.pauseSound('royal-jester.ogg');
-    this.playSound('enemy-offense.ogg', {loop: true});
+    this.pauseSound('royal-jester');
+    this.playSound('enemy-offense', {loop: true});
     var FightEngine = new huungry.FightEngine().setGameObj(this).setEnemyArmy(enemy);
     FightEngine.init();
 };
@@ -421,7 +432,7 @@ huungry.GameObj.prototype.showSplashScreen = function() {
         HuungryUI.showAboutDialog(currentObj);
       }   
       else {
-        window.location = 'market://details?id=com.zenva.huungreefull';
+        window.location = currentObj.upgradeURL;
       }
     });
     
@@ -696,7 +707,6 @@ huungry.GameObj.prototype.sendEvent = function(key, value, strength) {
 * @param array parameters: unique:true if turns off all existing sounds, false if it doesn't. loop: true
 */
 huungry.GameObj.prototype.playSound = function(fileName, params) {
-
   this.currentSounds = this.currentSounds || {};
 
   var unique;
@@ -709,9 +719,16 @@ huungry.GameObj.prototype.playSound = function(fileName, params) {
 
   if(window.device) {
     var getPhonegaPath = function() {
-      var path = window.location.pathname;
-      path = path.substr(path, path.length - 10);
-      return 'file://' + path;
+
+      if(window.device.platform == "Android") {
+        var path = window.location.pathname;
+        path = path.substr(path, path.length - 10);
+        return 'file://' + path;
+      }
+      else {
+        return "";
+      }
+      
     };
 
     if(unique) {
@@ -730,8 +747,8 @@ huungry.GameObj.prototype.playSound = function(fileName, params) {
               that.currentSounds[fileName].play();
           }
       };
-
-      this.currentSounds[fileName] = new Media(getPhonegaPath() + 'assets/music/' + fileName, null, null, replay); 
+      console.log('play audio: '+getPhonegaPath() + fileName );
+      this.currentSounds[fileName] = new Media(getPhonegaPath() + 'assets/music/' + fileName + '.' + this.AUDIO_EXTENSION, null, null, replay); 
       this.currentSounds[fileName].setVolume('1.0'); 
     }
     this.currentSounds[fileName].play();
@@ -796,7 +813,11 @@ huungry.GameObj.prototype.notifyServer = function() {
       }
 
       that.unsavedMinutes += 0.5;
-      that.sendEvent('NOTIFY');
-    }, 30000);
+
+      if(!that.isInBackground) {
+        that.sendEvent('NOTIFY');
+      }
+      
+    }, 60000);
   }
 };

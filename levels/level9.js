@@ -193,12 +193,12 @@ huungryGameMaps.level9.shops = [
             {
                 typeid: 'orc',
                 price: 35,
-                qty: 65
+                qty: 130
             },
             {
                 typeid: 'troll',
                 price: 55,
-                qty: 75
+                qty: 130
             }        
         ]
     }
@@ -282,7 +282,7 @@ huungryGameMaps.level9.items = [
 ];
 
 huungryGameMaps.level9.quest = {
-    screens: ['Now that the rebel menace is over, the troops of your bother asked you now to launch an attack to \
+    screens: ['Now that the rebel menace is over, the troops of your brother asked you to launch an attack to \
     the Nothul. This is another chance to impress your brother Jekkel so you accept the quest.',
 
     'The Nothul camp has been spotted in the White Mountains. If you attack with a strong army by surprise you \

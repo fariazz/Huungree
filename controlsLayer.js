@@ -145,7 +145,26 @@ huungry.ControlsLayer.prototype.initSave = function() {
 
     var that = this;
     goog.events.listen(btn,['mousedown', 'touchstart'], function(e) {
-        that.gameObj.saveGame(true);
+        if(that.gameObj.player.isGamepadVisible) {
+
+            var showOptions = false;
+            if(window.device) {
+                if(window.device.platform == "iOS") {
+                    showOptions = true;
+                }   
+                else {
+                    showOptions = false;
+                }
+            }
+            if(showOptions) {
+                HuungryUI.showGameMenuWindow();
+            }
+            else {
+                that.gameObj.saveGame(true);
+            }
+
+            
+        }        
     });       
 };
 

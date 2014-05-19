@@ -33,12 +33,12 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'armoredaxeman',
-                    power: 1200,
+                    power: 1000,
                     maxNum: 5
                 },
                 {
                     typeid: 'prairiehorseman',
-                    power: 1400,
+                    power: 1200,
                     maxNum: 3
                 },       
             ]
@@ -102,7 +102,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'wolf',
-                    power: 1800,
+                    power: 1000,
                     maxNum: 8
                 },       
             ]
@@ -118,7 +118,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'wolf',
-                    power: 2200,
+                    power: 1200,
                     maxNum: 8
                 },       
             ]
@@ -134,7 +134,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'wolf',
-                    power: 1200,
+                    power: 1000,
                     maxNum: 5
                 },       
             ]
@@ -166,7 +166,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'wolf',
-                    power: 1400,
+                    power: 1200,
                     maxNum: 5
                 },       
             ]
@@ -182,7 +182,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'elitearcher',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 6
                 },       
             ]
@@ -198,7 +198,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'swordskeleton',
-                    power: 2500,
+                    power: 1800,
                     maxNum: 4
                 },
                 {
@@ -219,7 +219,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'swordskeleton',
-                    power: 2600,
+                    power: 1800,
                     maxNum: 4
                 },
                 {
@@ -261,7 +261,7 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'orc',
-                    power: 2500,
+                    power: 2000,
                     maxNum: 6
                 },
                 {
@@ -282,12 +282,12 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'troll',
-                    power: 2400,
+                    power: 2000,
                     maxNum: 6
                 },
                 {
                     typeid: 'skeletonunarmed',
-                    power: 2600,
+                    power: 2000,
                     maxNum: 6
                 },       
             ]
@@ -303,17 +303,17 @@ huungryGameMaps.level13.enemyArmies = [
             [              
                 {
                     typeid: 'redwizard',
-                    power: 5500,
+                    power: 2500,
                     maxNum: 6
                 }, 
                 {
                     typeid: 'demon',
-                    power: 2500,
+                    power: 2000,
                     maxNum: 6
                 },    
                 {
                     typeid: 'swordskeleton',
-                    power: 4500,
+                    power: 1500,
                     maxNum: 6
                 },   
             ]
@@ -330,18 +330,18 @@ huungryGameMaps.level13.shops = [
         units: [
             {
                 typeid: 'prairiehorseman',
-                price: 900,
-                qty: 150
+                price: 300,
+                qty: 200
             },
             {
                 typeid: 'elitearcher',
-                price: 750,
-                qty: 120
+                price: 250,
+                qty: 220
             },
             {
                 typeid: 'armoredaxeman',
-                price: 650,
-                qty: 100
+                price: 250,
+                qty: 200
             }              
         ]
     }
@@ -352,7 +352,7 @@ huungryGameMaps.level13.items = [
         x: 19,
         y: 11,
         name: 'Gold',
-        gold: 200,
+        gold: 700,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -360,7 +360,7 @@ huungryGameMaps.level13.items = [
         x: 18,
         y: 11,
         name: 'Gold',
-        gold: 300,
+        gold: 800,
         image: 'gold-pile.png',
         type: 'ITEM.GOLD'
     },
@@ -368,7 +368,7 @@ huungryGameMaps.level13.items = [
         x: 18,
         y: 10,
         name: 'Gold',
-        gold: 200,
+        gold: 800,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -376,7 +376,7 @@ huungryGameMaps.level13.items = [
         x: 19,
         y: 0,
         name: 'Gold',
-        gold: 200,
+        gold: 800,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -384,7 +384,7 @@ huungryGameMaps.level13.items = [
         x: 18,
         y: 0,
         name: 'Gold',
-        gold: 300,
+        gold: 600,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -392,7 +392,7 @@ huungryGameMaps.level13.items = [
         x: 12,
         y: 4,
         name: 'Gold',
-        gold: 300,
+        gold: 600,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -400,7 +400,7 @@ huungryGameMaps.level13.items = [
         x: 11,
         y: 3,
         name: 'Gold',
-        gold: 200,
+        gold: 600,
         image: 'chest-jewels.png',
         type: 'ITEM.GOLD'
     },
@@ -408,7 +408,7 @@ huungryGameMaps.level13.items = [
         x: 12,
         y: 1,
         name: 'Gold',
-        gold: 200,
+        gold: 600,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -416,7 +416,7 @@ huungryGameMaps.level13.items = [
         x: 6,
         y: 3,
         name: 'Gold',
-        gold: 300,
+        gold: 600,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -432,7 +432,7 @@ huungryGameMaps.level13.items = [
         x: 2,
         y: 19,
         name: 'Gold',
-        gold: 300,
+        gold: 600,
         image: 'chest-gold.png',
         type: 'ITEM.GOLD'
     },
@@ -626,7 +626,7 @@ huungryGameMaps.level13.items = [
 huungryGameMaps.level13.quest = {
     screens: ['The Crow Mountains hide the sacred city of Huungree. Whoever finds the heart of the temple can ask anything to the gods',
     'If you could find that shrine you could ask the gods for the best strategy to attack Jekkel and take over Crisal for yourself',
-    'Legends say it is protected by power wizards and demons, but your first challenge will be to find an entrance to the city.',
+    'Legends say it is protected by powerful wizards and demons, but your first challenge will be to find an entrance to the city.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
 <li>1-Find the heart of the sacred city of Huungree. <img src="assets/images/places/shrine.png" width="20" /> \

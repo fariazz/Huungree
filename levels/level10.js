@@ -214,17 +214,17 @@ huungryGameMaps.level10.shops = [
             {
                 typeid: 'armoredaxeman',
                 price: 80,
-                qty: 40
+                qty: 100
             },
             {
                 typeid: 'elitearcher',
                 price: 105,
-                qty: 30
+                qty: 60
             },
             {
                 typeid: 'prairiehorseman',
                 price: 140,
-                qty: 40
+                qty: 80
             }              
         ]
     },
@@ -236,8 +236,8 @@ huungryGameMaps.level10.shops = [
         units: [
             {
                 typeid: 'insectman',
-                price: 65,
-                qty: 55
+                price: 55,
+                qty: 120
             }            
         ]
     }
@@ -324,7 +324,7 @@ huungryGameMaps.level10.items = [
 ];
 
 huungryGameMaps.level10.quest = {
-    screens: ['Victory!! The Nothul are retreating and leaving treasure behind. Its a good time to take it and defeat the escaping troops.',
+    screens: ['Victory! The Nothul are retreating and leaving treasure behind. Its a good time to take it and defeat the escaping troops.',
 
 '<div class="quests-title">LEVEL QUESTS:</div><ul>\
 <li>1-Kill the remaining Northul troops.<br/>\

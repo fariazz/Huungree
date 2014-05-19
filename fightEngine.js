@@ -753,7 +753,7 @@ huungry.FightEngine.prototype.updateDead = function() {
         HuungryUI.showDialog('YOU HAVE WON!',message
             ,[{text: 'OK', btnClass: 'button-home', callback: function() {
 
-                fightScene.gameObj.playSound('royal-jester.ogg', {unique: true, loop: true});
+                fightScene.gameObj.playSound('royal-jester', {unique: true, loop: true});
 
                 HuungryUI.hideDialog();
                 fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;

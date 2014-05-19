@@ -411,8 +411,7 @@ huungryGameMaps.level8.items = [
         name: 'Kooghul',
         image: 'shrine.png',
         type: 'ITEM.LANDMARK',
-        text: 'The Kooghul appears as a small shrine emanating the black energy that powers the mystical chamans. \
-        Not without fear, you order your troops to burn it to the ground.'
+        text: 'Not without fear, you order your troops to burn it to the ground and kill the remaining mystical priests.'
     },
     {
         x: 9,

@@ -29,8 +29,7 @@ huungry.Player.prototype.init = function() {
  */
 huungry.Player.prototype.playerMoved = function() {
     this.refreshMapPos();
-    this.toggleGamepad(true);
-    
+        
     var pos = this.getPosition();
     var that = this;
     this.gameObj.centerCameraTo(pos.x,pos.y);
@@ -45,6 +44,7 @@ huungry.Player.prototype.playerMoved = function() {
 
                 //there was a target found
                 noTarget = false;
+                that.toggleGamepad(true);
 
                 if(that.map.elements[i].elementType == that.gameObj.ENEMY_ARMY) {
                     that.gameObj.fight(that.map.elements[i]);
@@ -159,10 +159,11 @@ huungry.Player.prototype.playerMoved = function() {
                 return isAdjacent ? true : false;          
             });
             
+            var willAttack;
             var numEnemies = posibleEnemies.length;
             if(numEnemies) {
                 //probs of attack
-                var willAttack = Math.random() <= that.gameObj.PROB_MAP_ARMY_ATTACK;
+                willAttack = Math.random() <= that.gameObj.PROB_MAP_ARMY_ATTACK;
 
                 if(willAttack) {
                     var enemyIndex = _.random(numEnemies-1);
@@ -178,11 +179,11 @@ huungry.Player.prototype.playerMoved = function() {
                         that.playerMoved();
                     });
                 }
-            }            
+            }     
 
-            //move to player
-
-            //test again so there will be battle
+            if(!willAttack) {
+                that.toggleGamepad(true);
+            }       
 
         }
     }, this.gameObj.movementDuration*1000*0.4);  

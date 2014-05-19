@@ -33,7 +33,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'wolf',
-                    power: 1500,
+                    power: 1200,
                     maxNum: 12
                 },
             ]
@@ -91,12 +91,12 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'ritualwarrior',
-                    power: 2200,
+                    power: 1500,
                     maxNum: 5
                 },
                 {
                     typeid: 'snake',
-                    power: 2000,
+                    power: 1500,
                     maxNum: 10
                 },
             ]
@@ -260,7 +260,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'centaur',
-                    power: 2200,
+                    power: 2000,
                     maxNum: 10
                 },
             ]
@@ -276,7 +276,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'prairiehorseman',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -292,7 +292,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'prairiehorseman',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -308,7 +308,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'prairiehorseman',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -324,7 +324,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'elitearcher',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -340,7 +340,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'elitearcher',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -356,7 +356,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'armoredaxeman',
-                    power: 2200,
+                    power: 1700,
                     maxNum: 5
                 },
             ]
@@ -372,7 +372,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'armoredaxeman',
-                    power: 2200,
+                    power: 1700,
                     maxNum: 5
                 },
             ]
@@ -388,7 +388,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'wizardapprentice',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
             ]
@@ -404,7 +404,7 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'valkyrie',
-                    power: 2000,
+                    power: 1700,
                     maxNum: 5
                 },
             ]
@@ -420,12 +420,12 @@ huungryGameMaps.level14.enemyArmies = [
             [              
                 {
                     typeid: 'royalknight',
-                    power: 10000,
-                    maxNum: 5
+                    power: 3000,
+                    maxNum: 6
                 },
                 {
                     typeid: 'wizardapprentice',
-                    power: 2200,
+                    power: 1800,
                     maxNum: 5
                 },
                 {
@@ -447,18 +447,18 @@ huungryGameMaps.level14.shops = [
         units: [
             {
                 typeid: 'prairiehorseman',
-                price: 1000,
-                qty: 250
+                price: 400,
+                qty: 350
             },
             {
                 typeid: 'elitearcher',
-                price: 850,
-                qty: 220
+                price: 250,
+                qty: 320
             },
             {
                 typeid: 'valkyrie',
-                price: 650,
-                qty: 200
+                price: 250,
+                qty: 300
             }              
         ]
     },
@@ -470,17 +470,17 @@ huungryGameMaps.level14.shops = [
         units: [
             {
                 typeid: 'elfarcher',
-                price: 900,
-                qty: 200
+                price: 300,
+                qty: 300
             },
             {
                 typeid: 'elfswordman',
-                price: 750,
+                price: 250,
                 qty: 200
             },
             {
                 typeid: 'centaur',
-                price: 850,
+                price: 300,
                 qty: 200
             }              
         ]
@@ -772,7 +772,7 @@ huungryGameMaps.level14.items = [
 ];
 
 huungryGameMaps.level14.quest = {
-    screens: ['By following the secret road to Crisal you will be able to take over the city by surprise. The road is not easy but if you succeed you\'ll be the ruler of these lands.',
+    screens: ['By following the secret road to Crisal you will be able to take over the city by surprise. The road is not easy but if you succeed you\'ll be the sole ruler of these lands.',
     'The hardest part will be once you enter the city walls. Powerful and well-trained troops await.',
     'If you can defeat Jekkel and his army the city and the continent of Tamaca will be yours.<br/><br/>This is the final part of your journey and your chance to become a Legend. Good luck!',
 

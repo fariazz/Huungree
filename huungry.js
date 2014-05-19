@@ -31,7 +31,7 @@ huungry.start = function(isFullVersion){
     
 
     //intro music
-    gameObj.playSound('royal-jester.ogg', {unique: true, loop: true});
+    gameObj.playSound('royal-jester', {unique: true, loop: true});
     
     HuungryUI.prepareDialog(gameObj); 
     gameObj.setUnitTypes(UnitTypes);       
@@ -45,15 +45,16 @@ huungry.start = function(isFullVersion){
     gameObj.player.units = [
     gameObj.cloneUnit(gameObj.unitTypes['archer'], 15),
     gameObj.cloneUnit(gameObj.unitTypes['archer'], 20),
-    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
-    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 60),
     gameObj.cloneUnit(gameObj.unitTypes['halfling'], 15),
     gameObj.cloneUnit(gameObj.unitTypes['axeman'], 28),
     gameObj.cloneUnit(gameObj.unitTypes['axeman'], 28),
-    gameObj.cloneUnit(gameObj.unitTypes['halfling'], 35)
-    //gameObj.cloneUnit(gameObj.unitTypes['archer'], 1),
-    //gameObj.cloneUnit(gameObj.unitTypes['archer'],1)
-    ];
+    gameObj.cloneUnit(gameObj.unitTypes['halfling'], 35) ];
+/*    gameObj.cloneUnit(gameObj.unitTypes['insectman'], 21),
+    gameObj.cloneUnit(gameObj.unitTypes['centaur'], 30),
+    gameObj.cloneUnit(gameObj.unitTypes['elitearcher'], 21),
+    gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 27),
+    gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 25),
+    gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 25)    ];*/
     
     //start screen
     gameObj.showSplashScreen();       

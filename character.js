@@ -261,7 +261,7 @@ huungry.Character.prototype.initGamepad = function() {
  * @param boolean isVisible
  */
 huungry.Character.prototype.toggleGamepad = function(isVisible) {
-    
+    this.isGamepadVisible = isVisible;
     if(isVisible) {
         var pos = this.getPosition();
         var currentCell = this.getCell();
@@ -342,9 +342,9 @@ huungry.Character.prototype.getCenter = function() {
 huungry.Character.prototype.showGoalIcon = function() {
     if(this.isQuestGoal) {
             var goalIcon = new lime.Sprite()
-            .setSize(this.gameObj.tileSize*0.35, this.gameObj.tileSize*0.35)
+            .setSize(this.gameObj.tileSize*0.32, this.gameObj.tileSize*0.32)
             .setFill('assets/images/backgrounds/trophy.png')
-            .setPosition(this.gameObj.tileSize*0.9, this.gameObj.tileSize*0.9);
+            .setPosition(this.gameObj.tileSize*0.85, this.gameObj.tileSize*0.85);
         this.appendChild(goalIcon);
     }    
 }

@@ -333,17 +333,17 @@ huungryGameMaps.level11.enemyArmies = [
             {
                 typeid: 'valkyrie',
                 price: 90,
-                qty: 50
+                qty: 90
             },
             {
                 typeid: 'centaur',
                 price: 110,
-                qty: 40
+                qty: 100
             },
             {
                 typeid: 'armoredaxeman',
                 price: 80,
-                qty: 30
+                qty: 100
             }              
         ]
     },
@@ -355,13 +355,13 @@ huungryGameMaps.level11.enemyArmies = [
         units: [
             {
                 typeid: 'elfswordman',
-                price: 200,
-                qty: 55
+                price: 150,
+                qty: 85
             },
             {
                 typeid: 'elfarcher',
-                price: 270,
-                qty: 45
+                price: 200,
+                qty: 75
             }            
         ]
     }

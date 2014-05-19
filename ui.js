@@ -1,7 +1,9 @@
 var HuungryUI = HuungryUI || new Object();
 
 $(function() {
-    FastClick.attach(document.body);
+    if(typeof FastClick !== "undefined") {
+        FastClick.attach(document.body);
+    }    
 });
 
 document.addEventListener("backbutton", function() {
@@ -63,8 +65,8 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
     for(i = 0; i < actions.length; i++) {
         (function(i) {
             $('.zva_dialog_actions').append('<button on="return true;" data-role="action-btn-'+i+'" class="'+actions[i].btnClass+'" ">'+actions[i].text+'</button>');
-            $('button[data-role="action-btn-'+i+'"]').unbind('click ');
-            $('button[data-role="action-btn-'+i+'"]').bind('click ', function(e) {
+            $('button[data-role="action-btn-'+i+'"]').unbind(HuungryUI.gameObj.CLICK_EVENT);
+            $('button[data-role="action-btn-'+i+'"]').bind(HuungryUI.gameObj.CLICK_EVENT, function(e) {
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -198,7 +200,7 @@ HuungryUI.showArrangeUnitsWindow = function() {
     HuungryUI.showDialog('MERGE UNITS',html
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.showPlayerInfoWindow}], help);
 
-    $('.unit-cell').on('click ', function(e){
+    $('.unit-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
         var newIndex = $(this).attr('data-index');
@@ -289,7 +291,7 @@ HuungryUI.showItemsWindow = function() {
         }}
     ], help);
     
-    $('.item-cell').on('click ', function(e){
+    $('.item-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
         $('.item-cell').css('background-color', 'inherit');
@@ -350,7 +352,7 @@ HuungryUI.showBattleItemsWindow = function() {
             }
         }}], help);
     
-    $('.item-cell').on('click ', function(e){
+    $('.item-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
         var newIndex = $(this).attr('data-index');
@@ -406,7 +408,7 @@ HuungryUI.showShopWindow = function(shop, result) {
     var help = result === undefined ? 'Touch units to purchase' : result.msg;
     HuungryUI.showDialog(shop.data.name,html
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);
-    $('.shop-unit-cell').on('click ', function(e){
+    $('.shop-unit-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();        
         var index = $(this).attr('data-index');
@@ -450,7 +452,7 @@ HuungryUI.showGoPremiumDialog = function(gameObj) {
                     'The sacred city of Huungree holds the secret to victory, but it\'s guarded by demons and wizards.\
                     <div class="screenshot"><img src="assets/images/screenshots/screenshot-huungree.png" height="80" /></div>'
                     ,[{text: 'LETS DO IT!', btnClass: 'button-home', callback: function(){
-                        window.location = 'market://details?id=com.zenva.huungreefull';
+                        window.location = HuungryUI.gameObj.upgradeURL;
                     }}]);
                 }}]);
             }}]);
@@ -494,7 +496,7 @@ HuungryUI.showExpelUnitsWindow = function() {
             }}
         ], help);
 
-    $('.unit-cell').on('click ', function(e){
+    $('.unit-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
         var newIndex = $(this).attr('data-index');
@@ -516,4 +518,20 @@ HuungryUI.showExpelUnitsWindow = function() {
         
         
     });
+}
+
+/**
+show game menu window
+*/
+HuungryUI.showGameMenuWindow = function() {
+    HuungryUI.showDialog('GAME MENU','What would you like to do?'
+        ,[
+        {text: 'SAVE', btnClass: 'button-home', callback: function(){
+            HuungryUI.gameObj.saveGame(true);
+        }},
+        {text: 'HOME', btnClass: 'button-home', callback: function(){
+            window.location = '';
+        }},
+        {text: 'CANCEL', btnClass: 'button-home', callback: HuungryUI.hideDialog}
+        ]);
 }

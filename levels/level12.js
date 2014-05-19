@@ -280,18 +280,18 @@ huungryGameMaps.level12.shops = [
         units: [
             {
                 typeid: 'satyr',
-                price: 140,
-                qty: 50
+                price: 100,
+                qty: 60
             },
             {
                 typeid: 'elfswordman',
-                price: 200,
-                qty: 45
+                price: 150,
+                qty: 65
             },
             {
                 typeid: 'elfarcher',
-                price: 250,
-                qty: 40
+                price: 200,
+                qty: 60
             }              
         ]
     }
@@ -476,8 +476,8 @@ huungryGameMaps.level12.items = [
         type: 'ITEM.POSSESSION-SPELL'
     },
     {
-        x: 16,
-        y: 3,
+        x: 10,
+        y: 16,
         name: 'Possession Spell',
         numHits: 3,
         image: 'scroll-possession.png',
