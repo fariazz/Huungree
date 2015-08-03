@@ -3,7 +3,7 @@ var HuungryUI = HuungryUI || new Object();
 $(function() {
     if(typeof FastClick !== "undefined") {
         FastClick.attach(document.body);
-    }    
+    }
 });
 
 document.addEventListener("backbutton", function() {
@@ -15,16 +15,16 @@ document.addEventListener("backbutton", function() {
  * end of game dialog
  */
 HuungryUI.showEndofGameDialog = function(gameObj) {
-    HuungryUI.gameObj.saveGame(false);    
-    HuungryUI.showDialog('YOU HAVE WON THE GAME!', 
+    HuungryUI.gameObj.saveGame(false);
+    HuungryUI.showDialog('YOU HAVE WON THE GAME!',
         'Congratulations! you have defeated Jekkel\'s armies and you are now the sole ruler of the Mysical Cities.<br/><br/>It\'s been a long journey! You arrived to Tamaca as a low-grade mercenary and have become Ingeber\'s richest and most powerful privateer and an empire to rule.'
-        ,[{text: 'NEXT', btnClass: 'button-home', callback: function(){            
+        ,[{text: 'NEXT', btnClass: 'button-home', callback: function(){
             HuungryUI.showDialog('WHAT\'S NEXT?',
             'My name is Pablo Farias Navarro and as the founder of ZENVA I\'d like to thank you so much for playing our game! Feel free to email me at <span class="strongy">pablofarias@zenva.com</span>.<br/><br/>If you want to learn how to make your own games follow our YouTube Channel ;)'
-            ,[{text: 'YOUTUBE', btnClass: 'button-home', callback: function(){            
+            ,[{text: 'YOUTUBE', btnClass: 'button-home', callback: function(){
                 window.open('https://youtube.com/fariazz2', '_blank', 'location=yes');
             }},
-            {text: 'PLAY AGAIN!', btnClass: 'button-home', callback: function(){            
+            {text: 'PLAY AGAIN!', btnClass: 'button-home', callback: function(){
                 window.location = '';
             }},
 
@@ -37,13 +37,13 @@ HuungryUI.showEndofGameDialog = function(gameObj) {
 /**
  * about game dialog
  */
-HuungryUI.showAboutDialog = function(gameObj) {        
-    HuungryUI.showDialog('ABOUT HUUNGREE', 
+HuungryUI.showAboutDialog = function(gameObj) {
+    HuungryUI.showDialog('ABOUT HUUNGREE',
         'Huungree is a RPG created by ZENVA. Besides making games we also teach game development through online video courses.\
         <br/><br/>If you\'d like to know about the development process of Huungree feel free to check out YouTube channel.'
         ,[
-        {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}, 
-        {text: 'YOUTUBE', btnClass: 'button-home', callback: function(){            
+        {text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog},
+        {text: 'YOUTUBE', btnClass: 'button-home', callback: function(){
             window.open('https://www.youtube.com/watch?v=P4-Z4H8ZnG0', '_blank', 'location=yes');
         }}]);
 };
@@ -51,7 +51,7 @@ HuungryUI.showAboutDialog = function(gameObj) {
 /**
 * show dialog
 */
-HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) { 
+HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
     HuungryUI.gameObj.director.setPaused(true);
     //setTimeout(function() {HuungryUI.gameObj.director.setPaused(true);}, 300);
     var height = $(window).height();
@@ -73,7 +73,7 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
                 if(!actions[i].noHide) {
                     HuungryUI.hideDialog();
                 }
-                
+
                 actions[i].callback();
             });
         })(i);
@@ -86,12 +86,12 @@ HuungryUI.showDialog = function(headerHtml, bodyHtml, actions, help) {
 */
 HuungryUI.hideDialog = function() {
     HuungryUI.gameObj.director.setPaused(false);
-/*    setTimeout(function() {HuungryUI.gameObj.director.setPaused(false);}, 350); 
+/*    setTimeout(function() {HuungryUI.gameObj.director.setPaused(false);}, 350);
 */
-    $('.zva_dialog').css('display', 'none');  
-    $('.zva_dialog_header').empty(); 
-    $('.zva_dialog_body').empty(); 
-    $('.zva_dialog_actions').empty(); 
+    $('.zva_dialog').css('display', 'none');
+    $('.zva_dialog_header').empty();
+    $('.zva_dialog_body').empty();
+    $('.zva_dialog_actions').empty();
     $('.zva_dialog_help').empty();
     //$('.lime-director').css('top', 0);
 }
@@ -101,9 +101,9 @@ HuungryUI.hideDialog = function() {
 */
 HuungryUI.prepareDialog = function(gameObj) {
 
-    HuungryUI.gameObj = gameObj;    
+    HuungryUI.gameObj = gameObj;
     var gameRatio = gameObj.screenWidth/gameObj.screenHeight;
-    
+
     var factor = 1;
     if(window.device) {
         if(window.device.platform == "Android") {
@@ -125,7 +125,7 @@ HuungryUI.prepareDialog = function(gameObj) {
     console.log('height:'+height);
 
     var temp;
-    if(width < height) {        
+    if(width < height) {
         temp = width;
         width = height;
         height = temp;
@@ -134,7 +134,7 @@ HuungryUI.prepareDialog = function(gameObj) {
     //var left = (width - gameObj.screenWidth*ratio)/2;
     $('.zva_dialog').css('margin-left', -gameObj.screenWidth/2);
 
-    var winRatio = width/height;        
+    var winRatio = width/height;
     var ratio = gameRatio < winRatio ? height/HuungryUI.gameObj.screenHeight : width/HuungryUI.gameObj.screenWidth;
     console.log('winRatio: '+winRatio);
     console.log('gameRatio: '+gameRatio);
@@ -142,14 +142,14 @@ HuungryUI.prepareDialog = function(gameObj) {
     console.log('HuungryUI.gameObj.screenWidth: '+HuungryUI.gameObj.screenWidth);
     console.log('ratio: '+ratio);
     $('.zva_dialog').css('transform', 'scale('+ ratio + ','+ ratio + ')');
-    
+
     if(gameRatio < winRatio) {
-        //$('.zva_dialog').css('transform-origin-y', '0px');
         $('.zva_dialog').css('transform-origin', 'top');
     }
     else {
-        //$('.zva_dialog').css('transform-origin-x', '0px');
-        $('.zva_dialog').css('transform-origin', 'left');
+        var topPos = (window.innerHeight - (HuungryUI.gameObj.screenHeight*ratio))/2;
+         $('.zva_dialog').css('top', topPos);
+         $('.zva_dialog').css('transform-origin', 'top');
     }
 }
 
@@ -162,11 +162,11 @@ HuungryUI.showPlayerInfoWindow = function() {
         html += '<div class="unit-cell">\
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
-                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+ 
-                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
-        
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';
+
         if(i == 3) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
         }
@@ -186,11 +186,11 @@ HuungryUI.showArrangeUnitsWindow = function() {
         html += '<div class="unit-cell" data-index="'+i+'">\
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
-                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+  
-                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
-        
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';
+
         if(i == 3) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
         }
@@ -215,9 +215,9 @@ HuungryUI.showArrangeUnitsWindow = function() {
                     HuungryUI.gameObj.player.units.splice([HuungryUI.selectedUnit],1);
                     HuungryUI.showArrangeUnitsWindow();
                 }
-                
-            }            
-            HuungryUI.selectedUnit = undefined;            
+
+            }
+            HuungryUI.selectedUnit = undefined;
 
         }
         else {
@@ -225,9 +225,9 @@ HuungryUI.showArrangeUnitsWindow = function() {
             $(this).css('background-color', '#F6EBC6');
             $(this).css('opacity', '0.5');
         }
-        
-        
-        
+
+
+
     });
 }
 
@@ -235,35 +235,35 @@ HuungryUI.showArrangeUnitsWindow = function() {
 show items info window
 */
 HuungryUI.showItemsWindow = function() {
-    var info, len = HuungryUI.gameObj.player.items.length; 
-    var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';    
+    var info, len = HuungryUI.gameObj.player.items.length;
+    var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';
     for(var i=0; i< len; i++) {
         switch(HuungryUI.gameObj.player.items[i].type) {
             case 'ITEM.ATTACK-SPELL':
                 info = "Use in battle to damage your enemies Damage: "+HuungryUI.gameObj.player.items[i].attack;
-            break;     
+            break;
             case 'ITEM.DEFENSE-SPELL':
                 info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
             break;
             case 'ITEM.PARALYZE-SPELL':
                 info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
-            break;  
+            break;
             case 'ITEM.POSSESSION-SPELL':
                 info = "Use in battle to turn control an enemy for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
             break;
             case 'ITEM.KEY':
                 info = "You can open a "+HuungryUI.gameObj.player.items[i].attribute+" door with this key";
-            break;     
+            break;
             case 'ITEM.RESURRECTION-SPELL':
                 info = "Use in battle to raise "+HuungryUI.gameObj.player.items[i].numHits+" skeletons from a pile of bones";
-            break;           
+            break;
         }
 
         html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
                 <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
-                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
-                '</div>';  
-        
+                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+
+                '</div>';
+
     }
     html += '</div>';
     var help = 'Touch items for info.';
@@ -283,14 +283,14 @@ HuungryUI.showItemsWindow = function() {
                 else if(item.type == 'ITEM.KEY') {
                     $('.zva_dialog_help').html('You can\'t drop keys or may get stuck in the level!');
                 }
-                
+
             }
             else {
                 $('.zva_dialog_help').html('You haven\'t selected an item to drop');
             }
         }}
     ], help);
-    
+
     $('.item-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -310,32 +310,32 @@ HuungryUI.showItemsWindow = function() {
 show items info window
 */
 HuungryUI.showBattleItemsWindow = function() {
-    var info, len = HuungryUI.gameObj.player.items.length; 
-    var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';  
+    var info, len = HuungryUI.gameObj.player.items.length;
+    var html = '<div class="items-area" style="'+(len > 12 ? 'overflow-y:scroll;' : '')+'">';
     for(var i=0; i< HuungryUI.gameObj.player.items.length; i++) {
         switch(HuungryUI.gameObj.player.items[i].type) {
             case 'ITEM.ATTACK-SPELL':
                 info = "Use in battle to damage your enemies. Damage: "+HuungryUI.gameObj.player.items[i].attack;
-            break;  
+            break;
             case 'ITEM.DEFENSE-SPELL':
                 info = "Use in battle to protect a unit against "+HuungryUI.gameObj.player.items[i].numHits+" enemy hits";
-            break;     
+            break;
             case 'ITEM.PARALYZE-SPELL':
                 info = "Use in battle to freeze an enemy unit for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
-            break;  
+            break;
             case 'ITEM.POSSESSION-SPELL':
                 info = "Use in battle to turn control an enemy for "+HuungryUI.gameObj.player.items[i].numHits+" turns";
-            break;  
+            break;
             case 'ITEM.RESURRECTION-SPELL':
                 info = "Use in battle to raise "+HuungryUI.gameObj.player.items[i].numHits+" skeletons from a pile of bones";
-            break;       
+            break;
         }
 
         if(!_.contains(['ITEM.KEY'], HuungryUI.gameObj.player.items[i].type)) {
             html += '<div class="item-cell" data-info="'+info+'" data-index="'+i+'">\
                 <img src="assets/images/items/' + HuungryUI.gameObj.player.items[i].image+'" /> \
-                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+                 
-                '</div>';  
+                <div class="unit-name">' + HuungryUI.gameObj.player.items[i].name+'</div>'+
+                '</div>';
         }
     }
     html += '</div>';
@@ -351,7 +351,7 @@ HuungryUI.showBattleItemsWindow = function() {
                 HuungryUI.gameObj.fightEngine.showItemTargets();
             }
         }}], help);
-    
+
     $('.item-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -360,7 +360,7 @@ HuungryUI.showBattleItemsWindow = function() {
         if(HuungryUI.selectedItem) {
             $('[data-index="'+HuungryUI.selectedItem+'"]').css('background-color', 'transparent');
             $('[data-index="'+HuungryUI.selectedItem+'"]').css('opacity', '1');
-            HuungryUI.selectedItem = undefined;   
+            HuungryUI.selectedItem = undefined;
         }
 
         //select item
@@ -381,7 +381,7 @@ HuungryUI.showBattleItemsWindow = function() {
 show show window
 */
 HuungryUI.showShopWindow = function(shop, result) {
-    var html = '<div class="shop-products"><div>';  
+    var html = '<div class="shop-products"><div>';
     var length = shop.data.units.length;
     var unit;
     for(var i=0; i < length; i++) {
@@ -389,11 +389,11 @@ HuungryUI.showShopWindow = function(shop, result) {
         html += '<div class="shop-unit-cell" data-index="'+i+'">\
                     <div class="unit-num"><img width="10" src="assets/images/backgrounds/gold.png" style="display:inline;" />'+ shop.data.units[i].price +'</div>'+
                     '<img src="assets/images/units/' + unit.image+'" /> \
-                    <div class="unit-name">' + unit.name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/' + (unit.canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + unit.attack+' '+ 
+                    <div class="unit-name">' + unit.name+'</div>'+
+                    '<img width="10" src="assets/images/items/' + (unit.canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + unit.attack+' '+
                     '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + unit.defense+' '+
                     '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + unit.movements+
-                    '<div class="unit-left">'+shop.data.units[i].qty+' left</div></div>';                 
+                    '<div class="unit-left">'+shop.data.units[i].qty+' left</div></div>';
     }
 
     html += '</div></div><div class="shop-player-units"><div class="shop-player-title">Your Army</div>';
@@ -410,7 +410,7 @@ HuungryUI.showShopWindow = function(shop, result) {
         ,[{text: 'BACK', btnClass: 'button-home', callback: HuungryUI.hideDialog}], help);
     $('.shop-unit-cell').on(HuungryUI.gameObj.CLICK_EVENT, function(e){
         e.preventDefault();
-        e.stopPropagation();        
+        e.stopPropagation();
         var index = $(this).attr('data-index');
         var result = shop.purchase(shop.data.units[index]);
         HuungryUI.showShopWindow(shop, result);
@@ -419,7 +419,7 @@ HuungryUI.showShopWindow = function(shop, result) {
 
 HuungryUI.showSequence = function(title, screens) {
     if(screens.length > 0) {
-        HuungryUI.showDialog(title, screens[0], 
+        HuungryUI.showDialog(title, screens[0],
             [{text: 'OK', btnClass: 'button-home', callback: function() {
                 if(screens[1] !== undefined) {
                     HuungryUI.showSequence(title, screens.slice(1, screens.length));
@@ -428,32 +428,35 @@ HuungryUI.showSequence = function(title, screens) {
                     HuungryUI.hideDialog();
                 }
             }}]);
-    }    
+    }
 }
 
 /**
  * go premium dialog
  */
 HuungryUI.showGoPremiumDialog = function(gameObj) {
-    HuungryUI.gameObj.saveGame(false);    
-    HuungryUI.showDialog('EPIC ADVENTURES AWAIT!', 
-        'This is the end of the LITE version but you can continue exploring the exciting continent of Tamaca if you buy the developer a rum & coke ;)<br/><br/> \
-        The full game includes many new levels, monsters, spells and epic battles.'
+
+    var buttons = [{text: 'LETS DO IT!', btnClass: 'button-home', callback: function(){
+                        window.location = HuungryUI.gameObj.upgradeURL;
+                    }}];
+
+    HuungryUI.gameObj.saveGame(false);
+    HuungryUI.showDialog('EPIC ADVENTURES AWAIT!',
+        'This is the end of the LITE version but you can continue exploring the exciting continent of Tamaca if you support the developer of this game.<br/><br/> \
+        The full game includes hours of gameplay, no ads, and epic battles.'
         ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
-            HuungryUI.showDialog('CONTINUE YOUR JOURNEY', 
+            HuungryUI.showDialog('CONTINUE YOUR JOURNEY',
             'Explore echanted forests infested with elfs and evil mystical warriors.\
             <div class="screenshot"><img src="assets/images/screenshots/screenshot-forest1.png" height="100" /> <img src="assets/images/screenshots/screenshot-forest2.png" height="100" /></div>'
             ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
-                HuungryUI.showDialog('RAISE AN ARMY', 
+                HuungryUI.showDialog('RAISE AN ARMY',
                 'Raise an army and defeat the powerful Nothul troops in epic battles.\
                 <div class="screenshot"><img src="assets/images/screenshots/screenshot-snow.png" height="100" /> <img src="assets/images/screenshots/screenshot-snow2.png" height="100" /></div>'
                 ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
-                    HuungryUI.showDialog('TAKE OVER THE EMPIRE', 
+                    HuungryUI.showDialog('TAKE OVER THE EMPIRE',
                     'The sacred city of Huungree holds the secret to victory, but it\'s guarded by demons and wizards.\
                     <div class="screenshot"><img src="assets/images/screenshots/screenshot-huungree.png" height="80" /></div>'
-                    ,[{text: 'LETS DO IT!', btnClass: 'button-home', callback: function(){
-                        window.location = HuungryUI.gameObj.upgradeURL;
-                    }}]);
+                    ,buttons);
                 }}]);
             }}]);
         }}]);
@@ -469,11 +472,11 @@ HuungryUI.showExpelUnitsWindow = function() {
         html += '<div class="unit-cell" data-index="'+i+'">\
                     <div class="unit-num">'+ Math.ceil(HuungryUI.gameObj.player.units[i].life)+'</div>'+
                     '<img src="assets/images/units/' + HuungryUI.gameObj.player.units[i].image+'" /> \
-                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+ 
-                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+ 
-                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+  
-                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';  
-        
+                    <div class="unit-name">' + HuungryUI.gameObj.player.units[i].name+'</div>'+
+                    '<img width="10" src="assets/images/items/' + (HuungryUI.gameObj.player.units[i].canShoot ? 'rangeattack-icon.png' : 'attack-icon.png') + '" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].attack+' '+
+                    '<img width="10" src="assets/images/items/shield.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].defense+' '+
+                    '<img width="10" src="assets/images/items/movements.png" style="display:inline;" />' + HuungryUI.gameObj.player.units[i].movements+'</div>';
+
         if(i == 3) {
             html += '</div><div style="clear:both; margin-top:10px;height:62px;">';
         }
@@ -491,7 +494,7 @@ HuungryUI.showExpelUnitsWindow = function() {
                     }
                     else {
                         $('.zva_dialog_help').html('You can\'t fire all of your army!');
-                    }                    
+                    }
                 }
             }}
         ], help);
@@ -502,21 +505,21 @@ HuungryUI.showExpelUnitsWindow = function() {
         var newIndex = $(this).attr('data-index');
         if(HuungryUI.selectedUnit) {
             $('[data-index="'+HuungryUI.selectedUnit+'"]').css('background-color', 'transparent');
-            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('opacity', '1');   
+            $('[data-index="'+HuungryUI.selectedUnit+'"]').css('opacity', '1');
         }
-        
+
         HuungryUI.selectedUnit = newIndex;
         $(this).css('background-color', '#F6EBC6');
         $(this).css('opacity', '0.5');
-        
+
         //show use button
         $($('button')[1]).removeClass('button-hidden');
         $($('button')[1]).addClass('button-home');
 
         //show help
         $('.zva_dialog_help').html('Are you sure you want to expel this unit?');
-        
-        
+
+
     });
 }
 
@@ -534,4 +537,61 @@ HuungryUI.showGameMenuWindow = function() {
         }},
         {text: 'CANCEL', btnClass: 'button-home', callback: HuungryUI.hideDialog}
         ]);
-}
+};
+
+/**
+ * go premium dialog ad
+ */
+HuungryUI.showPremiumAdDialog = function(gameObj) {
+
+    var buttons = [
+        {
+            text: 'LETS DO IT!',
+            btnClass: 'button-home',
+            callback: function(){
+                window.location = HuungryUI.gameObj.upgradeURL;
+            }
+        },
+        {
+            text: 'MAYBE LATER',
+            btnClass: 'button-home',
+            callback: HuungryUI.hideDialog
+        }
+    ];
+
+    HuungryUI.showDialog('EPIC ADVENTURES AWAIT!',
+        'Enjoy an extended, ad-free experience by getting the Full Version. The continent of Tamaca needs you and so does the developer of this game.<br/><br/> \
+        The full game includes hours of gameplay, no ads, more spells and epic battles.'
+        ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+            HuungryUI.showDialog('UNVEIL THE MYSTERY',
+            'Explore echanted forests infested with elfs and evil mystical warriors.\
+            <div class="screenshot"><img src="assets/images/screenshots/screenshot-forest1.png" height="100" /> <img src="assets/images/screenshots/screenshot-forest2.png" height="100" /></div>'
+            ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+                HuungryUI.showDialog('RAISE AN ARMY',
+                'Raise an army and defeat the powerful Nothul troops in epic battles.\
+                <div class="screenshot"><img src="assets/images/screenshots/screenshot-snow.png" height="100" /> <img src="assets/images/screenshots/screenshot-snow2.png" height="100" /></div>'
+                ,[{text: 'LEARN MORE', btnClass: 'button-home', callback: function(){
+                    HuungryUI.showDialog('TAKE OVER THE EMPIRE',
+                    'The sacred city of Huungree holds the secret to victory, but it\'s guarded by demons and wizards.\
+                    <div class="screenshot"><img src="assets/images/screenshots/screenshot-huungree.png" height="80" /></div>'
+                    ,buttons);
+                }}]);
+            }}]);
+        }}]);
+};
+/*
+HuungryUI.showUpgradeLink = function() {
+
+    if(this.showingLink)
+        return;
+
+    $('body').append('<div id="upgrade-link" class="upgrade-link"><a id="upgrade-link-top">Remove ads</a></div>');
+
+    $('#upgrade-link-top').bind(HuungryUI.gameObj.CLICK_EVENT, function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location = HuungryUI.gameObj.upgradeURL;
+    });
+
+    this.showingLink = true;
+};*/

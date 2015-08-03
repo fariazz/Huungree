@@ -6,21 +6,21 @@ goog.require('lime.Circle');
  * Takes care of the fighting
  */
 huungry.FightEngine = function() {
-    this.playerUnits = new Array();
-    this.enemyUnits = new Array();
-    this.rangeTargets = new Array();
-    this.skeletons = new Array();
-}
+    this.playerUnits = [];
+    this.enemyUnits = [];
+    this.rangeTargets = [];
+    this.skeletons = [];
+};
 
 huungry.FightEngine.prototype.setGameObj = function(gameObj) {
     this.gameObj = gameObj;
     return this;
-}
+};
 
 huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
     this.enemyArmy = enemyArmy;
     return this;
-}
+};
 
 /**
  * initiate fighting
@@ -28,20 +28,20 @@ huungry.FightEngine.prototype.setEnemyArmy = function(enemyArmy) {
 huungry.FightEngine.prototype.init = function() {
     this.gameObj.fightEngine = this;
 
-    this.fightScene = new lime.Scene().setRenderer(this.gameObj.renderer);    
-    this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
-    this.fightUILayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);    
-        
+    this.fightScene = new lime.Scene().setRenderer(this.gameObj.renderer);
+    this.fightLayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);
+    this.fightUILayer = new lime.Layer().setPosition(0,0).setAnchorPoint(0,0);
+
     this.fightScene.appendChild(this.fightLayer);
     this.fightScene.appendChild(this.fightUILayer);
     this.gameObj.director.replaceScene(this.fightScene);
-    
+
     this.map = new huungry.Map().setGameObj(this.gameObj)
         .setSize({width: this.gameObj.screenWidth, height: this.gameObj.screenHeight-this.gameObj.tileSize})
         .setBackground('assets/images/backgrounds/'+this.enemyArmy.background);
-    
+
     this.fightLayer.appendChild(this.map.backgroundSprite);
-    
+
     //bottom bar
     var bottomBar = new lime.Sprite().setAnchorPoint(0,0)
         .setSize(this.gameObj.screenWidth, this.gameObj.tileSize)
@@ -55,8 +55,8 @@ huungry.FightEngine.prototype.init = function() {
         var target = currentObj.map.getColRowFromXY(e.position.x, e.position.y);
         //console.log(currentObj.map.getTargetType(target.col, target.row));
     });
-    
-    
+
+
     this.DEFAULT_MSG_POS = {x: this.gameObj.tileSize*8.5, y: this.gameObj.screenHeight - this.gameObj.tileSize/2};
     this.infoText = new lime.Label().setText('').setPosition(this.gameObj.tileSize*8.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
@@ -65,7 +65,7 @@ huungry.FightEngine.prototype.init = function() {
     this.infoText2 = new lime.Label().setText('').setPosition(this.gameObj.tileSize*8.5, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFontColor('#E9DDB9').setFontSize(16).setFontFamily('Courier').setFontWeight('bold');
     this.fightUILayer.appendChild(this.infoText);
-    
+
     var passButton = new lime.Sprite().setSize(this.gameObj.tileSize*3*3/4, this.gameObj.tileSize*3/4)
         .setPosition(1.5*this.gameObj.tileSize, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
@@ -74,16 +74,16 @@ huungry.FightEngine.prototype.init = function() {
     passButton.appendChild(passButtonText);
 
     this.fightUILayer.appendChild(passButton);
-    
+
     //pass
-    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {    
-        if(currentObj.playerMoves || (currentObj.currentUnit && currentObj.currentUnit.numTurnsPossessed)) {    
+    goog.events.listen(passButton, ['mousedown','touchstart'], function(e) {
+        if(currentObj.playerMoves || (currentObj.currentUnit && currentObj.currentUnit.numTurnsPossessed)) {
             currentObj.pass();
         }
     });
-        
-    
-    
+
+
+
     if(this.gameObj.developmentMode) {
         //kill all
         var killButton = new lime.Sprite().setSize(this.gameObj.tileSize*3, this.gameObj.tileSize)
@@ -94,32 +94,32 @@ huungry.FightEngine.prototype.init = function() {
     killButton.appendChild(killButtonText);
 
     this.fightUILayer.appendChild(killButton);
-        
+
         goog.events.listen(killButton, ['mousedown','touchstart'], function(e) {
-            if(currentObj.playerMoves) {           
+            if(currentObj.playerMoves) {
                 for(var j=0; j<currentObj.enemyUnits.length; j++) {
-                    currentObj.enemyUnits[j].life = -1;           
+                    currentObj.enemyUnits[j].life = -1;
                 }
 
                 currentObj.pass();
             }
         });
 
-        //run away    
+        //run away
         var runButton = new lime.GlossyButton().setSize(this.gameObj.tileSize*2,this.gameObj.tileSize*0.8)
             .setPosition(this.gameObj.tileSize*1,this.gameObj.tileSize*7.7)
             .setAnchorPoint(0,0)
-            .setText('Run').setColor('#00CD00'); 
+            .setText('Run').setColor('#00CD00');
         this.fightUILayer.appendChild(runButton);
 
         var currentObj = this;
         goog.events.listen(runButton, ['mousedown','touchstart'], function(e) {
-            if(currentObj.playerMoves) {   
+            if(currentObj.playerMoves) {
                 currentObj.exitFight();
             }
         });
     }
-    
+
     var itemsButton = new lime.Sprite().setSize(this.gameObj.tileSize*3*3/4, this.gameObj.tileSize*3/4)
         .setPosition(this.gameObj.tileSize*4.2, this.gameObj.screenHeight - this.gameObj.tileSize/2)
         .setFill('assets/images/backgrounds/button.png');
@@ -129,33 +129,33 @@ huungry.FightEngine.prototype.init = function() {
 
     this.fightUILayer.appendChild(itemsButton);
 
-    goog.events.listen(itemsButton, ['mousedown','touchstart'], function(e) {        
+    goog.events.listen(itemsButton, ['mousedown','touchstart'], function(e) {
         //can only use items when player is moving
         if(currentObj.playerMoves || (currentObj.currentUnit && currentObj.currentUnit.numTurnsPossessed)) {
-            
+
             if(HuungryUI.selectedItem === undefined) {
                 //show player items
-                HuungryUI.showBattleItemsWindow();  
+                HuungryUI.showBattleItemsWindow();
             }
             else {
                 currentObj.hideItemTargets();
             }
         }
-    });    
-    
-    this.gameObj.player.inFightScene = true;    
+    });
+
+    this.gameObj.player.inFightScene = true;
     this.initArmies();
-    this.playTurn();    
+    this.playTurn();
 }
 
 /**
  * exit fight scene
  */
 huungry.FightEngine.prototype.exitFight = function() {
-    
+
     //update player army
     this.gameObj.player.units = [];
-    
+
     for(var i=0; i< this.playerUnits.length; i++) {
         this.gameObj.player.units.push({
             typeid: this.playerUnits[i].typeid,
@@ -168,7 +168,7 @@ huungry.FightEngine.prototype.exitFight = function() {
             movements: this.playerUnits[i].movements
         });
     }
-    
+
     //go back to the map
     this.gameObj.director.replaceScene(this.gameObj.gameScene);
     this.gameObj.gameLayer.setDirty(255);
@@ -181,7 +181,20 @@ huungry.FightEngine.prototype.exitFight = function() {
     this.gameObj.player.inFightScene = false;
     this.gameObj.controlsLayer.refreshInfo();
     //this.gameObj.player.playerMoved();
-}
+
+    //show interstitial ads on lite version
+    if(!this.gameObj.isFullVersion) {
+        var showInter = Math.random() < 0.5;
+
+        if(this.gameObj.adsInitiated && showInter) {
+            AdMob.showInterstitial();
+        }
+
+        else {
+            HuungryUI.showPremiumAdDialog();
+        }
+    }
+};
 
 /**
  * initiate armies
@@ -189,10 +202,10 @@ huungry.FightEngine.prototype.exitFight = function() {
 huungry.FightEngine.prototype.initArmies = function() {
 
     //init player army
-    this.playerUnitPositions = new Array();
-    
+    this.playerUnitPositions = [];
+
     var i = 0, pos, unit;
-    var takenCells = new Array();    
+    var takenCells = [];
     var position, cellIndex;
     var len = this.gameObj.player.units.length;
     while(i < len) {
@@ -201,21 +214,21 @@ huungry.FightEngine.prototype.initArmies = function() {
             row: this.gameObj.fightScenePlayerStartY + goog.math.randomInt(this.gameObj.fightScenePlayerEndY-this.gameObj.fightScenePlayerStartY+1)
         };
         cellIndex = position.col + position.row*1000;
-        
+
         if(takenCells.indexOf(cellIndex) == -1) {
             takenCells.push(cellIndex);
             this.playerUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col,position.row);
-            unit = this.addBattleUnit(this.gameObj.player.units[i], true, pos, this.playerUnits, this.gameObj.PLAYER_UNIT);            
+            unit = this.addBattleUnit(this.gameObj.player.units[i], true, pos, this.playerUnits, this.gameObj.PLAYER_UNIT);
             i++;
         }
     }
-    
+
     //init enemy army
-    this.enemyUnitPositions = new Array();    
-    
+    this.enemyUnitPositions = [];
+
     i=0;
-    takenCells = new Array();    
+    takenCells = [];
     len = this.enemyArmy.units.length;
     while(i < len) {
         position = {
@@ -224,18 +237,18 @@ huungry.FightEngine.prototype.initArmies = function() {
         };
 
         cellIndex = position.col + position.row*1000;
-        
+
         if(takenCells.indexOf(cellIndex) == -1) {
             takenCells.push(cellIndex);
             this.enemyUnitPositions.push(position);
             pos = this.gameObj.map.getXYFromColRow(position.col, position.row);
             unit = this.addBattleUnit(this.enemyArmy.units[i], false, pos, this.enemyUnits, this.gameObj.ENEMY_UNIT);
             i++;
-        }            
+        }
     }
 
     this.initPowerStats();
-}
+};
 
 /**
 * add a unit to the battle
@@ -250,10 +263,10 @@ huungry.FightEngine.prototype.addBattleUnit = function (unitData, isPlayer, pos,
     var unit = new huungry.Unit()
         .setGameObj(this.gameObj)
         .setUnitData(unitData, isPlayer)
-        .setPosition(pos.x, pos.y)                
+        .setPosition(pos.x, pos.y)
         .setElementType(type)
         .setMap(this.map)
-        .refreshMapPos();   
+        .refreshMapPos();
     unit.customLayer = this.fightUILayer;
     unit.initGamepad();
     unit.fightEngine = this;
@@ -287,15 +300,15 @@ huungry.FightEngine.prototype.initPowerStats = function() {
  * play a turn
  */
 huungry.FightEngine.prototype.playTurn = function() {
-    
+
     this.updateDead();
-    
+
     if(!this.gameObj.player.inFightScene) {
         return;
     }
-    
+
     if(this.currentUnit && this.currentUnit.numTurnsPossessed > 0) {
-        this.currentUnit.numTurnsPossessed--;    
+        this.currentUnit.numTurnsPossessed--;
 
         if(this.currentUnit.numTurnsPossessed == 0) {
             this.currentUnit.revertPossession();
@@ -312,18 +325,18 @@ huungry.FightEngine.prototype.playTurn = function() {
 
     if(this.playerMoves) {
         //show gamepad for current unit
-        this.playerPlayTurn();        
+        this.playerPlayTurn();
     }
     else {
         this.enemyPlayTurn();
     }
-}
+};
 
 /**
 * check whether the current unit is paralyzed. If so skip turn
 */
 huungry.FightEngine.prototype.checkParalyzedUnit = function() {
-    
+
     var unit;
     if(this.playerMoves) {
         unit = this.playerUnits[this.currentPlayerIndex]
@@ -338,13 +351,13 @@ huungry.FightEngine.prototype.checkParalyzedUnit = function() {
         unit.numTurnsParalyzed--;
 
         if(unit.numTurnsParalyzed == 0) {
-            unit.clearVisualEffects('paralyze effect is up!');            
+            unit.clearVisualEffects('paralyze effect is up!');
         }
         unit.readiness = 0;
-        return true;        
+        return true;
     }
     return false;
-}
+};
 
 /**
 * enemy play turn
@@ -370,20 +383,20 @@ huungry.FightEngine.prototype.enemyPlayTurn = function() {
     else {
         this.enemyCastSpell(this.currentUnit, unitPos);
     }
-}
+};
 
 /**
 * enemy cast spell
 */
 huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
 
-    //get spells that have 
+    //get spells that have
     var availableSpells = _.filter(enemy.currentBattleSpells, function(element) {return element.numPerBattle > 0;})
 
     var chosenSpell = availableSpells[_.random(0, availableSpells.length-1)];
     chosenSpell.numPerBattle--;
 
-    var brief = 'casting a spell'; 
+    var brief = 'casting a spell';
     switch(chosenSpell.name) {
         case 'paralyze':
             var nonAffectedUnits = _.filter(this.playerUnits, function(element){ return !element.numTurnsParalyzed}, this);
@@ -394,16 +407,16 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
             }
             else {
                 //can call twice on the same unit, turns will add up
-                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];   
+                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];
             }
-            
+
             this.showBrief('casting paralize spell', enemy.getCenter());
 
             setTimeout(function() {
                 targetUnit.paralyzeSpell(chosenSpell.value);
                 setTimeout(function() {enemy.endMove()}, 1000);
             }, 800);
-            
+
         break;
         case 'possession':
             var nonAffectedUnits = _.filter(this.playerUnits, function(element){ return !element.numTurnsPossessed}, this);
@@ -414,16 +427,16 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
             }
             else {
                 //can call twice on the same unit, turns will add up
-                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];   
+                targetUnit = this.playerUnits[_.random(0,this.playerUnits.length-1)];
             }
-            
+
             this.showBrief('casting possession spell', enemy.getCenter());
 
             setTimeout(function() {
                 targetUnit.possessionSpell(chosenSpell.value);
                 setTimeout(function() {enemy.endMove()}, 1000);
             }, 800);
-            
+
         break;
         case 'resurrection':
             //can only cast if there are skeletons
@@ -457,7 +470,7 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
         case 'lightening':
         break;
     }
-}
+};
 
 /**
 * enemy attack the player
@@ -465,30 +478,30 @@ huungry.FightEngine.prototype.enemyCastSpell = function(enemy, unitPos) {
 huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
 
     //attach adjacent enemy if any
-    var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);        
+    var adjacentEnemy = this.map.getAdjacentElement(enemy, this.gameObj.PLAYER_UNIT);
     if(adjacentEnemy) {
         enemy.attackUnit(adjacentEnemy);
     }
-    
+
     else {
         //if range decide between shooting and moving
         var willShoot = Math.random();
-        
-        if(enemy.canShoot && willShoot <= this.gameObj.shootProbability) {            
+
+        if(enemy.canShoot && willShoot <= this.gameObj.shootProbability) {
             //define target
             var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
             var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
-            
+
             //create bullet
             var bullet = new lime.Circle().setPosition(unitPos.x+this.gameObj.tileSize/2, unitPos.y+this.gameObj.tileSize/2)
                 .setSize(this.gameObj.tileSize/5,this.gameObj.tileSize/5).setFill('#B0171F');
             this.fightLayer.appendChild(bullet);
-            
+
             var movement = new lime.animation
                 .MoveTo(targetUnitPos.x+this.gameObj.tileSize/2,targetUnitPos.y+this.gameObj.tileSize/2)
-                .setDuration(this.gameObj.movementDuration);                    
-            bullet.runAction(movement); 
-            
+                .setDuration(this.gameObj.movementDuration);
+            bullet.runAction(movement);
+
             var layer = this.fightLayer;
             var currentObj = this;
             goog.events.listen(movement,lime.animation.Event.STOP,function(){
@@ -497,21 +510,21 @@ huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
                     enemy.attackUnit(currentObj.playerUnits[targetUnitIndex]);
                 }
                 else {
-                    enemy.endMove();   
+                    enemy.endMove();
                     currentObj.showBrief('missed!', enemy.getCenter());
                 }
             })
         }
-        
+
         else {
             //define target player unit
-            var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);                
+            var targetUnitIndex = goog.math.randomInt(this.playerUnits.length-1);
             var targetUnitPos = this.playerUnits[targetUnitIndex].getPosition();
             var diffX = targetUnitPos.x - unitPos.x,
                 diffY = targetUnitPos.y - unitPos.y;
 
-            var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1), 
-                dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1); 
+            var dX = diffX == 0 ? 0 : (diffX > 0 ? 1 : -1),
+                dY = diffY == 0 ? 0 : (diffY > 0 ? 1 : -1);
 
             var targetX = unitPos.x + this.gameObj.tileSize*dX,
                 targetY = unitPos.y + this.gameObj.tileSize*dY;
@@ -523,8 +536,8 @@ huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
             //if not blocked move
             if(targetType == this.gameObj.FREE_TARGET) {
                 if(this.gameObj.animationOn) {
-                    var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);                    
-                    enemy.runAction(movement);     
+                    var movement = new lime.animation.MoveTo(targetX,targetY).setDuration(this.gameObj.movementDuration);
+                    enemy.runAction(movement);
 
                     var engine = this;
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
@@ -538,9 +551,9 @@ huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
                 this.remainingMoves = 0;
                 this.playTurn();
             }
-        }                        
-    }   
-}
+        }
+    }
+};
 
 
 /**
@@ -549,9 +562,9 @@ huungry.FightEngine.prototype.enemyAttack = function(enemy, unitPos) {
 huungry.FightEngine.prototype.playerPlayTurn = function() {
 
     this.itemsButtonText.setText('ITEMS');
-    
+
     this.currentUnit = this.playerUnits[this.currentPlayerIndex];
-    var pos = this.currentUnit.getPosition();        
+    var pos = this.currentUnit.getPosition();
 
     //if possessed the enemy moves the unit
     if(this.currentUnit.numTurnsPossessed) {
@@ -560,16 +573,16 @@ huungry.FightEngine.prototype.playerPlayTurn = function() {
     }
 
     this.showCurrentGamepad(this.currentUnit, pos);
-}
+};
 
 /**
  * show gamepad for current unit
  */
 huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
-    
+
     var tileSize = this.gameObj.tileSize;
     var currentObj = this;
-    
+
     //remove previous target
     unit.currentTarget = [];
 
@@ -579,17 +592,17 @@ huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
     for(var i=0, arrLen = unit.movementTargets.length; i<arrLen; i++) {
         var posX=pos.x+tileSize*unit.movementTargets[i].dx,
             posY=pos.y+tileSize*unit.movementTargets[i].dy;
-        
+
         var posCell = this.map.getColRowFromXY(posX, posY);
         var targetType = this.map.getTargetType(posCell.col, posCell.row);
 
         if(targetType == this.gameObj.FREE_TARGET) {
             unit.movementTargets[i].sprite.setHidden(false);
-            unit.movementTargets[i].sprite.setPosition(posX,posY);            
+            unit.movementTargets[i].sprite.setPosition(posX,posY);
         }
         else if(targetType == this.gameObj.ENEMY_UNIT) {
 
-            //show attack option            
+            //show attack option
             unit.attackTargets[i].sprite.setHidden(false);
             unit.attackTargets[i].sprite.setPosition(posX,posY);
             unit.currentTarget[i] = this.getUnitFromXY(posX, posY);
@@ -598,23 +611,23 @@ huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
 
     //show range attack targets if allowed
     if(unit.canShoot) {
-        
-        this.rangeTargets = new Array();
+
+        this.rangeTargets = [];
         var enemyPos;
         var enemyUnitPos;
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             enemyPos = this.enemyUnits[i].getPosition();
-            
+
             this.rangeTargets.push(new lime.Sprite().setAnchorPoint(0,0).setFill('#E3422C')
                 .setSize(tileSize,tileSize).setOpacity(0.5)
                 .setPosition(enemyPos.x, enemyPos.y));
-            
+
             (function(i, currentObj) {
                 goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
                     e.preventDefault();
-                    unit.toggleGamepad(false);                    
+                    unit.toggleGamepad(false);
                     enemyUnitPos = currentObj.enemyUnits[i].getPosition();
-                    
+
                     //create bullet
                     var bullet = new lime.Circle().setPosition(pos.x+currentObj.gameObj.tileSize/2, pos.y+currentObj.gameObj.tileSize/2)
                         .setSize(currentObj.gameObj.tileSize/5,currentObj.gameObj.tileSize/5).setFill('#B0171F');
@@ -622,45 +635,45 @@ huungry.FightEngine.prototype.showCurrentGamepad = function(unit, pos) {
 
                     var movement = new lime.animation
                         .MoveTo(enemyUnitPos.x+currentObj.gameObj.tileSize/2,enemyUnitPos.y+currentObj.gameObj.tileSize/2)
-                        .setDuration(currentObj.gameObj.movementDuration);                    
-                    bullet.runAction(movement); 
+                        .setDuration(currentObj.gameObj.movementDuration);
+                    bullet.runAction(movement);
 
                     goog.events.listen(movement,lime.animation.Event.STOP,function(){
-                        currentObj.fightLayer.removeChild(bullet);  
+                        currentObj.fightLayer.removeChild(bullet);
                         if(Math.random() < currentObj.gameObj.accuracyProbability) {
-                            unit.attackUnit(currentObj.enemyUnits[i]);  
-                        }  
+                            unit.attackUnit(currentObj.enemyUnits[i]);
+                        }
                         else {
                             unit.endMove();
                             currentObj.showBrief('missed!', unit.getCenter());
-                        }               
-                        
+                        }
+
                         this.remainingMoves = 0;
                     })
                 });
             })(i, currentObj);
-                
+
             this.fightLayer.appendChild(this.rangeTargets[i]);
         }
     }
-}
+};
 
 /**
  * remove range targets from layer
  */
  huungry.FightEngine.prototype.clearRangeTargets = function() {
     var len = this.rangeTargets.length, i;
-    for(i=0, arrayLen = len; i < arrayLen; i++) {    
+    for(i=0, arrayLen = len; i < arrayLen; i++) {
         this.rangeTargets[i].setHidden(true);
         this.fightLayer.removeChild(this.rangeTargets[i]);
     }
-     
- } 
+
+ };
 
 
 /**
  * get a unit from x y coordinates
- * 
+ *
  * @param x in pixels
  * @param y in pixels
  */
@@ -677,13 +690,13 @@ huungry.FightEngine.prototype.getUnitFromXY = function(x, y) {
             return this.enemyUnits[j];
         }
     }
-}
+};
 
 /**
  * remove dead units
  */
 huungry.FightEngine.prototype.updateDead = function() {
-    
+
     this.armyStats.pe = 0;
     this.armyStats.ee = 0;
 
@@ -698,7 +711,7 @@ huungry.FightEngine.prototype.updateDead = function() {
         }
     }
     this.armyStats.pe *= 1 + this.gameObj.powerNumFactor*(num_players-1);
-    
+
     var num_enemies = this.enemyUnits.length;
     for(i=num_enemies-1; i>= 0; i--) {
         if(this.enemyUnits[i].life <= 0) {
@@ -710,37 +723,37 @@ huungry.FightEngine.prototype.updateDead = function() {
         }
     }
     this.armyStats.ee *= 1 + this.gameObj.powerNumFactor*(num_enemies-1);
-    
+
     //check army defeated
     if(this.playerUnits.length === 0) {
         var fightScene = this;
         fightScene.sendStats();
         fightScene.exitFight();
-        HuungryUI.showDialog('GAME OVER', 
+        HuungryUI.showDialog('GAME OVER',
         'Your troops have been defeated, your treasures plundered by your enemies, and your name forgotten forever in History.',
         [{text: 'TRY AGAIN', btnClass: 'button-home', callback: function() {
-            HuungryUI.hideDialog();    
-            fightScene.exitFight();            
+            HuungryUI.hideDialog();
+            fightScene.exitFight();
             window.location = '';
         }}]
-        );      
-    }
-    
+        );
+    };
+
     if(this.enemyUnits.length == 0) {
         var fightScene = this;
         fightScene.sendStats();
         var delta = fightScene.armyStats.pe-fightScene.armyStats.ps;
         var ratio = delta / fightScene.armyStats.es;
         console.log('delta power:'+delta);
-        console.log('ratio:'+ratio);       
+        console.log('ratio:'+ratio);
 
         if(this.playerUnits.length > this.gameObj.player.maxNumUnits ) {
             var counter = this.playerUnits.length - this.gameObj.player.maxNumUnits + 1;
             this.playerUnits = _.reject(this.playerUnits, function(element){
                 if(element.removeAfterBattle) {
                     counter--;
-                }   
-                return element.removeAfterBattle && counter > 0;             
+                }
+                return element.removeAfterBattle && counter > 0;
             });
         }
         else {
@@ -758,19 +771,19 @@ huungry.FightEngine.prototype.updateDead = function() {
                 HuungryUI.hideDialog();
                 fightScene.gameObj.player.gold += fightScene.enemyArmy.gold;
                 fightScene.enemyArmy.die();
-                fightScene.exitFight();    
-                fightScene.gameObj.checkQuestCompletion();        
+                fightScene.exitFight();
+                fightScene.gameObj.checkQuestCompletion();
                 fightScene.gameObj.controlsLayer.refreshInfo();
             }
-            }]);     
+            }]);
     }
-}
+};
 
 /**
  * define which units are staged to move on the next move
  */
 huungry.FightEngine.prototype.updateNextMovingUnits = function() {
-    
+
     //reset previous unit if any, in case the movements run out
     if(this.playerMoves === true && this.remainingMoves == 0 && this.currentUnit) {
         this.currentUnit.readiness = 0;
@@ -778,9 +791,9 @@ huungry.FightEngine.prototype.updateNextMovingUnits = function() {
     else if(this.playerMoves === false && this.remainingMoves == 0 && this.currentUnit) {
         this.currentUnit.readiness = 0;
     }
-    
+
     if(!this.remainingMoves) {
-        //get the unit with the highest "readiness"    
+        //get the unit with the highest "readiness"
         var maxReady = -99;
         for(var i=0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
             this.playerUnits[i].readiness+= Math.random();
@@ -789,20 +802,20 @@ huungry.FightEngine.prototype.updateNextMovingUnits = function() {
                 maxReady = this.playerUnits[i].readiness;
                 this.playerMoves = true;
                 this.remainingMoves = this.playerUnits[i].movements;
-            }        
+            }
         }
-        
+
         for(i=0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
             this.enemyUnits[i].readiness+= Math.random();
             if(this.enemyUnits[i].readiness > maxReady) {
-                this.currentEnemyIndex = i;            
+                this.currentEnemyIndex = i;
                 maxReady = this.enemyUnits[i].readiness;
                 this.playerMoves = false;
                 this.remainingMoves = this.enemyUnits[i].movements;
-            }        
-        }  
-    }    
-}
+            }
+        }
+    }
+};
 
 /**
  * pass a turn
@@ -812,35 +825,35 @@ huungry.FightEngine.prototype.pass = function() {
     this.hideTargets();
     this.remainingMoves = 0;
     this.playTurn();
-}
+};
 
 /**
  * hide unit targets
  */
 huungry.FightEngine.prototype.hideTargets = function() {
-    this.currentUnit.toggleGamepad(false);    
+    this.currentUnit.toggleGamepad(false);
     //this.playerUnits[this.currentPlayerIndex].toggleGamepad(false);
     this.clearRangeTargets();
-}
+};
 
 /**
  * init items window
  */
-huungry.FightEngine.prototype.initItemsWindow = function() {    
+huungry.FightEngine.prototype.initItemsWindow = function() {
     //close event
     var currObj = this;
     goog.events.listen(closeButton,['mousedown', 'touchstart'], function(e) {
         currObj.gameObj.director.popScene();
     });
-    
+
     goog.events.listen(this.useButton,['mousedown', 'touchstart'], function(e) {
         currObj.showItemTargets();
         currObj.gameObj.director.popScene();
     });
-    
+
     var gridX = 5, gridY= 40;
     this.playerItemsLayer = new lime.Layer().setAnchorPoint(0,0).setPosition(gridX, gridY);
-    this.itemsScene.appendChild(this.playerItemsLayer);     
+    this.itemsScene.appendChild(this.playerItemsLayer);
 };
 
 
@@ -851,21 +864,21 @@ huungry.FightEngine.prototype.showItemTargets = function() {
     this.itemsButtonText.setText('CANCEL');
     //this.useButton.setHidden(true);
     this.hideTargets();
-        
+
     var unit = this.playerUnits[this.currentPlayerIndex];
-    var pos = unit.getPosition();        
+    var pos = unit.getPosition();
     var tileSize = this.gameObj.tileSize;
     var currentObj = this;
-    
+
     var item = this.gameObj.player.items[HuungryUI.selectedItem];
 
     //show range attack targets if attack spell
     if(_.contains(['ITEM.ATTACK-SPELL', 'ITEM.PARALYZE-SPELL', 'ITEM.POSSESSION-SPELL'], item.type)) {
-       
-        this.rangeTargets = new Array();
+
+        this.rangeTargets = [];
         var enemyPos, target;
         for(var i = 0, arrayLen = this.enemyUnits.length; i< arrayLen; i++) {
-            
+
             enemyPos = this.enemyUnits[i].getPosition();
             target = new lime.Sprite().setAnchorPoint(0,0).setFill('assets/images/items/'+item.image)
                 .setOpacity(0.5)
@@ -873,17 +886,17 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                 .setPosition(enemyPos.x, enemyPos.y);
 
             this.rangeTargets.push(target);
-            
+
             (function(i, currentObj) {
                 goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
-                    e.preventDefault(); 
+                    e.preventDefault();
 
                     if(item.type == 'ITEM.ATTACK-SPELL')  {
-                        item.attackUnit(currentObj.enemyUnits[i]); 
-                        currentObj.showBrief('fire!', currentObj.enemyUnits[i].getCenter()); 
+                        item.attackUnit(currentObj.enemyUnits[i]);
+                        currentObj.showBrief('fire!', currentObj.enemyUnits[i].getCenter());
                         HuungryUI.selectedItem = undefined;
                         currentObj.hideTargets();
-                    }   
+                    }
                     else if(item.type == 'ITEM.PARALYZE-SPELL') {
                         item.paralyzeUnit(currentObj.enemyUnits[i]);
                         HuungryUI.selectedItem = undefined;
@@ -895,17 +908,17 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                         HuungryUI.selectedItem = undefined;
                         currentObj.hideTargets();
                         currentObj.currentUnit.endMove();
-                    }                   
-                    
+                    }
+
                 });
             })(i, currentObj);
-                
+
             this.fightLayer.appendChild(this.rangeTargets[i]);
         }
         this.showBrief('pick an enemy', this.DEFAULT_MSG_POS);
     }
     else if(item.type == 'ITEM.DEFENSE-SPELL') {
-        this.rangeTargets = new Array();
+        this.rangeTargets = [];
         var unitPos;
         for(var i = 0, arrayLen = this.playerUnits.length; i< arrayLen; i++) {
             unitPos = this.playerUnits[i].getPosition();
@@ -913,23 +926,23 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                 .setOpacity(0.5)
                 .setSize(tileSize,tileSize)
                 .setPosition(unitPos.x, unitPos.y));
-            
+
             (function(i, currentObj) {
                 goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
-                    e.preventDefault();                         
-                    item.protectUnit(currentObj.playerUnits[i]);  
+                    e.preventDefault();
+                    item.protectUnit(currentObj.playerUnits[i]);
                     HuungryUI.selectedItem = undefined;
                     currentObj.hideTargets();
                     currentObj.currentUnit.endMove();
                 });
             })(i, currentObj);
-                
+
             this.fightLayer.appendChild(this.rangeTargets[i]);
         }
         this.showBrief('pick a unit', this.DEFAULT_MSG_POS);
     }
     else if(item.type == 'ITEM.RESURRECTION-SPELL') {
-        this.rangeTargets = new Array();
+        this.rangeTargets = [];
         var targetPos;
 
         if(this.skeletons.length) {
@@ -939,17 +952,17 @@ huungry.FightEngine.prototype.showItemTargets = function() {
                     .setOpacity(0.5)
                     .setSize(tileSize,tileSize)
                     .setPosition(targetPos.x, targetPos.y));
-                
+
                 (function(i, currentObj) {
                     goog.events.listen(currentObj.rangeTargets[i], ['mousedown', 'touchstart'], function(e) {
-                        e.preventDefault();                         
-                        item.turnIntoUnit(currentObj.skeletons[i], currentObj.gameObj.fightEngine.playerUnits, currentObj.gameObj.PLAYER_UNIT);  
+                        e.preventDefault();
+                        item.turnIntoUnit(currentObj.skeletons[i], currentObj.gameObj.fightEngine.playerUnits, currentObj.gameObj.PLAYER_UNIT);
                         HuungryUI.selectedItem = undefined;
                         currentObj.hideTargets();
                         currentObj.currentUnit.endMove();
                     });
                 })(i, currentObj);
-                    
+
                 this.fightLayer.appendChild(this.rangeTargets[i]);
             }
             this.showBrief('pick a bone pile', this.DEFAULT_MSG_POS);
@@ -957,7 +970,7 @@ huungry.FightEngine.prototype.showItemTargets = function() {
         else {
             this.showBrief('there are no bone piles!', this.DEFAULT_MSG_POS);
         }
-        
+
     }
 };
 
@@ -970,7 +983,7 @@ huungry.FightEngine.prototype.hideItemTargets = function() {
     this.clearRangeTargets();
     this.updateDead();
 
-    var pos = this.currentUnit.getPosition();        
+    var pos = this.currentUnit.getPosition();
     this.showCurrentGamepad(this.currentUnit, pos);
 };
 
@@ -988,22 +1001,22 @@ huungry.FightEngine.prototype.showBrief = function(text, position) {
     this.briefTimeout = setTimeout(function() {
         that.infoText.setText('');
     }, 1000);
-}
+};
 
 /**
 * send stats to server
 */
 huungry.FightEngine.prototype.sendStats = function() {
     var that = this;
-    var platform = 'desktop', 
-    platform_version='', 
+    var platform = 'desktop',
+    platform_version='',
     device_id='';
 
     if(window.device) {
         platform = window.device.platform;
         platform_version = window.device.version;
         device_id = window.device.uuid;
-    
+
         $.ajax(this.gameObj.API_BATTLE_URL, {
             data: _.extend(that.armyStats, {
                 game_version: that.gameObj.GAME_VERSION,
@@ -1017,4 +1030,4 @@ huungry.FightEngine.prototype.sendStats = function() {
             })
         });
     }
-}
+};

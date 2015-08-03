@@ -25,23 +25,23 @@ goog.require('huungry.Inanimated');
 goog.require('lime.GlossyButton');
 
 // entrypoint
-huungry.start = function(isFullVersion){
+huungry.start = function(params){
 
-    var gameObj = new huungry.GameObj(document, isFullVersion);
-    
+    var gameObj = new huungry.GameObj(document, params);
+
 
     //intro music
     gameObj.playSound('royal-jester', {unique: true, loop: true});
-    
-    HuungryUI.prepareDialog(gameObj); 
-    gameObj.setUnitTypes(UnitTypes);       
-    
-    //player    
+
+    HuungryUI.prepareDialog(gameObj);
+    gameObj.setUnitTypes(UnitTypes);
+
+    //player
     gameObj.player = new huungry.Player().setFill('assets/images/units/knight.png')
         .setGameObj(gameObj);
-        
-    gameObj.player.maxNumUnits = 8;   
-    gameObj.player.gold = 120;   
+
+    gameObj.player.maxNumUnits = 8;
+    gameObj.player.gold = 120;
     gameObj.player.units = [
     gameObj.cloneUnit(gameObj.unitTypes['archer'], 15),
     gameObj.cloneUnit(gameObj.unitTypes['archer'], 20),
@@ -55,10 +55,16 @@ huungry.start = function(isFullVersion){
     gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 27),
     gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 25),
     gameObj.cloneUnit(gameObj.unitTypes['elfarcher'], 25)    ];*/
-    
+
+    //init ads if not full version
+    if(!gameObj.isFullVersion) {
+        gameObj.initAds();
+    }
+
+
     //start screen
-    gameObj.showSplashScreen();       
-}
+    gameObj.showSplashScreen();
+};
 
 
 //this is required for outside access after code is compiled in ADVANCED_COMPILATIONS mode

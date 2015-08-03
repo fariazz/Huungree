@@ -10,13 +10,13 @@ huungry.Map = function() {
 
     this.pixelOffsetX = 0;
     this.pixelOffsetY = 0;
-    
+
     this.elements = [];
     this.blocked = [];
 }
 
 huungry.Map.prototype.setGameObj = function(gameObj) {
-    this.gameObj = gameObj;    
+    this.gameObj = gameObj;
     return this;
 }
 
@@ -35,10 +35,10 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
             break;
         }
     }
-    
+
     //init map elements
     this.initEmptyElements(this.num_cols, this.num_rows);
-    //load blocked cells    
+    //load blocked cells
     var current_row = 0;
     for(var i=0; i < jsonMap.layers[collision_i].data.length; i++) {
         var col = i % this.num_cols;
@@ -56,16 +56,16 @@ huungry.Map.prototype.setJsonMap = function(jsonMap, collision_layer_name) {
 
 /**
  * initiate an empty array of map elements
- * 
+ *
  * @param int num_cols
  * @param int num_rows
  */
  huungry.Map.prototype.initEmptyElements = function(num_cols, num_rows) {
      for(var i=0; i < num_rows; i++) {
-        this.blocked.push([]); 
+        this.blocked.push([]);
         for(var j=0; j < num_cols; j++) {
             this.blocked[i][j] =  0;
-        } 
+        }
      }
  }
 
@@ -78,7 +78,7 @@ huungry.Map.prototype.setSize = function(dimensions) {
     this.width = dimensions.width;
     this.height = dimensions.height;
     this.num_cols = this.width/this.gameObj.tileSize;
-    this.num_rows = this.height/this.gameObj.tileSize;   
+    this.num_rows = this.height/this.gameObj.tileSize;
     this.initEmptyElements(this.num_cols, this.num_rows);
     return this;
 }
@@ -96,23 +96,26 @@ huungry.Map.prototype.init = function() {
     this.gameObj.gameLayer.appendChild(this.backgroundSprite);
 
    var map = this;
-   goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
-       e.event.stopPropagation();
 
-       cell = map.getColRowFromXY(e.position.x, e.position.y);
-       console.log(cell);
-   });
-}
+   if(this.gameObj.developmentMode) {
+       goog.events.listen(this.backgroundSprite, ['mousedown', 'touchstart'], function(e) {
+           e.event.stopPropagation();
+
+           cell = map.getColRowFromXY(e.position.x, e.position.y);
+           console.log(cell);
+       });
+    }
+};
 
 /**
  *Initiate level data, only for maps that are levels
  */
 huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
     this.gameObj.map = this;
-    
+
     //load items
     this.gameObj.numItems = 0;
-    var item, pos, shop;    
+    var item, pos, shop;
     var arrayLen;
 
     this.gameObj.mapItems = new Array();
@@ -147,8 +150,8 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
             this.gameObj.numItems++;
         }
     }
-    
-    
+
+
     //shops
     this.gameObj.mapShops = new Array();
     if(mapShops === undefined) {
@@ -180,7 +183,7 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
             this.gameObj.gameLayer.appendChild(shop);
         }
     }
-    
+
     //enemyArmies
     this.gameObj.enemyArmies = new Array();
     if(enemyArmies === undefined) {
@@ -190,7 +193,7 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
             this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+this.level.enemyArmies[i].image).setPosition(pos.x, pos.y)
                 .setGameObj(this.gameObj)
                 .setMap(this.gameObj.map)
-                .refreshMapPos()); 
+                .refreshMapPos());
             this.gameObj.enemyArmies[i].image = this.level.enemyArmies[i].image;
             this.gameObj.enemyArmies[i].isQuestGoal = this.level.enemyArmies[i].isQuestGoal;
             this.gameObj.enemyArmies[i].unitsSummary = this.level.enemyArmies[i].unitsSummary;
@@ -205,7 +208,7 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
             this.gameObj.enemyArmies.push(new huungry.EnemyArmy().setFill('assets/images/units/'+enemyArmies[i].image).setPosition(enemyArmies[i].x, enemyArmies[i].y)
                 .setGameObj(this.gameObj)
                 .setMap(this.gameObj.map)
-                .refreshMapPos()); 
+                .refreshMapPos());
             this.gameObj.enemyArmies[i].image = enemyArmies[i].image;
             this.gameObj.enemyArmies[i].isQuestGoal = enemyArmies[i].isQuestGoal;
             this.gameObj.enemyArmies[i].unitsSummary = enemyArmies[i].unitsSummary;
@@ -214,7 +217,11 @@ huungry.Map.prototype.initLevel = function(mapItems, enemyArmies, mapShops) {
             this.gameObj.gameLayer.appendChild(this.gameObj.enemyArmies[i]);
         }
     }
-    
+
+/*    if(!this.gameObj.isFullVersion) {
+        HuungryUI.showUpgradeLink();
+    }*/
+
 };
 
 /**
@@ -248,7 +255,7 @@ huungry.Map.prototype.getXYFromColRow = function(col,row) {
  * @param int row tile column
  */
 huungry.Map.prototype.isCellBlocked = function(col, row) {
-    
+
     if(col >= this.num_cols || row >= this.num_rows || col < 0 || row < 0) {
         return 1;
     }
@@ -310,32 +317,32 @@ huungry.Map.prototype.removeElement = function(element) {
 
 /**
  * get the target element type
- * 
+ *
  * @param int col
  * @param int row
  */
 huungry.Map.prototype.getTargetType = function(col,row) {
-    var cellCoord = this.getXYFromColRow(col, row);    
+    var cellCoord = this.getXYFromColRow(col, row);
     for(var i=0; i<this.elements.length; i++) {
         var elementPos = this.elements[i].getPosition();
         if(cellCoord.x == elementPos.x && cellCoord.y == elementPos.y) {
             return this.elements[i].elementType;
         }
     }
-    
-    var blocked = this.isCellBlocked(col, row);    
+
+    var blocked = this.isCellBlocked(col, row);
     return blocked ? this.gameObj.BLOCKED_TARGET : this.gameObj.FREE_TARGET;
 }
 
 /**
  * get the target element
- * 
+ *
  * @param int col
  * @param int row
  */
 huungry.Map.prototype.getTargetElement = function(col,row) {
-    
-    var cellCoord = this.getXYFromColRow(col, row);    
+
+    var cellCoord = this.getXYFromColRow(col, row);
     for(var i=0; i<this.elements.length; i++) {
         var elementPos = this.elements[i].getPosition();
         if(cellCoord.x == elementPos.x && cellCoord.y == elementPos.y) {
@@ -347,7 +354,7 @@ huungry.Map.prototype.getTargetElement = function(col,row) {
 
 /**
  * get an adyacent element if any
- * 
+ *
  * @param {} element
  * @param int elementType
  * @return {}
@@ -355,50 +362,50 @@ huungry.Map.prototype.getTargetElement = function(col,row) {
 huungry.Map.prototype.getAdjacentElement = function(element, elementType) {
     var elementPos = element.getPosition();
     var cellPos = this.getColRowFromXY(elementPos.x, elementPos.y);
-    
+
     var adjacentElements = [];
     var foundElement;
-    if(cellPos.col-1 >= 0) {        
+    if(cellPos.col-1 >= 0) {
         foundElement = this.getTargetElement(cellPos.col-1,cellPos.row);
 //        console.log(foundElement);
 //        console.log('type:'+foundElement.elementType);
 //        console.log('type2:'+elementType);
 //        console.log(foundElement && foundElement.elementType == elementType);
-        
+
         if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
-        
+
         if(cellPos.row-1 >= 0) {
-            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row-1);    
+            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row-1);
             if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
-            
-            foundElement = this.getTargetElement(cellPos.col,cellPos.row-1);    
+
+            foundElement = this.getTargetElement(cellPos.col,cellPos.row-1);
             if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
-        
+
         if(cellPos.row+1 < this.num_rows) {
-            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row+1);    
+            foundElement = this.getTargetElement(cellPos.col-1,cellPos.row+1);
             if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
-            
-            foundElement = this.getTargetElement(cellPos.col,cellPos.row+1);    
+
+            foundElement = this.getTargetElement(cellPos.col,cellPos.row+1);
             if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
-        
+
     }
     //console.log(adjacentElements);
-    if(cellPos.col+1 < this.num_cols) {        
+    if(cellPos.col+1 < this.num_cols) {
         foundElement = this.getTargetElement(cellPos.col+1,cellPos.row);
         if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
-        
+
         if(cellPos.row-1 >= 0) {
-            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row-1);    
-            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}          
-        }
-        
-        if(cellPos.row+1 < this.num_rows) {
-            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row+1);    
+            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row-1);
             if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
         }
-        
+
+        if(cellPos.row+1 < this.num_rows) {
+            foundElement = this.getTargetElement(cellPos.col+1,cellPos.row+1);
+            if(foundElement && foundElement.elementType == elementType) {adjacentElements.push(foundElement);}
+        }
+
     }
     //console.log(adjacentElements.length);
     //console.log(adjacentElements.length > 0);
@@ -426,9 +433,9 @@ huungry.Map.prototype.setLevel = function(level) {
     this.gameObj.width = this.level.width;
     this.gameObj.height = this.level.height;
     this.setJsonMap(this.level.tiledData,'blocked');
-    this.setBackground(this.level.image); 
+    this.setBackground(this.level.image);
     this.playerInitialX = this.level.playerInitialX;
     this.playerInitialY = this.level.playerInitialY;
-    
+
     return this;
 };

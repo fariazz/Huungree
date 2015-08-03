@@ -4,37 +4,36 @@
 <head>
     <meta charset="utf-8"/>
     <title>huungry</title>
-    
-    <link rel="stylesheet" type="text/css" href="css/reset.css" />   
-    <link rel="stylesheet" type="text/css" href="css/huungry.css" />   
+
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/huungry.css" />
 </head>
-<body style="background-color:black">    
+<body style="background-color:black">
     <div class="zva_dialog">
         <div class="zva_dialog_header">
             <h2></h2>
         </div>
         <div class="zva_dialog_body">
         </div>
-        <div class="zva_dialog_actions">            
+        <div class="zva_dialog_actions">
         </div>
-        <div class="zva_dialog_help">            
+        <div class="zva_dialog_help">
         </div>
     </div>
     <script>
-        document.addEventListener("deviceready", function() {
+        document.addEventListener("DOMContentLoaded", function() {
             if(navigator.splashscreen) {
                 navigator.splashscreen.hide();
-            }                        
+            }
+
             huungry.start({
-                isFullVersion: true,
+                isFullVersion: false,
                 upgradeURL: 'market://details?id=com.zenva.huungreefull'
             });
         },  false);
     </script>
-    <script type="text/javascript" src="pushScripts.js"></script>
-    <script type="text/javascript" src="phonegap.js"></script>
-    <script type="text/javascript" src="GCMPlugin.js"></script>
-    <script type="text/javascript" src="PushNotification.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="pg-event-assist.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="underscore-min.js"></script>
     <script type="text/javascript" src="ui.js"></script>
@@ -54,7 +53,7 @@
     <script type='text/javascript' src='levels/level13.js'></script>
     <script type='text/javascript' src='levels/level14.js'></script>
     <script type="text/javascript" src="huungry_compiled.js"></script>
-    <script type="text/javascript" src="fastclick.js"></script>    
+    <script type="text/javascript" src="fastclick.js"></script>
 </body>
 
 </html>
